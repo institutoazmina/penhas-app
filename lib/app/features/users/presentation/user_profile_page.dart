@@ -24,17 +24,16 @@ import 'user_profile_state.dart';
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({
     required this.controller,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final UserProfileController controller;
 
   @override
-  _UserProfilePageState createState() => _UserProfilePageState();
+  UserProfilePageState createState() => UserProfilePageState();
 }
 
-class _UserProfilePageState extends State<UserProfilePage>
-    with SnackBarHandler {
+class UserProfilePageState extends State<UserProfilePage> with SnackBarHandler {
   ReactionDisposer? _disposer;
   late final _scaffoldKey = GlobalKey<ScaffoldState>();
   late final _progressDialogKey = GlobalKey();
@@ -67,7 +66,7 @@ class _UserProfilePageState extends State<UserProfilePage>
   }
 }
 
-extension _UserProfilePagePrivate on _UserProfilePageState {
+extension _UserProfilePagePrivate on UserProfilePageState {
   Widget bodyBuilder(UserProfileState state) {
     return state.when(
       initial: () => empty(),
@@ -219,7 +218,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
     if (badges.isEmpty) {
       return const SizedBox.shrink();
     }
-    final _emptyBadge = UserDetailBadgeModel(
+    final emptyBadge = UserDetailBadgeModel(
         code: '',
         description: '',
         imageUrl: '',
@@ -229,7 +228,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
         style: '');
     final badge = badges.firstWhere(
       (badge) => badge.style == 'inline-block',
-      orElse: () => _emptyBadge,
+      orElse: () => emptyBadge,
     );
     if (badge.style == '') {
       return const SizedBox.shrink();

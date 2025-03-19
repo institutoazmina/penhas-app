@@ -47,18 +47,12 @@ class PenhasButton extends ElevatedButton {
   /// * [style] define o estilo do botão e deve ser uma implementação de [ButtonStyle].
   /// * [focusNode] é o [FocusNode] opcional para o botão.
   const PenhasButton({
-    Key? key,
-    required VoidCallback? onPressed,
-    required Widget? child,
-    required ButtonStyle style,
-    FocusNode? focusNode,
-  }) : super(
-          key: key,
-          onPressed: onPressed,
-          child: child,
-          style: style,
-          focusNode: focusNode,
-        );
+    super.key,
+    required super.onPressed,
+    required super.child,
+    required ButtonStyle super.style,
+    super.focusNode,
+  });
 
   /// Cria uma instância de [PenhasButton] com estilo [RoundedFilledButtonStyle] (botão arredondado preenchido).
   factory PenhasButton.roundedFilled({
@@ -69,10 +63,10 @@ class PenhasButton extends ElevatedButton {
     String? text,
   }) {
     return PenhasButton(
-      child: child,
       onPressed: onPressed,
       focusNode: focusNode,
       style: RoundedFilledButtonStyle(),
+      child: child,
     );
   }
 
@@ -84,10 +78,10 @@ class PenhasButton extends ElevatedButton {
     FocusNode? focusNode,
   }) {
     return PenhasButton(
-      child: child,
       onPressed: onPressed,
       focusNode: focusNode,
       style: RoundedOutlinedButtonStyle(),
+      child: child,
     );
   }
 
@@ -99,10 +93,10 @@ class PenhasButton extends ElevatedButton {
     FocusNode? focusNode,
   }) {
     return PenhasButton(
-      child: child,
       onPressed: onPressed,
       focusNode: focusNode,
       style: TextButtonStyle(),
+      child: child,
     );
   }
 
@@ -114,10 +108,10 @@ class PenhasButton extends ElevatedButton {
     FocusNode? focusNode,
   }) {
     return PenhasButton(
-      child: child,
       onPressed: onPressed,
       focusNode: focusNode,
       style: FilledButtonStyle(),
+      child: child,
     );
   }
 }

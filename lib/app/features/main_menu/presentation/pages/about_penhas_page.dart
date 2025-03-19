@@ -6,9 +6,9 @@ import '../../../../shared/navigation/app_navigator.dart';
 
 class AboutPenhasPage extends StatelessWidget {
   const AboutPenhasPage({
-    Key? key,
+    super.key,
     required this.baseUrl,
-  }) : super(key: key);
+  });
 
   final Uri baseUrl;
 
@@ -16,6 +16,7 @@ class AboutPenhasPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: DesignSystemColors.white,
         elevation: 0.0,
         title: const Text('Sobre o PenhaS'),
         backgroundColor: DesignSystemColors.easterPurple,

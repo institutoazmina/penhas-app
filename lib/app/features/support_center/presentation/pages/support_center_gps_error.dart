@@ -4,12 +4,11 @@ import '../../../../shared/design_system/colors.dart';
 
 class SupportCenterGpsError extends StatelessWidget {
   const SupportCenterGpsError({
-    Key? key,
+    super.key,
     required String message,
     required VoidCallback onPressed,
   })  : _message = message,
-        _onPressed = onPressed,
-        super(key: key);
+        _onPressed = onPressed;
 
   final String _message;
   final VoidCallback _onPressed;

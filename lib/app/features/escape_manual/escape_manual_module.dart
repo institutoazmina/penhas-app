@@ -22,7 +22,7 @@ import 'presentation/escape_manual_controller.dart';
 import 'presentation/escape_manual_page.dart';
 
 class EscapeManualModule extends WidgetModule {
-  EscapeManualModule({Key? key}) : super(key: key);
+  EscapeManualModule({super.key});
 
   @override
   Widget get view => EscapeManualPage(

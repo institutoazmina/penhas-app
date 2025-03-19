@@ -128,7 +128,7 @@ void main() {
       },
     );
     group('golden test', () {
-      screenshotTest(
+      screenshotTestSimplified(
         'looks as expected',
         fileName: 'reset_password_page_step_2',
         pageBuilder: () => ResetPasswordTwoPage(

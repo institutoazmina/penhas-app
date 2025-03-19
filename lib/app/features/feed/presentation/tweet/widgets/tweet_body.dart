@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 import '../../../../../shared/design_system/text_styles.dart';
 
 class TweetBody extends StatelessWidget {
   const TweetBody({
-    Key? key,
+    super.key,
     required String? content,
-  })  : bodyContent = content,
-        super(key: key);
+  }) : bodyContent = content;
 
   final String? bodyContent;
 
   @override
   Widget build(BuildContext context) {
-    final htmlBody = HtmlWidget(
-      bodyContent!,
-      textStyle: kTextStyleFeedTweetBody,
-      factoryBuilder: () => DisabledWebViewJsWidgetFactory(),
+    final htmlBody = Html(
+      data: bodyContent!,
+      style: {
+        'body': Style.fromTextStyle(kTextStyleFeedTweetBody),
+        'iframe': Style(display: Display.none),
+      },
     );
 
     return Padding(
@@ -25,9 +26,4 @@ class TweetBody extends StatelessWidget {
       child: htmlBody,
     );
   }
-}
-
-class DisabledWebViewJsWidgetFactory extends WidgetFactory {
-  @override
-  bool get webViewJs => false;
 }

@@ -14,10 +14,10 @@ part 'quiz_start_controller.g.dart';
 
 typedef QuizSessionResult = Either<Failure, QuizSessionEntity>;
 
-class QuizStartController = _QuizStartControllerBase with _$QuizStartController;
+class QuizStartController = QuizStartControllerBase with _$QuizStartController;
 
-abstract class _QuizStartControllerBase with Store, MapFailureMessage {
-  _QuizStartControllerBase({
+abstract class QuizStartControllerBase with Store, MapFailureMessage {
+  QuizStartControllerBase({
     required String? sessionId,
     required StartQuizUseCase startQuiz,
   })  : _sessionId = sessionId,

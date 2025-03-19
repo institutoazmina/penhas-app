@@ -15,21 +15,20 @@ import 'penhas_drawer_controller.dart';
 
 class PenhasDrawerPage extends StatefulWidget {
   const PenhasDrawerPage(
-      {Key? key,
+      {super.key,
       this.title = 'Penhas Drawer',
       required this.controller,
-      required this.stealthController})
-      : super(key: key);
+      required this.stealthController});
 
   final String title;
   final PenhasDrawerController controller;
   final StealthModeTutorialPageController stealthController;
 
   @override
-  _PenhasDrawerPageState createState() => _PenhasDrawerPageState();
+  PenhasDrawerPageState createState() => PenhasDrawerPageState();
 }
 
-class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
+class PenhasDrawerPageState extends State<PenhasDrawerPage> {
   final double listHeight = 80;
   final Color drawerGrey = const Color.fromRGBO(239, 239, 239, 1.0);
   PenhasDrawerController get _controller => widget.controller;
@@ -73,7 +72,7 @@ class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
                     icon: SvgPicture.asset(
                       'assets/images/svg/drawer/user_profile.svg',
                       colorFilter: const ColorFilter.mode(
-                          DesignSystemColors.darkIndigoThree, BlendMode.color),
+                          DesignSystemColors.darkIndigoThree, BlendMode.srcIn),
                     ),
                     onPressed: () {
                       Modular.to.pushNamed('/mainboard/menu/profile_edit');
@@ -84,7 +83,7 @@ class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
                     icon: SvgPicture.asset(
                       'assets/images/svg/drawer/account_setting.svg',
                       colorFilter: const ColorFilter.mode(
-                          DesignSystemColors.darkIndigoThree, BlendMode.color),
+                          DesignSystemColors.darkIndigoThree, BlendMode.srcIn),
                     ),
                     onPressed: () {
                       Modular.to
@@ -96,7 +95,7 @@ class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
                     icon: SvgPicture.asset(
                       'assets/images/svg/drawer/trash.svg',
                       colorFilter: const ColorFilter.mode(
-                          DesignSystemColors.darkIndigoThree, BlendMode.color),
+                          DesignSystemColors.darkIndigoThree, BlendMode.srcIn),
                     ),
                     onPressed: () {
                       Modular.to.pushNamed('/mainboard/menu/account_delete');
@@ -107,7 +106,7 @@ class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
                     icon: SvgPicture.asset(
                       'assets/images/svg/drawer/menu_penhas_icone.svg',
                       colorFilter: const ColorFilter.mode(
-                          DesignSystemColors.darkIndigoThree, BlendMode.color),
+                          DesignSystemColors.darkIndigoThree, BlendMode.srcIn),
                     ),
                     onPressed: () {
                       Modular.to.pushNamed('/mainboard/menu/about');
@@ -184,7 +183,7 @@ class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
     return SvgPicture.network(
       avatarPath,
       colorFilter: const ColorFilter.mode(
-          DesignSystemColors.darkIndigo, BlendMode.color),
+          DesignSystemColors.darkIndigo, BlendMode.srcIn),
       height: 36,
     );
   }
@@ -219,7 +218,7 @@ class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
   }
 }
 
-extension _TextStyle on _PenhasDrawerPageState {
+extension _TextStyle on PenhasDrawerPageState {
   TextStyle get securityContextTextStyle => const TextStyle(
         color: DesignSystemColors.darkIndigoThree,
         fontFamily: 'Lato',

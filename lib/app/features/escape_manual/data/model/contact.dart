@@ -4,14 +4,10 @@ export '../../domain/entity/contact.dart';
 
 class ContactModel extends ContactEntity {
   const ContactModel({
-    required int id,
-    required String name,
-    required String phone,
-  }) : super(
-          id: id,
-          name: name,
-          phone: phone,
-        );
+    required super.id,
+    required super.name,
+    required super.phone,
+  });
 
   factory ContactModel.fromJson(Map<String, dynamic> json) => ContactModel(
         id: json['id'] as int,

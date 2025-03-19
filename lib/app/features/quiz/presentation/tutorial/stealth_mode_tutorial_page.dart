@@ -7,17 +7,15 @@ import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import 'stealth_mode_tutorial_page_controller.dart';
 
 class StealthModeTutorialPage extends StatefulWidget {
-  const StealthModeTutorialPage({Key? key, required this.controller})
-      : super(key: key);
+  const StealthModeTutorialPage({super.key, required this.controller});
 
   final StealthModeTutorialPageController controller;
 
   @override
-  _StealthModeTutorialPageState createState() =>
-      _StealthModeTutorialPageState();
+  StealthModeTutorialPageState createState() => StealthModeTutorialPageState();
 }
 
-class _StealthModeTutorialPageState extends State<StealthModeTutorialPage> {
+class StealthModeTutorialPageState extends State<StealthModeTutorialPage> {
   List<TutorialPageViewWidget> _contentPageView = [];
   final PageController _pageController = PageController();
   int _currentPage = 0;
@@ -29,6 +27,7 @@ class _StealthModeTutorialPageState extends State<StealthModeTutorialPage> {
       backgroundColor: DesignSystemColors.charcoalGrey,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        foregroundColor: DesignSystemColors.white,
         elevation: 0.0,
         leading: IconButton(
           splashColor: Colors.transparent,

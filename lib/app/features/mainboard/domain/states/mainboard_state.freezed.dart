@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'mainboard_state.dart';
 
@@ -12,7 +12,7 @@ part of 'mainboard_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$MainboardState {
@@ -28,12 +28,12 @@ mixin _$MainboardState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? chat,
-    TResult Function()? feed,
-    TResult Function()? escapeManual,
-    TResult Function()? compose,
-    TResult Function()? supportPoint,
-    TResult Function()? helpCenter,
+    TResult? Function()? chat,
+    TResult? Function()? feed,
+    TResult? Function()? escapeManual,
+    TResult? Function()? compose,
+    TResult? Function()? supportPoint,
+    TResult? Function()? helpCenter,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -59,12 +59,12 @@ mixin _$MainboardState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Chat value)? chat,
-    TResult Function(_Feed value)? feed,
-    TResult Function(_EscapeManual value)? escapeManual,
-    TResult Function(_Compose value)? compose,
-    TResult Function(_SupportPoint value)? supportPoint,
-    TResult Function(_HelpCenter value)? helpCenter,
+    TResult? Function(_Chat value)? chat,
+    TResult? Function(_Feed value)? feed,
+    TResult? Function(_EscapeManual value)? escapeManual,
+    TResult? Function(_Compose value)? compose,
+    TResult? Function(_SupportPoint value)? supportPoint,
+    TResult? Function(_HelpCenter value)? helpCenter,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -84,39 +84,39 @@ mixin _$MainboardState {
 abstract class $MainboardStateCopyWith<$Res> {
   factory $MainboardStateCopyWith(
           MainboardState value, $Res Function(MainboardState) then) =
-      _$MainboardStateCopyWithImpl<$Res>;
+      _$MainboardStateCopyWithImpl<$Res, MainboardState>;
 }
 
 /// @nodoc
-class _$MainboardStateCopyWithImpl<$Res>
+class _$MainboardStateCopyWithImpl<$Res, $Val extends MainboardState>
     implements $MainboardStateCopyWith<$Res> {
   _$MainboardStateCopyWithImpl(this._value, this._then);
 
-  final MainboardState _value;
   // ignore: unused_field
-  final $Res Function(MainboardState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$$_ChatCopyWith<$Res> {
-  factory _$$_ChatCopyWith(_$_Chat value, $Res Function(_$_Chat) then) =
-      __$$_ChatCopyWithImpl<$Res>;
+abstract class _$$ChatImplCopyWith<$Res> {
+  factory _$$ChatImplCopyWith(
+          _$ChatImpl value, $Res Function(_$ChatImpl) then) =
+      __$$ChatImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_ChatCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
-    implements _$$_ChatCopyWith<$Res> {
-  __$$_ChatCopyWithImpl(_$_Chat _value, $Res Function(_$_Chat) _then)
-      : super(_value, (v) => _then(v as _$_Chat));
-
-  @override
-  _$_Chat get _value => super._value as _$_Chat;
+class __$$ChatImplCopyWithImpl<$Res>
+    extends _$MainboardStateCopyWithImpl<$Res, _$ChatImpl>
+    implements _$$ChatImplCopyWith<$Res> {
+  __$$ChatImplCopyWithImpl(_$ChatImpl _value, $Res Function(_$ChatImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Chat implements _Chat {
-  const _$_Chat();
+class _$ChatImpl implements _Chat {
+  const _$ChatImpl();
 
   @override
   String toString() {
@@ -124,9 +124,9 @@ class _$_Chat implements _Chat {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Chat);
+        (other.runtimeType == runtimeType && other is _$ChatImpl);
   }
 
   @override
@@ -148,12 +148,12 @@ class _$_Chat implements _Chat {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? chat,
-    TResult Function()? feed,
-    TResult Function()? escapeManual,
-    TResult Function()? compose,
-    TResult Function()? supportPoint,
-    TResult Function()? helpCenter,
+    TResult? Function()? chat,
+    TResult? Function()? feed,
+    TResult? Function()? escapeManual,
+    TResult? Function()? compose,
+    TResult? Function()? supportPoint,
+    TResult? Function()? helpCenter,
   }) {
     return chat?.call();
   }
@@ -191,12 +191,12 @@ class _$_Chat implements _Chat {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Chat value)? chat,
-    TResult Function(_Feed value)? feed,
-    TResult Function(_EscapeManual value)? escapeManual,
-    TResult Function(_Compose value)? compose,
-    TResult Function(_SupportPoint value)? supportPoint,
-    TResult Function(_HelpCenter value)? helpCenter,
+    TResult? Function(_Chat value)? chat,
+    TResult? Function(_Feed value)? feed,
+    TResult? Function(_EscapeManual value)? escapeManual,
+    TResult? Function(_Compose value)? compose,
+    TResult? Function(_SupportPoint value)? supportPoint,
+    TResult? Function(_HelpCenter value)? helpCenter,
   }) {
     return chat?.call(this);
   }
@@ -220,29 +220,28 @@ class _$_Chat implements _Chat {
 }
 
 abstract class _Chat implements MainboardState {
-  const factory _Chat() = _$_Chat;
+  const factory _Chat() = _$ChatImpl;
 }
 
 /// @nodoc
-abstract class _$$_FeedCopyWith<$Res> {
-  factory _$$_FeedCopyWith(_$_Feed value, $Res Function(_$_Feed) then) =
-      __$$_FeedCopyWithImpl<$Res>;
+abstract class _$$FeedImplCopyWith<$Res> {
+  factory _$$FeedImplCopyWith(
+          _$FeedImpl value, $Res Function(_$FeedImpl) then) =
+      __$$FeedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_FeedCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
-    implements _$$_FeedCopyWith<$Res> {
-  __$$_FeedCopyWithImpl(_$_Feed _value, $Res Function(_$_Feed) _then)
-      : super(_value, (v) => _then(v as _$_Feed));
-
-  @override
-  _$_Feed get _value => super._value as _$_Feed;
+class __$$FeedImplCopyWithImpl<$Res>
+    extends _$MainboardStateCopyWithImpl<$Res, _$FeedImpl>
+    implements _$$FeedImplCopyWith<$Res> {
+  __$$FeedImplCopyWithImpl(_$FeedImpl _value, $Res Function(_$FeedImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Feed implements _Feed {
-  const _$_Feed();
+class _$FeedImpl implements _Feed {
+  const _$FeedImpl();
 
   @override
   String toString() {
@@ -250,9 +249,9 @@ class _$_Feed implements _Feed {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Feed);
+        (other.runtimeType == runtimeType && other is _$FeedImpl);
   }
 
   @override
@@ -274,12 +273,12 @@ class _$_Feed implements _Feed {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? chat,
-    TResult Function()? feed,
-    TResult Function()? escapeManual,
-    TResult Function()? compose,
-    TResult Function()? supportPoint,
-    TResult Function()? helpCenter,
+    TResult? Function()? chat,
+    TResult? Function()? feed,
+    TResult? Function()? escapeManual,
+    TResult? Function()? compose,
+    TResult? Function()? supportPoint,
+    TResult? Function()? helpCenter,
   }) {
     return feed?.call();
   }
@@ -317,12 +316,12 @@ class _$_Feed implements _Feed {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Chat value)? chat,
-    TResult Function(_Feed value)? feed,
-    TResult Function(_EscapeManual value)? escapeManual,
-    TResult Function(_Compose value)? compose,
-    TResult Function(_SupportPoint value)? supportPoint,
-    TResult Function(_HelpCenter value)? helpCenter,
+    TResult? Function(_Chat value)? chat,
+    TResult? Function(_Feed value)? feed,
+    TResult? Function(_EscapeManual value)? escapeManual,
+    TResult? Function(_Compose value)? compose,
+    TResult? Function(_SupportPoint value)? supportPoint,
+    TResult? Function(_HelpCenter value)? helpCenter,
   }) {
     return feed?.call(this);
   }
@@ -346,32 +345,29 @@ class _$_Feed implements _Feed {
 }
 
 abstract class _Feed implements MainboardState {
-  const factory _Feed() = _$_Feed;
+  const factory _Feed() = _$FeedImpl;
 }
 
 /// @nodoc
-abstract class _$$_EscapeManualCopyWith<$Res> {
-  factory _$$_EscapeManualCopyWith(
-          _$_EscapeManual value, $Res Function(_$_EscapeManual) then) =
-      __$$_EscapeManualCopyWithImpl<$Res>;
+abstract class _$$EscapeManualImplCopyWith<$Res> {
+  factory _$$EscapeManualImplCopyWith(
+          _$EscapeManualImpl value, $Res Function(_$EscapeManualImpl) then) =
+      __$$EscapeManualImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_EscapeManualCopyWithImpl<$Res>
-    extends _$MainboardStateCopyWithImpl<$Res>
-    implements _$$_EscapeManualCopyWith<$Res> {
-  __$$_EscapeManualCopyWithImpl(
-      _$_EscapeManual _value, $Res Function(_$_EscapeManual) _then)
-      : super(_value, (v) => _then(v as _$_EscapeManual));
-
-  @override
-  _$_EscapeManual get _value => super._value as _$_EscapeManual;
+class __$$EscapeManualImplCopyWithImpl<$Res>
+    extends _$MainboardStateCopyWithImpl<$Res, _$EscapeManualImpl>
+    implements _$$EscapeManualImplCopyWith<$Res> {
+  __$$EscapeManualImplCopyWithImpl(
+      _$EscapeManualImpl _value, $Res Function(_$EscapeManualImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_EscapeManual implements _EscapeManual {
-  const _$_EscapeManual();
+class _$EscapeManualImpl implements _EscapeManual {
+  const _$EscapeManualImpl();
 
   @override
   String toString() {
@@ -379,9 +375,9 @@ class _$_EscapeManual implements _EscapeManual {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_EscapeManual);
+        (other.runtimeType == runtimeType && other is _$EscapeManualImpl);
   }
 
   @override
@@ -403,12 +399,12 @@ class _$_EscapeManual implements _EscapeManual {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? chat,
-    TResult Function()? feed,
-    TResult Function()? escapeManual,
-    TResult Function()? compose,
-    TResult Function()? supportPoint,
-    TResult Function()? helpCenter,
+    TResult? Function()? chat,
+    TResult? Function()? feed,
+    TResult? Function()? escapeManual,
+    TResult? Function()? compose,
+    TResult? Function()? supportPoint,
+    TResult? Function()? helpCenter,
   }) {
     return escapeManual?.call();
   }
@@ -446,12 +442,12 @@ class _$_EscapeManual implements _EscapeManual {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Chat value)? chat,
-    TResult Function(_Feed value)? feed,
-    TResult Function(_EscapeManual value)? escapeManual,
-    TResult Function(_Compose value)? compose,
-    TResult Function(_SupportPoint value)? supportPoint,
-    TResult Function(_HelpCenter value)? helpCenter,
+    TResult? Function(_Chat value)? chat,
+    TResult? Function(_Feed value)? feed,
+    TResult? Function(_EscapeManual value)? escapeManual,
+    TResult? Function(_Compose value)? compose,
+    TResult? Function(_SupportPoint value)? supportPoint,
+    TResult? Function(_HelpCenter value)? helpCenter,
   }) {
     return escapeManual?.call(this);
   }
@@ -475,30 +471,29 @@ class _$_EscapeManual implements _EscapeManual {
 }
 
 abstract class _EscapeManual implements MainboardState {
-  const factory _EscapeManual() = _$_EscapeManual;
+  const factory _EscapeManual() = _$EscapeManualImpl;
 }
 
 /// @nodoc
-abstract class _$$_ComposeCopyWith<$Res> {
-  factory _$$_ComposeCopyWith(
-          _$_Compose value, $Res Function(_$_Compose) then) =
-      __$$_ComposeCopyWithImpl<$Res>;
+abstract class _$$ComposeImplCopyWith<$Res> {
+  factory _$$ComposeImplCopyWith(
+          _$ComposeImpl value, $Res Function(_$ComposeImpl) then) =
+      __$$ComposeImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_ComposeCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
-    implements _$$_ComposeCopyWith<$Res> {
-  __$$_ComposeCopyWithImpl(_$_Compose _value, $Res Function(_$_Compose) _then)
-      : super(_value, (v) => _then(v as _$_Compose));
-
-  @override
-  _$_Compose get _value => super._value as _$_Compose;
+class __$$ComposeImplCopyWithImpl<$Res>
+    extends _$MainboardStateCopyWithImpl<$Res, _$ComposeImpl>
+    implements _$$ComposeImplCopyWith<$Res> {
+  __$$ComposeImplCopyWithImpl(
+      _$ComposeImpl _value, $Res Function(_$ComposeImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Compose implements _Compose {
-  const _$_Compose();
+class _$ComposeImpl implements _Compose {
+  const _$ComposeImpl();
 
   @override
   String toString() {
@@ -506,9 +501,9 @@ class _$_Compose implements _Compose {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Compose);
+        (other.runtimeType == runtimeType && other is _$ComposeImpl);
   }
 
   @override
@@ -530,12 +525,12 @@ class _$_Compose implements _Compose {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? chat,
-    TResult Function()? feed,
-    TResult Function()? escapeManual,
-    TResult Function()? compose,
-    TResult Function()? supportPoint,
-    TResult Function()? helpCenter,
+    TResult? Function()? chat,
+    TResult? Function()? feed,
+    TResult? Function()? escapeManual,
+    TResult? Function()? compose,
+    TResult? Function()? supportPoint,
+    TResult? Function()? helpCenter,
   }) {
     return compose?.call();
   }
@@ -573,12 +568,12 @@ class _$_Compose implements _Compose {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Chat value)? chat,
-    TResult Function(_Feed value)? feed,
-    TResult Function(_EscapeManual value)? escapeManual,
-    TResult Function(_Compose value)? compose,
-    TResult Function(_SupportPoint value)? supportPoint,
-    TResult Function(_HelpCenter value)? helpCenter,
+    TResult? Function(_Chat value)? chat,
+    TResult? Function(_Feed value)? feed,
+    TResult? Function(_EscapeManual value)? escapeManual,
+    TResult? Function(_Compose value)? compose,
+    TResult? Function(_SupportPoint value)? supportPoint,
+    TResult? Function(_HelpCenter value)? helpCenter,
   }) {
     return compose?.call(this);
   }
@@ -602,32 +597,29 @@ class _$_Compose implements _Compose {
 }
 
 abstract class _Compose implements MainboardState {
-  const factory _Compose() = _$_Compose;
+  const factory _Compose() = _$ComposeImpl;
 }
 
 /// @nodoc
-abstract class _$$_SupportPointCopyWith<$Res> {
-  factory _$$_SupportPointCopyWith(
-          _$_SupportPoint value, $Res Function(_$_SupportPoint) then) =
-      __$$_SupportPointCopyWithImpl<$Res>;
+abstract class _$$SupportPointImplCopyWith<$Res> {
+  factory _$$SupportPointImplCopyWith(
+          _$SupportPointImpl value, $Res Function(_$SupportPointImpl) then) =
+      __$$SupportPointImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_SupportPointCopyWithImpl<$Res>
-    extends _$MainboardStateCopyWithImpl<$Res>
-    implements _$$_SupportPointCopyWith<$Res> {
-  __$$_SupportPointCopyWithImpl(
-      _$_SupportPoint _value, $Res Function(_$_SupportPoint) _then)
-      : super(_value, (v) => _then(v as _$_SupportPoint));
-
-  @override
-  _$_SupportPoint get _value => super._value as _$_SupportPoint;
+class __$$SupportPointImplCopyWithImpl<$Res>
+    extends _$MainboardStateCopyWithImpl<$Res, _$SupportPointImpl>
+    implements _$$SupportPointImplCopyWith<$Res> {
+  __$$SupportPointImplCopyWithImpl(
+      _$SupportPointImpl _value, $Res Function(_$SupportPointImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_SupportPoint implements _SupportPoint {
-  const _$_SupportPoint();
+class _$SupportPointImpl implements _SupportPoint {
+  const _$SupportPointImpl();
 
   @override
   String toString() {
@@ -635,9 +627,9 @@ class _$_SupportPoint implements _SupportPoint {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_SupportPoint);
+        (other.runtimeType == runtimeType && other is _$SupportPointImpl);
   }
 
   @override
@@ -659,12 +651,12 @@ class _$_SupportPoint implements _SupportPoint {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? chat,
-    TResult Function()? feed,
-    TResult Function()? escapeManual,
-    TResult Function()? compose,
-    TResult Function()? supportPoint,
-    TResult Function()? helpCenter,
+    TResult? Function()? chat,
+    TResult? Function()? feed,
+    TResult? Function()? escapeManual,
+    TResult? Function()? compose,
+    TResult? Function()? supportPoint,
+    TResult? Function()? helpCenter,
   }) {
     return supportPoint?.call();
   }
@@ -702,12 +694,12 @@ class _$_SupportPoint implements _SupportPoint {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Chat value)? chat,
-    TResult Function(_Feed value)? feed,
-    TResult Function(_EscapeManual value)? escapeManual,
-    TResult Function(_Compose value)? compose,
-    TResult Function(_SupportPoint value)? supportPoint,
-    TResult Function(_HelpCenter value)? helpCenter,
+    TResult? Function(_Chat value)? chat,
+    TResult? Function(_Feed value)? feed,
+    TResult? Function(_EscapeManual value)? escapeManual,
+    TResult? Function(_Compose value)? compose,
+    TResult? Function(_SupportPoint value)? supportPoint,
+    TResult? Function(_HelpCenter value)? helpCenter,
   }) {
     return supportPoint?.call(this);
   }
@@ -731,32 +723,29 @@ class _$_SupportPoint implements _SupportPoint {
 }
 
 abstract class _SupportPoint implements MainboardState {
-  const factory _SupportPoint() = _$_SupportPoint;
+  const factory _SupportPoint() = _$SupportPointImpl;
 }
 
 /// @nodoc
-abstract class _$$_HelpCenterCopyWith<$Res> {
-  factory _$$_HelpCenterCopyWith(
-          _$_HelpCenter value, $Res Function(_$_HelpCenter) then) =
-      __$$_HelpCenterCopyWithImpl<$Res>;
+abstract class _$$HelpCenterImplCopyWith<$Res> {
+  factory _$$HelpCenterImplCopyWith(
+          _$HelpCenterImpl value, $Res Function(_$HelpCenterImpl) then) =
+      __$$HelpCenterImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_HelpCenterCopyWithImpl<$Res>
-    extends _$MainboardStateCopyWithImpl<$Res>
-    implements _$$_HelpCenterCopyWith<$Res> {
-  __$$_HelpCenterCopyWithImpl(
-      _$_HelpCenter _value, $Res Function(_$_HelpCenter) _then)
-      : super(_value, (v) => _then(v as _$_HelpCenter));
-
-  @override
-  _$_HelpCenter get _value => super._value as _$_HelpCenter;
+class __$$HelpCenterImplCopyWithImpl<$Res>
+    extends _$MainboardStateCopyWithImpl<$Res, _$HelpCenterImpl>
+    implements _$$HelpCenterImplCopyWith<$Res> {
+  __$$HelpCenterImplCopyWithImpl(
+      _$HelpCenterImpl _value, $Res Function(_$HelpCenterImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_HelpCenter implements _HelpCenter {
-  const _$_HelpCenter();
+class _$HelpCenterImpl implements _HelpCenter {
+  const _$HelpCenterImpl();
 
   @override
   String toString() {
@@ -764,9 +753,9 @@ class _$_HelpCenter implements _HelpCenter {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_HelpCenter);
+        (other.runtimeType == runtimeType && other is _$HelpCenterImpl);
   }
 
   @override
@@ -788,12 +777,12 @@ class _$_HelpCenter implements _HelpCenter {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? chat,
-    TResult Function()? feed,
-    TResult Function()? escapeManual,
-    TResult Function()? compose,
-    TResult Function()? supportPoint,
-    TResult Function()? helpCenter,
+    TResult? Function()? chat,
+    TResult? Function()? feed,
+    TResult? Function()? escapeManual,
+    TResult? Function()? compose,
+    TResult? Function()? supportPoint,
+    TResult? Function()? helpCenter,
   }) {
     return helpCenter?.call();
   }
@@ -831,12 +820,12 @@ class _$_HelpCenter implements _HelpCenter {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Chat value)? chat,
-    TResult Function(_Feed value)? feed,
-    TResult Function(_EscapeManual value)? escapeManual,
-    TResult Function(_Compose value)? compose,
-    TResult Function(_SupportPoint value)? supportPoint,
-    TResult Function(_HelpCenter value)? helpCenter,
+    TResult? Function(_Chat value)? chat,
+    TResult? Function(_Feed value)? feed,
+    TResult? Function(_EscapeManual value)? escapeManual,
+    TResult? Function(_Compose value)? compose,
+    TResult? Function(_SupportPoint value)? supportPoint,
+    TResult? Function(_HelpCenter value)? helpCenter,
   }) {
     return helpCenter?.call(this);
   }
@@ -860,5 +849,5 @@ class _$_HelpCenter implements _HelpCenter {
 }
 
 abstract class _HelpCenter implements MainboardState {
-  const factory _HelpCenter() = _$_HelpCenter;
+  const factory _HelpCenter() = _$HelpCenterImpl;
 }

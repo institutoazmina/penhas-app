@@ -7,19 +7,19 @@ import '../../stores/tweet_controller.dart';
 
 class TweetBottom extends StatefulWidget {
   const TweetBottom({
-    Key? key,
+    super.key,
     required this.tweet,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final TweetEntity tweet;
   final ITweetController controller;
 
   @override
-  _TweetBottomState createState() => _TweetBottomState();
+  TweetBottomState createState() => TweetBottomState();
 }
 
-class _TweetBottomState extends State<TweetBottom> {
+class TweetBottomState extends State<TweetBottom> {
   late bool _isLiked;
   late int _likeCount;
 

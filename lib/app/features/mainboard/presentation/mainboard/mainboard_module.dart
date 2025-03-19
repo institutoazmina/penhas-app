@@ -4,10 +4,13 @@ import '../../../../core/managers/app_configuration.dart';
 import '../../../../core/managers/audio_play_services.dart';
 import '../../../../core/managers/audio_record_services.dart';
 import '../../../../core/managers/audio_sync_manager.dart';
+import '../../../../core/managers/impl/background_task_manager.dart';
 import '../../../../core/managers/local_store.dart';
 import '../../../../core/managers/location_services.dart';
 import '../../../../core/managers/modules_sevices.dart';
 import '../../../../core/network/api_client.dart';
+import '../../../../core/storage/cache_storage.dart';
+import '../../../../core/storage/persistent_storage.dart';
 import '../../../appstate/data/repositories/app_state_repository.dart';
 import '../../../appstate/domain/entities/app_preferences_entity.dart';
 import '../../../appstate/domain/entities/user_profile_entity.dart';
@@ -17,14 +20,34 @@ import '../../../appstate/domain/usecases/app_state_usecase.dart';
 import '../../../chat/domain/entities/chat_channel_open_entity.dart';
 import '../../../chat/domain/repositories/chat_channel_repository.dart';
 import '../../../chat/domain/usecases/chat_channel_usecase.dart';
+import '../../../chat/domain/usecases/chat_toggle_feature.dart';
 import '../../../chat/domain/usecases/get_chat_channel_token_usecase.dart';
 import '../../../chat/presentation/chat/chat_channel_controller.dart';
 import '../../../chat/presentation/chat/chat_channel_page.dart';
+import '../../../chat/presentation/chat_main_controller.dart';
+import '../../../chat/presentation/people/chat_main_people_controller.dart';
+import '../../../chat/presentation/talk/chat_main_talks_controller.dart';
+import '../../../escape_manual/data/datasource/escape_manual_datasource.dart';
+import '../../../escape_manual/data/datasource/impl/escape_manual_local_datasource.dart';
+import '../../../escape_manual/data/datasource/impl/escape_manual_remote_datasource.dart';
+import '../../../escape_manual/data/datastore/escape_manual_cache_store.dart';
+import '../../../escape_manual/data/datastore/escape_manual_persistent_store.dart';
+import '../../../escape_manual/data/repository/escape_manual_repository.dart';
+import '../../../escape_manual/domain/delete_escape_manual_task.dart';
+import '../../../escape_manual/domain/escape_manual_toggle.dart';
+import '../../../escape_manual/domain/get_escape_manual.dart';
+import '../../../escape_manual/domain/send_pending_escape_manual_tasks.dart';
+import '../../../escape_manual/domain/start_escape_manual.dart';
+import '../../../escape_manual/domain/update_escape_manual_task.dart';
+import '../../../escape_manual/presentation/edit/edit_trusted_contacts_controller.dart';
+import '../../../escape_manual/presentation/escape_manual_controller.dart';
 import '../../../feed/data/repositories/tweet_filter_preference_repository.dart';
 import '../../../feed/data/repositories/tweet_repository.dart';
 import '../../../feed/domain/repositories/i_tweet_repositories.dart';
+import '../../../feed/domain/usecases/compose_tweet_fab_toggle.dart';
 import '../../../feed/domain/usecases/feed_use_cases.dart';
 import '../../../feed/domain/usecases/tweet_filter_preference.dart';
+import '../../../feed/domain/usecases/tweet_toggle_feature.dart';
 import '../../../feed/presentation/category_tweet/category_tweet_controller.dart';
 import '../../../feed/presentation/category_tweet/category_tweet_page.dart';
 import '../../../feed/presentation/compose_tweet/compose_tweet_controller.dart';
@@ -32,6 +55,7 @@ import '../../../feed/presentation/compose_tweet/compose_tweet_navigator.dart';
 import '../../../feed/presentation/compose_tweet/compose_tweet_page.dart';
 import '../../../feed/presentation/detail_tweet/detail_tweet_controller.dart';
 import '../../../feed/presentation/detail_tweet/detail_tweet_page.dart';
+import '../../../feed/presentation/feed_controller.dart';
 import '../../../feed/presentation/filter_tweet/filter_tweet_controller.dart';
 import '../../../feed/presentation/filter_tweet/filter_tweet_page.dart';
 import '../../../feed/presentation/reply_tweet/reply_tweet_controller.dart';
@@ -48,6 +72,7 @@ import '../../../help_center/presentation/audios/audios_controller.dart';
 import '../../../help_center/presentation/audios/audios_page.dart';
 import '../../../help_center/presentation/guardians/guardians_controller.dart';
 import '../../../help_center/presentation/guardians/guardians_page.dart';
+import '../../../help_center/presentation/help_center_controller.dart';
 import '../../../help_center/presentation/new_guardian/new_guardian_controller.dart';
 import '../../../help_center/presentation/new_guardian/new_guardian_page.dart';
 import '../../../help_center/presentation/pages/audio/audio_record_controller.dart';
@@ -67,12 +92,15 @@ import '../../../notification/data/repositories/notification_repository.dart';
 import '../../../notification/presentation/notification_controller.dart';
 import '../../../notification/presentation/notification_page.dart';
 import '../../../quiz/presentation/tutorial/stealth_mode_tutorial_page_controller.dart';
+import '../../../support_center/data/repositories/support_center_repository.dart';
+import '../../../support_center/domain/usecases/support_center_usecase.dart';
 import '../../../support_center/presentation/add/support_center_add_controller.dart';
 import '../../../support_center/presentation/add/support_center_add_page.dart';
 import '../../../support_center/presentation/list/support_center_list_controller.dart';
 import '../../../support_center/presentation/list/support_center_list_page.dart';
 import '../../../support_center/presentation/show/support_center_show_controller.dart';
 import '../../../support_center/presentation/show/support_center_show_page.dart';
+import '../../../support_center/presentation/support_center_controller.dart';
 import '../../../users/data/repositories/users_repository.dart';
 import '../../../users/presentation/user_profile_module.dart';
 import '../../domain/states/mainboard_state.dart';
@@ -91,6 +119,8 @@ class MainboardModule extends Module {
         ...notificationBinds,
         ...menuBind,
         ...chatBinds,
+        ...feedBinds,
+        ...supportCenterBinds,
         Bind.factory<MainboardStore>(
           (i) => MainboardStore(
             modulesServices: i.get<IAppModulesServices>(),
@@ -361,6 +391,11 @@ class MainboardModule extends Module {
       ];
 
   List<Bind> get chatBinds => [
+        Bind.factory<ChatMainController>(
+          (i) => ChatMainController(
+            chatToggleFeature: i.get<ChatPrivateToggleFeature>(),
+          ),
+        ),
         Bind.factory<IChatChannelRepository>(
           (i) => ChatChannelRepository(
             apiProvider: i.get<IApiProvider>(),
@@ -380,6 +415,32 @@ class MainboardModule extends Module {
         ),
         Bind.factory(
           (i) => GetChatChannelTokenUseCase(repository: i()),
+        ),
+        Bind.factory<ChatPrivateToggleFeature>(
+          (i) => ChatPrivateToggleFeature(
+            modulesServices: i.get<IAppModulesServices>(),
+          ),
+        ),
+        Bind.factory<ChatMainTalksController>(
+          (i) => ChatMainTalksController(
+            chatChannelRepository: i.get<IChatChannelRepository>(),
+          ),
+        ),
+        Bind.factory<ChatMainPeopleController>(
+          (i) => ChatMainPeopleController(
+            usersRepository: i.get<IUsersRepository>(),
+            skillRepository: i.get<IFilterSkillRepository>(),
+          ),
+        ),
+        Bind.factory<IUsersRepository>(
+          (i) => UsersRepository(
+            apiProvider: i.get<IApiProvider>(),
+          ),
+        ),
+        Bind.factory<IChatChannelRepository>(
+          (i) => ChatChannelRepository(
+            apiProvider: i.get<IApiProvider>(),
+          ),
         ),
       ];
 
@@ -533,6 +594,171 @@ class MainboardModule extends Module {
         ),
         Bind.factory<IGuardianRepository>(
           (i) => GuardianRepository(apiProvider: i.get<IApiProvider>()),
+        ),
+        Bind.factory<HelpCenterController>(
+          (i) => HelpCenterController(
+            locationService: i.get<ILocationServices>(),
+            appConfiguration: i.get<IAppConfiguration>(),
+            guardianRepository: i.get<IGuardianRepository>(),
+            featureToogle: i.get<SecurityModeActionFeature>(),
+            audioServices: i.get<IAudioRecordServices>(),
+          ),
+        ),
+        Bind.factory<SecurityModeActionFeature>(
+          (i) => SecurityModeActionFeature(
+            modulesServices: i.get<IAppModulesServices>(),
+          ),
+        ),
+        Bind.factory(
+          (i) => AudioRecordController(
+            featureToogle: i.get<SecurityModeActionFeature>(),
+            audioServices: i.get<IAudioRecordServices>(),
+          ),
+        ),
+      ];
+
+  List<Bind> get feedBinds => [
+        Bind.factory<ITweetRepository>(
+          (i) => TweetRepository(apiProvider: i.get<IApiProvider>()),
+        ),
+        Bind.factory<ITweetFilterPreferenceRepository>(
+          (i) => TweetFilterPreferenceRepository(
+            apiProvider: i.get<IApiProvider>(),
+          ),
+        ),
+        Bind<FeedUseCases>(
+          (i) => FeedUseCases(
+            repository: i<ITweetRepository>(),
+            filterPreference: i<TweetFilterPreference>(),
+          ),
+        ),
+        Bind.factory<SecurityModeActionFeature>(
+          (i) => SecurityModeActionFeature(
+            modulesServices: i.get<IAppModulesServices>(),
+          ),
+        ),
+        Bind.factory<EscapeManualToggleFeature>(
+          (i) => EscapeManualToggleFeature(
+            modulesServices: i.get<IAppModulesServices>(),
+          ),
+        ),
+        Bind.factory<TweetToggleFeature>(
+          (i) => TweetToggleFeature(
+            modulesServices: i.get<IAppModulesServices>(),
+          ),
+        ),
+        Bind.factory<ComposeTweetFabToggleFeature>(
+          (i) => ComposeTweetFabToggleFeature(
+            escapeManualToggleFeature: i.get<EscapeManualToggleFeature>(),
+            tweetToggleFeature: i.get<TweetToggleFeature>(),
+          ),
+        ),
+        Bind.factory(
+          (i) => FeedController(
+            useCase: i.get<FeedUseCases>(),
+            securityModeActionFeature: i.get<SecurityModeActionFeature>(),
+            composeTweetFabToggleFeature: i.get<ComposeTweetFabToggleFeature>(),
+          ),
+        ),
+      ];
+
+  List<Bind> get escapeManualBinds => [
+        Bind.lazySingleton<EscapeManualController>(
+          (i) => EscapeManualController(
+            getEscapeManual: i.get<GetEscapeManualUseCase>(),
+            startEscapeManual: i.get<StartEscapeManualUseCase>(),
+            updateTask: i.get<UpdateEscapeManualTaskUseCase>(),
+            deleteTask: i.get<DeleteEscapeManualTaskUseCase>(),
+            backgroundTaskManager: i.get<BackgroundTaskManager>(),
+          ),
+        ),
+        Bind.factory<EditTrustedContactsController>(
+          (i) => EditTrustedContactsController(
+            contacts: i.args.data,
+            escapeManualToggleFeature: i.get<EscapeManualToggleFeature>(),
+          ),
+        ),
+        Bind.factory<GetEscapeManualUseCase>(
+          (i) => GetEscapeManualUseCase(
+            repository: i.get<IEscapeManualRepository>(),
+          ),
+        ),
+        Bind.factory(
+          (i) => StartEscapeManualUseCase(
+            repository: i.get<IEscapeManualRepository>(),
+          ),
+        ),
+        Bind.factory<UpdateEscapeManualTaskUseCase>(
+          (i) => UpdateEscapeManualTaskUseCase(
+            repository: i.get<IEscapeManualRepository>(),
+          ),
+        ),
+        Bind.factory<DeleteEscapeManualTaskUseCase>(
+          (i) => DeleteEscapeManualTaskUseCase(
+            repository: i.get<IEscapeManualRepository>(),
+          ),
+        ),
+        Bind.factory<SendPendingEscapeManualTasksUseCase>(
+          (i) => SendPendingEscapeManualTasksUseCase(
+            repository: i.get<IEscapeManualRepository>(),
+          ),
+        ),
+        Bind.factory<IEscapeManualRepository>(
+          (i) => EscapeManualRepository(
+            localDatasource: i.get<IEscapeManualLocalDatasource>(),
+            remoteDatasource: i.get<IEscapeManualRemoteDatasource>(),
+          ),
+        ),
+        Bind.factory<IEscapeManualRemoteDatasource>(
+          (i) => EscapeManualRemoteDatasource(
+            apiProvider: i.get<IApiProvider>(),
+            cacheStorage: EscapeManualCacheStore(
+              storage: i.get<ICacheStorage>(),
+            ),
+          ),
+        ),
+        Bind.factory<IEscapeManualLocalDatasource>(
+          (i) => EscapeManualLocalDatasource(
+            store: i.get<EscapeManualTasksStore>(),
+          ),
+        ),
+        Bind.factory<EscapeManualTasksStore>(
+          (i) => EscapeManualTasksStore(
+            storageFactory: i.get<IPersistentStorageFactory>(),
+          ),
+        ),
+      ];
+
+  List<Bind> get supportCenterBinds => [
+        Bind.factory<ISupportCenterRepository>(
+          (i) => SupportCenterRepository(
+            apiProvider: i.get<IApiProvider>(),
+          ),
+        ),
+        Bind.factory<SupportCenterUseCase>(
+          (i) => SupportCenterUseCase(
+            locationService: i.get<ILocationServices>(),
+            supportCenterRepository: i.get<ISupportCenterRepository>(),
+          ),
+        ),
+        Bind.factory<SupportCenterController>(
+          (i) => SupportCenterController(
+            supportCenterUseCase: i.get<SupportCenterUseCase>(),
+          ),
+        ),
+        Bind.factory(
+          (i) => SupportCenterAddController(
+            supportCenterUseCase: i.get<SupportCenterUseCase>(),
+          ),
+        ),
+        Bind.factory(
+          (i) => SupportCenterListController(i.args.data),
+        ),
+        Bind.factory(
+          (i) => SupportCenterShowController(
+            supportCenterUseCase: i.get<SupportCenterUseCase>(),
+            place: i.args.data,
+          ),
         ),
       ];
 }

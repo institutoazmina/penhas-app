@@ -16,17 +16,17 @@ import 'sign_in_stealth_controller.dart';
 
 class SignInStealthPage extends StatefulWidget {
   const SignInStealthPage(
-      {Key? key, this.title = 'Authentication', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'Authentication', required this.controller});
 
   final String title;
   final SignInStealthController controller;
 
   @override
-  _SignInStealthPage createState() => _SignInStealthPage();
+  SignInStealthPageState createState() => SignInStealthPageState();
 }
 
-class _SignInStealthPage extends State<SignInStealthPage> with SnackBarHandler {
+class SignInStealthPageState extends State<SignInStealthPage>
+    with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;

@@ -12,10 +12,10 @@ import '../../domain/states/mainboard_store.dart';
 
 part 'mainboard_controller.g.dart';
 
-class MainboardController = _MainboardControllerBase with _$MainboardController;
+class MainboardController = MainboardControllerBase with _$MainboardController;
 
-abstract class _MainboardControllerBase with Store {
-  _MainboardControllerBase({
+abstract class MainboardControllerBase with Store {
+  MainboardControllerBase({
     required this.mainboardStore,
     required InactivityLogoutUseCase inactivityLogoutUseCase,
     required INotificationRepository notification,

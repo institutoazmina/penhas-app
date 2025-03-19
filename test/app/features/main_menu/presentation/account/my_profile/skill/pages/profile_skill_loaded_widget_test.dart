@@ -7,7 +7,7 @@ import '../../../../../../../../utils/golden_tests.dart';
 
 void main() {
   group(ProfileSkillLoadedWidget, () {
-    screenshotTest(
+    screenshotTestSimplified(
       'should render correctly',
       fileName: 'profile_skill_loaded_widget',
       pageBuilder: () => Scaffold(

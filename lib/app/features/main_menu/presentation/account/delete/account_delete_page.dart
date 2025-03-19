@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../../shared/design_system/colors.dart';
@@ -12,15 +12,14 @@ import '../../../domain/states/profile_delete_state.dart';
 import 'account_delete_controller.dart';
 
 class AccountDeletePage extends StatefulWidget {
-  const AccountDeletePage({Key? key, required this.controller})
-      : super(key: key);
+  const AccountDeletePage({super.key, required this.controller});
   final AccountDeleteController controller;
 
   @override
-  _AccountDeletePageState createState() => _AccountDeletePageState();
+  AccountDeletePageState createState() => AccountDeletePageState();
 }
 
-class _AccountDeletePageState extends State<AccountDeletePage>
+class AccountDeletePageState extends State<AccountDeletePage>
     with SnackBarHandler {
   bool _isPasswordVisible = false;
   AccountDeleteController get _controller => widget.controller;
@@ -52,6 +51,7 @@ class _AccountDeletePageState extends State<AccountDeletePage>
         elevation: 0.0,
         title: const Text('Exclusão de conta'),
         backgroundColor: DesignSystemColors.easterPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: Observer(
         builder: (context) => bodyBuilder(_controller.state),
@@ -74,7 +74,7 @@ class _AccountDeletePageState extends State<AccountDeletePage>
   }
 }
 
-extension _PageBuilder on _AccountDeletePageState {
+extension _PageBuilder on AccountDeletePageState {
   Widget bodyBuilder(ProfileDeleteState state) {
     return state.when(
       initial: () => bodyLoading(),
@@ -116,8 +116,8 @@ extension _PageBuilder on _AccountDeletePageState {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: HtmlWidget(
-                    bodyMessage,
+                  child: Html(
+                    data: bodyMessage,
                   ),
                 ),
                 Padding(
@@ -178,7 +178,7 @@ extension _PageBuilder on _AccountDeletePageState {
   }
 }
 
-extension _TextStyle on _AccountDeletePageState {
+extension _TextStyle on AccountDeletePageState {
   TextStyle get titleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 20.0,

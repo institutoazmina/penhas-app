@@ -2,10 +2,10 @@ import '../../domain/entities/account_preference_entity.dart';
 
 class AccountPreferenceModel extends AccountPreferenceEntity {
   const AccountPreferenceModel({
-    required String key,
-    required String? label,
-    required bool value,
-  }) : super(key: key, label: label, value: value);
+    required super.key,
+    required super.label,
+    required super.value,
+  });
 
   factory AccountPreferenceModel.fromJson(Map<String, dynamic> jsonData) {
     final string = jsonData['value'].toString();

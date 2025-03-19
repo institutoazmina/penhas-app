@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'quiz_message.dart';
 
@@ -12,7 +12,7 @@ part of 'quiz_message.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$QuizMessage {
@@ -33,15 +33,15 @@ mixin _$QuizMessage {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String reference, String content)? text,
-    TResult Function(String reference, String content, UserAnswer? answer,
+    TResult? Function(String reference, String content)? text,
+    TResult? Function(String reference, String content, UserAnswer? answer,
             AnswerStatus status)?
         sent,
-    TResult Function(String reference, List<ButtonOption> buttons)?
+    TResult? Function(String reference, List<ButtonOption> buttons)?
         horizontalButtons,
-    TResult Function(String reference, List<MessageOption> options)?
+    TResult? Function(String reference, List<MessageOption> options)?
         singleChoice,
-    TResult Function(String reference, List<MessageOption> options)?
+    TResult? Function(String reference, List<MessageOption> options)?
         multipleChoices,
   }) =>
       throw _privateConstructorUsedError;
@@ -72,11 +72,11 @@ mixin _$QuizMessage {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TextMessage value)? text,
-    TResult Function(_SentMessage value)? sent,
-    TResult Function(_HorizontalButtonsMessage value)? horizontalButtons,
-    TResult Function(_SingleChoiceMessage value)? singleChoice,
-    TResult Function(_MultipleChoiceMessage value)? multipleChoices,
+    TResult? Function(_TextMessage value)? text,
+    TResult? Function(_SentMessage value)? sent,
+    TResult? Function(_HorizontalButtonsMessage value)? horizontalButtons,
+    TResult? Function(_SingleChoiceMessage value)? singleChoice,
+    TResult? Function(_MultipleChoiceMessage value)? multipleChoices,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -99,62 +99,66 @@ mixin _$QuizMessage {
 abstract class $QuizMessageCopyWith<$Res> {
   factory $QuizMessageCopyWith(
           QuizMessage value, $Res Function(QuizMessage) then) =
-      _$QuizMessageCopyWithImpl<$Res>;
+      _$QuizMessageCopyWithImpl<$Res, QuizMessage>;
+  @useResult
   $Res call({String reference});
 }
 
 /// @nodoc
-class _$QuizMessageCopyWithImpl<$Res> implements $QuizMessageCopyWith<$Res> {
+class _$QuizMessageCopyWithImpl<$Res, $Val extends QuizMessage>
+    implements $QuizMessageCopyWith<$Res> {
   _$QuizMessageCopyWithImpl(this._value, this._then);
 
-  final QuizMessage _value;
   // ignore: unused_field
-  final $Res Function(QuizMessage) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? reference = freezed,
+    Object? reference = null,
   }) {
     return _then(_value.copyWith(
-      reference: reference == freezed
+      reference: null == reference
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_TextMessageCopyWith<$Res>
+abstract class _$$TextMessageImplCopyWith<$Res>
     implements $QuizMessageCopyWith<$Res> {
-  factory _$$_TextMessageCopyWith(
-          _$_TextMessage value, $Res Function(_$_TextMessage) then) =
-      __$$_TextMessageCopyWithImpl<$Res>;
+  factory _$$TextMessageImplCopyWith(
+          _$TextMessageImpl value, $Res Function(_$TextMessageImpl) then) =
+      __$$TextMessageImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String reference, String content});
 }
 
 /// @nodoc
-class __$$_TextMessageCopyWithImpl<$Res> extends _$QuizMessageCopyWithImpl<$Res>
-    implements _$$_TextMessageCopyWith<$Res> {
-  __$$_TextMessageCopyWithImpl(
-      _$_TextMessage _value, $Res Function(_$_TextMessage) _then)
-      : super(_value, (v) => _then(v as _$_TextMessage));
+class __$$TextMessageImplCopyWithImpl<$Res>
+    extends _$QuizMessageCopyWithImpl<$Res, _$TextMessageImpl>
+    implements _$$TextMessageImplCopyWith<$Res> {
+  __$$TextMessageImplCopyWithImpl(
+      _$TextMessageImpl _value, $Res Function(_$TextMessageImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_TextMessage get _value => super._value as _$_TextMessage;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? reference = freezed,
-    Object? content = freezed,
+    Object? reference = null,
+    Object? content = null,
   }) {
-    return _then(_$_TextMessage(
-      reference: reference == freezed
+    return _then(_$TextMessageImpl(
+      reference: null == reference
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
               as String,
-      content: content == freezed
+      content: null == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
@@ -164,8 +168,8 @@ class __$$_TextMessageCopyWithImpl<$Res> extends _$QuizMessageCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TextMessage extends _TextMessage {
-  const _$_TextMessage({this.reference = '', required this.content})
+class _$TextMessageImpl extends _TextMessage {
+  const _$TextMessageImpl({this.reference = '', required this.content})
       : super._();
 
   @override
@@ -180,24 +184,23 @@ class _$_TextMessage extends _TextMessage {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TextMessage &&
-            const DeepCollectionEquality().equals(other.reference, reference) &&
-            const DeepCollectionEquality().equals(other.content, content));
+            other is _$TextMessageImpl &&
+            (identical(other.reference, reference) ||
+                other.reference == reference) &&
+            (identical(other.content, content) || other.content == content));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(reference),
-      const DeepCollectionEquality().hash(content));
+  int get hashCode => Object.hash(runtimeType, reference, content);
 
   @JsonKey(ignore: true)
   @override
-  _$$_TextMessageCopyWith<_$_TextMessage> get copyWith =>
-      __$$_TextMessageCopyWithImpl<_$_TextMessage>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$TextMessageImplCopyWith<_$TextMessageImpl> get copyWith =>
+      __$$TextMessageImplCopyWithImpl<_$TextMessageImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -219,15 +222,15 @@ class _$_TextMessage extends _TextMessage {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String reference, String content)? text,
-    TResult Function(String reference, String content, UserAnswer? answer,
+    TResult? Function(String reference, String content)? text,
+    TResult? Function(String reference, String content, UserAnswer? answer,
             AnswerStatus status)?
         sent,
-    TResult Function(String reference, List<ButtonOption> buttons)?
+    TResult? Function(String reference, List<ButtonOption> buttons)?
         horizontalButtons,
-    TResult Function(String reference, List<MessageOption> options)?
+    TResult? Function(String reference, List<MessageOption> options)?
         singleChoice,
-    TResult Function(String reference, List<MessageOption> options)?
+    TResult? Function(String reference, List<MessageOption> options)?
         multipleChoices,
   }) {
     return text?.call(reference, content);
@@ -270,11 +273,11 @@ class _$_TextMessage extends _TextMessage {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TextMessage value)? text,
-    TResult Function(_SentMessage value)? sent,
-    TResult Function(_HorizontalButtonsMessage value)? horizontalButtons,
-    TResult Function(_SingleChoiceMessage value)? singleChoice,
-    TResult Function(_MultipleChoiceMessage value)? multipleChoices,
+    TResult? Function(_TextMessage value)? text,
+    TResult? Function(_SentMessage value)? sent,
+    TResult? Function(_HorizontalButtonsMessage value)? horizontalButtons,
+    TResult? Function(_SingleChoiceMessage value)? singleChoice,
+    TResult? Function(_MultipleChoiceMessage value)? multipleChoices,
   }) {
     return text?.call(this);
   }
@@ -298,7 +301,8 @@ class _$_TextMessage extends _TextMessage {
 
 abstract class _TextMessage extends QuizMessage {
   const factory _TextMessage(
-      {final String reference, required final String content}) = _$_TextMessage;
+      {final String reference,
+      required final String content}) = _$TextMessageImpl;
   const _TextMessage._() : super._();
 
   @override
@@ -306,17 +310,18 @@ abstract class _TextMessage extends QuizMessage {
   String get content;
   @override
   @JsonKey(ignore: true)
-  _$$_TextMessageCopyWith<_$_TextMessage> get copyWith =>
+  _$$TextMessageImplCopyWith<_$TextMessageImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_SentMessageCopyWith<$Res>
+abstract class _$$SentMessageImplCopyWith<$Res>
     implements $QuizMessageCopyWith<$Res> {
-  factory _$$_SentMessageCopyWith(
-          _$_SentMessage value, $Res Function(_$_SentMessage) then) =
-      __$$_SentMessageCopyWithImpl<$Res>;
+  factory _$$SentMessageImplCopyWith(
+          _$SentMessageImpl value, $Res Function(_$SentMessageImpl) then) =
+      __$$SentMessageImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String reference,
       String content,
@@ -325,36 +330,35 @@ abstract class _$$_SentMessageCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SentMessageCopyWithImpl<$Res> extends _$QuizMessageCopyWithImpl<$Res>
-    implements _$$_SentMessageCopyWith<$Res> {
-  __$$_SentMessageCopyWithImpl(
-      _$_SentMessage _value, $Res Function(_$_SentMessage) _then)
-      : super(_value, (v) => _then(v as _$_SentMessage));
+class __$$SentMessageImplCopyWithImpl<$Res>
+    extends _$QuizMessageCopyWithImpl<$Res, _$SentMessageImpl>
+    implements _$$SentMessageImplCopyWith<$Res> {
+  __$$SentMessageImplCopyWithImpl(
+      _$SentMessageImpl _value, $Res Function(_$SentMessageImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_SentMessage get _value => super._value as _$_SentMessage;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? reference = freezed,
-    Object? content = freezed,
+    Object? reference = null,
+    Object? content = null,
     Object? answer = freezed,
-    Object? status = freezed,
+    Object? status = null,
   }) {
-    return _then(_$_SentMessage(
-      reference: reference == freezed
+    return _then(_$SentMessageImpl(
+      reference: null == reference
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
               as String,
-      content: content == freezed
+      content: null == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
-      answer: answer == freezed
+      answer: freezed == answer
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
               as UserAnswer?,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as AnswerStatus,
@@ -364,8 +368,8 @@ class __$$_SentMessageCopyWithImpl<$Res> extends _$QuizMessageCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SentMessage extends _SentMessage {
-  const _$_SentMessage(
+class _$SentMessageImpl extends _SentMessage {
+  const _$SentMessageImpl(
       {this.reference = '',
       required this.content,
       this.answer,
@@ -389,28 +393,26 @@ class _$_SentMessage extends _SentMessage {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SentMessage &&
-            const DeepCollectionEquality().equals(other.reference, reference) &&
-            const DeepCollectionEquality().equals(other.content, content) &&
-            const DeepCollectionEquality().equals(other.answer, answer) &&
-            const DeepCollectionEquality().equals(other.status, status));
+            other is _$SentMessageImpl &&
+            (identical(other.reference, reference) ||
+                other.reference == reference) &&
+            (identical(other.content, content) || other.content == content) &&
+            (identical(other.answer, answer) || other.answer == answer) &&
+            (identical(other.status, status) || other.status == status));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(reference),
-      const DeepCollectionEquality().hash(content),
-      const DeepCollectionEquality().hash(answer),
-      const DeepCollectionEquality().hash(status));
+  int get hashCode =>
+      Object.hash(runtimeType, reference, content, answer, status);
 
   @JsonKey(ignore: true)
   @override
-  _$$_SentMessageCopyWith<_$_SentMessage> get copyWith =>
-      __$$_SentMessageCopyWithImpl<_$_SentMessage>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$SentMessageImplCopyWith<_$SentMessageImpl> get copyWith =>
+      __$$SentMessageImplCopyWithImpl<_$SentMessageImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -432,15 +434,15 @@ class _$_SentMessage extends _SentMessage {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String reference, String content)? text,
-    TResult Function(String reference, String content, UserAnswer? answer,
+    TResult? Function(String reference, String content)? text,
+    TResult? Function(String reference, String content, UserAnswer? answer,
             AnswerStatus status)?
         sent,
-    TResult Function(String reference, List<ButtonOption> buttons)?
+    TResult? Function(String reference, List<ButtonOption> buttons)?
         horizontalButtons,
-    TResult Function(String reference, List<MessageOption> options)?
+    TResult? Function(String reference, List<MessageOption> options)?
         singleChoice,
-    TResult Function(String reference, List<MessageOption> options)?
+    TResult? Function(String reference, List<MessageOption> options)?
         multipleChoices,
   }) {
     return sent?.call(reference, content, answer, status);
@@ -483,11 +485,11 @@ class _$_SentMessage extends _SentMessage {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TextMessage value)? text,
-    TResult Function(_SentMessage value)? sent,
-    TResult Function(_HorizontalButtonsMessage value)? horizontalButtons,
-    TResult Function(_SingleChoiceMessage value)? singleChoice,
-    TResult Function(_MultipleChoiceMessage value)? multipleChoices,
+    TResult? Function(_TextMessage value)? text,
+    TResult? Function(_SentMessage value)? sent,
+    TResult? Function(_HorizontalButtonsMessage value)? horizontalButtons,
+    TResult? Function(_SingleChoiceMessage value)? singleChoice,
+    TResult? Function(_MultipleChoiceMessage value)? multipleChoices,
   }) {
     return sent?.call(this);
   }
@@ -514,7 +516,7 @@ abstract class _SentMessage extends QuizMessage {
       {final String reference,
       required final String content,
       final UserAnswer? answer,
-      final AnswerStatus status}) = _$_SentMessage;
+      final AnswerStatus status}) = _$SentMessageImpl;
   const _SentMessage._() : super._();
 
   @override
@@ -524,44 +526,43 @@ abstract class _SentMessage extends QuizMessage {
   AnswerStatus get status;
   @override
   @JsonKey(ignore: true)
-  _$$_SentMessageCopyWith<_$_SentMessage> get copyWith =>
+  _$$SentMessageImplCopyWith<_$SentMessageImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_HorizontalButtonsMessageCopyWith<$Res>
+abstract class _$$HorizontalButtonsMessageImplCopyWith<$Res>
     implements $QuizMessageCopyWith<$Res> {
-  factory _$$_HorizontalButtonsMessageCopyWith(
-          _$_HorizontalButtonsMessage value,
-          $Res Function(_$_HorizontalButtonsMessage) then) =
-      __$$_HorizontalButtonsMessageCopyWithImpl<$Res>;
+  factory _$$HorizontalButtonsMessageImplCopyWith(
+          _$HorizontalButtonsMessageImpl value,
+          $Res Function(_$HorizontalButtonsMessageImpl) then) =
+      __$$HorizontalButtonsMessageImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String reference, List<ButtonOption> buttons});
 }
 
 /// @nodoc
-class __$$_HorizontalButtonsMessageCopyWithImpl<$Res>
-    extends _$QuizMessageCopyWithImpl<$Res>
-    implements _$$_HorizontalButtonsMessageCopyWith<$Res> {
-  __$$_HorizontalButtonsMessageCopyWithImpl(_$_HorizontalButtonsMessage _value,
-      $Res Function(_$_HorizontalButtonsMessage) _then)
-      : super(_value, (v) => _then(v as _$_HorizontalButtonsMessage));
+class __$$HorizontalButtonsMessageImplCopyWithImpl<$Res>
+    extends _$QuizMessageCopyWithImpl<$Res, _$HorizontalButtonsMessageImpl>
+    implements _$$HorizontalButtonsMessageImplCopyWith<$Res> {
+  __$$HorizontalButtonsMessageImplCopyWithImpl(
+      _$HorizontalButtonsMessageImpl _value,
+      $Res Function(_$HorizontalButtonsMessageImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_HorizontalButtonsMessage get _value =>
-      super._value as _$_HorizontalButtonsMessage;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? reference = freezed,
-    Object? buttons = freezed,
+    Object? reference = null,
+    Object? buttons = null,
   }) {
-    return _then(_$_HorizontalButtonsMessage(
-      reference: reference == freezed
+    return _then(_$HorizontalButtonsMessageImpl(
+      reference: null == reference
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
               as String,
-      buttons: buttons == freezed
+      buttons: null == buttons
           ? _value._buttons
           : buttons // ignore: cast_nullable_to_non_nullable
               as List<ButtonOption>,
@@ -571,8 +572,8 @@ class __$$_HorizontalButtonsMessageCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_HorizontalButtonsMessage extends _HorizontalButtonsMessage {
-  const _$_HorizontalButtonsMessage(
+class _$HorizontalButtonsMessageImpl extends _HorizontalButtonsMessage {
+  const _$HorizontalButtonsMessageImpl(
       {required this.reference, required final List<ButtonOption> buttons})
       : _buttons = buttons,
         super._();
@@ -582,6 +583,7 @@ class _$_HorizontalButtonsMessage extends _HorizontalButtonsMessage {
   final List<ButtonOption> _buttons;
   @override
   List<ButtonOption> get buttons {
+    if (_buttons is EqualUnmodifiableListView) return _buttons;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_buttons);
   }
@@ -592,25 +594,25 @@ class _$_HorizontalButtonsMessage extends _HorizontalButtonsMessage {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_HorizontalButtonsMessage &&
-            const DeepCollectionEquality().equals(other.reference, reference) &&
+            other is _$HorizontalButtonsMessageImpl &&
+            (identical(other.reference, reference) ||
+                other.reference == reference) &&
             const DeepCollectionEquality().equals(other._buttons, _buttons));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(reference),
-      const DeepCollectionEquality().hash(_buttons));
+      runtimeType, reference, const DeepCollectionEquality().hash(_buttons));
 
   @JsonKey(ignore: true)
   @override
-  _$$_HorizontalButtonsMessageCopyWith<_$_HorizontalButtonsMessage>
-      get copyWith => __$$_HorizontalButtonsMessageCopyWithImpl<
-          _$_HorizontalButtonsMessage>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$HorizontalButtonsMessageImplCopyWith<_$HorizontalButtonsMessageImpl>
+      get copyWith => __$$HorizontalButtonsMessageImplCopyWithImpl<
+          _$HorizontalButtonsMessageImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -632,15 +634,15 @@ class _$_HorizontalButtonsMessage extends _HorizontalButtonsMessage {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String reference, String content)? text,
-    TResult Function(String reference, String content, UserAnswer? answer,
+    TResult? Function(String reference, String content)? text,
+    TResult? Function(String reference, String content, UserAnswer? answer,
             AnswerStatus status)?
         sent,
-    TResult Function(String reference, List<ButtonOption> buttons)?
+    TResult? Function(String reference, List<ButtonOption> buttons)?
         horizontalButtons,
-    TResult Function(String reference, List<MessageOption> options)?
+    TResult? Function(String reference, List<MessageOption> options)?
         singleChoice,
-    TResult Function(String reference, List<MessageOption> options)?
+    TResult? Function(String reference, List<MessageOption> options)?
         multipleChoices,
   }) {
     return horizontalButtons?.call(reference, buttons);
@@ -683,11 +685,11 @@ class _$_HorizontalButtonsMessage extends _HorizontalButtonsMessage {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TextMessage value)? text,
-    TResult Function(_SentMessage value)? sent,
-    TResult Function(_HorizontalButtonsMessage value)? horizontalButtons,
-    TResult Function(_SingleChoiceMessage value)? singleChoice,
-    TResult Function(_MultipleChoiceMessage value)? multipleChoices,
+    TResult? Function(_TextMessage value)? text,
+    TResult? Function(_SentMessage value)? sent,
+    TResult? Function(_HorizontalButtonsMessage value)? horizontalButtons,
+    TResult? Function(_SingleChoiceMessage value)? singleChoice,
+    TResult? Function(_MultipleChoiceMessage value)? multipleChoices,
   }) {
     return horizontalButtons?.call(this);
   }
@@ -711,8 +713,9 @@ class _$_HorizontalButtonsMessage extends _HorizontalButtonsMessage {
 
 abstract class _HorizontalButtonsMessage extends QuizMessage {
   const factory _HorizontalButtonsMessage(
-      {required final String reference,
-      required final List<ButtonOption> buttons}) = _$_HorizontalButtonsMessage;
+          {required final String reference,
+          required final List<ButtonOption> buttons}) =
+      _$HorizontalButtonsMessageImpl;
   const _HorizontalButtonsMessage._() : super._();
 
   @override
@@ -720,42 +723,41 @@ abstract class _HorizontalButtonsMessage extends QuizMessage {
   List<ButtonOption> get buttons;
   @override
   @JsonKey(ignore: true)
-  _$$_HorizontalButtonsMessageCopyWith<_$_HorizontalButtonsMessage>
+  _$$HorizontalButtonsMessageImplCopyWith<_$HorizontalButtonsMessageImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_SingleChoiceMessageCopyWith<$Res>
+abstract class _$$SingleChoiceMessageImplCopyWith<$Res>
     implements $QuizMessageCopyWith<$Res> {
-  factory _$$_SingleChoiceMessageCopyWith(_$_SingleChoiceMessage value,
-          $Res Function(_$_SingleChoiceMessage) then) =
-      __$$_SingleChoiceMessageCopyWithImpl<$Res>;
+  factory _$$SingleChoiceMessageImplCopyWith(_$SingleChoiceMessageImpl value,
+          $Res Function(_$SingleChoiceMessageImpl) then) =
+      __$$SingleChoiceMessageImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String reference, List<MessageOption> options});
 }
 
 /// @nodoc
-class __$$_SingleChoiceMessageCopyWithImpl<$Res>
-    extends _$QuizMessageCopyWithImpl<$Res>
-    implements _$$_SingleChoiceMessageCopyWith<$Res> {
-  __$$_SingleChoiceMessageCopyWithImpl(_$_SingleChoiceMessage _value,
-      $Res Function(_$_SingleChoiceMessage) _then)
-      : super(_value, (v) => _then(v as _$_SingleChoiceMessage));
+class __$$SingleChoiceMessageImplCopyWithImpl<$Res>
+    extends _$QuizMessageCopyWithImpl<$Res, _$SingleChoiceMessageImpl>
+    implements _$$SingleChoiceMessageImplCopyWith<$Res> {
+  __$$SingleChoiceMessageImplCopyWithImpl(_$SingleChoiceMessageImpl _value,
+      $Res Function(_$SingleChoiceMessageImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_SingleChoiceMessage get _value => super._value as _$_SingleChoiceMessage;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? reference = freezed,
-    Object? options = freezed,
+    Object? reference = null,
+    Object? options = null,
   }) {
-    return _then(_$_SingleChoiceMessage(
-      reference: reference == freezed
+    return _then(_$SingleChoiceMessageImpl(
+      reference: null == reference
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
               as String,
-      options: options == freezed
+      options: null == options
           ? _value._options
           : options // ignore: cast_nullable_to_non_nullable
               as List<MessageOption>,
@@ -765,8 +767,8 @@ class __$$_SingleChoiceMessageCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SingleChoiceMessage extends _SingleChoiceMessage {
-  const _$_SingleChoiceMessage(
+class _$SingleChoiceMessageImpl extends _SingleChoiceMessage {
+  const _$SingleChoiceMessageImpl(
       {required this.reference, required final List<MessageOption> options})
       : _options = options,
         super._();
@@ -776,6 +778,7 @@ class _$_SingleChoiceMessage extends _SingleChoiceMessage {
   final List<MessageOption> _options;
   @override
   List<MessageOption> get options {
+    if (_options is EqualUnmodifiableListView) return _options;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_options);
   }
@@ -786,24 +789,24 @@ class _$_SingleChoiceMessage extends _SingleChoiceMessage {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SingleChoiceMessage &&
-            const DeepCollectionEquality().equals(other.reference, reference) &&
+            other is _$SingleChoiceMessageImpl &&
+            (identical(other.reference, reference) ||
+                other.reference == reference) &&
             const DeepCollectionEquality().equals(other._options, _options));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(reference),
-      const DeepCollectionEquality().hash(_options));
+      runtimeType, reference, const DeepCollectionEquality().hash(_options));
 
   @JsonKey(ignore: true)
   @override
-  _$$_SingleChoiceMessageCopyWith<_$_SingleChoiceMessage> get copyWith =>
-      __$$_SingleChoiceMessageCopyWithImpl<_$_SingleChoiceMessage>(
+  @pragma('vm:prefer-inline')
+  _$$SingleChoiceMessageImplCopyWith<_$SingleChoiceMessageImpl> get copyWith =>
+      __$$SingleChoiceMessageImplCopyWithImpl<_$SingleChoiceMessageImpl>(
           this, _$identity);
 
   @override
@@ -826,15 +829,15 @@ class _$_SingleChoiceMessage extends _SingleChoiceMessage {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String reference, String content)? text,
-    TResult Function(String reference, String content, UserAnswer? answer,
+    TResult? Function(String reference, String content)? text,
+    TResult? Function(String reference, String content, UserAnswer? answer,
             AnswerStatus status)?
         sent,
-    TResult Function(String reference, List<ButtonOption> buttons)?
+    TResult? Function(String reference, List<ButtonOption> buttons)?
         horizontalButtons,
-    TResult Function(String reference, List<MessageOption> options)?
+    TResult? Function(String reference, List<MessageOption> options)?
         singleChoice,
-    TResult Function(String reference, List<MessageOption> options)?
+    TResult? Function(String reference, List<MessageOption> options)?
         multipleChoices,
   }) {
     return singleChoice?.call(reference, options);
@@ -877,11 +880,11 @@ class _$_SingleChoiceMessage extends _SingleChoiceMessage {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TextMessage value)? text,
-    TResult Function(_SentMessage value)? sent,
-    TResult Function(_HorizontalButtonsMessage value)? horizontalButtons,
-    TResult Function(_SingleChoiceMessage value)? singleChoice,
-    TResult Function(_MultipleChoiceMessage value)? multipleChoices,
+    TResult? Function(_TextMessage value)? text,
+    TResult? Function(_SentMessage value)? sent,
+    TResult? Function(_HorizontalButtonsMessage value)? horizontalButtons,
+    TResult? Function(_SingleChoiceMessage value)? singleChoice,
+    TResult? Function(_MultipleChoiceMessage value)? multipleChoices,
   }) {
     return singleChoice?.call(this);
   }
@@ -906,7 +909,7 @@ class _$_SingleChoiceMessage extends _SingleChoiceMessage {
 abstract class _SingleChoiceMessage extends QuizMessage {
   const factory _SingleChoiceMessage(
       {required final String reference,
-      required final List<MessageOption> options}) = _$_SingleChoiceMessage;
+      required final List<MessageOption> options}) = _$SingleChoiceMessageImpl;
   const _SingleChoiceMessage._() : super._();
 
   @override
@@ -914,43 +917,42 @@ abstract class _SingleChoiceMessage extends QuizMessage {
   List<MessageOption> get options;
   @override
   @JsonKey(ignore: true)
-  _$$_SingleChoiceMessageCopyWith<_$_SingleChoiceMessage> get copyWith =>
+  _$$SingleChoiceMessageImplCopyWith<_$SingleChoiceMessageImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_MultipleChoiceMessageCopyWith<$Res>
+abstract class _$$MultipleChoiceMessageImplCopyWith<$Res>
     implements $QuizMessageCopyWith<$Res> {
-  factory _$$_MultipleChoiceMessageCopyWith(_$_MultipleChoiceMessage value,
-          $Res Function(_$_MultipleChoiceMessage) then) =
-      __$$_MultipleChoiceMessageCopyWithImpl<$Res>;
+  factory _$$MultipleChoiceMessageImplCopyWith(
+          _$MultipleChoiceMessageImpl value,
+          $Res Function(_$MultipleChoiceMessageImpl) then) =
+      __$$MultipleChoiceMessageImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String reference, List<MessageOption> options});
 }
 
 /// @nodoc
-class __$$_MultipleChoiceMessageCopyWithImpl<$Res>
-    extends _$QuizMessageCopyWithImpl<$Res>
-    implements _$$_MultipleChoiceMessageCopyWith<$Res> {
-  __$$_MultipleChoiceMessageCopyWithImpl(_$_MultipleChoiceMessage _value,
-      $Res Function(_$_MultipleChoiceMessage) _then)
-      : super(_value, (v) => _then(v as _$_MultipleChoiceMessage));
+class __$$MultipleChoiceMessageImplCopyWithImpl<$Res>
+    extends _$QuizMessageCopyWithImpl<$Res, _$MultipleChoiceMessageImpl>
+    implements _$$MultipleChoiceMessageImplCopyWith<$Res> {
+  __$$MultipleChoiceMessageImplCopyWithImpl(_$MultipleChoiceMessageImpl _value,
+      $Res Function(_$MultipleChoiceMessageImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_MultipleChoiceMessage get _value =>
-      super._value as _$_MultipleChoiceMessage;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? reference = freezed,
-    Object? options = freezed,
+    Object? reference = null,
+    Object? options = null,
   }) {
-    return _then(_$_MultipleChoiceMessage(
-      reference: reference == freezed
+    return _then(_$MultipleChoiceMessageImpl(
+      reference: null == reference
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
               as String,
-      options: options == freezed
+      options: null == options
           ? _value._options
           : options // ignore: cast_nullable_to_non_nullable
               as List<MessageOption>,
@@ -960,8 +962,8 @@ class __$$_MultipleChoiceMessageCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_MultipleChoiceMessage extends _MultipleChoiceMessage {
-  const _$_MultipleChoiceMessage(
+class _$MultipleChoiceMessageImpl extends _MultipleChoiceMessage {
+  const _$MultipleChoiceMessageImpl(
       {required this.reference, required final List<MessageOption> options})
       : _options = options,
         super._();
@@ -971,6 +973,7 @@ class _$_MultipleChoiceMessage extends _MultipleChoiceMessage {
   final List<MessageOption> _options;
   @override
   List<MessageOption> get options {
+    if (_options is EqualUnmodifiableListView) return _options;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_options);
   }
@@ -981,25 +984,25 @@ class _$_MultipleChoiceMessage extends _MultipleChoiceMessage {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MultipleChoiceMessage &&
-            const DeepCollectionEquality().equals(other.reference, reference) &&
+            other is _$MultipleChoiceMessageImpl &&
+            (identical(other.reference, reference) ||
+                other.reference == reference) &&
             const DeepCollectionEquality().equals(other._options, _options));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(reference),
-      const DeepCollectionEquality().hash(_options));
+      runtimeType, reference, const DeepCollectionEquality().hash(_options));
 
   @JsonKey(ignore: true)
   @override
-  _$$_MultipleChoiceMessageCopyWith<_$_MultipleChoiceMessage> get copyWith =>
-      __$$_MultipleChoiceMessageCopyWithImpl<_$_MultipleChoiceMessage>(
-          this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$MultipleChoiceMessageImplCopyWith<_$MultipleChoiceMessageImpl>
+      get copyWith => __$$MultipleChoiceMessageImplCopyWithImpl<
+          _$MultipleChoiceMessageImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1021,15 +1024,15 @@ class _$_MultipleChoiceMessage extends _MultipleChoiceMessage {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String reference, String content)? text,
-    TResult Function(String reference, String content, UserAnswer? answer,
+    TResult? Function(String reference, String content)? text,
+    TResult? Function(String reference, String content, UserAnswer? answer,
             AnswerStatus status)?
         sent,
-    TResult Function(String reference, List<ButtonOption> buttons)?
+    TResult? Function(String reference, List<ButtonOption> buttons)?
         horizontalButtons,
-    TResult Function(String reference, List<MessageOption> options)?
+    TResult? Function(String reference, List<MessageOption> options)?
         singleChoice,
-    TResult Function(String reference, List<MessageOption> options)?
+    TResult? Function(String reference, List<MessageOption> options)?
         multipleChoices,
   }) {
     return multipleChoices?.call(reference, options);
@@ -1072,11 +1075,11 @@ class _$_MultipleChoiceMessage extends _MultipleChoiceMessage {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TextMessage value)? text,
-    TResult Function(_SentMessage value)? sent,
-    TResult Function(_HorizontalButtonsMessage value)? horizontalButtons,
-    TResult Function(_SingleChoiceMessage value)? singleChoice,
-    TResult Function(_MultipleChoiceMessage value)? multipleChoices,
+    TResult? Function(_TextMessage value)? text,
+    TResult? Function(_SentMessage value)? sent,
+    TResult? Function(_HorizontalButtonsMessage value)? horizontalButtons,
+    TResult? Function(_SingleChoiceMessage value)? singleChoice,
+    TResult? Function(_MultipleChoiceMessage value)? multipleChoices,
   }) {
     return multipleChoices?.call(this);
   }
@@ -1100,8 +1103,9 @@ class _$_MultipleChoiceMessage extends _MultipleChoiceMessage {
 
 abstract class _MultipleChoiceMessage extends QuizMessage {
   const factory _MultipleChoiceMessage(
-      {required final String reference,
-      required final List<MessageOption> options}) = _$_MultipleChoiceMessage;
+          {required final String reference,
+          required final List<MessageOption> options}) =
+      _$MultipleChoiceMessageImpl;
   const _MultipleChoiceMessage._() : super._();
 
   @override
@@ -1109,8 +1113,8 @@ abstract class _MultipleChoiceMessage extends QuizMessage {
   List<MessageOption> get options;
   @override
   @JsonKey(ignore: true)
-  _$$_MultipleChoiceMessageCopyWith<_$_MultipleChoiceMessage> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$MultipleChoiceMessageImplCopyWith<_$MultipleChoiceMessageImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1126,8 +1130,8 @@ mixin _$MessageOption {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult Function(String label, String value)? $default, {
-    TResult Function(String label, String value, ButtonAction? action)? button,
+    TResult? Function(String label, String value)? $default, {
+    TResult? Function(String label, String value, ButtonAction? action)? button,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1145,8 +1149,8 @@ mixin _$MessageOption {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>(
-    TResult Function(_MessageOption value)? $default, {
-    TResult Function(ButtonOption value)? button,
+    TResult? Function(_MessageOption value)? $default, {
+    TResult? Function(ButtonOption value)? button,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1166,69 +1170,71 @@ mixin _$MessageOption {
 abstract class $MessageOptionCopyWith<$Res> {
   factory $MessageOptionCopyWith(
           MessageOption value, $Res Function(MessageOption) then) =
-      _$MessageOptionCopyWithImpl<$Res>;
+      _$MessageOptionCopyWithImpl<$Res, MessageOption>;
+  @useResult
   $Res call({String label, String value});
 }
 
 /// @nodoc
-class _$MessageOptionCopyWithImpl<$Res>
+class _$MessageOptionCopyWithImpl<$Res, $Val extends MessageOption>
     implements $MessageOptionCopyWith<$Res> {
   _$MessageOptionCopyWithImpl(this._value, this._then);
 
-  final MessageOption _value;
   // ignore: unused_field
-  final $Res Function(MessageOption) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = freezed,
-    Object? value = freezed,
+    Object? label = null,
+    Object? value = null,
   }) {
     return _then(_value.copyWith(
-      label: label == freezed
+      label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      value: value == freezed
+      value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_MessageOptionCopyWith<$Res>
+abstract class _$$MessageOptionImplCopyWith<$Res>
     implements $MessageOptionCopyWith<$Res> {
-  factory _$$_MessageOptionCopyWith(
-          _$_MessageOption value, $Res Function(_$_MessageOption) then) =
-      __$$_MessageOptionCopyWithImpl<$Res>;
+  factory _$$MessageOptionImplCopyWith(
+          _$MessageOptionImpl value, $Res Function(_$MessageOptionImpl) then) =
+      __$$MessageOptionImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String label, String value});
 }
 
 /// @nodoc
-class __$$_MessageOptionCopyWithImpl<$Res>
-    extends _$MessageOptionCopyWithImpl<$Res>
-    implements _$$_MessageOptionCopyWith<$Res> {
-  __$$_MessageOptionCopyWithImpl(
-      _$_MessageOption _value, $Res Function(_$_MessageOption) _then)
-      : super(_value, (v) => _then(v as _$_MessageOption));
+class __$$MessageOptionImplCopyWithImpl<$Res>
+    extends _$MessageOptionCopyWithImpl<$Res, _$MessageOptionImpl>
+    implements _$$MessageOptionImplCopyWith<$Res> {
+  __$$MessageOptionImplCopyWithImpl(
+      _$MessageOptionImpl _value, $Res Function(_$MessageOptionImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_MessageOption get _value => super._value as _$_MessageOption;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = freezed,
-    Object? value = freezed,
+    Object? label = null,
+    Object? value = null,
   }) {
-    return _then(_$_MessageOption(
-      label: label == freezed
+    return _then(_$MessageOptionImpl(
+      label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      value: value == freezed
+      value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String,
@@ -1238,8 +1244,8 @@ class __$$_MessageOptionCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_MessageOption extends _MessageOption {
-  const _$_MessageOption({required this.label, required this.value})
+class _$MessageOptionImpl extends _MessageOption {
+  const _$MessageOptionImpl({required this.label, required this.value})
       : super._();
 
   @override
@@ -1253,24 +1259,22 @@ class _$_MessageOption extends _MessageOption {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MessageOption &&
-            const DeepCollectionEquality().equals(other.label, label) &&
-            const DeepCollectionEquality().equals(other.value, value));
+            other is _$MessageOptionImpl &&
+            (identical(other.label, label) || other.label == label) &&
+            (identical(other.value, value) || other.value == value));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(label),
-      const DeepCollectionEquality().hash(value));
+  int get hashCode => Object.hash(runtimeType, label, value);
 
   @JsonKey(ignore: true)
   @override
-  _$$_MessageOptionCopyWith<_$_MessageOption> get copyWith =>
-      __$$_MessageOptionCopyWithImpl<_$_MessageOption>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$MessageOptionImplCopyWith<_$MessageOptionImpl> get copyWith =>
+      __$$MessageOptionImplCopyWithImpl<_$MessageOptionImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1285,8 +1289,8 @@ class _$_MessageOption extends _MessageOption {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult Function(String label, String value)? $default, {
-    TResult Function(String label, String value, ButtonAction? action)? button,
+    TResult? Function(String label, String value)? $default, {
+    TResult? Function(String label, String value, ButtonAction? action)? button,
   }) {
     return $default?.call(label, value);
   }
@@ -1316,8 +1320,8 @@ class _$_MessageOption extends _MessageOption {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>(
-    TResult Function(_MessageOption value)? $default, {
-    TResult Function(ButtonOption value)? button,
+    TResult? Function(_MessageOption value)? $default, {
+    TResult? Function(ButtonOption value)? button,
   }) {
     return $default?.call(this);
   }
@@ -1339,7 +1343,7 @@ class _$_MessageOption extends _MessageOption {
 abstract class _MessageOption extends MessageOption {
   const factory _MessageOption(
       {required final String label,
-      required final String value}) = _$_MessageOption;
+      required final String value}) = _$MessageOptionImpl;
   const _MessageOption._() : super._();
 
   @override
@@ -1348,49 +1352,48 @@ abstract class _MessageOption extends MessageOption {
   String get value;
   @override
   @JsonKey(ignore: true)
-  _$$_MessageOptionCopyWith<_$_MessageOption> get copyWith =>
+  _$$MessageOptionImplCopyWith<_$MessageOptionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ButtonOptionCopyWith<$Res>
+abstract class _$$ButtonOptionImplCopyWith<$Res>
     implements $MessageOptionCopyWith<$Res> {
-  factory _$$ButtonOptionCopyWith(
-          _$ButtonOption value, $Res Function(_$ButtonOption) then) =
-      __$$ButtonOptionCopyWithImpl<$Res>;
+  factory _$$ButtonOptionImplCopyWith(
+          _$ButtonOptionImpl value, $Res Function(_$ButtonOptionImpl) then) =
+      __$$ButtonOptionImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String label, String value, ButtonAction? action});
 
   $ButtonActionCopyWith<$Res>? get action;
 }
 
 /// @nodoc
-class __$$ButtonOptionCopyWithImpl<$Res>
-    extends _$MessageOptionCopyWithImpl<$Res>
-    implements _$$ButtonOptionCopyWith<$Res> {
-  __$$ButtonOptionCopyWithImpl(
-      _$ButtonOption _value, $Res Function(_$ButtonOption) _then)
-      : super(_value, (v) => _then(v as _$ButtonOption));
+class __$$ButtonOptionImplCopyWithImpl<$Res>
+    extends _$MessageOptionCopyWithImpl<$Res, _$ButtonOptionImpl>
+    implements _$$ButtonOptionImplCopyWith<$Res> {
+  __$$ButtonOptionImplCopyWithImpl(
+      _$ButtonOptionImpl _value, $Res Function(_$ButtonOptionImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$ButtonOption get _value => super._value as _$ButtonOption;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = freezed,
-    Object? value = freezed,
+    Object? label = null,
+    Object? value = null,
     Object? action = freezed,
   }) {
-    return _then(_$ButtonOption(
-      label: label == freezed
+    return _then(_$ButtonOptionImpl(
+      label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      value: value == freezed
+      value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String,
-      action: action == freezed
+      action: freezed == action
           ? _value.action
           : action // ignore: cast_nullable_to_non_nullable
               as ButtonAction?,
@@ -1398,6 +1401,7 @@ class __$$ButtonOptionCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ButtonActionCopyWith<$Res>? get action {
     if (_value.action == null) {
       return null;
@@ -1411,8 +1415,9 @@ class __$$ButtonOptionCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ButtonOption extends ButtonOption {
-  const _$ButtonOption({required this.label, required this.value, this.action})
+class _$ButtonOptionImpl extends ButtonOption {
+  const _$ButtonOptionImpl(
+      {required this.label, required this.value, this.action})
       : super._();
 
   @override
@@ -1428,26 +1433,23 @@ class _$ButtonOption extends ButtonOption {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ButtonOption &&
-            const DeepCollectionEquality().equals(other.label, label) &&
-            const DeepCollectionEquality().equals(other.value, value) &&
-            const DeepCollectionEquality().equals(other.action, action));
+            other is _$ButtonOptionImpl &&
+            (identical(other.label, label) || other.label == label) &&
+            (identical(other.value, value) || other.value == value) &&
+            (identical(other.action, action) || other.action == action));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(label),
-      const DeepCollectionEquality().hash(value),
-      const DeepCollectionEquality().hash(action));
+  int get hashCode => Object.hash(runtimeType, label, value, action);
 
   @JsonKey(ignore: true)
   @override
-  _$$ButtonOptionCopyWith<_$ButtonOption> get copyWith =>
-      __$$ButtonOptionCopyWithImpl<_$ButtonOption>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$ButtonOptionImplCopyWith<_$ButtonOptionImpl> get copyWith =>
+      __$$ButtonOptionImplCopyWithImpl<_$ButtonOptionImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1462,8 +1464,8 @@ class _$ButtonOption extends ButtonOption {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult Function(String label, String value)? $default, {
-    TResult Function(String label, String value, ButtonAction? action)? button,
+    TResult? Function(String label, String value)? $default, {
+    TResult? Function(String label, String value, ButtonAction? action)? button,
   }) {
     return button?.call(label, value, action);
   }
@@ -1493,8 +1495,8 @@ class _$ButtonOption extends ButtonOption {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>(
-    TResult Function(_MessageOption value)? $default, {
-    TResult Function(ButtonOption value)? button,
+    TResult? Function(_MessageOption value)? $default, {
+    TResult? Function(ButtonOption value)? button,
   }) {
     return button?.call(this);
   }
@@ -1517,7 +1519,7 @@ abstract class ButtonOption extends MessageOption {
   const factory ButtonOption(
       {required final String label,
       required final String value,
-      final ButtonAction? action}) = _$ButtonOption;
+      final ButtonAction? action}) = _$ButtonOptionImpl;
   const ButtonOption._() : super._();
 
   @override
@@ -1527,7 +1529,7 @@ abstract class ButtonOption extends MessageOption {
   ButtonAction? get action;
   @override
   @JsonKey(ignore: true)
-  _$$ButtonOptionCopyWith<_$ButtonOption> get copyWith =>
+  _$$ButtonOptionImplCopyWith<_$ButtonOptionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1542,7 +1544,7 @@ mixin _$ButtonAction {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String route, String readableResult)? navigate,
+    TResult? Function(String route, String readableResult)? navigate,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1558,7 +1560,7 @@ mixin _$ButtonAction {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_NavigateAction value)? navigate,
+    TResult? Function(_NavigateAction value)? navigate,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1577,68 +1579,71 @@ mixin _$ButtonAction {
 abstract class $ButtonActionCopyWith<$Res> {
   factory $ButtonActionCopyWith(
           ButtonAction value, $Res Function(ButtonAction) then) =
-      _$ButtonActionCopyWithImpl<$Res>;
+      _$ButtonActionCopyWithImpl<$Res, ButtonAction>;
+  @useResult
   $Res call({String route, String readableResult});
 }
 
 /// @nodoc
-class _$ButtonActionCopyWithImpl<$Res> implements $ButtonActionCopyWith<$Res> {
+class _$ButtonActionCopyWithImpl<$Res, $Val extends ButtonAction>
+    implements $ButtonActionCopyWith<$Res> {
   _$ButtonActionCopyWithImpl(this._value, this._then);
 
-  final ButtonAction _value;
   // ignore: unused_field
-  final $Res Function(ButtonAction) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? route = freezed,
-    Object? readableResult = freezed,
+    Object? route = null,
+    Object? readableResult = null,
   }) {
     return _then(_value.copyWith(
-      route: route == freezed
+      route: null == route
           ? _value.route
           : route // ignore: cast_nullable_to_non_nullable
               as String,
-      readableResult: readableResult == freezed
+      readableResult: null == readableResult
           ? _value.readableResult
           : readableResult // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_NavigateActionCopyWith<$Res>
+abstract class _$$NavigateActionImplCopyWith<$Res>
     implements $ButtonActionCopyWith<$Res> {
-  factory _$$_NavigateActionCopyWith(
-          _$_NavigateAction value, $Res Function(_$_NavigateAction) then) =
-      __$$_NavigateActionCopyWithImpl<$Res>;
+  factory _$$NavigateActionImplCopyWith(_$NavigateActionImpl value,
+          $Res Function(_$NavigateActionImpl) then) =
+      __$$NavigateActionImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String route, String readableResult});
 }
 
 /// @nodoc
-class __$$_NavigateActionCopyWithImpl<$Res>
-    extends _$ButtonActionCopyWithImpl<$Res>
-    implements _$$_NavigateActionCopyWith<$Res> {
-  __$$_NavigateActionCopyWithImpl(
-      _$_NavigateAction _value, $Res Function(_$_NavigateAction) _then)
-      : super(_value, (v) => _then(v as _$_NavigateAction));
+class __$$NavigateActionImplCopyWithImpl<$Res>
+    extends _$ButtonActionCopyWithImpl<$Res, _$NavigateActionImpl>
+    implements _$$NavigateActionImplCopyWith<$Res> {
+  __$$NavigateActionImplCopyWithImpl(
+      _$NavigateActionImpl _value, $Res Function(_$NavigateActionImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_NavigateAction get _value => super._value as _$_NavigateAction;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? route = freezed,
-    Object? readableResult = freezed,
+    Object? route = null,
+    Object? readableResult = null,
   }) {
-    return _then(_$_NavigateAction(
-      route: route == freezed
+    return _then(_$NavigateActionImpl(
+      route: null == route
           ? _value.route
           : route // ignore: cast_nullable_to_non_nullable
               as String,
-      readableResult: readableResult == freezed
+      readableResult: null == readableResult
           ? _value.readableResult
           : readableResult // ignore: cast_nullable_to_non_nullable
               as String,
@@ -1648,8 +1653,9 @@ class __$$_NavigateActionCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_NavigateAction extends _NavigateAction {
-  const _$_NavigateAction({required this.route, required this.readableResult})
+class _$NavigateActionImpl extends _NavigateAction {
+  const _$NavigateActionImpl(
+      {required this.route, required this.readableResult})
       : super._();
 
   @override
@@ -1663,25 +1669,24 @@ class _$_NavigateAction extends _NavigateAction {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_NavigateAction &&
-            const DeepCollectionEquality().equals(other.route, route) &&
-            const DeepCollectionEquality()
-                .equals(other.readableResult, readableResult));
+            other is _$NavigateActionImpl &&
+            (identical(other.route, route) || other.route == route) &&
+            (identical(other.readableResult, readableResult) ||
+                other.readableResult == readableResult));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(route),
-      const DeepCollectionEquality().hash(readableResult));
+  int get hashCode => Object.hash(runtimeType, route, readableResult);
 
   @JsonKey(ignore: true)
   @override
-  _$$_NavigateActionCopyWith<_$_NavigateAction> get copyWith =>
-      __$$_NavigateActionCopyWithImpl<_$_NavigateAction>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$NavigateActionImplCopyWith<_$NavigateActionImpl> get copyWith =>
+      __$$NavigateActionImplCopyWithImpl<_$NavigateActionImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1694,7 +1699,7 @@ class _$_NavigateAction extends _NavigateAction {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String route, String readableResult)? navigate,
+    TResult? Function(String route, String readableResult)? navigate,
   }) {
     return navigate?.call(route, readableResult);
   }
@@ -1722,7 +1727,7 @@ class _$_NavigateAction extends _NavigateAction {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_NavigateAction value)? navigate,
+    TResult? Function(_NavigateAction value)? navigate,
   }) {
     return navigate?.call(this);
   }
@@ -1743,7 +1748,7 @@ class _$_NavigateAction extends _NavigateAction {
 abstract class _NavigateAction extends ButtonAction {
   const factory _NavigateAction(
       {required final String route,
-      required final String readableResult}) = _$_NavigateAction;
+      required final String readableResult}) = _$NavigateActionImpl;
   const _NavigateAction._() : super._();
 
   @override
@@ -1752,6 +1757,6 @@ abstract class _NavigateAction extends ButtonAction {
   String get readableResult;
   @override
   @JsonKey(ignore: true)
-  _$$_NavigateActionCopyWith<_$_NavigateAction> get copyWith =>
+  _$$NavigateActionImplCopyWith<_$NavigateActionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

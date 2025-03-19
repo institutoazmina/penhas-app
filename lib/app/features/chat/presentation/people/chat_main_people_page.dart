@@ -11,16 +11,15 @@ import '../pages/chat_people_filter_card.dart';
 import 'chat_main_people_controller.dart';
 
 class ChatMainPeoplePage extends StatefulWidget {
-  const ChatMainPeoplePage({Key? key, required this.controller})
-      : super(key: key);
+  const ChatMainPeoplePage({super.key, required this.controller});
 
   final ChatMainPeopleController controller;
 
   @override
-  _ChatMainPeoplePageState createState() => _ChatMainPeoplePageState();
+  ChatMainPeoplePageState createState() => ChatMainPeoplePageState();
 }
 
-class _ChatMainPeoplePageState extends State<ChatMainPeoplePage> {
+class ChatMainPeoplePageState extends State<ChatMainPeoplePage> {
   ChatMainPeopleController get controller => widget.controller;
   @override
   Widget build(BuildContext context) {
@@ -36,7 +35,7 @@ class _ChatMainPeoplePageState extends State<ChatMainPeoplePage> {
   }
 }
 
-extension _ChatMainPeoplePageBodyBuilder on _ChatMainPeoplePageState {
+extension _ChatMainPeoplePageBodyBuilder on ChatMainPeoplePageState {
   Widget bodyBuilder(ChatMainTalksState state) {
     return state.when(
       initial: () => empty(),

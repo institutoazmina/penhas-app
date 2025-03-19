@@ -21,18 +21,16 @@ import 'new_guardian_controller.dart';
 
 class NewGuardianPage extends StatefulWidget {
   const NewGuardianPage(
-      {Key? key, this.title = 'NewGuardian', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'NewGuardian', required this.controller});
 
   final String title;
   final NewGuardianController controller;
 
   @override
-  _NewGuardianPageState createState() => _NewGuardianPageState();
+  NewGuardianPageState createState() => NewGuardianPageState();
 }
 
-class _NewGuardianPageState extends State<NewGuardianPage>
-    with SnackBarHandler {
+class NewGuardianPageState extends State<NewGuardianPage> with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   NewGuardianController get _controller => widget.controller;
@@ -72,6 +70,7 @@ class _NewGuardianPageState extends State<NewGuardianPage>
       appBar: AppBar(
         title: const Text('Novo Guardião'),
         backgroundColor: DesignSystemColors.ligthPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: PageProgressIndicator(
         progressState: _loadState,

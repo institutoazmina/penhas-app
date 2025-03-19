@@ -5,11 +5,11 @@ import 'card_profile_header_edit_page.dart';
 
 class CardProfileSingleTilePage extends StatelessWidget {
   const CardProfileSingleTilePage({
-    Key? key,
+    super.key,
     required this.title,
     required this.content,
     this.background = DesignSystemColors.white,
-  }) : super(key: key);
+  });
 
   final String title;
   final String? content;

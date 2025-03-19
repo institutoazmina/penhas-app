@@ -46,13 +46,13 @@ class TweetController implements ITweetController {
   Future<void> report(TweetEntity tweet) async {
     return Modular.to.showDialog(
       builder: (context) {
-        final TextEditingController _controller = TextEditingController();
+        final TextEditingController controller = TextEditingController();
 
         return AlertDialog(
           title: const Text('Denunciar'),
           content: TextFormField(
             maxLengthEnforcement: MaxLengthEnforcement.enforced,
-            controller: _controller,
+            controller: controller,
             maxLength: 500,
             maxLines: 5,
             decoration: const InputDecoration(
@@ -71,7 +71,7 @@ class TweetController implements ITweetController {
               child: const Text('Enviar'),
               onPressed: () {
                 _useCase
-                    .report(tweet, _controller.text)
+                    .report(tweet, controller.text)
                     .then((value) => Navigator.of(context).pop());
               },
             ),

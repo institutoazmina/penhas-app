@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../../../../shared/design_system/colors.dart';
 import '../../domain/entities/notification_session_entity.dart';
 
 class NotificationCardPage extends StatelessWidget {
-  const NotificationCardPage({Key? key, required this.notification})
-      : super(key: key);
+  const NotificationCardPage({super.key, required this.notification});
 
   final NotificationEntity notification;
 
@@ -88,10 +87,12 @@ class NotificationCardPage extends StatelessWidget {
     }
     return Padding(
       padding: const EdgeInsets.only(top: 12.0, bottom: 12.0, left: 38),
-      child: HtmlWidget(
-        notification.content!,
-        factoryBuilder: () => DisabledWebViewJsWidgetFactory(),
-        textStyle: contentTextStyle,
+      child: Html(
+        data: notification.content!,
+        style: {
+          'body': Style.fromTextStyle(contentTextStyle),
+          'iframe': Style(display: Display.none)
+        },
       ),
     );
   }
@@ -120,7 +121,7 @@ extension _TextStyle on NotificationCardPage {
       );
 }
 
-class DisabledWebViewJsWidgetFactory extends WidgetFactory {
-  @override
-  bool get webViewJs => false;
-}
+// TODO: class DisabledWebViewJsWidgetFactory extends WidgetFactory {
+//   @override
+//   bool get webViewJs => false;
+// }

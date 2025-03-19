@@ -5,13 +5,13 @@ import '../../domain/entities/chat_main_tile_entity.dart';
 
 class ChatAssistantCard extends StatelessWidget {
   const ChatAssistantCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.description,
     required this.icon,
     required this.channel,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final String? title;
   final Widget icon;

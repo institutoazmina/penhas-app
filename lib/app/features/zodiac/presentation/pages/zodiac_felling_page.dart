@@ -8,8 +8,8 @@ import '../../domain/entities/izodiac.dart';
 class ZodiacFellingPage extends StatelessWidget {
   const ZodiacFellingPage({
     required this.sign,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final IZodiac sign;
 

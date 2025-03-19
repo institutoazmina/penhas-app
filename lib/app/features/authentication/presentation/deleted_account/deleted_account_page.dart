@@ -10,17 +10,17 @@ import 'deleted_account_controller.dart';
 
 class DeletedAccountPage extends StatefulWidget {
   const DeletedAccountPage({
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final DeletedAccountController controller;
 
   @override
-  _DeletedAccountPageState createState() => _DeletedAccountPageState();
+  DeletedAccountPageState createState() => DeletedAccountPageState();
 }
 
-class _DeletedAccountPageState extends State<DeletedAccountPage>
+class DeletedAccountPageState extends State<DeletedAccountPage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -43,6 +43,7 @@ class _DeletedAccountPageState extends State<DeletedAccountPage>
         title: const Text('Conta excluída'),
         elevation: 0.0,
         backgroundColor: DesignSystemColors.easterPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: Observer(
         builder: (context) => bodyBuilder(),
@@ -59,7 +60,7 @@ class _DeletedAccountPageState extends State<DeletedAccountPage>
   }
 }
 
-extension _TextStyle on _DeletedAccountPageState {
+extension _TextStyle on DeletedAccountPageState {
   TextStyle get titleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 20.0,
@@ -84,7 +85,7 @@ extension _TextStyle on _DeletedAccountPageState {
       );
 }
 
-extension _MethodPrivate on _DeletedAccountPageState {
+extension _MethodPrivate on DeletedAccountPageState {
   Widget bodyBuilder() {
     return SafeArea(
       child: PageProgressIndicator(

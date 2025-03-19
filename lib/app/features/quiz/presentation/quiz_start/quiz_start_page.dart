@@ -8,9 +8,9 @@ import 'quiz_start_controller.dart';
 
 class QuizStartPage extends StatefulWidget {
   const QuizStartPage({
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final QuizStartController controller;
 
@@ -36,6 +36,7 @@ class _QuizStartPageState extends State<QuizStartPage> {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: DesignSystemColors.ligthPurple,
+        foregroundColor: DesignSystemColors.white,
         centerTitle: true,
         title: const SizedBox(
           width: 39,

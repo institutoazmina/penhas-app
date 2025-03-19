@@ -19,10 +19,10 @@ part 'feed_controller.g.dart';
 typedef TFeed = FailureOr<FeedCache>;
 typedef _FetchSource = Future<TFeed> Function();
 
-class FeedController = _FeedControllerBase with _$FeedController;
+class FeedController = FeedControllerBase with _$FeedController;
 
-abstract class _FeedControllerBase with Store, MapFailureMessage {
-  _FeedControllerBase({
+abstract class FeedControllerBase with Store, MapFailureMessage {
+  FeedControllerBase({
     required FeedUseCases useCase,
     required SecurityModeActionFeature securityModeActionFeature,
     required ComposeTweetFabToggleFeature composeTweetFabToggleFeature,

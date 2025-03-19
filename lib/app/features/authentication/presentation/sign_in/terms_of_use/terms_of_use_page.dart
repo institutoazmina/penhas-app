@@ -5,9 +5,9 @@ import '../../../../../shared/design_system/colors.dart';
 
 class TermsOfUsePage extends StatelessWidget {
   const TermsOfUsePage({
-    Key? key,
+    super.key,
     required this.baseUrl,
-  }) : super(key: key);
+  });
 
   final Uri baseUrl;
 
@@ -18,6 +18,7 @@ class TermsOfUsePage extends StatelessWidget {
         elevation: 0.0,
         title: const Text('Termos de Uso'),
         backgroundColor: DesignSystemColors.easterPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: WebViewWidget(
         controller: WebViewController()

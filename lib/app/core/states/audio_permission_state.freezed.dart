@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'audio_permission_state.dart';
 
@@ -12,7 +12,7 @@ part of 'audio_permission_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$AudioPermissionState {
@@ -27,11 +27,11 @@ mixin _$AudioPermissionState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? granted,
-    TResult Function()? denied,
-    TResult Function()? permanentlyDenied,
-    TResult Function()? restricted,
-    TResult Function()? undefined,
+    TResult? Function()? granted,
+    TResult? Function()? denied,
+    TResult? Function()? permanentlyDenied,
+    TResult? Function()? restricted,
+    TResult? Function()? undefined,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,11 +55,11 @@ mixin _$AudioPermissionState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Granted value)? granted,
-    TResult Function(_Denied value)? denied,
-    TResult Function(_PermanentlyDenied value)? permanentlyDenied,
-    TResult Function(_Restricted value)? restricted,
-    TResult Function(_Undefined value)? undefined,
+    TResult? Function(_Granted value)? granted,
+    TResult? Function(_Denied value)? denied,
+    TResult? Function(_PermanentlyDenied value)? permanentlyDenied,
+    TResult? Function(_Restricted value)? restricted,
+    TResult? Function(_Undefined value)? undefined,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -78,41 +78,41 @@ mixin _$AudioPermissionState {
 abstract class $AudioPermissionStateCopyWith<$Res> {
   factory $AudioPermissionStateCopyWith(AudioPermissionState value,
           $Res Function(AudioPermissionState) then) =
-      _$AudioPermissionStateCopyWithImpl<$Res>;
+      _$AudioPermissionStateCopyWithImpl<$Res, AudioPermissionState>;
 }
 
 /// @nodoc
-class _$AudioPermissionStateCopyWithImpl<$Res>
+class _$AudioPermissionStateCopyWithImpl<$Res,
+        $Val extends AudioPermissionState>
     implements $AudioPermissionStateCopyWith<$Res> {
   _$AudioPermissionStateCopyWithImpl(this._value, this._then);
 
-  final AudioPermissionState _value;
   // ignore: unused_field
-  final $Res Function(AudioPermissionState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$$_GrantedCopyWith<$Res> {
-  factory _$$_GrantedCopyWith(
-          _$_Granted value, $Res Function(_$_Granted) then) =
-      __$$_GrantedCopyWithImpl<$Res>;
+abstract class _$$GrantedImplCopyWith<$Res> {
+  factory _$$GrantedImplCopyWith(
+          _$GrantedImpl value, $Res Function(_$GrantedImpl) then) =
+      __$$GrantedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_GrantedCopyWithImpl<$Res>
-    extends _$AudioPermissionStateCopyWithImpl<$Res>
-    implements _$$_GrantedCopyWith<$Res> {
-  __$$_GrantedCopyWithImpl(_$_Granted _value, $Res Function(_$_Granted) _then)
-      : super(_value, (v) => _then(v as _$_Granted));
-
-  @override
-  _$_Granted get _value => super._value as _$_Granted;
+class __$$GrantedImplCopyWithImpl<$Res>
+    extends _$AudioPermissionStateCopyWithImpl<$Res, _$GrantedImpl>
+    implements _$$GrantedImplCopyWith<$Res> {
+  __$$GrantedImplCopyWithImpl(
+      _$GrantedImpl _value, $Res Function(_$GrantedImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Granted implements _Granted {
-  const _$_Granted();
+class _$GrantedImpl implements _Granted {
+  const _$GrantedImpl();
 
   @override
   String toString() {
@@ -120,9 +120,9 @@ class _$_Granted implements _Granted {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Granted);
+        (other.runtimeType == runtimeType && other is _$GrantedImpl);
   }
 
   @override
@@ -143,11 +143,11 @@ class _$_Granted implements _Granted {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? granted,
-    TResult Function()? denied,
-    TResult Function()? permanentlyDenied,
-    TResult Function()? restricted,
-    TResult Function()? undefined,
+    TResult? Function()? granted,
+    TResult? Function()? denied,
+    TResult? Function()? permanentlyDenied,
+    TResult? Function()? restricted,
+    TResult? Function()? undefined,
   }) {
     return granted?.call();
   }
@@ -183,11 +183,11 @@ class _$_Granted implements _Granted {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Granted value)? granted,
-    TResult Function(_Denied value)? denied,
-    TResult Function(_PermanentlyDenied value)? permanentlyDenied,
-    TResult Function(_Restricted value)? restricted,
-    TResult Function(_Undefined value)? undefined,
+    TResult? Function(_Granted value)? granted,
+    TResult? Function(_Denied value)? denied,
+    TResult? Function(_PermanentlyDenied value)? permanentlyDenied,
+    TResult? Function(_Restricted value)? restricted,
+    TResult? Function(_Undefined value)? undefined,
   }) {
     return granted?.call(this);
   }
@@ -210,30 +210,29 @@ class _$_Granted implements _Granted {
 }
 
 abstract class _Granted implements AudioPermissionState {
-  const factory _Granted() = _$_Granted;
+  const factory _Granted() = _$GrantedImpl;
 }
 
 /// @nodoc
-abstract class _$$_DeniedCopyWith<$Res> {
-  factory _$$_DeniedCopyWith(_$_Denied value, $Res Function(_$_Denied) then) =
-      __$$_DeniedCopyWithImpl<$Res>;
+abstract class _$$DeniedImplCopyWith<$Res> {
+  factory _$$DeniedImplCopyWith(
+          _$DeniedImpl value, $Res Function(_$DeniedImpl) then) =
+      __$$DeniedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_DeniedCopyWithImpl<$Res>
-    extends _$AudioPermissionStateCopyWithImpl<$Res>
-    implements _$$_DeniedCopyWith<$Res> {
-  __$$_DeniedCopyWithImpl(_$_Denied _value, $Res Function(_$_Denied) _then)
-      : super(_value, (v) => _then(v as _$_Denied));
-
-  @override
-  _$_Denied get _value => super._value as _$_Denied;
+class __$$DeniedImplCopyWithImpl<$Res>
+    extends _$AudioPermissionStateCopyWithImpl<$Res, _$DeniedImpl>
+    implements _$$DeniedImplCopyWith<$Res> {
+  __$$DeniedImplCopyWithImpl(
+      _$DeniedImpl _value, $Res Function(_$DeniedImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Denied implements _Denied {
-  const _$_Denied();
+class _$DeniedImpl implements _Denied {
+  const _$DeniedImpl();
 
   @override
   String toString() {
@@ -241,9 +240,9 @@ class _$_Denied implements _Denied {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Denied);
+        (other.runtimeType == runtimeType && other is _$DeniedImpl);
   }
 
   @override
@@ -264,11 +263,11 @@ class _$_Denied implements _Denied {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? granted,
-    TResult Function()? denied,
-    TResult Function()? permanentlyDenied,
-    TResult Function()? restricted,
-    TResult Function()? undefined,
+    TResult? Function()? granted,
+    TResult? Function()? denied,
+    TResult? Function()? permanentlyDenied,
+    TResult? Function()? restricted,
+    TResult? Function()? undefined,
   }) {
     return denied?.call();
   }
@@ -304,11 +303,11 @@ class _$_Denied implements _Denied {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Granted value)? granted,
-    TResult Function(_Denied value)? denied,
-    TResult Function(_PermanentlyDenied value)? permanentlyDenied,
-    TResult Function(_Restricted value)? restricted,
-    TResult Function(_Undefined value)? undefined,
+    TResult? Function(_Granted value)? granted,
+    TResult? Function(_Denied value)? denied,
+    TResult? Function(_PermanentlyDenied value)? permanentlyDenied,
+    TResult? Function(_Restricted value)? restricted,
+    TResult? Function(_Undefined value)? undefined,
   }) {
     return denied?.call(this);
   }
@@ -331,32 +330,29 @@ class _$_Denied implements _Denied {
 }
 
 abstract class _Denied implements AudioPermissionState {
-  const factory _Denied() = _$_Denied;
+  const factory _Denied() = _$DeniedImpl;
 }
 
 /// @nodoc
-abstract class _$$_PermanentlyDeniedCopyWith<$Res> {
-  factory _$$_PermanentlyDeniedCopyWith(_$_PermanentlyDenied value,
-          $Res Function(_$_PermanentlyDenied) then) =
-      __$$_PermanentlyDeniedCopyWithImpl<$Res>;
+abstract class _$$PermanentlyDeniedImplCopyWith<$Res> {
+  factory _$$PermanentlyDeniedImplCopyWith(_$PermanentlyDeniedImpl value,
+          $Res Function(_$PermanentlyDeniedImpl) then) =
+      __$$PermanentlyDeniedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_PermanentlyDeniedCopyWithImpl<$Res>
-    extends _$AudioPermissionStateCopyWithImpl<$Res>
-    implements _$$_PermanentlyDeniedCopyWith<$Res> {
-  __$$_PermanentlyDeniedCopyWithImpl(
-      _$_PermanentlyDenied _value, $Res Function(_$_PermanentlyDenied) _then)
-      : super(_value, (v) => _then(v as _$_PermanentlyDenied));
-
-  @override
-  _$_PermanentlyDenied get _value => super._value as _$_PermanentlyDenied;
+class __$$PermanentlyDeniedImplCopyWithImpl<$Res>
+    extends _$AudioPermissionStateCopyWithImpl<$Res, _$PermanentlyDeniedImpl>
+    implements _$$PermanentlyDeniedImplCopyWith<$Res> {
+  __$$PermanentlyDeniedImplCopyWithImpl(_$PermanentlyDeniedImpl _value,
+      $Res Function(_$PermanentlyDeniedImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_PermanentlyDenied implements _PermanentlyDenied {
-  const _$_PermanentlyDenied();
+class _$PermanentlyDeniedImpl implements _PermanentlyDenied {
+  const _$PermanentlyDeniedImpl();
 
   @override
   String toString() {
@@ -364,9 +360,9 @@ class _$_PermanentlyDenied implements _PermanentlyDenied {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_PermanentlyDenied);
+        (other.runtimeType == runtimeType && other is _$PermanentlyDeniedImpl);
   }
 
   @override
@@ -387,11 +383,11 @@ class _$_PermanentlyDenied implements _PermanentlyDenied {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? granted,
-    TResult Function()? denied,
-    TResult Function()? permanentlyDenied,
-    TResult Function()? restricted,
-    TResult Function()? undefined,
+    TResult? Function()? granted,
+    TResult? Function()? denied,
+    TResult? Function()? permanentlyDenied,
+    TResult? Function()? restricted,
+    TResult? Function()? undefined,
   }) {
     return permanentlyDenied?.call();
   }
@@ -427,11 +423,11 @@ class _$_PermanentlyDenied implements _PermanentlyDenied {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Granted value)? granted,
-    TResult Function(_Denied value)? denied,
-    TResult Function(_PermanentlyDenied value)? permanentlyDenied,
-    TResult Function(_Restricted value)? restricted,
-    TResult Function(_Undefined value)? undefined,
+    TResult? Function(_Granted value)? granted,
+    TResult? Function(_Denied value)? denied,
+    TResult? Function(_PermanentlyDenied value)? permanentlyDenied,
+    TResult? Function(_Restricted value)? restricted,
+    TResult? Function(_Undefined value)? undefined,
   }) {
     return permanentlyDenied?.call(this);
   }
@@ -454,32 +450,29 @@ class _$_PermanentlyDenied implements _PermanentlyDenied {
 }
 
 abstract class _PermanentlyDenied implements AudioPermissionState {
-  const factory _PermanentlyDenied() = _$_PermanentlyDenied;
+  const factory _PermanentlyDenied() = _$PermanentlyDeniedImpl;
 }
 
 /// @nodoc
-abstract class _$$_RestrictedCopyWith<$Res> {
-  factory _$$_RestrictedCopyWith(
-          _$_Restricted value, $Res Function(_$_Restricted) then) =
-      __$$_RestrictedCopyWithImpl<$Res>;
+abstract class _$$RestrictedImplCopyWith<$Res> {
+  factory _$$RestrictedImplCopyWith(
+          _$RestrictedImpl value, $Res Function(_$RestrictedImpl) then) =
+      __$$RestrictedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_RestrictedCopyWithImpl<$Res>
-    extends _$AudioPermissionStateCopyWithImpl<$Res>
-    implements _$$_RestrictedCopyWith<$Res> {
-  __$$_RestrictedCopyWithImpl(
-      _$_Restricted _value, $Res Function(_$_Restricted) _then)
-      : super(_value, (v) => _then(v as _$_Restricted));
-
-  @override
-  _$_Restricted get _value => super._value as _$_Restricted;
+class __$$RestrictedImplCopyWithImpl<$Res>
+    extends _$AudioPermissionStateCopyWithImpl<$Res, _$RestrictedImpl>
+    implements _$$RestrictedImplCopyWith<$Res> {
+  __$$RestrictedImplCopyWithImpl(
+      _$RestrictedImpl _value, $Res Function(_$RestrictedImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Restricted implements _Restricted {
-  const _$_Restricted();
+class _$RestrictedImpl implements _Restricted {
+  const _$RestrictedImpl();
 
   @override
   String toString() {
@@ -487,9 +480,9 @@ class _$_Restricted implements _Restricted {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Restricted);
+        (other.runtimeType == runtimeType && other is _$RestrictedImpl);
   }
 
   @override
@@ -510,11 +503,11 @@ class _$_Restricted implements _Restricted {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? granted,
-    TResult Function()? denied,
-    TResult Function()? permanentlyDenied,
-    TResult Function()? restricted,
-    TResult Function()? undefined,
+    TResult? Function()? granted,
+    TResult? Function()? denied,
+    TResult? Function()? permanentlyDenied,
+    TResult? Function()? restricted,
+    TResult? Function()? undefined,
   }) {
     return restricted?.call();
   }
@@ -550,11 +543,11 @@ class _$_Restricted implements _Restricted {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Granted value)? granted,
-    TResult Function(_Denied value)? denied,
-    TResult Function(_PermanentlyDenied value)? permanentlyDenied,
-    TResult Function(_Restricted value)? restricted,
-    TResult Function(_Undefined value)? undefined,
+    TResult? Function(_Granted value)? granted,
+    TResult? Function(_Denied value)? denied,
+    TResult? Function(_PermanentlyDenied value)? permanentlyDenied,
+    TResult? Function(_Restricted value)? restricted,
+    TResult? Function(_Undefined value)? undefined,
   }) {
     return restricted?.call(this);
   }
@@ -577,32 +570,29 @@ class _$_Restricted implements _Restricted {
 }
 
 abstract class _Restricted implements AudioPermissionState {
-  const factory _Restricted() = _$_Restricted;
+  const factory _Restricted() = _$RestrictedImpl;
 }
 
 /// @nodoc
-abstract class _$$_UndefinedCopyWith<$Res> {
-  factory _$$_UndefinedCopyWith(
-          _$_Undefined value, $Res Function(_$_Undefined) then) =
-      __$$_UndefinedCopyWithImpl<$Res>;
+abstract class _$$UndefinedImplCopyWith<$Res> {
+  factory _$$UndefinedImplCopyWith(
+          _$UndefinedImpl value, $Res Function(_$UndefinedImpl) then) =
+      __$$UndefinedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_UndefinedCopyWithImpl<$Res>
-    extends _$AudioPermissionStateCopyWithImpl<$Res>
-    implements _$$_UndefinedCopyWith<$Res> {
-  __$$_UndefinedCopyWithImpl(
-      _$_Undefined _value, $Res Function(_$_Undefined) _then)
-      : super(_value, (v) => _then(v as _$_Undefined));
-
-  @override
-  _$_Undefined get _value => super._value as _$_Undefined;
+class __$$UndefinedImplCopyWithImpl<$Res>
+    extends _$AudioPermissionStateCopyWithImpl<$Res, _$UndefinedImpl>
+    implements _$$UndefinedImplCopyWith<$Res> {
+  __$$UndefinedImplCopyWithImpl(
+      _$UndefinedImpl _value, $Res Function(_$UndefinedImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Undefined implements _Undefined {
-  const _$_Undefined();
+class _$UndefinedImpl implements _Undefined {
+  const _$UndefinedImpl();
 
   @override
   String toString() {
@@ -610,9 +600,9 @@ class _$_Undefined implements _Undefined {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Undefined);
+        (other.runtimeType == runtimeType && other is _$UndefinedImpl);
   }
 
   @override
@@ -633,11 +623,11 @@ class _$_Undefined implements _Undefined {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? granted,
-    TResult Function()? denied,
-    TResult Function()? permanentlyDenied,
-    TResult Function()? restricted,
-    TResult Function()? undefined,
+    TResult? Function()? granted,
+    TResult? Function()? denied,
+    TResult? Function()? permanentlyDenied,
+    TResult? Function()? restricted,
+    TResult? Function()? undefined,
   }) {
     return undefined?.call();
   }
@@ -673,11 +663,11 @@ class _$_Undefined implements _Undefined {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Granted value)? granted,
-    TResult Function(_Denied value)? denied,
-    TResult Function(_PermanentlyDenied value)? permanentlyDenied,
-    TResult Function(_Restricted value)? restricted,
-    TResult Function(_Undefined value)? undefined,
+    TResult? Function(_Granted value)? granted,
+    TResult? Function(_Denied value)? denied,
+    TResult? Function(_PermanentlyDenied value)? permanentlyDenied,
+    TResult? Function(_Restricted value)? restricted,
+    TResult? Function(_Undefined value)? undefined,
   }) {
     return undefined?.call(this);
   }
@@ -700,5 +690,5 @@ class _$_Undefined implements _Undefined {
 }
 
 abstract class _Undefined implements AudioPermissionState {
-  const factory _Undefined() = _$_Undefined;
+  const factory _Undefined() = _$UndefinedImpl;
 }

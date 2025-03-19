@@ -3,14 +3,10 @@ import '../../domain/entity/button.dart';
 
 class ButtonModel extends ButtonEntity {
   const ButtonModel({
-    required String label,
-    required String route,
-    dynamic arguments,
-  }) : super(
-          label: label,
-          route: route,
-          arguments: arguments,
-        );
+    required super.label,
+    required super.route,
+    super.arguments,
+  });
 
   factory ButtonModel.fromJson(Map<String, dynamic> json) => ButtonModel(
         label: json['label'] as String,

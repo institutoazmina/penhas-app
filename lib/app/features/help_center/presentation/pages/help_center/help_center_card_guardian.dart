@@ -8,10 +8,10 @@ import '../tutorial/guardian/guardian_tutorial_page.dart';
 
 class HelpCenterCardGuardian extends StatelessWidget {
   const HelpCenterCardGuardian({
-    Key? key,
+    super.key,
     required this.create,
     required this.manager,
-  }) : super(key: key);
+  });
 
   final VoidCallback create;
   final VoidCallback manager;

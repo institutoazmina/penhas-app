@@ -22,18 +22,17 @@ import 'pages/help_center/help_center_card_record.dart';
 
 class HelpCenterPage extends StatefulWidget {
   const HelpCenterPage(
-      {Key? key, this.title = 'HelpCenter', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'HelpCenter', required this.controller});
 
   final HelpCenterController controller;
 
   final String title;
 
   @override
-  _HelpCenterPageState createState() => _HelpCenterPageState();
+  HelpCenterPageState createState() => HelpCenterPageState();
 }
 
-class _HelpCenterPageState extends State<HelpCenterPage> with SnackBarHandler {
+class HelpCenterPageState extends State<HelpCenterPage> with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _loadState = PageProgressState.initial;

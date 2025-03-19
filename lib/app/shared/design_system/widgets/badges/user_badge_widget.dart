@@ -7,7 +7,7 @@ import '../../text_styles.dart';
 
 class UserBadgeWidget extends StatelessWidget {
   const UserBadgeWidget({
-    Key? key,
+    super.key,
     required this.badgePopUp,
     required this.badgeImageUrl,
     this.badgeImageUrlBlack,
@@ -15,7 +15,7 @@ class UserBadgeWidget extends StatelessWidget {
     required this.badgeName,
     required this.badgeShowDescription,
     required this.isLightBackground,
-  }) : super(key: key);
+  });
 
   final int badgePopUp;
   final String badgeImageUrl;
@@ -51,7 +51,7 @@ class UserBadgeWidget extends StatelessWidget {
               height: 16,
               width: 16,
               colorFilter: ColorFilter.mode(
-                  returnCorrectColor(isLightBackground), BlendMode.color),
+                  returnCorrectColor(isLightBackground), BlendMode.srcIn),
             )
           : const SizedBox.shrink(),
     );
@@ -77,11 +77,10 @@ class UserBadgeWidget extends StatelessWidget {
 
 class _DescriptionBottomSheetWidget extends StatelessWidget {
   const _DescriptionBottomSheetWidget({
-    Key? key,
     required this.badgeShowDescription,
     required this.badgeDescription,
     required this.badgeName,
-  }) : super(key: key);
+  });
   final int badgeShowDescription;
   final String badgeDescription;
   final String badgeName;

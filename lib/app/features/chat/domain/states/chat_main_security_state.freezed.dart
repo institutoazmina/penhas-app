@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'chat_main_security_state.dart';
 
@@ -12,7 +12,7 @@ part of 'chat_main_security_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$ChatMainSecurityState {
@@ -24,8 +24,8 @@ mixin _$ChatMainSecurityState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? onlySupport,
-    TResult Function()? supportAndPrivate,
+    TResult? Function()? onlySupport,
+    TResult? Function()? supportAndPrivate,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,8 +43,8 @@ mixin _$ChatMainSecurityState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_OnlySupport value)? onlySupport,
-    TResult Function(_SupportAndPrivate value)? supportAndPrivate,
+    TResult? Function(_OnlySupport value)? onlySupport,
+    TResult? Function(_SupportAndPrivate value)? supportAndPrivate,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,42 +60,41 @@ mixin _$ChatMainSecurityState {
 abstract class $ChatMainSecurityStateCopyWith<$Res> {
   factory $ChatMainSecurityStateCopyWith(ChatMainSecurityState value,
           $Res Function(ChatMainSecurityState) then) =
-      _$ChatMainSecurityStateCopyWithImpl<$Res>;
+      _$ChatMainSecurityStateCopyWithImpl<$Res, ChatMainSecurityState>;
 }
 
 /// @nodoc
-class _$ChatMainSecurityStateCopyWithImpl<$Res>
+class _$ChatMainSecurityStateCopyWithImpl<$Res,
+        $Val extends ChatMainSecurityState>
     implements $ChatMainSecurityStateCopyWith<$Res> {
   _$ChatMainSecurityStateCopyWithImpl(this._value, this._then);
 
-  final ChatMainSecurityState _value;
   // ignore: unused_field
-  final $Res Function(ChatMainSecurityState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$$_OnlySupportCopyWith<$Res> {
-  factory _$$_OnlySupportCopyWith(
-          _$_OnlySupport value, $Res Function(_$_OnlySupport) then) =
-      __$$_OnlySupportCopyWithImpl<$Res>;
+abstract class _$$OnlySupportImplCopyWith<$Res> {
+  factory _$$OnlySupportImplCopyWith(
+          _$OnlySupportImpl value, $Res Function(_$OnlySupportImpl) then) =
+      __$$OnlySupportImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_OnlySupportCopyWithImpl<$Res>
-    extends _$ChatMainSecurityStateCopyWithImpl<$Res>
-    implements _$$_OnlySupportCopyWith<$Res> {
-  __$$_OnlySupportCopyWithImpl(
-      _$_OnlySupport _value, $Res Function(_$_OnlySupport) _then)
-      : super(_value, (v) => _then(v as _$_OnlySupport));
-
-  @override
-  _$_OnlySupport get _value => super._value as _$_OnlySupport;
+class __$$OnlySupportImplCopyWithImpl<$Res>
+    extends _$ChatMainSecurityStateCopyWithImpl<$Res, _$OnlySupportImpl>
+    implements _$$OnlySupportImplCopyWith<$Res> {
+  __$$OnlySupportImplCopyWithImpl(
+      _$OnlySupportImpl _value, $Res Function(_$OnlySupportImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_OnlySupport implements _OnlySupport {
-  const _$_OnlySupport();
+class _$OnlySupportImpl implements _OnlySupport {
+  const _$OnlySupportImpl();
 
   @override
   String toString() {
@@ -103,9 +102,9 @@ class _$_OnlySupport implements _OnlySupport {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_OnlySupport);
+        (other.runtimeType == runtimeType && other is _$OnlySupportImpl);
   }
 
   @override
@@ -123,8 +122,8 @@ class _$_OnlySupport implements _OnlySupport {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? onlySupport,
-    TResult Function()? supportAndPrivate,
+    TResult? Function()? onlySupport,
+    TResult? Function()? supportAndPrivate,
   }) {
     return onlySupport?.call();
   }
@@ -154,8 +153,8 @@ class _$_OnlySupport implements _OnlySupport {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_OnlySupport value)? onlySupport,
-    TResult Function(_SupportAndPrivate value)? supportAndPrivate,
+    TResult? Function(_OnlySupport value)? onlySupport,
+    TResult? Function(_SupportAndPrivate value)? supportAndPrivate,
   }) {
     return onlySupport?.call(this);
   }
@@ -175,32 +174,29 @@ class _$_OnlySupport implements _OnlySupport {
 }
 
 abstract class _OnlySupport implements ChatMainSecurityState {
-  const factory _OnlySupport() = _$_OnlySupport;
+  const factory _OnlySupport() = _$OnlySupportImpl;
 }
 
 /// @nodoc
-abstract class _$$_SupportAndPrivateCopyWith<$Res> {
-  factory _$$_SupportAndPrivateCopyWith(_$_SupportAndPrivate value,
-          $Res Function(_$_SupportAndPrivate) then) =
-      __$$_SupportAndPrivateCopyWithImpl<$Res>;
+abstract class _$$SupportAndPrivateImplCopyWith<$Res> {
+  factory _$$SupportAndPrivateImplCopyWith(_$SupportAndPrivateImpl value,
+          $Res Function(_$SupportAndPrivateImpl) then) =
+      __$$SupportAndPrivateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_SupportAndPrivateCopyWithImpl<$Res>
-    extends _$ChatMainSecurityStateCopyWithImpl<$Res>
-    implements _$$_SupportAndPrivateCopyWith<$Res> {
-  __$$_SupportAndPrivateCopyWithImpl(
-      _$_SupportAndPrivate _value, $Res Function(_$_SupportAndPrivate) _then)
-      : super(_value, (v) => _then(v as _$_SupportAndPrivate));
-
-  @override
-  _$_SupportAndPrivate get _value => super._value as _$_SupportAndPrivate;
+class __$$SupportAndPrivateImplCopyWithImpl<$Res>
+    extends _$ChatMainSecurityStateCopyWithImpl<$Res, _$SupportAndPrivateImpl>
+    implements _$$SupportAndPrivateImplCopyWith<$Res> {
+  __$$SupportAndPrivateImplCopyWithImpl(_$SupportAndPrivateImpl _value,
+      $Res Function(_$SupportAndPrivateImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_SupportAndPrivate implements _SupportAndPrivate {
-  const _$_SupportAndPrivate();
+class _$SupportAndPrivateImpl implements _SupportAndPrivate {
+  const _$SupportAndPrivateImpl();
 
   @override
   String toString() {
@@ -208,9 +204,9 @@ class _$_SupportAndPrivate implements _SupportAndPrivate {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_SupportAndPrivate);
+        (other.runtimeType == runtimeType && other is _$SupportAndPrivateImpl);
   }
 
   @override
@@ -228,8 +224,8 @@ class _$_SupportAndPrivate implements _SupportAndPrivate {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? onlySupport,
-    TResult Function()? supportAndPrivate,
+    TResult? Function()? onlySupport,
+    TResult? Function()? supportAndPrivate,
   }) {
     return supportAndPrivate?.call();
   }
@@ -259,8 +255,8 @@ class _$_SupportAndPrivate implements _SupportAndPrivate {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_OnlySupport value)? onlySupport,
-    TResult Function(_SupportAndPrivate value)? supportAndPrivate,
+    TResult? Function(_OnlySupport value)? onlySupport,
+    TResult? Function(_SupportAndPrivate value)? supportAndPrivate,
   }) {
     return supportAndPrivate?.call(this);
   }
@@ -280,5 +276,5 @@ class _$_SupportAndPrivate implements _SupportAndPrivate {
 }
 
 abstract class _SupportAndPrivate implements ChatMainSecurityState {
-  const factory _SupportAndPrivate() = _$_SupportAndPrivate;
+  const factory _SupportAndPrivate() = _$SupportAndPrivateImpl;
 }

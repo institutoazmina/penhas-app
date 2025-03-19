@@ -5,13 +5,13 @@ import '../../../../../../shared/design_system/colors.dart';
 import '../../../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 
 class RecordTutorialPage extends StatefulWidget {
-  const RecordTutorialPage({Key? key}) : super(key: key);
+  const RecordTutorialPage({super.key});
 
   @override
-  _RecordTutorialPageState createState() => _RecordTutorialPageState();
+  RecordTutorialPageState createState() => RecordTutorialPageState();
 }
 
-class _RecordTutorialPageState extends State<RecordTutorialPage> {
+class RecordTutorialPageState extends State<RecordTutorialPage> {
   final List<TutorialPageViewWidget> _contentPageView = [
     const TutorialPageViewWidget(
       description:
@@ -73,6 +73,7 @@ class _RecordTutorialPageState extends State<RecordTutorialPage> {
       backgroundColor: DesignSystemColors.charcoalGrey,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        foregroundColor: DesignSystemColors.white,
         elevation: 0.0,
         leading: IconButton(
           splashColor: Colors.transparent,

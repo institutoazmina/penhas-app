@@ -10,10 +10,10 @@ import '../../domain/entities/chat_channel_entity.dart';
 
 class ChatChannelCard extends StatelessWidget {
   const ChatChannelCard({
-    Key? key,
+    super.key,
     required this.channel,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final ChatChannelEntity channel;
   final void Function(ChatChannelEntity channel) onPressed;

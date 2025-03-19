@@ -102,12 +102,12 @@ class LocationServices implements ILocationServices {
               ),
               actions: <Widget>[
                 TextButton(
-                  child: const Text('Agora não'),
                   style: TextButtonStyle.flat(),
                   onPressed: () async {
                     Navigator.of(context)
                         .pop(const LocationPermissionState.denied());
                   },
+                  child: const Text('Agora não'),
                 ),
                 ConstrainedBox(
                   constraints: const BoxConstraints(minWidth: 120),
@@ -211,12 +211,12 @@ class LocationServices implements ILocationServices {
               ),
               actions: <Widget>[
                 TextButton(
-                  child: const Text('Não'),
                   style: TextButtonStyle.flat(),
                   onPressed: () async {
                     Navigator.of(context)
                         .pop(const LocationPermissionState.denied());
                   },
+                  child: const Text('Não'),
                 ),
                 ConstrainedBox(
                   constraints: const BoxConstraints(minWidth: 120),

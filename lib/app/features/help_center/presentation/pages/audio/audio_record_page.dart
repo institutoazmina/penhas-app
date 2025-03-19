@@ -10,17 +10,17 @@ import 'sound_record_widget.dart';
 
 class AudioRecordPage extends StatefulWidget {
   const AudioRecordPage({
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final AudioRecordController controller;
 
   @override
-  _AudioRecordState createState() => _AudioRecordState();
+  AudioRecordState createState() => AudioRecordState();
 }
 
-class _AudioRecordState extends State<AudioRecordPage> with SnackBarHandler {
+class AudioRecordState extends State<AudioRecordPage> with SnackBarHandler {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   AudioActivity? _audioActivity;
   StreamSubscription? _streamSubscription;
@@ -59,6 +59,7 @@ class _AudioRecordState extends State<AudioRecordPage> with SnackBarHandler {
         key: _scaffoldKey,
         appBar: AppBar(
           backgroundColor: DesignSystemColors.ligthPurple,
+          foregroundColor: DesignSystemColors.white,
         ),
         body: SoundRecordWidget(
           audioActivity: _audioActivity,

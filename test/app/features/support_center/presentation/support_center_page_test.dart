@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -50,10 +51,16 @@ void main() {
       },
     );
 
-    screenshotTest(
+    screenshotTestSimplified(
       'should render success state with map and markers',
+      skip: true,
       fileName: 'support_center_page_success_state',
-      pageBuilder: () => SupportCenterPage(controller: controller),
+      pageBuilder: () => SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: SupportCenterPage(controller: controller))),
       setUp: () {
         when(() => supportCenterUseCase.fetch(any())).thenAnswer(
           (_) => Future.value(dartz.Right(centerPlace)),

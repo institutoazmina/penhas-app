@@ -6,9 +6,9 @@ import '../../../../../shared/design_system/text_styles.dart';
 
 class HelpCenterActionRecord extends StatelessWidget {
   const HelpCenterActionRecord({
-    Key? key,
+    super.key,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final VoidCallback onPressed;
 

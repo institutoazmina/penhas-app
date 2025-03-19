@@ -7,9 +7,9 @@ import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 
 class FeedCategoryFilter extends StatelessWidget {
   const FeedCategoryFilter({
-    Key? key,
+    super.key,
     required this.reloadFeed,
-  }) : super(key: key);
+  });
 
   final void Function() reloadFeed;
 

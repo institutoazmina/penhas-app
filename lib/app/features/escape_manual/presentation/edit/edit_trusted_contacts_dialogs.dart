@@ -8,8 +8,8 @@ import '../../domain/entity/contact.dart';
 class RemoveContactConfirmationDialog extends StatelessWidget {
   const RemoveContactConfirmationDialog(
     this.contact, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final ContactEntity contact;
 
@@ -44,8 +44,8 @@ class RemoveContactConfirmationDialog extends StatelessWidget {
 class UpdateContactDialog extends StatefulWidget {
   const UpdateContactDialog(
     this.contact, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final ContactEntity contact;
 
@@ -135,10 +135,9 @@ class _UpdateContactDialogState extends State<UpdateContactDialog> {
 
 class _PrimaryButton extends StatelessWidget {
   const _PrimaryButton({
-    Key? key,
     required this.text,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   final String text;
   final VoidCallback? onPressed;
@@ -147,7 +146,6 @@ class _PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return ElevatedButton(
-      child: Text(text),
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: DesignSystemColors.ligthPurple,
@@ -165,16 +163,16 @@ class _PrimaryButton extends StatelessWidget {
           color: DesignSystemColors.white,
         ),
       ),
+      child: Text(text),
     );
   }
 }
 
 class _SecondaryButton extends StatelessWidget {
   const _SecondaryButton({
-    Key? key,
     required this.text,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   final String text;
   final VoidCallback? onPressed;
@@ -183,7 +181,6 @@ class _SecondaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return TextButton(
-      child: Text(text),
       onPressed: onPressed,
       style: TextButton.styleFrom(
         foregroundColor: const Color(0xFF8D929D),
@@ -196,6 +193,7 @@ class _SecondaryButton extends StatelessWidget {
           fontWeight: FontWeight.w700,
         ),
       ),
+      child: Text(text),
     );
   }
 }

@@ -8,17 +8,16 @@ import '../../domain/states/feed_routing_state.dart';
 import 'feed_routing_profile_chat_controller.dart';
 
 class FeedRoutingProfileChatPage extends StatefulWidget {
-  const FeedRoutingProfileChatPage({Key? key, required this.controller})
-      : super(key: key);
+  const FeedRoutingProfileChatPage({super.key, required this.controller});
 
   final FeedRoutingProfileChatController controller;
 
   @override
-  _FeedRoutingProfileChatPageState createState() =>
-      _FeedRoutingProfileChatPageState();
+  FeedRoutingProfileChatPageState createState() =>
+      FeedRoutingProfileChatPageState();
 }
 
-class _FeedRoutingProfileChatPageState
+class FeedRoutingProfileChatPageState
     extends State<FeedRoutingProfileChatPage> {
   FeedRoutingProfileChatController get _controller => widget.controller;
 
@@ -29,7 +28,7 @@ class _FeedRoutingProfileChatPageState
   }
 }
 
-extension _Bodybuilder on _FeedRoutingProfileChatPageState {
+extension _Bodybuilder on FeedRoutingProfileChatPageState {
   Widget pageBuilder(FeedRoutingState state) {
     return state.when(
       initial: (title) => loadingPage(title),
@@ -43,6 +42,7 @@ extension _Bodybuilder on _FeedRoutingProfileChatPageState {
         elevation: 0,
         title: Text(title),
         backgroundColor: DesignSystemColors.easterPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: SafeArea(
         child: PageProgressIndicator(
@@ -60,6 +60,7 @@ extension _Bodybuilder on _FeedRoutingProfileChatPageState {
         elevation: 0,
         title: Text(title),
         backgroundColor: DesignSystemColors.easterPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: SafeArea(
         child: SupportCenterGeneralError(

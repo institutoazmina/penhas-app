@@ -14,11 +14,11 @@ part 'compose_tweet_controller.g.dart';
 
 const _tweetContentLimitSize = 2200;
 
-class ComposeTweetController = _ComposeTweetControllerBase
+class ComposeTweetController = ComposeTweetControllerBase
     with _$ComposeTweetController;
 
-abstract class _ComposeTweetControllerBase with Store, MapFailureMessage {
-  _ComposeTweetControllerBase({
+abstract class ComposeTweetControllerBase with Store, MapFailureMessage {
+  ComposeTweetControllerBase({
     required this.useCase,
     required this.navigator,
     TextEditingController? textEditingController,

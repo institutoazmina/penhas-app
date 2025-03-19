@@ -4,17 +4,17 @@ import '../../shared/design_system/colors.dart';
 import 'splash_controller.dart';
 
 class SplashPage extends StatefulWidget {
-  const SplashPage({Key? key, this.title = 'Splash', required this.controller})
-      : super(key: key);
+  const SplashPage(
+      {super.key, this.title = 'Splash', required this.controller});
 
   final String title;
   final SplashController controller;
 
   @override
-  _SplashPageState createState() => _SplashPageState();
+  SplashPageState createState() => SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class SplashPageState extends State<SplashPage> {
   SplashController get _controller => widget.controller;
   @override
   Widget build(BuildContext context) {

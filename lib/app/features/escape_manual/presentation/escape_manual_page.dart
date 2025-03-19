@@ -1,8 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../shared/design_system/button_shape.dart';
@@ -24,8 +24,7 @@ typedef OnCallButtonPressed = void Function(
 );
 
 class EscapeManualPage extends StatefulWidget {
-  const EscapeManualPage({Key? key, required this.controller})
-      : super(key: key);
+  const EscapeManualPage({super.key, required this.controller});
   final EscapeManualController controller;
 
   @override
@@ -101,9 +100,9 @@ class _InitialStateWidget extends Container {
 
 class _ErrorStateWidget extends SupportCenterGeneralError {
   const _ErrorStateWidget({
-    required String message,
+    required super.message,
     required VoidCallback onRetryPressed,
-  }) : super(message: message, onPressed: onRetryPressed);
+  }) : super(onPressed: onRetryPressed);
 }
 
 class _LoadedStateWidget extends StatelessWidget {
@@ -145,10 +144,6 @@ class _LoadedStateWidget extends StatelessWidget {
               onPressed: () {
                 openAssistantPressed(assistant.action);
               },
-              child: Text(
-                assistant.action.text,
-                textAlign: TextAlign.center,
-              ),
               style: OutlinedButton.styleFrom(
                 foregroundColor: DesignSystemColors.darkIndigoThree,
                 backgroundColor: DesignSystemColors.white,
@@ -157,6 +152,10 @@ class _LoadedStateWidget extends StatelessWidget {
                 ),
                 minimumSize: const Size(double.infinity, 50),
                 shape: kButtonShapeOutlineWhite,
+              ),
+              child: Text(
+                assistant.action.text,
+                textAlign: TextAlign.center,
               ),
             ),
           ),
@@ -241,8 +240,8 @@ class _TaskWidget extends StatefulWidget {
   const _TaskWidget(
     this.task,
     this.controller, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final EscapeManualTodoTaskEntity task;
   final EscapeManualController controller;
@@ -281,12 +280,17 @@ class _TaskWidgetState extends State<_TaskWidget> {
             title: Semantics(
               label: task.description,
               excludeSemantics: true,
-              child: HtmlWidget(
-                task.description,
-                textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontSize: 16,
-                      color: DesignSystemColors.darkIndigoThree,
-                    ),
+              child: Html(
+                data: task.description,
+                style: {
+                  'body': Style.fromTextStyle(
+                    Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              fontSize: 16,
+                              color: DesignSystemColors.darkIndigoThree,
+                            ) ??
+                        const TextStyle(fontSize: 16),
+                  )
+                },
               ),
             ),
             subtitle: task is EscapeManualContactsTaskEntity
@@ -355,7 +359,7 @@ class _TaskActionWidget extends PopupMenuItem {
               SvgPicture.asset(
                 icon,
                 colorFilter: const ColorFilter.mode(
-                    DesignSystemColors.darkIndigoThree, BlendMode.color),
+                    DesignSystemColors.darkIndigoThree, BlendMode.srcIn),
                 height: size,
                 width: size,
               ),
@@ -380,9 +384,8 @@ class _Divider extends Divider {
 class _TrustedContactsWidget extends StatelessWidget {
   const _TrustedContactsWidget(
     this.task, {
-    Key? key,
     required this.onCallButtonPressed,
-  }) : super(key: key);
+  });
 
   final EscapeManualContactsTaskEntity task;
   final OnCallButtonPressed onCallButtonPressed;
@@ -412,9 +415,8 @@ class _TrustedContactsWidget extends StatelessWidget {
 class _ContactWidget extends StatelessWidget {
   const _ContactWidget(
     this.contact, {
-    Key? key,
     required this.onCallButtonPressed,
-  }) : super(key: key);
+  });
 
   final ContactEntity contact;
   final OnCallButtonPressed onCallButtonPressed;
@@ -463,9 +465,9 @@ class _ContactWidget extends StatelessWidget {
 class _ButtonTaskWidget extends StatefulWidget {
   const _ButtonTaskWidget(
     this.task, {
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final EscapeManualButtonTaskEntity task;
   final EscapeManualController controller;
@@ -487,7 +489,6 @@ class _ButtonTaskWidgetState extends State<_ButtonTaskWidget> {
           horizontal: 52,
         ),
         title: TextButton(
-          child: Text(task.button.label),
           onPressed: () {
             controller.onButtonPressed(task.button);
           },
@@ -502,6 +503,7 @@ class _ButtonTaskWidgetState extends State<_ButtonTaskWidget> {
             ),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
           ),
+          child: Text(task.button.label),
         ),
       ),
     );

@@ -2,14 +2,10 @@ import '../../domain/entities/guardian_session_entity.dart';
 
 class GuardianSessionModel extends GuardianSessionEntity {
   const GuardianSessionModel({
-    required List<GuardianEntity> guards,
-    required int remainingInvites,
-    required int maximumInvites,
-  }) : super(
-          remainingInvites: remainingInvites,
-          guards: guards,
-          maximumInvites: maximumInvites,
-        );
+    required super.guards,
+    required super.remainingInvites,
+    required super.maximumInvites,
+  });
 
   factory GuardianSessionModel.fromJson(Map<String, dynamic> jsonData) {
     final int remainingInvites = jsonData['remaing_invites'] ?? 0;

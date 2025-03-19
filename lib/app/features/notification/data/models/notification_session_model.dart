@@ -2,14 +2,10 @@ import '../../domain/entities/notification_session_entity.dart';
 
 class NotificationSessionModel extends NotificationSessionEntity {
   const NotificationSessionModel({
-    required bool hasMore,
-    required String? nextPage,
-    required List<NotificationEntity>? notifications,
-  }) : super(
-          hasMore: hasMore,
-          nextPage: nextPage,
-          notifications: notifications,
-        );
+    required super.hasMore,
+    required super.nextPage,
+    required super.notifications,
+  });
 
   factory NotificationSessionModel.fromJson(Map<String, dynamic> jsonData) {
     final hasMore = jsonData['has_more'] == 1;

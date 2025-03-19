@@ -3,20 +3,13 @@ import '../../domain/entities/chat_user_entity.dart';
 
 class ChatUserModel extends ChatUserEntity {
   const ChatUserModel({
-    required String activity,
-    required String? nickname,
-    required String? avatar,
-    required int? userId,
-    required bool blockedMe,
-    required List<ChatBadgeEntity> badges,
-  }) : super(
-          activity: activity,
-          nickname: nickname,
-          avatar: avatar,
-          userId: userId,
-          blockedMe: blockedMe,
-          badges: badges,
-        );
+    required String super.activity,
+    required super.nickname,
+    required super.avatar,
+    required super.userId,
+    required super.blockedMe,
+    required super.badges,
+  });
 
   factory ChatUserModel.fromJson(Map<String, dynamic> jsonData) {
     List<ChatBadgeEntity> badges = [];
@@ -41,23 +34,14 @@ class ChatUserModel extends ChatUserEntity {
 
 class ChatBadgeModel extends ChatBadgeEntity {
   ChatBadgeModel(
-      {required String code,
-      required String description,
-      required String imageUrl,
-      required String imageUrlBlack,
-      required String name,
-      required String style,
-      required int showDescription,
-      required int popUp})
-      : super(
-            code: code,
-            description: description,
-            imageUrl: imageUrl,
-            imageUrlBlack: imageUrlBlack,
-            name: name,
-            style: style,
-            showDescription: showDescription,
-            popUp: popUp);
+      {required super.code,
+      required super.description,
+      required super.imageUrl,
+      required super.imageUrlBlack,
+      required super.name,
+      required super.style,
+      required super.showDescription,
+      required super.popUp});
 
   factory ChatBadgeModel.fromJson(Map<String, dynamic> jsonData) {
     return ChatBadgeModel(

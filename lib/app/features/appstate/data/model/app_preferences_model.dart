@@ -2,12 +2,9 @@ import '../../domain/entities/app_preferences_entity.dart';
 
 class AppPreferencesModel extends AppPreferencesEntity {
   const AppPreferencesModel({
-    required int? inactiveAppSince,
-    required int inactiveAppLogoutTimeInSeconds,
-  }) : super(
-          inactiveAppSince: inactiveAppSince,
-          inactiveAppLogoutTimeInSeconds: inactiveAppLogoutTimeInSeconds,
-        );
+    required super.inactiveAppSince,
+    required super.inactiveAppLogoutTimeInSeconds,
+  });
 
   factory AppPreferencesModel.fromJson(Map<String, dynamic> jsonData) =>
       AppPreferencesModel(

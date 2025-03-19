@@ -76,7 +76,7 @@ void main() {
       verify(() => mockCallback.call(any())).called(1);
     });
 
-    screenshotTest(
+    screenshotTestSimplified(
       'should render the page',
       fileName: 'filter_loaded_state_page',
       pageBuilder: () => FilterLoadedStatePage(

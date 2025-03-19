@@ -11,21 +11,20 @@ import 'talk/chat_main_talks_page.dart';
 
 class ChatMainPage extends StatefulWidget {
   const ChatMainPage(
-      {Key? key,
-      required this.chatMainPeopleController,
+      {super.key,
       required this.controller,
-      required this.chatMainTalksController})
-      : super(key: key);
+      required this.chatMainPeopleController,
+      required this.chatMainTalksController});
 
-  final ChatMainPeopleController chatMainPeopleController;
   final ChatMainController controller;
+  final ChatMainPeopleController chatMainPeopleController;
   final ChatMainTalksController chatMainTalksController;
 
   @override
-  _ChatMainPageState createState() => _ChatMainPageState();
+  ChatMainPageState createState() => ChatMainPageState();
 }
 
-class _ChatMainPageState extends State<ChatMainPage>
+class ChatMainPageState extends State<ChatMainPage>
     with SingleTickerProviderStateMixin {
   ChatMainController get controller => widget.controller;
   ChatMainPeopleController get chatMainPeopleController =>
@@ -46,7 +45,7 @@ class _ChatMainPageState extends State<ChatMainPage>
   }
 }
 
-extension _ChatMainBuilder on _ChatMainPageState {
+extension _ChatMainBuilder on ChatMainPageState {
   Widget buildSupportChat() {
     return SafeArea(
       child: SizedBox.expand(
@@ -83,9 +82,11 @@ extension _ChatMainBuilder on _ChatMainPageState {
   }
 }
 
-extension _ChatMainPageStatePrivate on _ChatMainPageState {
+extension _ChatMainPageStatePrivate on ChatMainPageState {
   PreferredSizeWidget chatTabBar(List<ChatTabItem> items) {
     return TabBar(
+      dividerColor: Colors.transparent,
+      tabAlignment: TabAlignment.start,
       isScrollable: true,
       labelColor: DesignSystemColors.white,
       indicatorColor: DesignSystemColors.white,
@@ -97,7 +98,6 @@ extension _ChatMainPageStatePrivate on _ChatMainPageState {
           color: DesignSystemColors.ligthPurple,
           borderRadius: BorderRadius.circular(22),
           border: Border.all(color: DesignSystemColors.ligthPurple, width: 1)),
-      indicatorPadding: const EdgeInsets.only(right: 16.0),
       labelPadding: const EdgeInsets.only(right: 16.0),
       tabs: items.map((e) => _CustomTabWidget(title: e.title)).toList(),
     );
@@ -119,9 +119,8 @@ extension _ChatMainPageStatePrivate on _ChatMainPageState {
 
 class _CustomTabWidget extends StatelessWidget {
   const _CustomTabWidget({
-    Key? key,
     required this.title,
-  }) : super(key: key);
+  });
 
   final String title;
 
@@ -140,7 +139,7 @@ class _CustomTabWidget extends StatelessWidget {
   }
 }
 
-extension _ChatMainPageStateTextStyle on _ChatMainPageState {
+extension _ChatMainPageStateTextStyle on ChatMainPageState {
   TextStyle get chatTabSelectedTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,

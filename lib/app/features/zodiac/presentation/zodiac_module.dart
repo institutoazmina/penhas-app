@@ -15,7 +15,7 @@ import 'zodiac_controller.dart';
 import 'zodiac_page.dart';
 
 class ZodiacModule extends WidgetModule {
-  ZodiacModule({Key? key}) : super(key: key);
+  ZodiacModule({super.key});
 
   @override
   List<Bind> get binds => [

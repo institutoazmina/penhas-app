@@ -104,7 +104,7 @@ void main() {
       expect(iconButtonFinder, findsOneWidget);
     });
 
-    screenshotTest('Should render page',
+    screenshotTestSimplified('Should render page',
         fileName: 'guardian_tile_action',
         pageBuilder: () => GuardianTileActionCard(
               card: card,
