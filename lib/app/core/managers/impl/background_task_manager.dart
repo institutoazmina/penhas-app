@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:workmanager/workmanager.dart';
 
 import '../../../shared/logger/log.dart';
 import '../background_task_manager.dart';
@@ -9,7 +10,7 @@ import '../background_task_registry.dart';
 class BackgroundTaskManager extends IBackgroundTaskManager {
   BackgroundTaskManager({
     IBackgroundTaskRegistry registry = const BackgroundTaskRegistry(),
-    FlutterBackgroundService? workManager,
+    Workmanager? workManager,
   })  : _registry = registry; // coverage:ignore-line
 
   final IBackgroundTaskRegistry _registry;

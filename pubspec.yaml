@@ -93,6 +93,8 @@ dev_dependencies:
   mocktail: ^1.0.0
   mocktail_image_network: ^1.2.0
   plugin_platform_interface: ^2.0.0
+  flutter_html: ^3.0.0-beta.2
+  workmanager: ^0.5.1
 
 flutter_icons:
   ios: true
