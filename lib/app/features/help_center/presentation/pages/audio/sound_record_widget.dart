@@ -10,7 +10,7 @@ class SoundRecordWidget extends StatefulWidget {
   final VoidCallback? onPressed;
 
   @override
-  SoundRecordWidgetState createState() => SoundRecordWidgetState();
+  State<SoundRecordWidget> createState() => _SoundRecordWidgetState();
 }
 
 class _SoundRecordWidgetState extends State<SoundRecordWidget>
