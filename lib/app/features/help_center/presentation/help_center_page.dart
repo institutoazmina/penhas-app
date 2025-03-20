@@ -29,7 +29,7 @@ class HelpCenterPage extends StatefulWidget {
   final String title;
 
   @override
-  HelpCenterPageState createState() => HelpCenterPageState();
+  State<HelpCenterPage> createState() => _HelpCenterPageState();
 }
 
 class _HelpCenterPageState extends State<HelpCenterPage> with SnackBarHandler {
