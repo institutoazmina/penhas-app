@@ -31,7 +31,7 @@ class DetailTweetPage extends StatefulWidget {
   final DetailTweetController detailTweetController;
 
   @override
-  DetailTweetPageState createState() => DetailTweetPageState();
+  State<DetailTweetPage> createState() => _DetailTweetPageState();
 }
 
 class _DetailTweetPageState extends State<DetailTweetPage> with SnackBarHandler {
