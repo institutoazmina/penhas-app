@@ -26,7 +26,7 @@ class ResetPasswordPage extends StatefulWidget {
   State<ResetPasswordPage> createState() => _ResetPasswordPageState();
 }
 
-class ResetPasswordPageState extends State<ResetPasswordPage>
+class _ResetPasswordPageState extends State<ResetPasswordPage>
     with SnackBarHandler {
   ResetPasswordController get controller => widget.controller;
   List<ReactionDisposer>? _disposers;
