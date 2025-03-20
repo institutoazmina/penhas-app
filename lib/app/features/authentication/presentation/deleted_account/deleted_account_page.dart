@@ -17,7 +17,7 @@ class DeletedAccountPage extends StatefulWidget {
   final DeletedAccountController controller;
 
   @override
-  DeletedAccountPageState createState() => DeletedAccountPageState();
+  State<DeletedAccountPage> createState() => _DeletedAccountPageState();
 }
 
 class _DeletedAccountPageState extends State<DeletedAccountPage>
