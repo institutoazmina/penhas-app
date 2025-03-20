@@ -17,7 +17,7 @@ class FeedRoutingProfileChatPage extends StatefulWidget {
       FeedRoutingProfileChatPageState();
 }
 
-class FeedRoutingProfileChatPageState
+class _FeedRoutingProfileChatPageState
     extends State<FeedRoutingProfileChatPage> {
   FeedRoutingProfileChatController get _controller => widget.controller;
 
