@@ -18,7 +18,7 @@ class ChatChannelMessageComposer extends StatefulWidget {
 
   @override
   State<ChatChannelMessageComposer> createState() =>
-      ChatChannelMessageComposerState();
+      _ChatChannelMessageComposerState();
 }
 
 class _ChatChannelMessageComposerState
