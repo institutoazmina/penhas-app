@@ -20,7 +20,7 @@ class ChatMainTalksPage extends StatefulWidget {
   ChatMainTalksPageState createState() => ChatMainTalksPageState();
 }
 
-class ChatMainTalksPageState extends State<ChatMainTalksPage> {
+class _ChatMainTalksPageState extends State<ChatMainTalksPage> {
   ChatMainTalksController get controller => widget.controller;
 
   @override
