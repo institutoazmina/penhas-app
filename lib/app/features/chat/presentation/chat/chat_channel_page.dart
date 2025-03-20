@@ -22,7 +22,7 @@ class ChatPage extends StatefulWidget {
   final ChatChannelController controller;
 
   @override
-  ChatPageState createState() => ChatPageState();
+  State<ChatPage> createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
