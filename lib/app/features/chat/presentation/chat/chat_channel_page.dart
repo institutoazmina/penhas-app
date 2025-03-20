@@ -25,7 +25,7 @@ class ChatPage extends StatefulWidget {
   ChatPageState createState() => ChatPageState();
 }
 
-class ChatPageState extends State<ChatPage> {
+class _ChatPageState extends State<ChatPage> {
   ChatChannelController get controller => widget.controller;
 
   @override
