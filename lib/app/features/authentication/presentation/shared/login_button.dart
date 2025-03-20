@@ -14,7 +14,7 @@ class LoginButton extends StatefulWidget {
   State<LoginButton> createState() => _LoginButtonState();
 }
 
-class LoginButtonState extends State<LoginButton> {
+class _LoginButtonState extends State<LoginButton> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
