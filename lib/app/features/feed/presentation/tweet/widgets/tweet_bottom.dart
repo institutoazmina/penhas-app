@@ -16,7 +16,7 @@ class TweetBottom extends StatefulWidget {
   final ITweetController controller;
 
   @override
-  TweetBottomState createState() => TweetBottomState();
+  State<TweetBottom> createState() => _TweetBottomState();
 }
 
 class _TweetBottomState extends State<TweetBottom> {
