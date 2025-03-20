@@ -24,7 +24,7 @@ class ProfileEditPage extends StatefulWidget {
   final ProfileEditController controller;
 
   @override
-  ProfileEditPageState createState() => ProfileEditPageState();
+  State<ProfileEditPage> createState() => _ProfileEditPageState();
 }
 
 class _ProfileEditPageState extends State<ProfileEditPage> with SnackBarHandler {
