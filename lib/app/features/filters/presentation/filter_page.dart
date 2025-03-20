@@ -16,7 +16,7 @@ class FilterPage extends StatefulWidget {
   FilterPageState createState() => FilterPageState();
 }
 
-class FilterPageState extends State<FilterPage> with SnackBarHandler {
+class _FilterPageState extends State<FilterPage> with SnackBarHandler {
   FilterController get _controller => widget.controller;
   @override
   Widget build(BuildContext context) {
