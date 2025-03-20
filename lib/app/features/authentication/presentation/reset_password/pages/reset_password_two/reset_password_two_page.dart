@@ -20,7 +20,7 @@ class ResetPasswordTwoPage extends StatefulWidget {
   final ResetPasswordTwoController controller;
 
   @override
-  ResetPasswordTwoPageState createState() => ResetPasswordTwoPageState();
+  State<ResetPasswordTwoPage> createState() => _ResetPasswordTwoPageState();
 }
 
 class ResetPasswordTwoPageState extends State<ResetPasswordTwoPage>
