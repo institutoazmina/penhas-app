@@ -25,7 +25,7 @@ class ReplyTweetPage extends StatefulWidget {
   ReplyTweetPageState createState() => ReplyTweetPageState();
 }
 
-class ReplyTweetPageState extends State<ReplyTweetPage> with SnackBarHandler {
+class _ReplyTweetPageState extends State<ReplyTweetPage> with SnackBarHandler {
   final String inputHint = 'Deixe seu comentário';
   final String anonymousHint =
       'Sua publicação é anônima. As usuárias do app podem comentar sua publicação, mas só você pode iniciar uma conversa com elas.';
