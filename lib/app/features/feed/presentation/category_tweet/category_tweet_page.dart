@@ -23,7 +23,7 @@ class CategoryTweetPage extends StatefulWidget {
   CategoryTweetPageState createState() => CategoryTweetPageState();
 }
 
-class CategoryTweetPageState extends State<CategoryTweetPage>
+class _CategoryTweetPageState extends State<CategoryTweetPage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
