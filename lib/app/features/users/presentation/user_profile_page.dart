@@ -30,7 +30,7 @@ class UserProfilePage extends StatefulWidget {
   final UserProfileController controller;
 
   @override
-  UserProfilePageState createState() => UserProfilePageState();
+  State<UserProfilePage> createState() => _UserProfilePageState();
 }
 
 class _UserProfilePageState extends State<UserProfilePage> with SnackBarHandler {
