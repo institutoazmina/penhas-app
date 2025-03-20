@@ -16,7 +16,7 @@ class AccountDeletePage extends StatefulWidget {
   final AccountDeleteController controller;
 
   @override
-  AccountDeletePageState createState() => AccountDeletePageState();
+  State<AccountDeletePage> createState() => _AccountDeletePageState();
 }
 
 class _AccountDeletePageState extends State<AccountDeletePage>
