@@ -13,7 +13,7 @@ class FilterPage extends StatefulWidget {
   final FilterController controller;
 
   @override
-  FilterPageState createState() => FilterPageState();
+  State<FilterPage> createState() => _FilterPageState();
 }
 
 class _FilterPageState extends State<FilterPage> with SnackBarHandler {
