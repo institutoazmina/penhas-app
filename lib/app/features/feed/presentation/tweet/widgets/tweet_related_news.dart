@@ -17,7 +17,7 @@ class TweetRelatedNews extends StatefulWidget {
   TweetRelatedNewsState createState() => TweetRelatedNewsState();
 }
 
-class TweetRelatedNewsState extends State<TweetRelatedNews> {
+class _TweetRelatedNewsState extends State<TweetRelatedNews> {
   @override
   Widget build(BuildContext context) {
     final double viewPortScale = widget.related.news.length > 1 ? 0.80 : 0.95;
