@@ -21,7 +21,7 @@ class SignInAnonymousPage extends StatefulWidget {
   final SignInAnonymousController controller;
 
   @override
-  SignInAnonymousPageState createState() => SignInAnonymousPageState();
+  State<SignInAnonymousPage> createState() => _SignInAnonymousPageState();
 }
 
 class _SignInAnonymousPageState extends State<SignInAnonymousPage>
