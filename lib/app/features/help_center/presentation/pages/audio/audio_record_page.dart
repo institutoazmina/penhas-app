@@ -17,7 +17,7 @@ class AudioRecordPage extends StatefulWidget {
   final AudioRecordController controller;
 
   @override
-  AudioRecordState createState() => AudioRecordState();
+  State<AudioRecordPage> createState() => _AudioRecordState();
 }
 
 class _AudioRecordState extends State<AudioRecordPage> with SnackBarHandler {
