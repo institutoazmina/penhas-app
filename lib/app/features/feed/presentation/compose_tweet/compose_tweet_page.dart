@@ -24,7 +24,7 @@ class ComposeTweetPage extends StatefulWidget {
   final ComposeTweetController composeTweetController;
 
   @override
-  ComposeTweetPageState createState() => ComposeTweetPageState();
+  State<ComposeTweetPage> createState() => _ComposeTweetPageState();
 }
 
 class _ComposeTweetPageState extends State<ComposeTweetPage>
