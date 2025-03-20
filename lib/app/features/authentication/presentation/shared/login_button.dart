@@ -11,7 +11,7 @@ class LoginButton extends StatefulWidget {
   final void Function() onChanged;
 
   @override
-  LoginButtonState createState() => LoginButtonState();
+  State<LoginButton> createState() => _LoginButtonState();
 }
 
 class LoginButtonState extends State<LoginButton> {
