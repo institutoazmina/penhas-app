@@ -27,7 +27,7 @@ class SignUpPage extends StatefulWidget {
   SignUpPageState createState() => SignUpPageState();
 }
 
-class SignUpPageState extends State<SignUpPage> with SnackBarHandler {
+class _SignUpPageState extends State<SignUpPage> with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
