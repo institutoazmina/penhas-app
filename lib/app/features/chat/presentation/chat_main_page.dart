@@ -21,7 +21,7 @@ class ChatMainPage extends StatefulWidget {
   final ChatMainTalksController chatMainTalksController;
 
   @override
-  ChatMainPageState createState() => ChatMainPageState();
+  State<ChatMainPage> createState() => _ChatMainPageState();
 }
 
 class _ChatMainPageState extends State<ChatMainPage>
