@@ -23,7 +23,7 @@ class GuardiansPage extends StatefulWidget {
   final String title;
 
   @override
-  GuardiansPageState createState() => GuardiansPageState();
+  State<GuardiansPage> createState() => _GuardiansPageState();
 }
 
 class _GuardiansPageState extends State<GuardiansPage> with SnackBarHandler {
