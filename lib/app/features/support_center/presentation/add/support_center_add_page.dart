@@ -33,7 +33,7 @@ class SupportCenterAddPage extends StatefulWidget {
   SupportCenterAddPageState createState() => SupportCenterAddPageState();
 }
 
-class SupportCenterAddPageState extends State<SupportCenterAddPage>
+class _SupportCenterAddPageState extends State<SupportCenterAddPage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
