@@ -33,7 +33,7 @@ class UserProfilePage extends StatefulWidget {
   UserProfilePageState createState() => UserProfilePageState();
 }
 
-class UserProfilePageState extends State<UserProfilePage> with SnackBarHandler {
+class _UserProfilePageState extends State<UserProfilePage> with SnackBarHandler {
   ReactionDisposer? _disposer;
   late final _scaffoldKey = GlobalKey<ScaffoldState>();
   late final _progressDialogKey = GlobalKey();
