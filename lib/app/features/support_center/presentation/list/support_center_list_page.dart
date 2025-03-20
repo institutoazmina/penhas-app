@@ -13,7 +13,7 @@ class SupportCenterListPage extends StatefulWidget {
   final SupportCenterListController controller;
 
   @override
-  SupportCenterListPageState createState() => SupportCenterListPageState();
+  State<SupportCenterListPage> createState() => _SupportCenterListPageState();
 }
 
 class _SupportCenterListPageState extends State<SupportCenterListPage> {
