@@ -19,7 +19,7 @@ class ChatMainPeoplePage extends StatefulWidget {
   ChatMainPeoplePageState createState() => ChatMainPeoplePageState();
 }
 
-class ChatMainPeoplePageState extends State<ChatMainPeoplePage> {
+class _ChatMainPeoplePageState extends State<ChatMainPeoplePage> {
   ChatMainPeopleController get controller => widget.controller;
   @override
   Widget build(BuildContext context) {
