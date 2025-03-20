@@ -20,7 +20,7 @@ class AudioRecordPage extends StatefulWidget {
   AudioRecordState createState() => AudioRecordState();
 }
 
-class AudioRecordState extends State<AudioRecordPage> with SnackBarHandler {
+class _AudioRecordState extends State<AudioRecordPage> with SnackBarHandler {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   AudioActivity? _audioActivity;
   StreamSubscription? _streamSubscription;
