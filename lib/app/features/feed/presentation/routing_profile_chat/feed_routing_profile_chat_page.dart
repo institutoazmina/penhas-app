@@ -14,7 +14,7 @@ class FeedRoutingProfileChatPage extends StatefulWidget {
 
   @override
   State<FeedRoutingProfileChatPage> createState() =>
-      FeedRoutingProfileChatPageState();
+      _FeedRoutingProfileChatPageState();
 }
 
 class _FeedRoutingProfileChatPageState
