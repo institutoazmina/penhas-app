@@ -28,7 +28,7 @@ class PenhasDrawerPage extends StatefulWidget {
   PenhasDrawerPageState createState() => PenhasDrawerPageState();
 }
 
-class PenhasDrawerPageState extends State<PenhasDrawerPage> {
+class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
   final double listHeight = 80;
   final Color drawerGrey = const Color.fromRGBO(239, 239, 239, 1.0);
   PenhasDrawerController get _controller => widget.controller;
