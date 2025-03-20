@@ -20,7 +20,7 @@ class DeletedAccountPage extends StatefulWidget {
   DeletedAccountPageState createState() => DeletedAccountPageState();
 }
 
-class DeletedAccountPageState extends State<DeletedAccountPage>
+class _DeletedAccountPageState extends State<DeletedAccountPage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
