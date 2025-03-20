@@ -27,7 +27,7 @@ class ComposeTweetPage extends StatefulWidget {
   ComposeTweetPageState createState() => ComposeTweetPageState();
 }
 
-class ComposeTweetPageState extends State<ComposeTweetPage>
+class _ComposeTweetPageState extends State<ComposeTweetPage>
     with SnackBarHandler {
   final String inputHint = 'Deixe seu comentário';
   final String anonymousHint =
