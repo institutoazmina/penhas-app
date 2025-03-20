@@ -218,7 +218,7 @@ class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
   }
 }
 
-extension _TextStyle on PenhasDrawerPageState {
+extension _TextStyle on _PenhasDrawerPageState {
   TextStyle get securityContextTextStyle => const TextStyle(
         color: DesignSystemColors.darkIndigoThree,
         fontFamily: 'Lato',
