@@ -21,7 +21,7 @@ class ChatChannelMessageComposer extends StatefulWidget {
       ChatChannelMessageComposerState();
 }
 
-class ChatChannelMessageComposerState
+class _ChatChannelMessageComposerState
     extends State<ChatChannelMessageComposer> {
   final TextEditingController _textController = TextEditingController();
 
