@@ -32,7 +32,7 @@ class HelpCenterPage extends StatefulWidget {
   HelpCenterPageState createState() => HelpCenterPageState();
 }
 
-class HelpCenterPageState extends State<HelpCenterPage> with SnackBarHandler {
+class _HelpCenterPageState extends State<HelpCenterPage> with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _loadState = PageProgressState.initial;
