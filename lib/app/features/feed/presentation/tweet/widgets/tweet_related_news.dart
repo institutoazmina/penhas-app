@@ -14,7 +14,7 @@ class TweetRelatedNews extends StatefulWidget {
   final TweetRelatedNewsEntity related;
 
   @override
-  TweetRelatedNewsState createState() => TweetRelatedNewsState();
+  State<TweetRelatedNews> createState() => _TweetRelatedNewsState();
 }
 
 class _TweetRelatedNewsState extends State<TweetRelatedNews> {
