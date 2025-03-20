@@ -27,7 +27,7 @@ class NewGuardianPage extends StatefulWidget {
   final NewGuardianController controller;
 
   @override
-  NewGuardianPageState createState() => NewGuardianPageState();
+  State<NewGuardianPage> createState() => _NewGuardianPageState();
 }
 
 class _NewGuardianPageState extends State<NewGuardianPage> with SnackBarHandler {
