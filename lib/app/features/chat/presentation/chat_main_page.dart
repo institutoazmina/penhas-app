@@ -24,7 +24,7 @@ class ChatMainPage extends StatefulWidget {
   ChatMainPageState createState() => ChatMainPageState();
 }
 
-class ChatMainPageState extends State<ChatMainPage>
+class _ChatMainPageState extends State<ChatMainPage>
     with SingleTickerProviderStateMixin {
   ChatMainController get controller => widget.controller;
   ChatMainPeopleController get chatMainPeopleController =>
