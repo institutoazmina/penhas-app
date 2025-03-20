@@ -30,7 +30,7 @@ class AudiosPage extends StatefulWidget {
   AudiosPageState createState() => AudiosPageState();
 }
 
-class AudiosPageState extends State<AudiosPage> with SnackBarHandler {
+class _AudiosPageState extends State<AudiosPage> with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
