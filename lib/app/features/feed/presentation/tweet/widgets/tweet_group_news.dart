@@ -16,7 +16,7 @@ class TweetGroupNews extends StatefulWidget {
   TweetGroupNewsState createState() => TweetGroupNewsState();
 }
 
-class TweetGroupNewsState extends State<TweetGroupNews> {
+class _TweetGroupNewsState extends State<TweetGroupNews> {
   int _currentPage = 0;
 
   @override
