@@ -25,7 +25,7 @@ class PenhasDrawerPage extends StatefulWidget {
   final StealthModeTutorialPageController stealthController;
 
   @override
-  PenhasDrawerPageState createState() => PenhasDrawerPageState();
+  State<PenhasDrawerPage> createState() => _PenhasDrawerPageState();
 }
 
 class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
