@@ -22,7 +22,7 @@ class SupportCenterPage extends StatefulWidget {
   final SupportCenterController controller;
 
   @override
-  SupportCenterPageState createState() => SupportCenterPageState();
+  State<SupportCenterPage> createState() => _SupportCenterPageState();
 }
 
 class _SupportCenterPageState extends State<SupportCenterPage>
