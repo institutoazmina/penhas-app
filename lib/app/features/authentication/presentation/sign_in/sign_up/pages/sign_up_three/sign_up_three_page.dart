@@ -22,7 +22,7 @@ class SignUpThreePage extends StatefulWidget {
   final SignUpThreeController controller;
 
   @override
-  SignUpThreePageState createState() => SignUpThreePageState();
+  State<SignUpThreePage> createState() => _SignUpThreePageState();
 }
 
 class _SignUpThreePageState extends State<SignUpThreePage> with SnackBarHandler {
