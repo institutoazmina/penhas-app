@@ -8,7 +8,7 @@ class RecordTutorialPage extends StatefulWidget {
   const RecordTutorialPage({super.key});
 
   @override
-  RecordTutorialPageState createState() => RecordTutorialPageState();
+  State<RecordTutorialPage> createState() => _RecordTutorialPageState();
 }
 
 class _RecordTutorialPageState extends State<RecordTutorialPage> {
