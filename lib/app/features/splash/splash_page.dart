@@ -14,7 +14,7 @@ class SplashPage extends StatefulWidget {
   SplashPageState createState() => SplashPageState();
 }
 
-class SplashPageState extends State<SplashPage> {
+class _SplashPageState extends State<SplashPage> {
   SplashController get _controller => widget.controller;
   @override
   Widget build(BuildContext context) {
