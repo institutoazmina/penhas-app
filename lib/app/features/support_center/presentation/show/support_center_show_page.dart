@@ -24,7 +24,7 @@ class SupportCenterShowPage extends StatefulWidget {
   final SupportCenterShowController controller;
 
   @override
-  SupportCenterShowPageState createState() => SupportCenterShowPageState();
+  State<SupportCenterShowPage> createState() => _SupportCenterShowPageState();
 }
 
 class SupportCenterShowPageState extends State<SupportCenterShowPage> {
