@@ -16,7 +16,7 @@ class FilterTweetPage extends StatefulWidget {
   final FilterTweetController controller;
 
   @override
-  FilterTweetPageState createState() => FilterTweetPageState();
+  State<FilterTweetPage> createState() => _FilterTweetPageState();
 }
 
 class _FilterTweetPageState extends State<FilterTweetPage> with SnackBarHandler {
