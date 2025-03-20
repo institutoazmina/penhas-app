@@ -19,7 +19,7 @@ class AccountDeletePage extends StatefulWidget {
   AccountDeletePageState createState() => AccountDeletePageState();
 }
 
-class AccountDeletePageState extends State<AccountDeletePage>
+class _AccountDeletePageState extends State<AccountDeletePage>
     with SnackBarHandler {
   bool _isPasswordVisible = false;
   AccountDeleteController get _controller => widget.controller;
