@@ -24,7 +24,7 @@ class SignUpPage extends StatefulWidget {
   final SignUpController controller;
 
   @override
-  SignUpPageState createState() => SignUpPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> with SnackBarHandler {
