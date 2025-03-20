@@ -22,7 +22,7 @@ class ReplyTweetPage extends StatefulWidget {
   final ReplyTweetController controller;
 
   @override
-  ReplyTweetPageState createState() => ReplyTweetPageState();
+  State<ReplyTweetPage> createState() => _ReplyTweetPageState();
 }
 
 class _ReplyTweetPageState extends State<ReplyTweetPage> with SnackBarHandler {
