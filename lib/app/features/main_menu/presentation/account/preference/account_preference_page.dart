@@ -18,7 +18,7 @@ class AccountPreferencePage extends StatefulWidget {
   final AccountPreferenceController controller;
 
   @override
-  AccountPreferencePageState createState() => AccountPreferencePageState();
+  State<AccountPreferencePage> createState() => _AccountPreferencePageState();
 }
 
 class _AccountPreferencePageState extends State<AccountPreferencePage>
