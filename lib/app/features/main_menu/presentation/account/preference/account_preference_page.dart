@@ -21,7 +21,7 @@ class AccountPreferencePage extends StatefulWidget {
   AccountPreferencePageState createState() => AccountPreferencePageState();
 }
 
-class AccountPreferencePageState extends State<AccountPreferencePage>
+class _AccountPreferencePageState extends State<AccountPreferencePage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
