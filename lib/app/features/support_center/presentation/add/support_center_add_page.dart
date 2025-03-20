@@ -30,7 +30,7 @@ class SupportCenterAddPage extends StatefulWidget {
   final SupportCenterAddController controller;
 
   @override
-  SupportCenterAddPageState createState() => SupportCenterAddPageState();
+  State<SupportCenterAddPage> createState() => _SupportCenterAddPageState();
 }
 
 class _SupportCenterAddPageState extends State<SupportCenterAddPage>
