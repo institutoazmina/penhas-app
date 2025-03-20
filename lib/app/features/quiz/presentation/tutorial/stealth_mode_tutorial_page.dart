@@ -12,7 +12,8 @@ class StealthModeTutorialPage extends StatefulWidget {
   final StealthModeTutorialPageController controller;
 
   @override
-  State<StealthModeTutorialPage> createState() => _StealthModeTutorialPageState();
+  State<StealthModeTutorialPage> createState() =>
+      _StealthModeTutorialPageState();
 }
 
 class _StealthModeTutorialPageState extends State<StealthModeTutorialPage> {

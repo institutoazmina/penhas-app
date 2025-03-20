@@ -84,7 +84,7 @@ class _SupportCenterPageState extends State<SupportCenterPage>
   }
 }
 
-extension _SupportCenterPageStateBuilder on SupportCenterPageState {
+extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
   Widget bodyBuilder(SupportCenterState state) {
     return state.when(
       loaded: () => loadedSupportCenterPage(),

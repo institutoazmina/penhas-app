@@ -35,7 +35,7 @@ class _ChatMainPeoplePageState extends State<ChatMainPeoplePage> {
   }
 }
 
-extension _ChatMainPeoplePageBodyBuilder on ChatMainPeoplePageState {
+extension _ChatMainPeoplePageBodyBuilder on _ChatMainPeoplePageState {
   Widget bodyBuilder(ChatMainTalksState state) {
     return state.when(
       initial: () => empty(),

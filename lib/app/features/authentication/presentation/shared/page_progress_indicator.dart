@@ -20,7 +20,7 @@ class PageProgressIndicator extends StatefulWidget {
 
 class _PageProgressIndicatorState extends State<PageProgressIndicator>
     with SingleTickerProviderStateMixin {
-  PageProgressIndicatorState();
+  _PageProgressIndicatorState();
 
   late AnimationController _controller;
   late Animation<double> _animation;

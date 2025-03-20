@@ -74,7 +74,7 @@ class _AccountDeletePageState extends State<AccountDeletePage>
   }
 }
 
-extension _PageBuilder on AccountDeletePageState {
+extension _PageBuilder on _AccountDeletePageState {
   Widget bodyBuilder(ProfileDeleteState state) {
     return state.when(
       initial: () => bodyLoading(),
@@ -178,7 +178,7 @@ extension _PageBuilder on AccountDeletePageState {
   }
 }
 
-extension _TextStyle on AccountDeletePageState {
+extension _TextStyle on _AccountDeletePageState {
   TextStyle get titleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 20.0,

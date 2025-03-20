@@ -60,7 +60,7 @@ class _DeletedAccountPageState extends State<DeletedAccountPage>
   }
 }
 
-extension _TextStyle on DeletedAccountPageState {
+extension _TextStyle on _DeletedAccountPageState {
   TextStyle get titleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 20.0,
@@ -85,7 +85,7 @@ extension _TextStyle on DeletedAccountPageState {
       );
 }
 
-extension _MethodPrivate on DeletedAccountPageState {
+extension _MethodPrivate on _DeletedAccountPageState {
   Widget bodyBuilder() {
     return SafeArea(
       child: PageProgressIndicator(

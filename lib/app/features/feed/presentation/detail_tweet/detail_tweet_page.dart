@@ -34,7 +34,8 @@ class DetailTweetPage extends StatefulWidget {
   State<DetailTweetPage> createState() => _DetailTweetPageState();
 }
 
-class _DetailTweetPageState extends State<DetailTweetPage> with SnackBarHandler {
+class _DetailTweetPageState extends State<DetailTweetPage>
+    with SnackBarHandler {
   DetailTweetController get _controller => widget.detailTweetController;
   List<ReactionDisposer>? _disposers;
   final _scrollController = AutoScrollController();

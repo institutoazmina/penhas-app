@@ -32,7 +32,7 @@ class FeedPage extends StatefulWidget {
   final FeedController feedController;
 
   @override
-   State<FeedPage> createState() => _FeedPageState();
+  State<FeedPage> createState() => _FeedPageState();
 }
 
 class _FeedPageState extends State<FeedPage>

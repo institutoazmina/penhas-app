@@ -70,7 +70,7 @@ class _AccountPreferencePageState extends State<AccountPreferencePage>
   }
 }
 
-extension _PageBuilder on AccountPreferencePageState {
+extension _PageBuilder on _AccountPreferencePageState {
   Widget bodyBuilder(AccountPreferenceState state) {
     return state.when(
       initial: () => bodyLoading(),
@@ -140,7 +140,7 @@ extension _PageBuilder on AccountPreferencePageState {
   }
 }
 
-extension _TextStyle on AccountPreferencePageState {
+extension _TextStyle on _AccountPreferencePageState {
   TextStyle get itemTitleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,

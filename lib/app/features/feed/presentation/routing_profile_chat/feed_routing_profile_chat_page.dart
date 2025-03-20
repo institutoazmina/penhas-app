@@ -28,7 +28,7 @@ class _FeedRoutingProfileChatPageState
   }
 }
 
-extension _Bodybuilder on FeedRoutingProfileChatPageState {
+extension _Bodybuilder on _FeedRoutingProfileChatPageState {
   Widget pageBuilder(FeedRoutingState state) {
     return state.when(
       initial: (title) => loadingPage(title),

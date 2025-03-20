@@ -28,7 +28,7 @@ class _FilterPageState extends State<ProfileSkillPage> with SnackBarHandler {
   }
 }
 
-extension _FilterPageStateMethods on FilterPageState {
+extension _FilterPageStateMethods on _FilterPageState {
   Widget pageBuilder(FilterState state) {
     return state.when(
       initial: () => const ProfileSkillInitialWidget(),

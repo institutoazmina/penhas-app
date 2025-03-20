@@ -56,7 +56,7 @@ class _SupportCenterShowPageState extends State<SupportCenterShowPage> {
   }
 }
 
-extension _PageStateBuilder on SupportCenterShowPageState {
+extension _PageStateBuilder on _SupportCenterShowPageState {
   Widget bodyBuilder(BuildContext context, SupportCenterShowState state) {
     return state.when(
       initial: () => buildInitialState(),
@@ -173,7 +173,7 @@ extension _PageStateBuilder on SupportCenterShowPageState {
   }
 }
 
-extension _Maps on SupportCenterShowPageState {
+extension _Maps on _SupportCenterShowPageState {
   double fullWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
   }
@@ -256,7 +256,7 @@ extension _Maps on SupportCenterShowPageState {
   }
 }
 
-extension _TextStyle on SupportCenterShowPageState {
+extension _TextStyle on _SupportCenterShowPageState {
   TextStyle get placeTypeTextStyle => const TextStyle(
         color: DesignSystemColors.brownishGrey,
         fontFamily: 'Lato',

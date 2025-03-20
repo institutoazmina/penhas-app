@@ -44,7 +44,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 }
 
-extension _ChatPageStateMethods on ChatPageState {
+extension _ChatPageStateMethods on _ChatPageState {
   Widget pageBuilder(ChatChannelState state) {
     return state.when(
       initial: () => const ChatChannelInitialPage(),
@@ -319,7 +319,7 @@ extension _ChatPageStateMethods on ChatPageState {
   }
 }
 
-extension _ChatPageStateStyle on ChatPageState {
+extension _ChatPageStateStyle on _ChatPageState {
   TextStyle get titleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,

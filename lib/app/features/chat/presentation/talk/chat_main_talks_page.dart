@@ -44,7 +44,7 @@ class _ChatMainTalksPageState extends State<ChatMainTalksPage> {
   }
 }
 
-extension _ChatMainTalksPageBodyBuilder on ChatMainTalksPageState {
+extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
   Widget bodyBuilder(ChatMainTalksState state) {
     return state.when(
       initial: () => empty(),
@@ -209,7 +209,7 @@ extension _ChatMainTalksPageBodyBuilder on ChatMainTalksPageState {
   }
 }
 
-extension _ChatMainTalksPageTextStyle on ChatMainTalksPageState {
+extension _ChatMainTalksPageTextStyle on _ChatMainTalksPageState {
   TextStyle get talksDividerTitleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 16.0,

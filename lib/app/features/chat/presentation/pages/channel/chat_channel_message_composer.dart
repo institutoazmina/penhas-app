@@ -146,7 +146,7 @@ class _ChatChannelMessageComposerState
 }
 
 extension _ChatChannelMessageComposerStatePrivate
-    on ChatChannelMessageComposerState {
+    on _ChatChannelMessageComposerState {
   TextStyle get buttomTitleStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 12.0,
