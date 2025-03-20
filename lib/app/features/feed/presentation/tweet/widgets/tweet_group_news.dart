@@ -13,7 +13,7 @@ class TweetGroupNews extends StatefulWidget {
   final TweetNewsGroupEntity _group;
 
   @override
-  TweetGroupNewsState createState() => TweetGroupNewsState();
+  State<TweetGroupNews> createState() => _TweetGroupNewsState();
 }
 
 class _TweetGroupNewsState extends State<TweetGroupNews> {
