@@ -25,7 +25,7 @@ class SupportCenterPage extends StatefulWidget {
   SupportCenterPageState createState() => SupportCenterPageState();
 }
 
-class SupportCenterPageState extends State<SupportCenterPage>
+class _SupportCenterPageState extends State<SupportCenterPage>
     with SnackBarHandler {
   GoogleMapController? mapController;
   List<ReactionDisposer>? _disposers;
