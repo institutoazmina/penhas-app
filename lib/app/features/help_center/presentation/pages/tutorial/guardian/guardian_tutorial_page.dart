@@ -9,7 +9,7 @@ class GuardianTutorialPage extends StatefulWidget {
   const GuardianTutorialPage({super.key});
 
   @override
-  GuardianTutorialPageState createState() => GuardianTutorialPageState();
+  State<GuardianTutorialPage> createState() => _GuardianTutorialPageState();
 }
 
 class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
