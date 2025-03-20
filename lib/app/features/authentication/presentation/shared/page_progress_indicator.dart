@@ -18,7 +18,7 @@ class PageProgressIndicator extends StatefulWidget {
   PageProgressIndicatorState createState() => PageProgressIndicatorState();
 }
 
-class PageProgressIndicatorState extends State<PageProgressIndicator>
+class _PageProgressIndicatorState extends State<PageProgressIndicator>
     with SingleTickerProviderStateMixin {
   PageProgressIndicatorState();
 
