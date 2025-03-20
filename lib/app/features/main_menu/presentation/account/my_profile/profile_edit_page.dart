@@ -27,7 +27,7 @@ class ProfileEditPage extends StatefulWidget {
   ProfileEditPageState createState() => ProfileEditPageState();
 }
 
-class ProfileEditPageState extends State<ProfileEditPage> with SnackBarHandler {
+class _ProfileEditPageState extends State<ProfileEditPage> with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   ProfileEditController get _controller => widget.controller;
