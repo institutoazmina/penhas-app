@@ -15,7 +15,7 @@ class PageProgressIndicator extends StatefulWidget {
   final String progressMessage;
 
   @override
-  PageProgressIndicatorState createState() => PageProgressIndicatorState();
+  State<PageProgressIndicator> createState() => _PageProgressIndicatorState();
 }
 
 class _PageProgressIndicatorState extends State<PageProgressIndicator>
