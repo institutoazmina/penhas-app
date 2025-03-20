@@ -25,7 +25,7 @@ class PasswordInputField extends StatefulWidget {
 }
 
 class _PasswordInputFieldState extends State<PasswordInputField> {
-  PasswordInputFieldState();
+  _PasswordInputFieldState();
 
   bool _isPasswordVisible = false;
 
