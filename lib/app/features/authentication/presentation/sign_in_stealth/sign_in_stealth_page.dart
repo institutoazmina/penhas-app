@@ -22,7 +22,7 @@ class SignInStealthPage extends StatefulWidget {
   final SignInStealthController controller;
 
   @override
-  SignInStealthPageState createState() => SignInStealthPageState();
+  State<SignInStealthPage> createState() => _SignInStealthPageState();
 }
 
 class _SignInStealthPageState extends State<SignInStealthPage>
