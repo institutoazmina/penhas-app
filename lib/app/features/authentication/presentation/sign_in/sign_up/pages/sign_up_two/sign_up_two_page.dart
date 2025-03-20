@@ -21,7 +21,7 @@ class SignUpTwoPage extends StatefulWidget {
   final SignUpTwoController controller;
 
   @override
-  SignUpTwoPageState createState() => SignUpTwoPageState();
+  State<SignUpTwoPage> createState() => _SignUpTwoPageState();
 }
 
 class _SignUpTwoPageState extends State<SignUpTwoPage> with SnackBarHandler {
