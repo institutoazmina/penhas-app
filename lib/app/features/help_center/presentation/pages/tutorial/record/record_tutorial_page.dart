@@ -11,7 +11,7 @@ class RecordTutorialPage extends StatefulWidget {
   RecordTutorialPageState createState() => RecordTutorialPageState();
 }
 
-class RecordTutorialPageState extends State<RecordTutorialPage> {
+class _RecordTutorialPageState extends State<RecordTutorialPage> {
   final List<TutorialPageViewWidget> _contentPageView = [
     const TutorialPageViewWidget(
       description:
