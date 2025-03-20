@@ -13,7 +13,7 @@ class ProfileSkillPage extends StatefulWidget {
   final ProfileSkillController controller;
 
   @override
-  FilterPageState createState() => FilterPageState();
+  State<ProfileSkillPage> createState() => _FilterPageState();
 }
 
 class _FilterPageState extends State<ProfileSkillPage> with SnackBarHandler {
