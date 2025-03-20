@@ -20,7 +20,7 @@ class CategoryTweetPage extends StatefulWidget {
   final CategoryTweetController controller;
 
   @override
-  CategoryTweetPageState createState() => CategoryTweetPageState();
+  State<CategoryTweetPage> createState() => _CategoryTweetPageState();
 }
 
 class _CategoryTweetPageState extends State<CategoryTweetPage>
