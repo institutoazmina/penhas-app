@@ -19,7 +19,7 @@ class TweetBottom extends StatefulWidget {
   TweetBottomState createState() => TweetBottomState();
 }
 
-class TweetBottomState extends State<TweetBottom> {
+class _TweetBottomState extends State<TweetBottom> {
   late bool _isLiked;
   late int _likeCount;
 
