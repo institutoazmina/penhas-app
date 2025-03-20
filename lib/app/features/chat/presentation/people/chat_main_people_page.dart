@@ -16,7 +16,7 @@ class ChatMainPeoplePage extends StatefulWidget {
   final ChatMainPeopleController controller;
 
   @override
-  ChatMainPeoplePageState createState() => ChatMainPeoplePageState();
+  State<ChatMainPeoplePage> createState() => _ChatMainPeoplePageState();
 }
 
 class _ChatMainPeoplePageState extends State<ChatMainPeoplePage> {
