@@ -19,7 +19,7 @@ class FilterTweetPage extends StatefulWidget {
   FilterTweetPageState createState() => FilterTweetPageState();
 }
 
-class FilterTweetPageState extends State<FilterTweetPage> with SnackBarHandler {
+class _FilterTweetPageState extends State<FilterTweetPage> with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
