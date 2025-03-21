@@ -35,7 +35,7 @@ def isFirebaseDistribution = System.getenv('IS_FIREBASE_DISTRIBUTION') == 'true'
 
 
 android {
-    namespace 'penhas.com.br'
+    namespace 'br.com.azmina.penhas'
 
     compileSdkVersion 35
 
@@ -43,12 +43,9 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-    lintOptions {
-        disable 'InvalidPackage'
-    }
 
     defaultConfig {
-        applicationId "penhas.com.br"
+        applicationId "br.com.azmina.penhas"
         minSdkVersion 24
         targetSdkVersion 35
         versionCode flutterVersionCode.toInteger()
@@ -84,6 +81,9 @@ android {
         release {
             signingConfig signingConfigs.release
         }
+    }
+    lint {
+        disable 'InvalidPackage'
     }
 
     applicationVariants.all { variant ->
