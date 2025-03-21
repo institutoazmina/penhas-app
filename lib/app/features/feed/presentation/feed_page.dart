@@ -32,10 +32,10 @@ class FeedPage extends StatefulWidget {
   final FeedController feedController;
 
   @override
-  FeedPageState createState() => FeedPageState();
+  State<FeedPage> createState() => _FeedPageState();
 }
 
-class FeedPageState extends State<FeedPage>
+class _FeedPageState extends State<FeedPage>
     with SnackBarHandler, AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;

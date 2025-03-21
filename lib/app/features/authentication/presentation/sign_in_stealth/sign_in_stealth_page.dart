@@ -22,10 +22,10 @@ class SignInStealthPage extends StatefulWidget {
   final SignInStealthController controller;
 
   @override
-  SignInStealthPageState createState() => SignInStealthPageState();
+  State<SignInStealthPage> createState() => _SignInStealthPageState();
 }
 
-class SignInStealthPageState extends State<SignInStealthPage>
+class _SignInStealthPageState extends State<SignInStealthPage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();

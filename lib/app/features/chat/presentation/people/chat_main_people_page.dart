@@ -16,10 +16,10 @@ class ChatMainPeoplePage extends StatefulWidget {
   final ChatMainPeopleController controller;
 
   @override
-  ChatMainPeoplePageState createState() => ChatMainPeoplePageState();
+  State<ChatMainPeoplePage> createState() => _ChatMainPeoplePageState();
 }
 
-class ChatMainPeoplePageState extends State<ChatMainPeoplePage> {
+class _ChatMainPeoplePageState extends State<ChatMainPeoplePage> {
   ChatMainPeopleController get controller => widget.controller;
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class ChatMainPeoplePageState extends State<ChatMainPeoplePage> {
   }
 }
 
-extension _ChatMainPeoplePageBodyBuilder on ChatMainPeoplePageState {
+extension _ChatMainPeoplePageBodyBuilder on _ChatMainPeoplePageState {
   Widget bodyBuilder(ChatMainTalksState state) {
     return state.when(
       initial: () => empty(),

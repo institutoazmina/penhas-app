@@ -13,11 +13,11 @@ class FeedRoutingProfileChatPage extends StatefulWidget {
   final FeedRoutingProfileChatController controller;
 
   @override
-  FeedRoutingProfileChatPageState createState() =>
-      FeedRoutingProfileChatPageState();
+  State<FeedRoutingProfileChatPage> createState() =>
+      _FeedRoutingProfileChatPageState();
 }
 
-class FeedRoutingProfileChatPageState
+class _FeedRoutingProfileChatPageState
     extends State<FeedRoutingProfileChatPage> {
   FeedRoutingProfileChatController get _controller => widget.controller;
 
@@ -28,7 +28,7 @@ class FeedRoutingProfileChatPageState
   }
 }
 
-extension _Bodybuilder on FeedRoutingProfileChatPageState {
+extension _Bodybuilder on _FeedRoutingProfileChatPageState {
   Widget pageBuilder(FeedRoutingState state) {
     return state.when(
       initial: (title) => loadingPage(title),

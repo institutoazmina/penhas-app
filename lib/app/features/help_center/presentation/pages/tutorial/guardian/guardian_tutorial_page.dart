@@ -9,10 +9,10 @@ class GuardianTutorialPage extends StatefulWidget {
   const GuardianTutorialPage({super.key});
 
   @override
-  GuardianTutorialPageState createState() => GuardianTutorialPageState();
+  State<GuardianTutorialPage> createState() => _GuardianTutorialPageState();
 }
 
-class GuardianTutorialPageState extends State<GuardianTutorialPage> {
+class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
   final List<TutorialPageViewWidget> _contentPageView = [
     TutorialPageViewWidget(
       description:

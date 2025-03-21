@@ -13,10 +13,10 @@ class ProfileSkillPage extends StatefulWidget {
   final ProfileSkillController controller;
 
   @override
-  FilterPageState createState() => FilterPageState();
+  State<ProfileSkillPage> createState() => _FilterPageState();
 }
 
-class FilterPageState extends State<ProfileSkillPage> with SnackBarHandler {
+class _FilterPageState extends State<ProfileSkillPage> with SnackBarHandler {
   ProfileSkillController get _controller => widget.controller;
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class FilterPageState extends State<ProfileSkillPage> with SnackBarHandler {
   }
 }
 
-extension _FilterPageStateMethods on FilterPageState {
+extension _FilterPageStateMethods on _FilterPageState {
   Widget pageBuilder(FilterState state) {
     return state.when(
       initial: () => const ProfileSkillInitialWidget(),

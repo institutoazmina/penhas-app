@@ -26,10 +26,10 @@ class SignInPage extends StatefulWidget {
   final SignInController controller;
 
   @override
-  SignInPageState createState() => SignInPageState();
+  State<SignInPage> createState() => _SignInPageState();
 }
 
-class SignInPageState extends State<SignInPage> with SnackBarHandler {
+class _SignInPageState extends State<SignInPage> with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;

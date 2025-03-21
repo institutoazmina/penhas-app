@@ -22,10 +22,10 @@ class ChatPage extends StatefulWidget {
   final ChatChannelController controller;
 
   @override
-  ChatPageState createState() => ChatPageState();
+  State<ChatPage> createState() => _ChatPageState();
 }
 
-class ChatPageState extends State<ChatPage> {
+class _ChatPageState extends State<ChatPage> {
   ChatChannelController get controller => widget.controller;
 
   @override
@@ -44,7 +44,7 @@ class ChatPageState extends State<ChatPage> {
   }
 }
 
-extension _ChatPageStateMethods on ChatPageState {
+extension _ChatPageStateMethods on _ChatPageState {
   Widget pageBuilder(ChatChannelState state) {
     return state.when(
       initial: () => const ChatChannelInitialPage(),
@@ -319,7 +319,7 @@ extension _ChatPageStateMethods on ChatPageState {
   }
 }
 
-extension _ChatPageStateStyle on ChatPageState {
+extension _ChatPageStateStyle on _ChatPageState {
   TextStyle get titleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,

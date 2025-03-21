@@ -10,10 +10,10 @@ class SoundRecordWidget extends StatefulWidget {
   final VoidCallback? onPressed;
 
   @override
-  SoundRecordWidgetState createState() => SoundRecordWidgetState();
+  State<SoundRecordWidget> createState() => _SoundRecordWidgetState();
 }
 
-class SoundRecordWidgetState extends State<SoundRecordWidget>
+class _SoundRecordWidgetState extends State<SoundRecordWidget>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animationController =
       AnimationController(vsync: this, duration: const Duration(seconds: 2));

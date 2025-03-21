@@ -25,10 +25,10 @@ class PenhasDrawerPage extends StatefulWidget {
   final StealthModeTutorialPageController stealthController;
 
   @override
-  PenhasDrawerPageState createState() => PenhasDrawerPageState();
+  State<PenhasDrawerPage> createState() => _PenhasDrawerPageState();
 }
 
-class PenhasDrawerPageState extends State<PenhasDrawerPage> {
+class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
   final double listHeight = 80;
   final Color drawerGrey = const Color.fromRGBO(239, 239, 239, 1.0);
   PenhasDrawerController get _controller => widget.controller;
@@ -218,7 +218,7 @@ class PenhasDrawerPageState extends State<PenhasDrawerPage> {
   }
 }
 
-extension _TextStyle on PenhasDrawerPageState {
+extension _TextStyle on _PenhasDrawerPageState {
   TextStyle get securityContextTextStyle => const TextStyle(
         color: DesignSystemColors.darkIndigoThree,
         fontFamily: 'Lato',

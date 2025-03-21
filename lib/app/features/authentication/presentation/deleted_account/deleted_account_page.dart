@@ -17,10 +17,10 @@ class DeletedAccountPage extends StatefulWidget {
   final DeletedAccountController controller;
 
   @override
-  DeletedAccountPageState createState() => DeletedAccountPageState();
+  State<DeletedAccountPage> createState() => _DeletedAccountPageState();
 }
 
-class DeletedAccountPageState extends State<DeletedAccountPage>
+class _DeletedAccountPageState extends State<DeletedAccountPage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -60,7 +60,7 @@ class DeletedAccountPageState extends State<DeletedAccountPage>
   }
 }
 
-extension _TextStyle on DeletedAccountPageState {
+extension _TextStyle on _DeletedAccountPageState {
   TextStyle get titleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 20.0,
@@ -85,7 +85,7 @@ extension _TextStyle on DeletedAccountPageState {
       );
 }
 
-extension _MethodPrivate on DeletedAccountPageState {
+extension _MethodPrivate on _DeletedAccountPageState {
   Widget bodyBuilder() {
     return SafeArea(
       child: PageProgressIndicator(

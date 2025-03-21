@@ -22,10 +22,11 @@ class SignUpThreePage extends StatefulWidget {
   final SignUpThreeController controller;
 
   @override
-  SignUpThreePageState createState() => SignUpThreePageState();
+  State<SignUpThreePage> createState() => _SignUpThreePageState();
 }
 
-class SignUpThreePageState extends State<SignUpThreePage> with SnackBarHandler {
+class _SignUpThreePageState extends State<SignUpThreePage>
+    with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;

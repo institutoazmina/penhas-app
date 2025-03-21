@@ -13,10 +13,10 @@ class FilterPage extends StatefulWidget {
   final FilterController controller;
 
   @override
-  FilterPageState createState() => FilterPageState();
+  State<FilterPage> createState() => _FilterPageState();
 }
 
-class FilterPageState extends State<FilterPage> with SnackBarHandler {
+class _FilterPageState extends State<FilterPage> with SnackBarHandler {
   FilterController get _controller => widget.controller;
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class FilterPageState extends State<FilterPage> with SnackBarHandler {
   }
 }
 
-extension _FilterPageStateMethods on FilterPageState {
+extension _FilterPageStateMethods on _FilterPageState {
   Widget pageBuilder(FilterState state) {
     return state.when(
       initial: () => const FilterInitialStatePage(),

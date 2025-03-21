@@ -21,11 +21,11 @@ class PasswordInputField extends StatefulWidget {
   final bool isAutofocus;
 
   @override
-  PasswordInputFieldState createState() => PasswordInputFieldState();
+  State<PasswordInputField> createState() => _PasswordInputFieldState();
 }
 
-class PasswordInputFieldState extends State<PasswordInputField> {
-  PasswordInputFieldState();
+class _PasswordInputFieldState extends State<PasswordInputField> {
+  _PasswordInputFieldState();
 
   bool _isPasswordVisible = false;
 

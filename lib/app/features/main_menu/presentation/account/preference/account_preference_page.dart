@@ -18,10 +18,10 @@ class AccountPreferencePage extends StatefulWidget {
   final AccountPreferenceController controller;
 
   @override
-  AccountPreferencePageState createState() => AccountPreferencePageState();
+  State<AccountPreferencePage> createState() => _AccountPreferencePageState();
 }
 
-class AccountPreferencePageState extends State<AccountPreferencePage>
+class _AccountPreferencePageState extends State<AccountPreferencePage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -70,7 +70,7 @@ class AccountPreferencePageState extends State<AccountPreferencePage>
   }
 }
 
-extension _PageBuilder on AccountPreferencePageState {
+extension _PageBuilder on _AccountPreferencePageState {
   Widget bodyBuilder(AccountPreferenceState state) {
     return state.when(
       initial: () => bodyLoading(),
@@ -140,7 +140,7 @@ extension _PageBuilder on AccountPreferencePageState {
   }
 }
 
-extension _TextStyle on AccountPreferencePageState {
+extension _TextStyle on _AccountPreferencePageState {
   TextStyle get itemTitleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,

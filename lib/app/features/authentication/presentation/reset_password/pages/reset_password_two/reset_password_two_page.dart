@@ -20,10 +20,10 @@ class ResetPasswordTwoPage extends StatefulWidget {
   final ResetPasswordTwoController controller;
 
   @override
-  ResetPasswordTwoPageState createState() => ResetPasswordTwoPageState();
+  State<ResetPasswordTwoPage> createState() => _ResetPasswordTwoPageState();
 }
 
-class ResetPasswordTwoPageState extends State<ResetPasswordTwoPage>
+class _ResetPasswordTwoPageState extends State<ResetPasswordTwoPage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();

@@ -17,10 +17,10 @@ class ChatMainTalksPage extends StatefulWidget {
   final ChatMainTalksController controller;
 
   @override
-  ChatMainTalksPageState createState() => ChatMainTalksPageState();
+  State<ChatMainTalksPage> createState() => _ChatMainTalksPageState();
 }
 
-class ChatMainTalksPageState extends State<ChatMainTalksPage> {
+class _ChatMainTalksPageState extends State<ChatMainTalksPage> {
   ChatMainTalksController get controller => widget.controller;
 
   @override
@@ -44,7 +44,7 @@ class ChatMainTalksPageState extends State<ChatMainTalksPage> {
   }
 }
 
-extension _ChatMainTalksPageBodyBuilder on ChatMainTalksPageState {
+extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
   Widget bodyBuilder(ChatMainTalksState state) {
     return state.when(
       initial: () => empty(),
@@ -209,7 +209,7 @@ extension _ChatMainTalksPageBodyBuilder on ChatMainTalksPageState {
   }
 }
 
-extension _ChatMainTalksPageTextStyle on ChatMainTalksPageState {
+extension _ChatMainTalksPageTextStyle on _ChatMainTalksPageState {
   TextStyle get talksDividerTitleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 16.0,

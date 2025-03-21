@@ -30,10 +30,11 @@ class UserProfilePage extends StatefulWidget {
   final UserProfileController controller;
 
   @override
-  UserProfilePageState createState() => UserProfilePageState();
+  State<UserProfilePage> createState() => _UserProfilePageState();
 }
 
-class UserProfilePageState extends State<UserProfilePage> with SnackBarHandler {
+class _UserProfilePageState extends State<UserProfilePage>
+    with SnackBarHandler {
   ReactionDisposer? _disposer;
   late final _scaffoldKey = GlobalKey<ScaffoldState>();
   late final _progressDialogKey = GlobalKey();
@@ -66,7 +67,7 @@ class UserProfilePageState extends State<UserProfilePage> with SnackBarHandler {
   }
 }
 
-extension _UserProfilePagePrivate on UserProfilePageState {
+extension _UserProfilePagePrivate on _UserProfilePageState {
   Widget bodyBuilder(UserProfileState state) {
     return state.when(
       initial: () => empty(),

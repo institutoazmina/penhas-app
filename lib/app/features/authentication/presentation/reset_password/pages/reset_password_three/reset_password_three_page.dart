@@ -20,10 +20,10 @@ class ResetPasswordThreePage extends StatefulWidget {
   final ResetPasswordThreeController controller;
 
   @override
-  ResetPasswordThreePageState createState() => ResetPasswordThreePageState();
+  State<ResetPasswordThreePage> createState() => _ResetPasswordThreePageState();
 }
 
-class ResetPasswordThreePageState extends State<ResetPasswordThreePage>
+class _ResetPasswordThreePageState extends State<ResetPasswordThreePage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();

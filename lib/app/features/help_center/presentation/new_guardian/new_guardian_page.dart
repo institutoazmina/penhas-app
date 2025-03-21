@@ -27,10 +27,11 @@ class NewGuardianPage extends StatefulWidget {
   final NewGuardianController controller;
 
   @override
-  NewGuardianPageState createState() => NewGuardianPageState();
+  State<NewGuardianPage> createState() => _NewGuardianPageState();
 }
 
-class NewGuardianPageState extends State<NewGuardianPage> with SnackBarHandler {
+class _NewGuardianPageState extends State<NewGuardianPage>
+    with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   NewGuardianController get _controller => widget.controller;

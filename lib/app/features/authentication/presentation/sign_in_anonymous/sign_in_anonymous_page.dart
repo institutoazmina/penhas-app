@@ -21,10 +21,10 @@ class SignInAnonymousPage extends StatefulWidget {
   final SignInAnonymousController controller;
 
   @override
-  SignInAnonymousPageState createState() => SignInAnonymousPageState();
+  State<SignInAnonymousPage> createState() => _SignInAnonymousPageState();
 }
 
-class SignInAnonymousPageState extends State<SignInAnonymousPage>
+class _SignInAnonymousPageState extends State<SignInAnonymousPage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();

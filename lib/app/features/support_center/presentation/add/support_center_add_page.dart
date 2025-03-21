@@ -30,10 +30,10 @@ class SupportCenterAddPage extends StatefulWidget {
   final SupportCenterAddController controller;
 
   @override
-  SupportCenterAddPageState createState() => SupportCenterAddPageState();
+  State<SupportCenterAddPage> createState() => _SupportCenterAddPageState();
 }
 
-class SupportCenterAddPageState extends State<SupportCenterAddPage>
+class _SupportCenterAddPageState extends State<SupportCenterAddPage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -132,7 +132,7 @@ class SupportCenterAddPageState extends State<SupportCenterAddPage>
   }
 }
 
-extension _BuildWidget on SupportCenterAddPageState {
+extension _BuildWidget on _SupportCenterAddPageState {
   Widget buildInputPlaceInformation(
     BuildContext context,
     List<FilterTagEntity> categories,
@@ -511,7 +511,7 @@ extension _BuildWidget on SupportCenterAddPageState {
   }
 }
 
-extension _SupportCenterAddPageStateTextStyle on SupportCenterAddPageState {
+extension _SupportCenterAddPageStateTextStyle on _SupportCenterAddPageState {
   TextStyle get introductionText => const TextStyle(
         color: DesignSystemColors.darkIndigoThree,
         fontFamily: 'Lato',
