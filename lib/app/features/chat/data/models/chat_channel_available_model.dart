@@ -1,23 +1,15 @@
-import 'package:collection/collection.dart';
-
 import '../../domain/entities/chat_channel_available_entity.dart';
 import 'chat_assistant_model.dart';
 import 'chat_channel_model.dart';
 
 class ChatChannelAvailableModel extends ChatChannelAvailableEntity {
   const ChatChannelAvailableModel({
-    required bool? hasMore,
-    required String? nextPage,
-    required List<ChatChannelModel>? channels,
-    required ChatChannelModel? support,
-    required ChatAssistantModel? assistant,
-  }) : super(
-          hasMore: hasMore,
-          nextPage: nextPage,
-          channels: channels,
-          support: support,
-          assistant: assistant,
-        );
+    required super.hasMore,
+    required super.nextPage,
+    required List<ChatChannelModel>? super.channels,
+    required ChatChannelModel? super.support,
+    required ChatAssistantModel? super.assistant,
+  });
 
   factory ChatChannelAvailableModel.fromJson(Map<String, dynamic> jsonData) {
     final hasMore = jsonData['has_more'] == 1;
@@ -30,7 +22,7 @@ class ChatChannelAvailableModel extends ChatChannelAvailableEntity {
     final List<ChatChannelModel> channels = jsonChannels
         .map((e) => e as Map<String, dynamic>)
         .map((e) => ChatChannelModel.fromJson(e))
-        .whereNotNull()
+        .nonNulls
         .toList();
 
     return ChatChannelAvailableModel(

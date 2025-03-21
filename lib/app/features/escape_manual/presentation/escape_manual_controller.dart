@@ -24,13 +24,13 @@ import 'send_pending_escape_manual_task.dart';
 
 part 'escape_manual_controller.g.dart';
 
-class EscapeManualController = _EscapeManualControllerBase
+class EscapeManualController = EscapeManualControllerBase
     with _$EscapeManualController;
 
 typedef OnEscapeManualReaction = void Function(EscapeManualReaction? reaction);
 
-abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
-  _EscapeManualControllerBase({
+abstract class EscapeManualControllerBase with Store, MapFailureMessage {
+  EscapeManualControllerBase({
     required GetEscapeManualUseCase getEscapeManual,
     required StartEscapeManualUseCase startEscapeManual,
     required UpdateEscapeManualTaskUseCase updateTask,
@@ -69,7 +69,9 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
   @action
   Future<void> load() async {
     if (progressState == PageProgressState.loading ||
-        _loadProgress.state == PageProgressState.loading) return;
+        _loadProgress.state == PageProgressState.loading) {
+      return;
+    }
 
     subscription?.cancel();
 

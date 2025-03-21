@@ -11,8 +11,8 @@ import 'text.dart';
 class MessageWidget extends StatefulWidget {
   const MessageWidget(
     this.message, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final QuizMessage message;
 
@@ -57,11 +57,11 @@ class _MessageWidgetState extends State<MessageWidget> {
 
 class AnimatedMessage extends StatelessWidget {
   const AnimatedMessage({
-    Key? key,
+    super.key,
     required this.index,
     required this.message,
     required this.animation,
-  }) : super(key: key);
+  });
 
   final int index;
   final QuizMessage message;
@@ -107,10 +107,10 @@ class AnimatedMessage extends StatelessWidget {
 
 class InteractionBox extends StatelessWidget {
   const InteractionBox({
-    Key? key,
+    super.key,
     required this.animation,
     required this.message,
-  }) : super(key: key);
+  });
 
   final Animation<double> animation;
   final QuizMessage? message;

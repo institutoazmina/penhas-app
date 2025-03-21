@@ -101,7 +101,9 @@ class _MockFirebaseAnalyticsPlatform extends Mock
     with MockPlatformInterfaceMixin
     implements FirebaseAnalyticsPlatform {
   @override
-  FirebaseAnalyticsPlatform delegateFor({required FirebaseApp app}) => this;
+  FirebaseAnalyticsPlatform delegateFor(
+          {required FirebaseApp app, Map<String, dynamic>? webOptions}) =>
+      this;
 
   @override
   Future<void> setAnalyticsCollectionEnabled(bool enabled) => Future.value();

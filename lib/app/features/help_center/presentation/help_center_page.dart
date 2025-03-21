@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/extension/asuka.dart';
 import '../../../shared/design_system/colors.dart';
@@ -22,15 +22,14 @@ import 'pages/help_center/help_center_card_record.dart';
 
 class HelpCenterPage extends StatefulWidget {
   const HelpCenterPage(
-      {Key? key, this.title = 'HelpCenter', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'HelpCenter', required this.controller});
 
   final HelpCenterController controller;
 
   final String title;
 
   @override
-  _HelpCenterPageState createState() => _HelpCenterPageState();
+  State<HelpCenterPage> createState() => _HelpCenterPageState();
 }
 
 class _HelpCenterPageState extends State<HelpCenterPage> with SnackBarHandler {
@@ -142,15 +141,15 @@ class _HelpCenterPageState extends State<HelpCenterPage> with SnackBarHandler {
       padding: const EdgeInsets.only(bottom: 20.0),
       child: Container(
         color: DesignSystemColors.nigthBlue,
-        child: Padding(
-          padding: const EdgeInsets.only(
+        child: const Padding(
+          padding: EdgeInsets.only(
             left: 16.0,
             right: 16.0,
             top: 12.0,
             bottom: 12.0,
           ),
           child: Row(
-            children: const <Widget>[
+            children: <Widget>[
               Expanded(
                 child: Icon(
                   Icons.location_off,
@@ -209,7 +208,15 @@ class _HelpCenterPageState extends State<HelpCenterPage> with SnackBarHandler {
   }
 
   Future<void> _actionOnTap(String callingNumber) async {
-    await FlutterPhoneDirectCaller.callNumber(callingNumber);
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: callingNumber,
+    );
+    if (await canLaunchUrl(Uri.parse(launchUri.toString()))) {
+      await launchUrl(Uri.parse(launchUri.toString()));
+    } else {
+      throw 'Could not launch $callingNumber';
+    }
   }
 
   ReactionDisposer _showLoadProgress() {

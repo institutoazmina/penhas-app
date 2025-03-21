@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'support_center_show_state.dart';
 
@@ -12,7 +12,7 @@ part of 'support_center_show_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$SupportCenterShowState {
@@ -25,9 +25,9 @@ mixin _$SupportCenterShowState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(SupportCenterPlaceDetailEntity detail)? loaded,
-    TResult Function(String message)? error,
+    TResult? Function()? initial,
+    TResult? Function(SupportCenterPlaceDetailEntity detail)? loaded,
+    TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,9 +47,9 @@ mixin _$SupportCenterShowState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_ErrorDetails value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_ErrorDetails value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -66,41 +66,41 @@ mixin _$SupportCenterShowState {
 abstract class $SupportCenterShowStateCopyWith<$Res> {
   factory $SupportCenterShowStateCopyWith(SupportCenterShowState value,
           $Res Function(SupportCenterShowState) then) =
-      _$SupportCenterShowStateCopyWithImpl<$Res>;
+      _$SupportCenterShowStateCopyWithImpl<$Res, SupportCenterShowState>;
 }
 
 /// @nodoc
-class _$SupportCenterShowStateCopyWithImpl<$Res>
+class _$SupportCenterShowStateCopyWithImpl<$Res,
+        $Val extends SupportCenterShowState>
     implements $SupportCenterShowStateCopyWith<$Res> {
   _$SupportCenterShowStateCopyWithImpl(this._value, this._then);
 
-  final SupportCenterShowState _value;
   // ignore: unused_field
-  final $Res Function(SupportCenterShowState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$$_InitialCopyWith<$Res> {
-  factory _$$_InitialCopyWith(
-          _$_Initial value, $Res Function(_$_Initial) then) =
-      __$$_InitialCopyWithImpl<$Res>;
+abstract class _$$InitialImplCopyWith<$Res> {
+  factory _$$InitialImplCopyWith(
+          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
+      __$$InitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res>
-    extends _$SupportCenterShowStateCopyWithImpl<$Res>
-    implements _$$_InitialCopyWith<$Res> {
-  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
-
-  @override
-  _$_Initial get _value => super._value as _$_Initial;
+class __$$InitialImplCopyWithImpl<$Res>
+    extends _$SupportCenterShowStateCopyWithImpl<$Res, _$InitialImpl>
+    implements _$$InitialImplCopyWith<$Res> {
+  __$$InitialImplCopyWithImpl(
+      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Initial implements _Initial {
-  const _$_Initial();
+class _$InitialImpl implements _Initial {
+  const _$InitialImpl();
 
   @override
   String toString() {
@@ -108,9 +108,9 @@ class _$_Initial implements _Initial {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Initial);
+        (other.runtimeType == runtimeType && other is _$InitialImpl);
   }
 
   @override
@@ -129,9 +129,9 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(SupportCenterPlaceDetailEntity detail)? loaded,
-    TResult Function(String message)? error,
+    TResult? Function()? initial,
+    TResult? Function(SupportCenterPlaceDetailEntity detail)? loaded,
+    TResult? Function(String message)? error,
   }) {
     return initial?.call();
   }
@@ -163,9 +163,9 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_ErrorDetails value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_ErrorDetails value)? error,
   }) {
     return initial?.call(this);
   }
@@ -186,32 +186,33 @@ class _$_Initial implements _Initial {
 }
 
 abstract class _Initial implements SupportCenterShowState {
-  const factory _Initial() = _$_Initial;
+  const factory _Initial() = _$InitialImpl;
 }
 
 /// @nodoc
-abstract class _$$_LoadedCopyWith<$Res> {
-  factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
-      __$$_LoadedCopyWithImpl<$Res>;
+abstract class _$$LoadedImplCopyWith<$Res> {
+  factory _$$LoadedImplCopyWith(
+          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
+      __$$LoadedImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({SupportCenterPlaceDetailEntity detail});
 }
 
 /// @nodoc
-class __$$_LoadedCopyWithImpl<$Res>
-    extends _$SupportCenterShowStateCopyWithImpl<$Res>
-    implements _$$_LoadedCopyWith<$Res> {
-  __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
-      : super(_value, (v) => _then(v as _$_Loaded));
+class __$$LoadedImplCopyWithImpl<$Res>
+    extends _$SupportCenterShowStateCopyWithImpl<$Res, _$LoadedImpl>
+    implements _$$LoadedImplCopyWith<$Res> {
+  __$$LoadedImplCopyWithImpl(
+      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_Loaded get _value => super._value as _$_Loaded;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? detail = freezed,
+    Object? detail = null,
   }) {
-    return _then(_$_Loaded(
-      detail == freezed
+    return _then(_$LoadedImpl(
+      null == detail
           ? _value.detail
           : detail // ignore: cast_nullable_to_non_nullable
               as SupportCenterPlaceDetailEntity,
@@ -221,8 +222,8 @@ class __$$_LoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Loaded implements _Loaded {
-  const _$_Loaded(this.detail);
+class _$LoadedImpl implements _Loaded {
+  const _$LoadedImpl(this.detail);
 
   @override
   final SupportCenterPlaceDetailEntity detail;
@@ -233,21 +234,21 @@ class _$_Loaded implements _Loaded {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Loaded &&
-            const DeepCollectionEquality().equals(other.detail, detail));
+            other is _$LoadedImpl &&
+            (identical(other.detail, detail) || other.detail == detail));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(detail));
+  int get hashCode => Object.hash(runtimeType, detail);
 
   @JsonKey(ignore: true)
   @override
-  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
-      __$$_LoadedCopyWithImpl<_$_Loaded>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -262,9 +263,9 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(SupportCenterPlaceDetailEntity detail)? loaded,
-    TResult Function(String message)? error,
+    TResult? Function()? initial,
+    TResult? Function(SupportCenterPlaceDetailEntity detail)? loaded,
+    TResult? Function(String message)? error,
   }) {
     return loaded?.call(detail);
   }
@@ -296,9 +297,9 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_ErrorDetails value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_ErrorDetails value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -320,39 +321,38 @@ class _$_Loaded implements _Loaded {
 
 abstract class _Loaded implements SupportCenterShowState {
   const factory _Loaded(final SupportCenterPlaceDetailEntity detail) =
-      _$_Loaded;
+      _$LoadedImpl;
 
   SupportCenterPlaceDetailEntity get detail;
   @JsonKey(ignore: true)
-  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ErrorDetailsCopyWith<$Res> {
-  factory _$$_ErrorDetailsCopyWith(
-          _$_ErrorDetails value, $Res Function(_$_ErrorDetails) then) =
-      __$$_ErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$ErrorDetailsImplCopyWith<$Res> {
+  factory _$$ErrorDetailsImplCopyWith(
+          _$ErrorDetailsImpl value, $Res Function(_$ErrorDetailsImpl) then) =
+      __$$ErrorDetailsImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$$_ErrorDetailsCopyWithImpl<$Res>
-    extends _$SupportCenterShowStateCopyWithImpl<$Res>
-    implements _$$_ErrorDetailsCopyWith<$Res> {
-  __$$_ErrorDetailsCopyWithImpl(
-      _$_ErrorDetails _value, $Res Function(_$_ErrorDetails) _then)
-      : super(_value, (v) => _then(v as _$_ErrorDetails));
+class __$$ErrorDetailsImplCopyWithImpl<$Res>
+    extends _$SupportCenterShowStateCopyWithImpl<$Res, _$ErrorDetailsImpl>
+    implements _$$ErrorDetailsImplCopyWith<$Res> {
+  __$$ErrorDetailsImplCopyWithImpl(
+      _$ErrorDetailsImpl _value, $Res Function(_$ErrorDetailsImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_ErrorDetails get _value => super._value as _$_ErrorDetails;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? message = freezed,
+    Object? message = null,
   }) {
-    return _then(_$_ErrorDetails(
-      message == freezed
+    return _then(_$ErrorDetailsImpl(
+      null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
@@ -362,8 +362,8 @@ class __$$_ErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ErrorDetails implements _ErrorDetails {
-  const _$_ErrorDetails(this.message);
+class _$ErrorDetailsImpl implements _ErrorDetails {
+  const _$ErrorDetailsImpl(this.message);
 
   @override
   final String message;
@@ -374,21 +374,21 @@ class _$_ErrorDetails implements _ErrorDetails {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ErrorDetails &&
-            const DeepCollectionEquality().equals(other.message, message));
+            other is _$ErrorDetailsImpl &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
-  _$$_ErrorDetailsCopyWith<_$_ErrorDetails> get copyWith =>
-      __$$_ErrorDetailsCopyWithImpl<_$_ErrorDetails>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$ErrorDetailsImplCopyWith<_$ErrorDetailsImpl> get copyWith =>
+      __$$ErrorDetailsImplCopyWithImpl<_$ErrorDetailsImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -403,9 +403,9 @@ class _$_ErrorDetails implements _ErrorDetails {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(SupportCenterPlaceDetailEntity detail)? loaded,
-    TResult Function(String message)? error,
+    TResult? Function()? initial,
+    TResult? Function(SupportCenterPlaceDetailEntity detail)? loaded,
+    TResult? Function(String message)? error,
   }) {
     return error?.call(message);
   }
@@ -437,9 +437,9 @@ class _$_ErrorDetails implements _ErrorDetails {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_ErrorDetails value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_ErrorDetails value)? error,
   }) {
     return error?.call(this);
   }
@@ -460,10 +460,10 @@ class _$_ErrorDetails implements _ErrorDetails {
 }
 
 abstract class _ErrorDetails implements SupportCenterShowState {
-  const factory _ErrorDetails(final String message) = _$_ErrorDetails;
+  const factory _ErrorDetails(final String message) = _$ErrorDetailsImpl;
 
   String get message;
   @JsonKey(ignore: true)
-  _$$_ErrorDetailsCopyWith<_$_ErrorDetails> get copyWith =>
+  _$$ErrorDetailsImplCopyWith<_$ErrorDetailsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

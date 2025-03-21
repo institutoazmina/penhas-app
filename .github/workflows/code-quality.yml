@@ -83,7 +83,7 @@ jobs:
       - name: Check code formatting
         if: ${{ always() && needs.check-changes.outputs.changed_dart_files }}
         run: |
-          flutter format --output=none --set-exit-if-changed \
+          dart format --output=none --set-exit-if-changed \
             ${{ needs.check-changes.outputs.changed_dart_files }}
 
   unit-tests:

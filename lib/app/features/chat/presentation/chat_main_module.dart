@@ -7,7 +7,7 @@ import 'people/chat_main_people_controller.dart';
 import 'talk/chat_main_talks_controller.dart';
 
 class ChatMainModule extends WidgetModule {
-  ChatMainModule({Key? key}) : super(key: key);
+  ChatMainModule({super.key});
 
   @override
   List<Bind> get binds => [];

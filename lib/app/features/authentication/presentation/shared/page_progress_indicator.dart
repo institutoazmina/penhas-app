@@ -4,23 +4,23 @@ enum PageProgressState { initial, loading, loaded }
 
 class PageProgressIndicator extends StatefulWidget {
   const PageProgressIndicator({
-    Key? key,
+    super.key,
     required this.child,
     required this.progressState,
     this.progressMessage = 'Processando',
-  }) : super(key: key);
+  });
 
   final Widget child;
   final PageProgressState progressState;
   final String progressMessage;
 
   @override
-  _PageProgressIndicator createState() => _PageProgressIndicator();
+  State<PageProgressIndicator> createState() => _PageProgressIndicatorState();
 }
 
-class _PageProgressIndicator extends State<PageProgressIndicator>
+class _PageProgressIndicatorState extends State<PageProgressIndicator>
     with SingleTickerProviderStateMixin {
-  _PageProgressIndicator();
+  _PageProgressIndicatorState();
 
   late AnimationController _controller;
   late Animation<double> _animation;

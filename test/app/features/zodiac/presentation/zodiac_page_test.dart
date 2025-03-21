@@ -98,7 +98,7 @@ void main() {
       verify(() => AuthenticationModulesMock.securityAction.start()).called(1);
     });
 
-    screenshotTest(
+    screenshotTestSimplified(
       'should render the page',
       fileName: 'zodiac_page',
       pageBuilder: () => ZodiacPage(controller: controller),

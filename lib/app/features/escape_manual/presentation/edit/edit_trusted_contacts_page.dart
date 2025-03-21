@@ -15,8 +15,7 @@ import 'edit_trusted_contacts_state.dart';
 typedef OnContactActionPressed = void Function(ContactEntity contact);
 
 class EditTrustedContactsPage extends StatefulWidget {
-  const EditTrustedContactsPage({Key? key, required this.controller})
-      : super(key: key);
+  const EditTrustedContactsPage({super.key, required this.controller});
 
   final EditTrustedContactsController controller;
 
@@ -39,16 +38,19 @@ class _EditTrustedContactsPageState extends State<EditTrustedContactsPage> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return WillPopScope(
-      onWillPop: () async {
-        Timer.run(() => Modular.to.pop(controller.contacts));
-        return false;
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, dynamic result) async {
+        if (didPop) {
+          Timer.run(() => Modular.to.pop(controller.contacts));
+        }
       },
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Editar'),
           elevation: 0,
           backgroundColor: DesignSystemColors.easterPurple,
+          foregroundColor: DesignSystemColors.white,
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 0),
@@ -129,11 +131,10 @@ class _EditTrustedContactsPageState extends State<EditTrustedContactsPage> {
 
 class _LoadedStateWidget extends StatelessWidget {
   const _LoadedStateWidget({
-    Key? key,
     required this.contacts,
     required this.onUpdateContactPressed,
     required this.onRemoveContactPressed,
-  }) : super(key: key);
+  });
 
   final List<ContactEntity> contacts;
   final OnContactActionPressed onUpdateContactPressed;
@@ -161,11 +162,11 @@ class _LoadedStateWidget extends StatelessWidget {
 
 class _ContactCard extends StatelessWidget {
   const _ContactCard({
-    Key? key,
+    super.key,
     required this.contact,
     required this.onUpdatePressed,
     required this.onRemovePressed,
-  }) : super(key: key);
+  });
 
   final ContactEntity contact;
   final VoidCallback onUpdatePressed;
@@ -214,7 +215,8 @@ class _ContactCard extends StatelessWidget {
               onPressed: onUpdatePressed,
               icon: SvgPicture.asset(
                 'assets/images/svg/actions/edit.svg',
-                color: DesignSystemColors.pumpkinOrange,
+                colorFilter: const ColorFilter.mode(
+                    DesignSystemColors.pumpkinOrange, BlendMode.srcIn),
                 height: theme.iconTheme.size,
                 width: theme.iconTheme.size,
               ),
@@ -224,7 +226,8 @@ class _ContactCard extends StatelessWidget {
               onPressed: onRemovePressed,
               icon: SvgPicture.asset(
                 'assets/images/svg/actions/close.svg',
-                color: DesignSystemColors.pumpkinOrange,
+                colorFilter: const ColorFilter.mode(
+                    DesignSystemColors.pumpkinOrange, BlendMode.srcIn),
                 height: theme.iconTheme.size,
                 width: theme.iconTheme.size,
               ),

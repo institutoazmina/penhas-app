@@ -5,8 +5,8 @@ import '../../../../../../authentication/presentation/shared/page_progress_indic
 
 class ProfileSkillInitialWidget extends StatelessWidget {
   const ProfileSkillInitialWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +14,7 @@ class ProfileSkillInitialWidget extends StatelessWidget {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: DesignSystemColors.ligthPurple,
+        foregroundColor: DesignSystemColors.white,
         title: const Text('Habilidades'),
       ),
       body: PageProgressIndicator(

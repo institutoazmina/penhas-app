@@ -5,11 +5,11 @@ import '../../../../shared/design_system/colors.dart';
 
 class SupportCenterInputCep extends StatelessWidget {
   const SupportCenterInputCep({
-    Key? key,
+    super.key,
     required this.hintText,
     required this.onChanged,
     required this.mask,
-  }) : super(key: key);
+  });
 
   final String hintText;
   final ValueChanged<String> onChanged;

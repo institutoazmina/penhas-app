@@ -4,14 +4,13 @@ import '../../../../../core/managers/audio_record_services.dart';
 import '../../../../../shared/design_system/colors.dart';
 
 class SoundRecordWidget extends StatefulWidget {
-  const SoundRecordWidget({Key? key, this.audioActivity, this.onPressed})
-      : super(key: key);
+  const SoundRecordWidget({super.key, this.audioActivity, this.onPressed});
 
   final AudioActivity? audioActivity;
   final VoidCallback? onPressed;
 
   @override
-  _SoundRecordWidgetState createState() => _SoundRecordWidgetState();
+  State<SoundRecordWidget> createState() => _SoundRecordWidgetState();
 }
 
 class _SoundRecordWidgetState extends State<SoundRecordWidget>
@@ -49,8 +48,9 @@ class _SoundRecordWidgetState extends State<SoundRecordWidget>
             boxShadow: [
               for (int i = 1; i <= 5; i++)
                 BoxShadow(
-                  color: DesignSystemColors.easterPurple
-                      .withOpacity(_animationController.value / 2),
+                  color: DesignSystemColors.easterPurple.withAlpha(
+                    ((_animationController.value / 2) * 255).toInt(),
+                  ),
                   spreadRadius: i * _animation.value as double,
                 )
             ],

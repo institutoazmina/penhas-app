@@ -6,8 +6,8 @@ import '../../domain/entities/izodiac.dart';
 class ZodiacSignPage extends StatelessWidget {
   const ZodiacSignPage({
     required this.sign,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final IZodiac sign;
 

@@ -60,12 +60,15 @@ void main() {
         ];
 
         for (final genre in genreList) {
-          await iSeeWidget(DropdownButtonFormField<String>, text: genre);
-          await iTapDropdownFormItem<String>(
-            tester,
-            key: genreDropdownList,
-            item: genre,
-          );
+          final genreDropdown = find.byKey(genreDropdownList);
+          await tester.tap(genreDropdown);
+          await tester.pumpAndSettle();
+
+          final genreItem = find.text(genre);
+          expect(genreItem, findsOneWidget);
+
+          await tester.tap(genreItem);
+          await tester.pumpAndSettle();
         }
       },
     );
@@ -85,12 +88,15 @@ void main() {
         ];
 
         for (final race in raceList) {
-          await iSeeWidget(DropdownButtonFormField<String>, text: race);
-          await iTapDropdownFormItem<String>(
-            tester,
-            key: raceDropdownList,
-            item: race,
-          );
+          final raceDropdown = find.byKey(raceDropdownList);
+          await tester.tap(raceDropdown);
+          await tester.pumpAndSettle();
+
+          final raceItem = find.text(race);
+          expect(raceItem, findsOneWidget);
+
+          await tester.tap(raceItem);
+          await tester.pumpAndSettle();
         }
       },
     );
@@ -134,11 +140,14 @@ void main() {
           value: 'nickname',
         );
 
-        await iTapDropdownFormItem<String>(
-          tester,
-          key: genreDropdownList,
-          item: 'Mulher Trans',
-        );
+        final genreDropdown = find.byKey(genreDropdownList);
+        await tester.tap(genreDropdown);
+        await tester.pumpAndSettle();
+
+        final genreItem = find.text('Mulher Trans');
+        expect(genreItem, findsOneWidget);
+        await tester.tap(genreItem);
+        await tester.pumpAndSettle();
 
         await iEnterIntoSingleTextInput(
           tester,
@@ -146,15 +155,20 @@ void main() {
           value: 'Social Name',
         );
 
-        await iTapDropdownFormItem<String>(
-          tester,
-          key: raceDropdownList,
-          item: 'Não declarado',
-        );
+        final raceDropdown = find.byKey(raceDropdownList);
+        await tester.tap(raceDropdown);
+        await tester.pumpAndSettle();
+
+        final raceItem = find.text('Não declarado');
+        expect(raceItem, findsOneWidget);
+        await tester.tap(raceItem);
+        await tester.pumpAndSettle();
 
         await iTapText(tester, text: 'Próximo');
+
         await iSeeText(
-            'O servidor está com problema neste momento, tente novamente.');
+          'O servidor está com problema neste momento, tente novamente.',
+        );
       },
     );
 
@@ -170,6 +184,7 @@ void main() {
               genre: any(named: 'genre'),
               race: any(named: 'race'),
             )).thenSuccess((_) => const ValidField());
+
         when(
           () => AppModulesMock.modularNavigator.pushNamed(
               '/authentication/signup/step3',
@@ -177,17 +192,21 @@ void main() {
         ).thenAnswer((_) => Future.value());
 
         await theAppIsRunning(tester, SignUpTwoPage(controller: controller));
+
         await iEnterIntoSingleTextInput(
           tester,
           text: 'Apelido',
           value: 'nickname',
         );
 
-        await iTapDropdownFormItem<String>(
-          tester,
-          key: genreDropdownList,
-          item: 'Mulher Trans',
-        );
+        final genreDropdown = find.byKey(genreDropdownList);
+        await tester.tap(genreDropdown);
+        await tester.pumpAndSettle();
+
+        final genreItem = find.text('Mulher Trans');
+        expect(genreItem, findsOneWidget);
+        await tester.tap(genreItem);
+        await tester.pumpAndSettle();
 
         await iEnterIntoSingleTextInput(
           tester,
@@ -195,11 +214,14 @@ void main() {
           value: 'Social Name',
         );
 
-        await iTapDropdownFormItem<String>(
-          tester,
-          key: raceDropdownList,
-          item: 'Não declarado',
-        );
+        final raceDropdown = find.byKey(raceDropdownList);
+        await tester.tap(raceDropdown);
+        await tester.pumpAndSettle();
+
+        final raceItem = find.text('Não declarado');
+        expect(raceItem, findsOneWidget);
+        await tester.tap(raceItem);
+        await tester.pumpAndSettle();
 
         await iTapText(tester, text: 'Próximo');
 

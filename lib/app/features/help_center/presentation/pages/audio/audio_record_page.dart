@@ -10,14 +10,14 @@ import 'sound_record_widget.dart';
 
 class AudioRecordPage extends StatefulWidget {
   const AudioRecordPage({
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final AudioRecordController controller;
 
   @override
-  _AudioRecordState createState() => _AudioRecordState();
+  State<AudioRecordPage> createState() => _AudioRecordState();
 }
 
 class _AudioRecordState extends State<AudioRecordPage> with SnackBarHandler {
@@ -50,15 +50,16 @@ class _AudioRecordState extends State<AudioRecordPage> with SnackBarHandler {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, dynamic result) async {
         controller.stopAudioRecord();
-        return false;
       },
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
           backgroundColor: DesignSystemColors.ligthPurple,
+          foregroundColor: DesignSystemColors.white,
         ),
         body: SoundRecordWidget(
           audioActivity: _audioActivity,

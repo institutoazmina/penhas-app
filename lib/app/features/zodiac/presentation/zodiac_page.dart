@@ -13,8 +13,8 @@ import 'zodiac_controller.dart';
 class ZodiacPage extends StatefulWidget {
   const ZodiacPage({
     required this.controller,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final ZodiacController controller;
 
@@ -98,6 +98,7 @@ class _ZodiacPageState extends State<ZodiacPage> {
       toolbarHeight: 120,
       centerTitle: true,
       backgroundColor: DesignSystemColors.easterPurple,
+      foregroundColor: DesignSystemColors.white,
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

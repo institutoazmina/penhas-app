@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'audio_playing.dart';
 
@@ -12,7 +12,7 @@ part of 'audio_playing.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$AudioPlaying {
@@ -24,8 +24,8 @@ mixin _$AudioPlaying {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? none,
-    TResult Function(AudioEntity audio)? playing,
+    TResult? Function()? none,
+    TResult? Function(AudioEntity audio)? playing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,8 +43,8 @@ mixin _$AudioPlaying {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_None value)? none,
-    TResult Function(_Playing value)? playing,
+    TResult? Function(_None value)? none,
+    TResult? Function(_Playing value)? playing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,38 +60,39 @@ mixin _$AudioPlaying {
 abstract class $AudioPlayingCopyWith<$Res> {
   factory $AudioPlayingCopyWith(
           AudioPlaying value, $Res Function(AudioPlaying) then) =
-      _$AudioPlayingCopyWithImpl<$Res>;
+      _$AudioPlayingCopyWithImpl<$Res, AudioPlaying>;
 }
 
 /// @nodoc
-class _$AudioPlayingCopyWithImpl<$Res> implements $AudioPlayingCopyWith<$Res> {
+class _$AudioPlayingCopyWithImpl<$Res, $Val extends AudioPlaying>
+    implements $AudioPlayingCopyWith<$Res> {
   _$AudioPlayingCopyWithImpl(this._value, this._then);
 
-  final AudioPlaying _value;
   // ignore: unused_field
-  final $Res Function(AudioPlaying) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$$_NoneCopyWith<$Res> {
-  factory _$$_NoneCopyWith(_$_None value, $Res Function(_$_None) then) =
-      __$$_NoneCopyWithImpl<$Res>;
+abstract class _$$NoneImplCopyWith<$Res> {
+  factory _$$NoneImplCopyWith(
+          _$NoneImpl value, $Res Function(_$NoneImpl) then) =
+      __$$NoneImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_NoneCopyWithImpl<$Res> extends _$AudioPlayingCopyWithImpl<$Res>
-    implements _$$_NoneCopyWith<$Res> {
-  __$$_NoneCopyWithImpl(_$_None _value, $Res Function(_$_None) _then)
-      : super(_value, (v) => _then(v as _$_None));
-
-  @override
-  _$_None get _value => super._value as _$_None;
+class __$$NoneImplCopyWithImpl<$Res>
+    extends _$AudioPlayingCopyWithImpl<$Res, _$NoneImpl>
+    implements _$$NoneImplCopyWith<$Res> {
+  __$$NoneImplCopyWithImpl(_$NoneImpl _value, $Res Function(_$NoneImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_None implements _None {
-  const _$_None();
+class _$NoneImpl implements _None {
+  const _$NoneImpl();
 
   @override
   String toString() {
@@ -99,9 +100,9 @@ class _$_None implements _None {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_None);
+        (other.runtimeType == runtimeType && other is _$NoneImpl);
   }
 
   @override
@@ -119,8 +120,8 @@ class _$_None implements _None {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? none,
-    TResult Function(AudioEntity audio)? playing,
+    TResult? Function()? none,
+    TResult? Function(AudioEntity audio)? playing,
   }) {
     return none?.call();
   }
@@ -150,8 +151,8 @@ class _$_None implements _None {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_None value)? none,
-    TResult Function(_Playing value)? playing,
+    TResult? Function(_None value)? none,
+    TResult? Function(_Playing value)? playing,
   }) {
     return none?.call(this);
   }
@@ -171,32 +172,33 @@ class _$_None implements _None {
 }
 
 abstract class _None implements AudioPlaying {
-  const factory _None() = _$_None;
+  const factory _None() = _$NoneImpl;
 }
 
 /// @nodoc
-abstract class _$$_PlayingCopyWith<$Res> {
-  factory _$$_PlayingCopyWith(
-          _$_Playing value, $Res Function(_$_Playing) then) =
-      __$$_PlayingCopyWithImpl<$Res>;
+abstract class _$$PlayingImplCopyWith<$Res> {
+  factory _$$PlayingImplCopyWith(
+          _$PlayingImpl value, $Res Function(_$PlayingImpl) then) =
+      __$$PlayingImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({AudioEntity audio});
 }
 
 /// @nodoc
-class __$$_PlayingCopyWithImpl<$Res> extends _$AudioPlayingCopyWithImpl<$Res>
-    implements _$$_PlayingCopyWith<$Res> {
-  __$$_PlayingCopyWithImpl(_$_Playing _value, $Res Function(_$_Playing) _then)
-      : super(_value, (v) => _then(v as _$_Playing));
+class __$$PlayingImplCopyWithImpl<$Res>
+    extends _$AudioPlayingCopyWithImpl<$Res, _$PlayingImpl>
+    implements _$$PlayingImplCopyWith<$Res> {
+  __$$PlayingImplCopyWithImpl(
+      _$PlayingImpl _value, $Res Function(_$PlayingImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_Playing get _value => super._value as _$_Playing;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? audio = freezed,
+    Object? audio = null,
   }) {
-    return _then(_$_Playing(
-      audio == freezed
+    return _then(_$PlayingImpl(
+      null == audio
           ? _value.audio
           : audio // ignore: cast_nullable_to_non_nullable
               as AudioEntity,
@@ -206,8 +208,8 @@ class __$$_PlayingCopyWithImpl<$Res> extends _$AudioPlayingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Playing implements _Playing {
-  const _$_Playing(this.audio);
+class _$PlayingImpl implements _Playing {
+  const _$PlayingImpl(this.audio);
 
   @override
   final AudioEntity audio;
@@ -218,21 +220,21 @@ class _$_Playing implements _Playing {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Playing &&
-            const DeepCollectionEquality().equals(other.audio, audio));
+            other is _$PlayingImpl &&
+            (identical(other.audio, audio) || other.audio == audio));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(audio));
+  int get hashCode => Object.hash(runtimeType, audio);
 
   @JsonKey(ignore: true)
   @override
-  _$$_PlayingCopyWith<_$_Playing> get copyWith =>
-      __$$_PlayingCopyWithImpl<_$_Playing>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$PlayingImplCopyWith<_$PlayingImpl> get copyWith =>
+      __$$PlayingImplCopyWithImpl<_$PlayingImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -246,8 +248,8 @@ class _$_Playing implements _Playing {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? none,
-    TResult Function(AudioEntity audio)? playing,
+    TResult? Function()? none,
+    TResult? Function(AudioEntity audio)? playing,
   }) {
     return playing?.call(audio);
   }
@@ -277,8 +279,8 @@ class _$_Playing implements _Playing {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_None value)? none,
-    TResult Function(_Playing value)? playing,
+    TResult? Function(_None value)? none,
+    TResult? Function(_Playing value)? playing,
   }) {
     return playing?.call(this);
   }
@@ -298,10 +300,10 @@ class _$_Playing implements _Playing {
 }
 
 abstract class _Playing implements AudioPlaying {
-  const factory _Playing(final AudioEntity audio) = _$_Playing;
+  const factory _Playing(final AudioEntity audio) = _$PlayingImpl;
 
   AudioEntity get audio;
   @JsonKey(ignore: true)
-  _$$_PlayingCopyWith<_$_Playing> get copyWith =>
+  _$$PlayingImplCopyWith<_$PlayingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

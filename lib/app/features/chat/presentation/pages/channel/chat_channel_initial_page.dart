@@ -6,13 +6,14 @@ import '../../../../authentication/presentation/shared/page_progress_indicator.d
 
 class ChatChannelInitialPage extends StatelessWidget {
   const ChatChannelInitialPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: DesignSystemColors.white,
         centerTitle: true,
         leading: Padding(
           padding: const EdgeInsets.only(left: 8.0),

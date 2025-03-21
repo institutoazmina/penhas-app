@@ -4,14 +4,14 @@ import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 
 class LoginButton extends StatefulWidget {
   const LoginButton({
-    Key? key,
+    super.key,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   final void Function() onChanged;
 
   @override
-  _LoginButtonState createState() => _LoginButtonState();
+  State<LoginButton> createState() => _LoginButtonState();
 }
 
 class _LoginButtonState extends State<LoginButton> {

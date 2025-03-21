@@ -30,7 +30,7 @@ void main() {
   });
 
   group(AccountDeletePage, () {
-    screenshotTest(
+    screenshotTestSimplified(
       'should show error when loading page',
       fileName: 'account_delete_page_error',
       pageBuilder: () => Scaffold(

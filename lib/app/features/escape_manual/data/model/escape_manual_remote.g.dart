@@ -10,7 +10,7 @@ EscapeManualRemoteModel _$EscapeManualRemoteModelFromJson(
         Map<String, dynamic> json) =>
     EscapeManualRemoteModel(
       lastModifiedAt: const JsonSecondsFromEpochConverter()
-          .fromJson(json['consultado_em'] as int),
+          .fromJson((json['consultado_em'] as num).toInt()),
       assistant: EscapeManualAssistantRemoteModel.fromJson(
           json['mf_assistant'] as Map<String, dynamic>),
       tasks: json['tarefas'] == null
@@ -22,23 +22,14 @@ EscapeManualRemoteModel _$EscapeManualRemoteModelFromJson(
     );
 
 Map<String, dynamic> _$EscapeManualRemoteModelToJson(
-    EscapeManualRemoteModel instance) {
-  final val = <String, dynamic>{
-    'mf_assistant': instance.assistant,
-    'tarefas': instance.tasks.toList(),
-    'tarefas_removidas': instance.removedTasks.toList(),
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('consultado_em',
-      const JsonSecondsFromEpochConverter().toJson(instance.lastModifiedAt));
-  return val;
-}
+        EscapeManualRemoteModel instance) =>
+    <String, dynamic>{
+      'mf_assistant': instance.assistant,
+      'tarefas': instance.tasks.toList(),
+      'tarefas_removidas': instance.removedTasks.toList(),
+      'consultado_em':
+          const JsonSecondsFromEpochConverter().toJson(instance.lastModifiedAt),
+    };
 
 EscapeManualAssistantRemoteModel _$EscapeManualAssistantRemoteModelFromJson(
         Map<String, dynamic> json) =>
@@ -82,7 +73,7 @@ EscapeManualTaskRemoteModel _$EscapeManualTaskRemoteModelFromJson(
       value: userInputValueFromJson(
           readUserInputValue(json, 'campo_livre') as Map<String, dynamic>),
       updatedAt: const JsonSecondsFromEpochConverter()
-          .fromJson(json['atualizado_em'] as int),
+          .fromJson((json['atualizado_em'] as num).toInt()),
       rawType: readRawType(json, 'rawType') as String?,
     );
 
@@ -107,8 +98,8 @@ Map<String, dynamic> _$EscapeManualTaskRemoteModelToJson(
   writeNotNull('campo_livre', instance.value);
   writeNotNull(
       'checkbox_feito', const JsonBoolConverter().toJson(instance.isDone));
-  writeNotNull('atualizado_em',
-      const JsonSecondsFromEpochConverter().toJson(instance.updatedAt));
+  val['atualizado_em'] =
+      const JsonSecondsFromEpochConverter().toJson(instance.updatedAt);
   return val;
 }
 

@@ -1,24 +1,22 @@
-import 'package:collection/collection.dart';
-
 import '../../domain/entities/tweet_filter_session_entity.dart';
 
 class TweetFilterSessionModel extends TweetFilterSessionEntity {
   const TweetFilterSessionModel({
-    required List<TweetFilterEntity> categories,
-    required List<TweetFilterEntity> tags,
-  }) : super(categories: categories, tags: tags);
+    required super.categories,
+    required super.tags,
+  });
 
   factory TweetFilterSessionModel.fromJson(Map<String, dynamic> jsonData) {
     final List<dynamic> tagsObject = jsonData['tags'];
     final List<dynamic> categoriesObject = jsonData['categories'];
     final List<TweetFilterEntity> categories = categoriesObject
         .map((e) => TweetFilterEntityModel.fromJson(e))
-        .whereNotNull()
+        .nonNulls
         .toList();
 
     final List<TweetFilterEntity> tags = tagsObject
         .map((e) => TweetFilterEntityModel.fromJson(e))
-        .whereNotNull()
+        .nonNulls
         .toList();
 
     return TweetFilterSessionModel(

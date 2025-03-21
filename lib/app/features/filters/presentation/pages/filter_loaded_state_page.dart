@@ -7,11 +7,11 @@ import '../../domain/entities/filter_tag_entity.dart';
 
 class FilterLoadedStatePage extends StatelessWidget {
   FilterLoadedStatePage({
-    Key? key,
+    super.key,
     required this.tags,
     required this.onResetAction,
     required this.onApplyFilterAction,
-  }) : super(key: key);
+  });
 
   final void Function() onResetAction;
   final void Function(List<FilterTagEntity>) onApplyFilterAction;
@@ -25,6 +25,7 @@ class FilterLoadedStatePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Filtros'),
         backgroundColor: DesignSystemColors.ligthPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: SizedBox.expand(
         child: SafeArea(

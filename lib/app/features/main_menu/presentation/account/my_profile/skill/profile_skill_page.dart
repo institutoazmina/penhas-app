@@ -8,13 +8,12 @@ import 'pages/profile_skill_loaded_widget.dart';
 import 'profile_skill_controller.dart';
 
 class ProfileSkillPage extends StatefulWidget {
-  const ProfileSkillPage({Key? key, required this.controller})
-      : super(key: key);
+  const ProfileSkillPage({super.key, required this.controller});
 
   final ProfileSkillController controller;
 
   @override
-  _FilterPageState createState() => _FilterPageState();
+  State<ProfileSkillPage> createState() => _FilterPageState();
 }
 
 class _FilterPageState extends State<ProfileSkillPage> with SnackBarHandler {

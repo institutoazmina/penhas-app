@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'help_center_state.dart';
 
@@ -12,7 +12,7 @@ part of 'help_center_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$HelpCenterState {
@@ -26,9 +26,9 @@ mixin _$HelpCenterState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(GuardianAlertMessageAction action)? guardianTriggered,
-    TResult Function(String callingNumber)? callingPolice,
+    TResult? Function()? initial,
+    TResult? Function(GuardianAlertMessageAction action)? guardianTriggered,
+    TResult? Function(String callingNumber)? callingPolice,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -48,9 +48,9 @@ mixin _$HelpCenterState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_GuardianTriggered value)? guardianTriggered,
-    TResult Function(_CallingPolice value)? callingPolice,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_GuardianTriggered value)? guardianTriggered,
+    TResult? Function(_CallingPolice value)? callingPolice,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -67,40 +67,40 @@ mixin _$HelpCenterState {
 abstract class $HelpCenterStateCopyWith<$Res> {
   factory $HelpCenterStateCopyWith(
           HelpCenterState value, $Res Function(HelpCenterState) then) =
-      _$HelpCenterStateCopyWithImpl<$Res>;
+      _$HelpCenterStateCopyWithImpl<$Res, HelpCenterState>;
 }
 
 /// @nodoc
-class _$HelpCenterStateCopyWithImpl<$Res>
+class _$HelpCenterStateCopyWithImpl<$Res, $Val extends HelpCenterState>
     implements $HelpCenterStateCopyWith<$Res> {
   _$HelpCenterStateCopyWithImpl(this._value, this._then);
 
-  final HelpCenterState _value;
   // ignore: unused_field
-  final $Res Function(HelpCenterState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$$_InitialCopyWith<$Res> {
-  factory _$$_InitialCopyWith(
-          _$_Initial value, $Res Function(_$_Initial) then) =
-      __$$_InitialCopyWithImpl<$Res>;
+abstract class _$$InitialImplCopyWith<$Res> {
+  factory _$$InitialImplCopyWith(
+          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
+      __$$InitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res> extends _$HelpCenterStateCopyWithImpl<$Res>
-    implements _$$_InitialCopyWith<$Res> {
-  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
-
-  @override
-  _$_Initial get _value => super._value as _$_Initial;
+class __$$InitialImplCopyWithImpl<$Res>
+    extends _$HelpCenterStateCopyWithImpl<$Res, _$InitialImpl>
+    implements _$$InitialImplCopyWith<$Res> {
+  __$$InitialImplCopyWithImpl(
+      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Initial implements _Initial {
-  const _$_Initial();
+class _$InitialImpl implements _Initial {
+  const _$InitialImpl();
 
   @override
   String toString() {
@@ -108,9 +108,9 @@ class _$_Initial implements _Initial {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Initial);
+        (other.runtimeType == runtimeType && other is _$InitialImpl);
   }
 
   @override
@@ -130,9 +130,9 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(GuardianAlertMessageAction action)? guardianTriggered,
-    TResult Function(String callingNumber)? callingPolice,
+    TResult? Function()? initial,
+    TResult? Function(GuardianAlertMessageAction action)? guardianTriggered,
+    TResult? Function(String callingNumber)? callingPolice,
   }) {
     return initial?.call();
   }
@@ -164,9 +164,9 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_GuardianTriggered value)? guardianTriggered,
-    TResult Function(_CallingPolice value)? callingPolice,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_GuardianTriggered value)? guardianTriggered,
+    TResult? Function(_CallingPolice value)? callingPolice,
   }) {
     return initial?.call(this);
   }
@@ -187,34 +187,33 @@ class _$_Initial implements _Initial {
 }
 
 abstract class _Initial implements HelpCenterState {
-  const factory _Initial() = _$_Initial;
+  const factory _Initial() = _$InitialImpl;
 }
 
 /// @nodoc
-abstract class _$$_GuardianTriggeredCopyWith<$Res> {
-  factory _$$_GuardianTriggeredCopyWith(_$_GuardianTriggered value,
-          $Res Function(_$_GuardianTriggered) then) =
-      __$$_GuardianTriggeredCopyWithImpl<$Res>;
+abstract class _$$GuardianTriggeredImplCopyWith<$Res> {
+  factory _$$GuardianTriggeredImplCopyWith(_$GuardianTriggeredImpl value,
+          $Res Function(_$GuardianTriggeredImpl) then) =
+      __$$GuardianTriggeredImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({GuardianAlertMessageAction action});
 }
 
 /// @nodoc
-class __$$_GuardianTriggeredCopyWithImpl<$Res>
-    extends _$HelpCenterStateCopyWithImpl<$Res>
-    implements _$$_GuardianTriggeredCopyWith<$Res> {
-  __$$_GuardianTriggeredCopyWithImpl(
-      _$_GuardianTriggered _value, $Res Function(_$_GuardianTriggered) _then)
-      : super(_value, (v) => _then(v as _$_GuardianTriggered));
+class __$$GuardianTriggeredImplCopyWithImpl<$Res>
+    extends _$HelpCenterStateCopyWithImpl<$Res, _$GuardianTriggeredImpl>
+    implements _$$GuardianTriggeredImplCopyWith<$Res> {
+  __$$GuardianTriggeredImplCopyWithImpl(_$GuardianTriggeredImpl _value,
+      $Res Function(_$GuardianTriggeredImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_GuardianTriggered get _value => super._value as _$_GuardianTriggered;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? action = freezed,
+    Object? action = null,
   }) {
-    return _then(_$_GuardianTriggered(
-      action == freezed
+    return _then(_$GuardianTriggeredImpl(
+      null == action
           ? _value.action
           : action // ignore: cast_nullable_to_non_nullable
               as GuardianAlertMessageAction,
@@ -224,8 +223,8 @@ class __$$_GuardianTriggeredCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_GuardianTriggered implements _GuardianTriggered {
-  const _$_GuardianTriggered(this.action);
+class _$GuardianTriggeredImpl implements _GuardianTriggered {
+  const _$GuardianTriggeredImpl(this.action);
 
   @override
   final GuardianAlertMessageAction action;
@@ -236,21 +235,21 @@ class _$_GuardianTriggered implements _GuardianTriggered {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_GuardianTriggered &&
-            const DeepCollectionEquality().equals(other.action, action));
+            other is _$GuardianTriggeredImpl &&
+            (identical(other.action, action) || other.action == action));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(action));
+  int get hashCode => Object.hash(runtimeType, action);
 
   @JsonKey(ignore: true)
   @override
-  _$$_GuardianTriggeredCopyWith<_$_GuardianTriggered> get copyWith =>
-      __$$_GuardianTriggeredCopyWithImpl<_$_GuardianTriggered>(
+  @pragma('vm:prefer-inline')
+  _$$GuardianTriggeredImplCopyWith<_$GuardianTriggeredImpl> get copyWith =>
+      __$$GuardianTriggeredImplCopyWithImpl<_$GuardianTriggeredImpl>(
           this, _$identity);
 
   @override
@@ -267,9 +266,9 @@ class _$_GuardianTriggered implements _GuardianTriggered {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(GuardianAlertMessageAction action)? guardianTriggered,
-    TResult Function(String callingNumber)? callingPolice,
+    TResult? Function()? initial,
+    TResult? Function(GuardianAlertMessageAction action)? guardianTriggered,
+    TResult? Function(String callingNumber)? callingPolice,
   }) {
     return guardianTriggered?.call(action);
   }
@@ -301,9 +300,9 @@ class _$_GuardianTriggered implements _GuardianTriggered {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_GuardianTriggered value)? guardianTriggered,
-    TResult Function(_CallingPolice value)? callingPolice,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_GuardianTriggered value)? guardianTriggered,
+    TResult? Function(_CallingPolice value)? callingPolice,
   }) {
     return guardianTriggered?.call(this);
   }
@@ -325,39 +324,38 @@ class _$_GuardianTriggered implements _GuardianTriggered {
 
 abstract class _GuardianTriggered implements HelpCenterState {
   const factory _GuardianTriggered(final GuardianAlertMessageAction action) =
-      _$_GuardianTriggered;
+      _$GuardianTriggeredImpl;
 
   GuardianAlertMessageAction get action;
   @JsonKey(ignore: true)
-  _$$_GuardianTriggeredCopyWith<_$_GuardianTriggered> get copyWith =>
+  _$$GuardianTriggeredImplCopyWith<_$GuardianTriggeredImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_CallingPoliceCopyWith<$Res> {
-  factory _$$_CallingPoliceCopyWith(
-          _$_CallingPolice value, $Res Function(_$_CallingPolice) then) =
-      __$$_CallingPoliceCopyWithImpl<$Res>;
+abstract class _$$CallingPoliceImplCopyWith<$Res> {
+  factory _$$CallingPoliceImplCopyWith(
+          _$CallingPoliceImpl value, $Res Function(_$CallingPoliceImpl) then) =
+      __$$CallingPoliceImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({String callingNumber});
 }
 
 /// @nodoc
-class __$$_CallingPoliceCopyWithImpl<$Res>
-    extends _$HelpCenterStateCopyWithImpl<$Res>
-    implements _$$_CallingPoliceCopyWith<$Res> {
-  __$$_CallingPoliceCopyWithImpl(
-      _$_CallingPolice _value, $Res Function(_$_CallingPolice) _then)
-      : super(_value, (v) => _then(v as _$_CallingPolice));
+class __$$CallingPoliceImplCopyWithImpl<$Res>
+    extends _$HelpCenterStateCopyWithImpl<$Res, _$CallingPoliceImpl>
+    implements _$$CallingPoliceImplCopyWith<$Res> {
+  __$$CallingPoliceImplCopyWithImpl(
+      _$CallingPoliceImpl _value, $Res Function(_$CallingPoliceImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_CallingPolice get _value => super._value as _$_CallingPolice;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? callingNumber = freezed,
+    Object? callingNumber = null,
   }) {
-    return _then(_$_CallingPolice(
-      callingNumber == freezed
+    return _then(_$CallingPoliceImpl(
+      null == callingNumber
           ? _value.callingNumber
           : callingNumber // ignore: cast_nullable_to_non_nullable
               as String,
@@ -367,8 +365,8 @@ class __$$_CallingPoliceCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CallingPolice implements _CallingPolice {
-  const _$_CallingPolice(this.callingNumber);
+class _$CallingPoliceImpl implements _CallingPolice {
+  const _$CallingPoliceImpl(this.callingNumber);
 
   @override
   final String callingNumber;
@@ -379,22 +377,22 @@ class _$_CallingPolice implements _CallingPolice {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CallingPolice &&
-            const DeepCollectionEquality()
-                .equals(other.callingNumber, callingNumber));
+            other is _$CallingPoliceImpl &&
+            (identical(other.callingNumber, callingNumber) ||
+                other.callingNumber == callingNumber));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(callingNumber));
+  int get hashCode => Object.hash(runtimeType, callingNumber);
 
   @JsonKey(ignore: true)
   @override
-  _$$_CallingPoliceCopyWith<_$_CallingPolice> get copyWith =>
-      __$$_CallingPoliceCopyWithImpl<_$_CallingPolice>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$CallingPoliceImplCopyWith<_$CallingPoliceImpl> get copyWith =>
+      __$$CallingPoliceImplCopyWithImpl<_$CallingPoliceImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -410,9 +408,9 @@ class _$_CallingPolice implements _CallingPolice {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(GuardianAlertMessageAction action)? guardianTriggered,
-    TResult Function(String callingNumber)? callingPolice,
+    TResult? Function()? initial,
+    TResult? Function(GuardianAlertMessageAction action)? guardianTriggered,
+    TResult? Function(String callingNumber)? callingPolice,
   }) {
     return callingPolice?.call(callingNumber);
   }
@@ -444,9 +442,9 @@ class _$_CallingPolice implements _CallingPolice {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_GuardianTriggered value)? guardianTriggered,
-    TResult Function(_CallingPolice value)? callingPolice,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_GuardianTriggered value)? guardianTriggered,
+    TResult? Function(_CallingPolice value)? callingPolice,
   }) {
     return callingPolice?.call(this);
   }
@@ -467,10 +465,11 @@ class _$_CallingPolice implements _CallingPolice {
 }
 
 abstract class _CallingPolice implements HelpCenterState {
-  const factory _CallingPolice(final String callingNumber) = _$_CallingPolice;
+  const factory _CallingPolice(final String callingNumber) =
+      _$CallingPoliceImpl;
 
   String get callingNumber;
   @JsonKey(ignore: true)
-  _$$_CallingPoliceCopyWith<_$_CallingPolice> get copyWith =>
+  _$$CallingPoliceImplCopyWith<_$CallingPoliceImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

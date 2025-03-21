@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class BottomSheetActionsContentWidget extends StatefulWidget {
   BottomSheetActionsContentWidget({
-    Key? key,
+    super.key,
     required this.actions,
-  }) : super(key: key) {
+  }) {
     assert(actions.isNotEmpty);
   }
 
@@ -41,7 +41,7 @@ class _BottomSheetActionsContentWidgetState
 }
 
 class _BottomSheetDivider extends StatelessWidget {
-  const _BottomSheetDivider({Key? key}) : super(key: key);
+  const _BottomSheetDivider();
 
   @override
   Widget build(BuildContext context) => LayoutBuilder(

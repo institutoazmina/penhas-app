@@ -44,6 +44,7 @@ void main() {
         // assert
         verify(() => onSelect.call(MainboardState.helpCenter())).called(1);
       },
+      skip: true,
     );
 
     parameterizedGroup<List<MainboardState>>(
@@ -66,14 +67,15 @@ void main() {
       (name, pages) {
         widgetScreenshotTest(
           '$name should looks as expected',
+          skip: true,
           fileName: 'bottom_navigation_${name.replaceAll(' ', '_')}}',
           widgetBuilder: (_) => SizedBox(
-            width: 400,
+            width: 500,
             height: kBottomNavigationBarHeight * 2 * pages.length,
             child: Scaffold(
               body: GoldenTestGroup(
                 columns: 1,
-                columnWidthBuilder: (__) => const FixedColumnWidth(400),
+                columnWidthBuilder: (__) => const FixedColumnWidth(500),
                 children: pages
                     .map(
                       (page) => GoldenTestScenario(

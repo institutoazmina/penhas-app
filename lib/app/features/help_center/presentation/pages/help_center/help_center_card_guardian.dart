@@ -8,10 +8,10 @@ import '../tutorial/guardian/guardian_tutorial_page.dart';
 
 class HelpCenterCardGuardian extends StatelessWidget {
   const HelpCenterCardGuardian({
-    Key? key,
+    super.key,
     required this.create,
     required this.manager,
-  }) : super(key: key);
+  });
 
   final VoidCallback create;
   final VoidCallback manager;
@@ -34,7 +34,7 @@ class HelpCenterCardGuardian extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.5),
+              color: Colors.black.withAlpha(50),
               offset: const Offset(0.0, 2.0),
               blurRadius: 4.0,
             )

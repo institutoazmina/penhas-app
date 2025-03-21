@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../../../../../../shared/design_system/colors.dart';
 import '../../../../../../../shared/design_system/linear_gradient_design_system.dart';
 import '../../../../../../../shared/design_system/text_styles.dart';
 import '../../../../../../../shared/design_system/widgets/buttons/penhas_button.dart';
@@ -15,14 +16,13 @@ import 'sign_up_three_controller.dart';
 
 class SignUpThreePage extends StatefulWidget {
   const SignUpThreePage(
-      {Key? key, this.title = 'SignUpThree', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'SignUpThree', required this.controller});
 
   final String title;
   final SignUpThreeController controller;
 
   @override
-  _SignUpThreePageState createState() => _SignUpThreePageState();
+  State<SignUpThreePage> createState() => _SignUpThreePageState();
 }
 
 class _SignUpThreePageState extends State<SignUpThreePage>
@@ -57,6 +57,7 @@ class _SignUpThreePageState extends State<SignUpThreePage>
         child: Scaffold(
           key: _scaffoldKey,
           appBar: AppBar(
+            foregroundColor: DesignSystemColors.white,
             backgroundColor: Colors.transparent,
             elevation: 0,
           ),

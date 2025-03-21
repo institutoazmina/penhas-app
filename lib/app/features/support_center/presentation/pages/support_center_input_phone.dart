@@ -5,11 +5,11 @@ import '../../../../shared/design_system/colors.dart';
 
 class SupportCenterInputPhone extends StatelessWidget {
   const SupportCenterInputPhone({
-    Key? key,
+    super.key,
     required this.hintText,
     required this.errorText,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   final String hintText;
   final String errorText;

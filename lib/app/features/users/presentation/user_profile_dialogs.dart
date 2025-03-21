@@ -8,7 +8,7 @@ import '../../../shared/widgets/bottom_sheet_actions_widget.dart';
 import 'user_profile_state.dart';
 
 class ProfileOptionsBottomSheet extends StatelessWidget {
-  const ProfileOptionsBottomSheet({Key? key}) : super(key: key);
+  const ProfileOptionsBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) =>
@@ -33,14 +33,14 @@ class ProfileOptionsBottomSheet extends StatelessWidget {
 }
 
 class ReportUserDialog extends StatelessWidget {
-  const ReportUserDialog({Key? key, required this.reason}) : super(key: key);
+  const ReportUserDialog({super.key, required this.reason});
 
   static final _formKey = GlobalKey<FormState>();
   final String? reason;
 
   @override
   Widget build(BuildContext context) {
-    final _controller = TextEditingController(text: reason);
+    final controller = TextEditingController(text: reason);
 
     return AlertDialog(
       title: const Text('Denunciar', style: kTextStyleAlertDialogTitle),
@@ -48,7 +48,7 @@ class ReportUserDialog extends StatelessWidget {
         key: _formKey,
         child: TextFormField(
           maxLengthEnforcement: MaxLengthEnforcement.enforced,
-          controller: _controller,
+          controller: controller,
           maxLength: 500,
           maxLines: 5,
           decoration: const InputDecoration(
@@ -71,7 +71,7 @@ class ReportUserDialog extends StatelessWidget {
           child: const Text('Enviar'),
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              Navigator.pop(context, _controller.text);
+              Navigator.pop(context, controller.text);
             }
           },
         ),
@@ -82,9 +82,9 @@ class ReportUserDialog extends StatelessWidget {
 
 class UserBlockConfirmationDialog extends StatelessWidget {
   const UserBlockConfirmationDialog({
-    Key? key,
+    super.key,
     required this.message,
-  }) : super(key: key);
+  });
 
   final String message;
 

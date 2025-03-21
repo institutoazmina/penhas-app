@@ -7,11 +7,11 @@ import '../../../../../../filters/domain/entities/filter_tag_entity.dart';
 
 class ProfileSkillLoadedWidget extends StatelessWidget {
   ProfileSkillLoadedWidget({
-    Key? key,
+    super.key,
     required this.tags,
     required this.onResetAction,
     required this.onApplyFilterAction,
-  }) : super(key: key);
+  });
 
   final void Function() onResetAction;
   final void Function(List<FilterTagEntity>) onApplyFilterAction;
@@ -25,6 +25,7 @@ class ProfileSkillLoadedWidget extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Habilidades'),
         backgroundColor: DesignSystemColors.ligthPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: SizedBox.expand(
         child: SafeArea(

@@ -16,14 +16,13 @@ import 'reply_tweet_controller.dart';
 
 class ReplyTweetPage extends StatefulWidget {
   const ReplyTweetPage(
-      {Key? key, this.title = 'ReplyTweet', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'ReplyTweet', required this.controller});
 
   final String title;
   final ReplyTweetController controller;
 
   @override
-  _ReplyTweetPageState createState() => _ReplyTweetPageState();
+  State<ReplyTweetPage> createState() => _ReplyTweetPageState();
 }
 
 class _ReplyTweetPageState extends State<ReplyTweetPage> with SnackBarHandler {
@@ -199,6 +198,7 @@ class _ReplyTweetPageState extends State<ReplyTweetPage> with SnackBarHandler {
     return AppBar(
       title: const Text('Comentário'),
       backgroundColor: DesignSystemColors.ligthPurple,
+      foregroundColor: DesignSystemColors.white,
     );
   }
 
@@ -221,7 +221,8 @@ class _ReplyTweetPageState extends State<ReplyTweetPage> with SnackBarHandler {
                   children: <Widget>[
                     SvgPicture.asset(
                       'assets/images/svg/drawer/user_profile.svg',
-                      color: DesignSystemColors.darkIndigoThree,
+                      colorFilter: const ColorFilter.mode(
+                          DesignSystemColors.darkIndigoThree, BlendMode.srcIn),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 12.0),

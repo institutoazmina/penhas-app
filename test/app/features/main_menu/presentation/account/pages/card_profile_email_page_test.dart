@@ -6,7 +6,7 @@ import '../../../../../../utils/golden_tests.dart';
 
 void main() {
   group(CardProfileEmailPage, () {
-    screenshotTest(
+    screenshotTestSimplified(
       'should render correctly',
       fileName: 'card_profile_email_page',
       pageBuilder: () => Scaffold(

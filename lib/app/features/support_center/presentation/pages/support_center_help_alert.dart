@@ -4,7 +4,7 @@ import '../../../../shared/design_system/text_styles.dart';
 import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 
 class SupportCenterHelpAlert extends StatelessWidget {
-  const SupportCenterHelpAlert({Key? key}) : super(key: key);
+  const SupportCenterHelpAlert({super.key});
 
   @override
   Widget build(BuildContext context) {

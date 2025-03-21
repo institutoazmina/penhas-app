@@ -14,18 +14,75 @@ const testDevices = const [
   Device(
     name: 'iPhone 6',
     size: Size(375, 667),
+    safeArea: EdgeInsets.zero,
   ),
   Device(
     name: 'iPhone Pro',
     size: Size(390, 844),
-    safeArea: EdgeInsets.only(top: 47, bottom: 34),
+    safeArea: EdgeInsets.zero,
   ),
   Device(
     name: 'iPhone Pro Max',
     size: Size(428, 926),
-    safeArea: EdgeInsets.only(top: 47, bottom: 34),
+    safeArea: EdgeInsets.zero,
   ),
 ];
+
+@isTest
+Future<void> screenshotTestSimplified(
+  String description, {
+  required String fileName,
+  FutureOr<void> Function()? setUp,
+  required Widget Function() pageBuilder,
+  PumpAction? pumpBeforeTest,
+  List<Device> devices = testDevices,
+  bool skip = false,
+  String? reason,
+  List<String> tags = const ['golden'],
+  Duration timeout = const Duration(seconds: 5),
+  TransitionBuilder? transitionBuilder,
+}) async {
+  goldenTest(
+    description,
+    fileName: fileName,
+    builder: () {
+      setUp?.call();
+
+      return GoldenTestGroup(
+        columns: 3,
+        children: devices
+            .map(
+              (it) => Padding(
+                padding: EdgeInsets.all(16),
+                child: SizedBox(
+                  width: it.size.width,
+                  height: it.size.height,
+                  child: MaterialApp(
+                    builder: transitionBuilder,
+                    home: pageBuilder(),
+                    debugShowCheckedModeBanner: false,
+                  ),
+                ),
+              ),
+            )
+            .toList(),
+      );
+    },
+    tags: tags,
+    skip: skip,
+    pumpBeforeTest: (tester) async {
+      await pumpBeforeTest?.call(tester);
+      // first round of pre-caching for images that are available immediately
+      await mockNetworkImages(() => precacheImages(tester));
+      // this will allow all the UI to properly settle before caching images
+      await tester.pump(const LongDuration());
+      // second round of pre-caching for images that are available a bit later, after first frame
+      return mockNetworkImages(() => precacheImages(tester)).timeout(timeout);
+    },
+    pumpWidget: (tester, widget) =>
+        mockNetworkImages(() => tester.pumpWidget(widget)).timeout(timeout),
+  ).timeout(timeout);
+}
 
 @isTest
 Future<void> screenshotTest(

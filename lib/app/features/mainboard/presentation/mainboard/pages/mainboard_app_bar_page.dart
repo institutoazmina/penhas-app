@@ -9,11 +9,11 @@ import 'mainboard_notification_page.dart';
 class MainBoardAppBarPage extends StatelessWidget
     implements PreferredSizeWidget {
   const MainBoardAppBarPage({
-    Key? key,
+    super.key,
     required this.counter,
     required this.currentPage,
     required this.resetCounter,
-  }) : super(key: key);
+  });
 
   final int counter;
   final MainboardState currentPage;
@@ -37,6 +37,7 @@ class MainBoardAppBarPage extends StatelessWidget
       centerTitle: false,
       titleSpacing: 0,
       backgroundColor: DesignSystemColors.helpCenterNavigationBar,
+      foregroundColor: DesignSystemColors.white,
       title: const Text(
         'Precisa de ajuda?',
         style: kTextStyleHelpCenterTitle,
@@ -48,6 +49,7 @@ class MainBoardAppBarPage extends StatelessWidget
     return AppBar(
       titleSpacing: 0,
       backgroundColor: DesignSystemColors.ligthPurple,
+      foregroundColor: DesignSystemColors.white,
       elevation: 0.0,
       centerTitle: false,
       title: const Icon(
@@ -70,6 +72,7 @@ class MainBoardAppBarPage extends StatelessWidget
       leading: const SizedBox.shrink(),
       centerTitle: true,
       backgroundColor: DesignSystemColors.easterPurple,
+      foregroundColor: DesignSystemColors.white,
       title: const Text('Chat'),
     );
   }

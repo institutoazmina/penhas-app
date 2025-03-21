@@ -13,14 +13,12 @@ String? _normalizeHitText(String? text) {
 
 class WhiteBoxDecorationStyle extends InputDecoration {
   WhiteBoxDecorationStyle({
-    required String labelText,
-    String? hintText,
+    required String super.labelText,
+    super.hintText,
     String? errorText,
   }) : super(
           border: const OutlineInputBorder(),
-          labelText: labelText,
           labelStyle: kTextStyleDefaultTextFieldLabelStyle,
-          hintText: hintText,
           hintStyle: kTextStyleDefaultTextFieldLabelStyle,
           errorText: _normalizeHitText(errorText),
           contentPadding:
@@ -36,14 +34,12 @@ class WhiteBoxDecorationStyle extends InputDecoration {
 
 class PurpleBoxDecorationStyle extends InputDecoration {
   PurpleBoxDecorationStyle({
-    required String labelText,
-    String? hintText,
+    required String super.labelText,
+    super.hintText,
     String? errorText,
   }) : super(
           border: const OutlineInputBorder(),
-          labelText: labelText,
           labelStyle: kTextStyleGreyDefaultTextFieldLabelStyle,
-          hintText: hintText,
           hintStyle: kTextStyleGreyDefaultTextFieldLabelStyle,
           errorText: _normalizeHitText(errorText),
           contentPadding:

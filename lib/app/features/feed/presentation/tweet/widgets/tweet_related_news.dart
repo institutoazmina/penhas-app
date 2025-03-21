@@ -7,14 +7,14 @@ import '../../../domain/entities/tweet_entity.dart';
 
 class TweetRelatedNews extends StatefulWidget {
   const TweetRelatedNews({
-    Key? key,
+    super.key,
     required this.related,
-  }) : super(key: key);
+  });
 
   final TweetRelatedNewsEntity related;
 
   @override
-  _TweetRelatedNewsState createState() => _TweetRelatedNewsState();
+  State<TweetRelatedNews> createState() => _TweetRelatedNewsState();
 }
 
 class _TweetRelatedNewsState extends State<TweetRelatedNews> {
@@ -58,10 +58,7 @@ class _TweetRelatedNewsState extends State<TweetRelatedNews> {
 }
 
 class _TweetRelatedNewsContent extends StatelessWidget {
-  const _TweetRelatedNewsContent(
-    this._entity, {
-    Key? key,
-  }) : super(key: key);
+  const _TweetRelatedNewsContent(this._entity);
 
   final TweetNewsEntity _entity;
 
@@ -96,7 +93,7 @@ class _TweetRelatedNewsContent extends StatelessWidget {
                   Text(
                     _entity.title,
                     overflow: TextOverflow.ellipsis,
-                    maxLines: 3,
+                    maxLines: 2,
                     style: kTextStyleDrawerUsername,
                   ),
                   if (_entity.source != null)

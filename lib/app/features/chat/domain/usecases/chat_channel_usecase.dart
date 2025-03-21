@@ -271,14 +271,14 @@ class ChatChannelUseCase with MapFailureMessage {
   }
 
   void _setupPollingSync() {
-    const _pollingSyncInterval = Duration(seconds: 60);
+    const pollingSyncInterval = Duration(seconds: 60);
 
     if (_syncTimer != null) {
       return;
     }
 
     _syncTimer = Timer.periodic(
-      _pollingSyncInterval,
+      pollingSyncInterval,
       (timer) async {
         _syncChannel();
       },

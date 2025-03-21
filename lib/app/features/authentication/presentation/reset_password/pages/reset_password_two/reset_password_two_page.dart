@@ -14,14 +14,13 @@ import 'reset_password_two_controller.dart';
 
 class ResetPasswordTwoPage extends StatefulWidget {
   const ResetPasswordTwoPage(
-      {Key? key, this.title = 'ResetPasswordTwo', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'ResetPasswordTwo', required this.controller});
 
   final String title;
   final ResetPasswordTwoController controller;
 
   @override
-  _ResetPasswordTwoPageState createState() => _ResetPasswordTwoPageState();
+  State<ResetPasswordTwoPage> createState() => _ResetPasswordTwoPageState();
 }
 
 class _ResetPasswordTwoPageState extends State<ResetPasswordTwoPage>
@@ -95,7 +94,8 @@ class _ResetPasswordTwoPageState extends State<ResetPasswordTwoPage>
                             width: 102,
                             child: SvgPicture.asset(
                               'assets/images/svg/reset_password/recovery_password_step_2.svg',
-                              color: Colors.white,
+                              colorFilter: const ColorFilter.mode(
+                                  Colors.white, BlendMode.srcIn),
                             ),
                           ),
                         ],

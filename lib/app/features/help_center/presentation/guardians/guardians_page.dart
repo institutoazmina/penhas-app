@@ -16,15 +16,14 @@ import 'guardians_controller.dart';
 
 class GuardiansPage extends StatefulWidget {
   const GuardiansPage(
-      {Key? key, this.title = 'Guardians', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'Guardians', required this.controller});
 
   final GuardiansController controller;
 
   final String title;
 
   @override
-  _GuardiansPageState createState() => _GuardiansPageState();
+  State<GuardiansPage> createState() => _GuardiansPageState();
 }
 
 class _GuardiansPageState extends State<GuardiansPage> with SnackBarHandler {
@@ -69,6 +68,7 @@ class _GuardiansPageState extends State<GuardiansPage> with SnackBarHandler {
       appBar: AppBar(
         title: const Text('Meus Guardiões'),
         backgroundColor: DesignSystemColors.ligthPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: PageProgressIndicator(
         progressState: _loadState,

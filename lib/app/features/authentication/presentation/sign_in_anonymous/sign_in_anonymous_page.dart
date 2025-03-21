@@ -15,17 +15,16 @@ import 'sign_in_anonymous_controller.dart';
 
 class SignInAnonymousPage extends StatefulWidget {
   const SignInAnonymousPage(
-      {Key? key, this.title = 'Authentication', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'Authentication', required this.controller});
 
   final String title;
   final SignInAnonymousController controller;
 
   @override
-  _SignInAnonymousPage createState() => _SignInAnonymousPage();
+  State<SignInAnonymousPage> createState() => _SignInAnonymousPageState();
 }
 
-class _SignInAnonymousPage extends State<SignInAnonymousPage>
+class _SignInAnonymousPageState extends State<SignInAnonymousPage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();

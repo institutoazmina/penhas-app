@@ -5,10 +5,10 @@ import '../../../../../shared/design_system/colors.dart';
 
 class CardProfileHeaderEditPage extends StatelessWidget {
   const CardProfileHeaderEditPage({
-    Key? key,
+    super.key,
     required this.title,
     required this.onEditAction,
-  }) : super(key: key);
+  });
 
   final String title;
   final void Function()? onEditAction;
@@ -25,7 +25,8 @@ class CardProfileHeaderEditPage extends StatelessWidget {
           IconButton(
             icon: SvgPicture.asset(
               'assets/images/svg/profile/edit.svg',
-              color: DesignSystemColors.pinky,
+              colorFilter: const ColorFilter.mode(
+                  DesignSystemColors.pinky, BlendMode.srcIn),
             ),
             onPressed: onEditAction,
           ),

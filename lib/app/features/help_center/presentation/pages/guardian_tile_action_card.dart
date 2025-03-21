@@ -13,19 +13,21 @@ import '../../domain/entities/guardian_tile_entity.dart';
 
 class GuardianTileActionCard extends StatelessWidget {
   const GuardianTileActionCard({
-    Key? key,
+    super.key,
     required this.card,
-  }) : super(key: key);
+  });
 
   final GuardianTileCardEntity card;
 
   Widget get _canEditIcon => SvgPicture.asset(
         'assets/images/svg/help_center/guardians/guardians_edit.svg',
-        color: DesignSystemColors.pumpkinOrange,
+        colorFilter: const ColorFilter.mode(
+            DesignSystemColors.pumpkinOrange, BlendMode.srcIn),
       );
   Widget get _canDeleteIcon => SvgPicture.asset(
         'assets/images/svg/help_center/guardians/guardians_delete.svg',
-        color: DesignSystemColors.pumpkinOrange,
+        colorFilter: const ColorFilter.mode(
+            DesignSystemColors.pumpkinOrange, BlendMode.srcIn),
       );
   Widget get _canResendIcon => const Icon(
         Icons.autorenew,
@@ -119,14 +121,14 @@ class GuardianTileActionCard extends StatelessWidget {
   void _onEditPressed(void Function(String name)? action) {
     Modular.to.showDialog(
       builder: (context) {
-        final TextEditingController _controller = TextEditingController();
+        final TextEditingController controller = TextEditingController();
 
         return AlertDialog(
           title: const Text('Alterar nome', style: kTextStyleAlertDialogTitle),
           content: TextFormField(
             maxLengthEnforcement: MaxLengthEnforcement.enforced,
             style: kTextStyleGreyDefaultTextFieldLabelStyle,
-            controller: _controller,
+            controller: controller,
             decoration: PurpleBoxDecorationStyle(
               labelText: 'Novo nome',
             ),
@@ -145,7 +147,7 @@ class GuardianTileActionCard extends StatelessWidget {
               child:
                   const Text('Enviar', style: TextStyle(color: Colors.white)),
               onPressed: () {
-                action!(_controller.text);
+                action!(controller.text);
                 Navigator.of(context).pop();
               },
             )

@@ -5,8 +5,8 @@ import '../../../authentication/presentation/shared/page_progress_indicator.dart
 
 class FilterInitialStatePage extends StatelessWidget {
   const FilterInitialStatePage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +15,7 @@ class FilterInitialStatePage extends StatelessWidget {
         elevation: 0.0,
         backgroundColor: DesignSystemColors.ligthPurple,
         title: const Text('Filtros'),
+        foregroundColor: DesignSystemColors.white,
       ),
       body: PageProgressIndicator(
         progressMessage: 'Carregando...',

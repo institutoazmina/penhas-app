@@ -8,13 +8,12 @@ import '../../domain/states/feed_routing_state.dart';
 import 'feed_routing_profile_chat_controller.dart';
 
 class FeedRoutingProfileChatPage extends StatefulWidget {
-  const FeedRoutingProfileChatPage({Key? key, required this.controller})
-      : super(key: key);
+  const FeedRoutingProfileChatPage({super.key, required this.controller});
 
   final FeedRoutingProfileChatController controller;
 
   @override
-  _FeedRoutingProfileChatPageState createState() =>
+  State<FeedRoutingProfileChatPage> createState() =>
       _FeedRoutingProfileChatPageState();
 }
 
@@ -43,6 +42,7 @@ extension _Bodybuilder on _FeedRoutingProfileChatPageState {
         elevation: 0,
         title: Text(title),
         backgroundColor: DesignSystemColors.easterPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: SafeArea(
         child: PageProgressIndicator(
@@ -60,6 +60,7 @@ extension _Bodybuilder on _FeedRoutingProfileChatPageState {
         elevation: 0,
         title: Text(title),
         backgroundColor: DesignSystemColors.easterPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: SafeArea(
         child: SupportCenterGeneralError(

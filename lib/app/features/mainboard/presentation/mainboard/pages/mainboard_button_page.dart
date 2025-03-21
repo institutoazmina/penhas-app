@@ -6,11 +6,11 @@ import '../../../domain/states/mainboard_state.dart';
 
 class MainboarButtonPage extends StatelessWidget {
   const MainboarButtonPage({
-    Key? key,
+    super.key,
     required this.page,
     required this.selectedPage,
     required this.onSelect,
-  }) : super(key: key);
+  });
 
   final MainboardState page;
   final MainboardState selectedPage;
@@ -68,8 +68,7 @@ class _BottomBarIcon extends StatelessWidget {
   const _BottomBarIcon({
     required this.current,
     required this.selected,
-    Key? key,
-  }) : super(key: key);
+  });
 
   final MainboardState current;
   final MainboardState selected;
@@ -108,7 +107,7 @@ class _BottomBarIcon extends StatelessWidget {
       dimension: 24,
       child: SvgPicture.asset(
         asset,
-        color: assetColor,
+        colorFilter: ColorFilter.mode(assetColor, BlendMode.srcIn),
         fit: BoxFit.contain,
         excludeFromSemantics: true,
       ),

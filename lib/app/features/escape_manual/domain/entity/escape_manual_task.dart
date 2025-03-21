@@ -3,8 +3,8 @@ import 'package:equatable/equatable.dart';
 import 'button.dart';
 import 'contact.dart';
 
-export 'contact.dart';
 export 'button.dart';
+export 'contact.dart';
 
 abstract class EscapeManualTaskEntity extends Equatable {
   const EscapeManualTaskEntity({
@@ -24,13 +24,10 @@ abstract class EscapeManualTaskEntity extends Equatable {
 
 abstract class EscapeManualTodoTaskEntity extends EscapeManualTaskEntity {
   const EscapeManualTodoTaskEntity({
-    required String id,
-    required String description,
+    required super.id,
+    required super.description,
     required this.isDone,
-  }) : super(
-          id: id,
-          description: description,
-        );
+  });
 
   final bool isDone;
 
@@ -48,15 +45,11 @@ abstract class EscapeManualTodoTaskEntity extends EscapeManualTaskEntity {
 abstract class EscapeManualEditableTaskEntity<T extends Object>
     extends EscapeManualTodoTaskEntity {
   const EscapeManualEditableTaskEntity({
-    required String id,
-    required String description,
+    required super.id,
+    required super.description,
     required this.value,
-    required bool isDone,
-  }) : super(
-          id: id,
-          description: description,
-          isDone: isDone,
-        );
+    required super.isDone,
+  });
 
   final T? value;
 
@@ -75,14 +68,10 @@ abstract class EscapeManualEditableTaskEntity<T extends Object>
 
 class EscapeManualDefaultTaskEntity extends EscapeManualTodoTaskEntity {
   const EscapeManualDefaultTaskEntity({
-    required String id,
-    required String description,
-    bool isDone = false,
-  }) : super(
-          id: id,
-          description: description,
-          isDone: isDone,
-        );
+    required super.id,
+    required super.description,
+    super.isDone = false,
+  });
 
   @override
   EscapeManualTodoTaskEntity copyWith({
@@ -98,16 +87,11 @@ class EscapeManualDefaultTaskEntity extends EscapeManualTodoTaskEntity {
 class EscapeManualContactsTaskEntity
     extends EscapeManualEditableTaskEntity<List<ContactEntity>> {
   const EscapeManualContactsTaskEntity({
-    required String id,
-    required String description,
-    List<ContactEntity>? value,
-    bool isDone = false,
-  }) : super(
-          id: id,
-          description: description,
-          value: value,
-          isDone: isDone,
-        );
+    required super.id,
+    required super.description,
+    super.value,
+    super.isDone = false,
+  });
 
   @override
   EscapeManualContactsTaskEntity copyWith({
@@ -124,11 +108,10 @@ class EscapeManualContactsTaskEntity
 
 class EscapeManualButtonTaskEntity extends EscapeManualTaskEntity {
   const EscapeManualButtonTaskEntity({
-    required String id,
+    required super.id,
     String? description,
     required this.button,
   }) : super(
-          id: id,
           description: description ?? '',
         );
 

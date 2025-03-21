@@ -6,18 +6,18 @@ import '../../chat/chat_channel_compose_type.dart';
 
 class ChatChannelMessageComposer extends StatefulWidget {
   const ChatChannelMessageComposer({
-    Key? key,
+    super.key,
     required this.composerType,
     required this.onSentMessage,
     required this.onUnblockChannel,
-  }) : super(key: key);
+  });
 
   final ChatChannelComposerType composerType;
   final void Function(String) onSentMessage;
   final void Function() onUnblockChannel;
 
   @override
-  _ChatChannelMessageComposerState createState() =>
+  State<ChatChannelMessageComposer> createState() =>
       _ChatChannelMessageComposerState();
 }
 

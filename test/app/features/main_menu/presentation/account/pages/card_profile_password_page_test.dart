@@ -42,7 +42,7 @@ void main() {
       iDontSeeText('Email');
     });
 
-    screenshotTest(
+    screenshotTestSimplified(
       'should render correctly',
       fileName: 'card_profile_password_page',
       pageBuilder: () => Scaffold(

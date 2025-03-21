@@ -4,10 +4,10 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class MainboardNotificationPage extends StatelessWidget {
   const MainboardNotificationPage({
-    Key? key,
+    super.key,
     required this.counter,
     required this.resetCounter,
-  }) : super(key: key);
+  });
 
   final int counter;
   final void Function() resetCounter;
@@ -15,14 +15,13 @@ class MainboardNotificationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: bdg.Badge(
-        elevation: 0.0,
-        position: _badgePosition(counter),
-        showBadge: counter > 0,
-        toAnimate: false,
-        badgeContent: Text(
-          counter > 99 ? '+99' : counter.toString(),
-          style: const TextStyle(
+        icon: bdg.Badge(
+          elevation: 0.0,
+          position: _badgePosition(counter),
+          showBadge: counter > 0,
+          badgeContent: Text(
+            counter > 99 ? '+99' : counter.toString(),
+            style: const TextStyle(
             color: Colors.white,
             fontFamily: 'Lato',
             fontSize: 11.0,

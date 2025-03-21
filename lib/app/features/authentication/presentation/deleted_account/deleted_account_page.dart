@@ -10,14 +10,14 @@ import 'deleted_account_controller.dart';
 
 class DeletedAccountPage extends StatefulWidget {
   const DeletedAccountPage({
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final DeletedAccountController controller;
 
   @override
-  _DeletedAccountPageState createState() => _DeletedAccountPageState();
+  State<DeletedAccountPage> createState() => _DeletedAccountPageState();
 }
 
 class _DeletedAccountPageState extends State<DeletedAccountPage>
@@ -43,6 +43,7 @@ class _DeletedAccountPageState extends State<DeletedAccountPage>
         title: const Text('Conta excluída'),
         elevation: 0.0,
         backgroundColor: DesignSystemColors.easterPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: Observer(
         builder: (context) => bodyBuilder(),

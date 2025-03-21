@@ -8,17 +8,17 @@ part of 'compose_tweet_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$ComposeTweetController on _ComposeTweetControllerBase, Store {
+mixin _$ComposeTweetController on ComposeTweetControllerBase, Store {
   Computed<PageProgressState>? _$currentStateComputed;
 
   @override
   PageProgressState get currentState => (_$currentStateComputed ??=
           Computed<PageProgressState>(() => super.currentState,
-              name: '_ComposeTweetControllerBase.currentState'))
+              name: 'ComposeTweetControllerBase.currentState'))
       .value;
 
   late final _$_progressAtom =
-      Atom(name: '_ComposeTweetControllerBase._progress', context: context);
+      Atom(name: 'ComposeTweetControllerBase._progress', context: context);
 
   @override
   ObservableFuture<Either<Failure, FeedCache>>? get _progress {
@@ -34,7 +34,7 @@ mixin _$ComposeTweetController on _ComposeTweetControllerBase, Store {
   }
 
   late final _$isAnonymousModeAtom = Atom(
-      name: '_ComposeTweetControllerBase.isAnonymousMode', context: context);
+      name: 'ComposeTweetControllerBase.isAnonymousMode', context: context);
 
   @override
   bool get isAnonymousMode {
@@ -50,7 +50,7 @@ mixin _$ComposeTweetController on _ComposeTweetControllerBase, Store {
   }
 
   late final _$isEnableCreateButtonAtom = Atom(
-      name: '_ComposeTweetControllerBase.isEnableCreateButton',
+      name: 'ComposeTweetControllerBase.isEnableCreateButton',
       context: context);
 
   @override
@@ -68,7 +68,7 @@ mixin _$ComposeTweetController on _ComposeTweetControllerBase, Store {
   }
 
   late final _$errorMessageAtom =
-      Atom(name: '_ComposeTweetControllerBase.errorMessage', context: context);
+      Atom(name: 'ComposeTweetControllerBase.errorMessage', context: context);
 
   @override
   String get errorMessage {
@@ -84,7 +84,7 @@ mixin _$ComposeTweetController on _ComposeTweetControllerBase, Store {
   }
 
   late final _$createTweetPressedAsyncAction = AsyncAction(
-      '_ComposeTweetControllerBase.createTweetPressed',
+      'ComposeTweetControllerBase.createTweetPressed',
       context: context);
 
   @override
@@ -93,17 +93,17 @@ mixin _$ComposeTweetController on _ComposeTweetControllerBase, Store {
         .run(() => super.createTweetPressed(context));
   }
 
-  late final _$_ComposeTweetControllerBaseActionController =
-      ActionController(name: '_ComposeTweetControllerBase', context: context);
+  late final _$ComposeTweetControllerBaseActionController =
+      ActionController(name: 'ComposeTweetControllerBase', context: context);
 
   @override
   void setTweetContent(String content) {
-    final _$actionInfo = _$_ComposeTweetControllerBaseActionController
-        .startAction(name: '_ComposeTweetControllerBase.setTweetContent');
+    final _$actionInfo = _$ComposeTweetControllerBaseActionController
+        .startAction(name: 'ComposeTweetControllerBase.setTweetContent');
     try {
       return super.setTweetContent(content);
     } finally {
-      _$_ComposeTweetControllerBaseActionController.endAction(_$actionInfo);
+      _$ComposeTweetControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 

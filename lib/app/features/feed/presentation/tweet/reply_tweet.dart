@@ -14,12 +14,11 @@ import 'widgets/tweet_title.dart';
 
 class ReplyTweet extends StatelessWidget {
   const ReplyTweet({
-    Key? key,
+    super.key,
     required this.tweet,
     required this.controller,
     required BuildContext context,
-  })  : _context = context,
-        super(key: key);
+  }) : _context = context;
 
   final TweetEntity tweet;
   final BuildContext _context;
@@ -155,11 +154,10 @@ class ReplyTweet extends StatelessWidget {
 
 class _RepliedTweet extends StatelessWidget {
   const _RepliedTweet({
-    Key? key,
     required this.repliedTweet,
     required this.parentTweet,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final TweetEntity parentTweet;
   final TweetEntity repliedTweet;

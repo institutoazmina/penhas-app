@@ -5,7 +5,7 @@ import 'support_center_controller.dart';
 import 'support_center_page.dart';
 
 class SupportCenterModule extends WidgetModule {
-  SupportCenterModule({Key? key}) : super(key: key);
+  SupportCenterModule({super.key});
 
   @override
   List<Bind> get binds => [];
