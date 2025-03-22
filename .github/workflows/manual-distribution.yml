@@ -20,7 +20,10 @@ on:
 permissions:
   contents: read  # Required to read the repository contents
   packages: write # Required if you are publishing packages
-  actions: read   # Required if you are using reusable workflows
+  actions: write  # Required if you are using reusable workflows
+  id-token: write   
+  checks: write
+  deployments: write
 
 jobs:
 
