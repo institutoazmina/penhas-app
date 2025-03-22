@@ -11,16 +11,16 @@ import 'category_tweet_controller.dart';
 
 class CategoryTweetPage extends StatefulWidget {
   const CategoryTweetPage({
-    Key? key,
+    super.key,
     this.title = 'CategoryTweet',
     required this.controller,
-  }) : super(key: key);
+  });
 
   final String title;
   final CategoryTweetController controller;
 
   @override
-  _CategoryTweetPageState createState() => _CategoryTweetPageState();
+  State<CategoryTweetPage> createState() => _CategoryTweetPageState();
 }
 
 class _CategoryTweetPageState extends State<CategoryTweetPage>
@@ -128,6 +128,7 @@ class _CategoryTweetPageState extends State<CategoryTweetPage>
     return AppBar(
       title: const Text('Categoria'),
       backgroundColor: DesignSystemColors.ligthPurple,
+      foregroundColor: DesignSystemColors.white,
     );
   }
 

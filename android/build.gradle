@@ -1,27 +1,8 @@
-buildscript {
-    ext.kotlin_version = '1.8.10'
-    repositories {
-        google()
-        jcenter()
-        maven {
-            url 'https://maven.fabric.io/public'
-        }
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        // Add the google services classpath
-        classpath 'com.google.gms:google-services:4.3.10'
-        // Add fabric classpath
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1'
-    }
-}
-
 allprojects {
     repositories {
         google()
         jcenter()
+        mavenCentral()
     }
 }
 
@@ -33,6 +14,6 @@ subprojects {
     project.evaluationDependsOn(':app')
 }
 
-task clean(type: Delete) {
+tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }

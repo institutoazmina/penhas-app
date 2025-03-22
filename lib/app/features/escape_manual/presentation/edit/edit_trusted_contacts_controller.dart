@@ -12,11 +12,11 @@ typedef OnEditTrustedContactsReaction = void Function(
   EditTrustedContactsReaction? reaction,
 );
 
-class EditTrustedContactsController = _EditTrustedContactsControllerBase
+class EditTrustedContactsController = EditTrustedContactsControllerBase
     with _$EditTrustedContactsController;
 
-abstract class _EditTrustedContactsControllerBase with Store {
-  _EditTrustedContactsControllerBase({
+abstract class EditTrustedContactsControllerBase with Store {
+  EditTrustedContactsControllerBase({
     required List<ContactEntity>? contacts,
     required EscapeManualToggleFeature escapeManualToggleFeature,
   })  : contacts = contacts ?? <ContactEntity>[],

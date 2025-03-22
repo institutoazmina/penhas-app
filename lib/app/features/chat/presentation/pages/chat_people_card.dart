@@ -10,10 +10,10 @@ import '../../../users/domain/entities/user_detail_profile_entity.dart';
 
 class ChatPeopleCard extends StatelessWidget {
   const ChatPeopleCard({
-    Key? key,
+    super.key,
     required this.person,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final UserDetailProfileEntity person;
   final void Function(UserDetailProfileEntity person) onPressed;

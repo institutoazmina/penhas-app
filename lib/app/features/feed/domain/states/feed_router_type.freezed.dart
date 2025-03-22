@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'feed_router_type.dart';
 
@@ -12,7 +12,7 @@ part of 'feed_router_type.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$FeedRouterType {
@@ -25,8 +25,8 @@ mixin _$FeedRouterType {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int clientId)? chat,
-    TResult Function(int clientId)? profile,
+    TResult? Function(int clientId)? chat,
+    TResult? Function(int clientId)? profile,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -44,8 +44,8 @@ mixin _$FeedRouterType {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Chat value)? chat,
-    TResult Function(_Profile value)? profile,
+    TResult? Function(_Chat value)? chat,
+    TResult? Function(_Profile value)? profile,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -65,55 +65,60 @@ mixin _$FeedRouterType {
 abstract class $FeedRouterTypeCopyWith<$Res> {
   factory $FeedRouterTypeCopyWith(
           FeedRouterType value, $Res Function(FeedRouterType) then) =
-      _$FeedRouterTypeCopyWithImpl<$Res>;
+      _$FeedRouterTypeCopyWithImpl<$Res, FeedRouterType>;
+  @useResult
   $Res call({int clientId});
 }
 
 /// @nodoc
-class _$FeedRouterTypeCopyWithImpl<$Res>
+class _$FeedRouterTypeCopyWithImpl<$Res, $Val extends FeedRouterType>
     implements $FeedRouterTypeCopyWith<$Res> {
   _$FeedRouterTypeCopyWithImpl(this._value, this._then);
 
-  final FeedRouterType _value;
   // ignore: unused_field
-  final $Res Function(FeedRouterType) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? clientId = freezed,
+    Object? clientId = null,
   }) {
     return _then(_value.copyWith(
-      clientId: clientId == freezed
+      clientId: null == clientId
           ? _value.clientId
           : clientId // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_ChatCopyWith<$Res> implements $FeedRouterTypeCopyWith<$Res> {
-  factory _$$_ChatCopyWith(_$_Chat value, $Res Function(_$_Chat) then) =
-      __$$_ChatCopyWithImpl<$Res>;
+abstract class _$$ChatImplCopyWith<$Res>
+    implements $FeedRouterTypeCopyWith<$Res> {
+  factory _$$ChatImplCopyWith(
+          _$ChatImpl value, $Res Function(_$ChatImpl) then) =
+      __$$ChatImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({int clientId});
 }
 
 /// @nodoc
-class __$$_ChatCopyWithImpl<$Res> extends _$FeedRouterTypeCopyWithImpl<$Res>
-    implements _$$_ChatCopyWith<$Res> {
-  __$$_ChatCopyWithImpl(_$_Chat _value, $Res Function(_$_Chat) _then)
-      : super(_value, (v) => _then(v as _$_Chat));
+class __$$ChatImplCopyWithImpl<$Res>
+    extends _$FeedRouterTypeCopyWithImpl<$Res, _$ChatImpl>
+    implements _$$ChatImplCopyWith<$Res> {
+  __$$ChatImplCopyWithImpl(_$ChatImpl _value, $Res Function(_$ChatImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_Chat get _value => super._value as _$_Chat;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? clientId = freezed,
+    Object? clientId = null,
   }) {
-    return _then(_$_Chat(
-      clientId == freezed
+    return _then(_$ChatImpl(
+      null == clientId
           ? _value.clientId
           : clientId // ignore: cast_nullable_to_non_nullable
               as int,
@@ -123,8 +128,8 @@ class __$$_ChatCopyWithImpl<$Res> extends _$FeedRouterTypeCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Chat implements _Chat {
-  const _$_Chat(this.clientId);
+class _$ChatImpl implements _Chat {
+  const _$ChatImpl(this.clientId);
 
   @override
   final int clientId;
@@ -135,21 +140,22 @@ class _$_Chat implements _Chat {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Chat &&
-            const DeepCollectionEquality().equals(other.clientId, clientId));
+            other is _$ChatImpl &&
+            (identical(other.clientId, clientId) ||
+                other.clientId == clientId));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(clientId));
+  int get hashCode => Object.hash(runtimeType, clientId);
 
   @JsonKey(ignore: true)
   @override
-  _$$_ChatCopyWith<_$_Chat> get copyWith =>
-      __$$_ChatCopyWithImpl<_$_Chat>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$ChatImplCopyWith<_$ChatImpl> get copyWith =>
+      __$$ChatImplCopyWithImpl<_$ChatImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -163,8 +169,8 @@ class _$_Chat implements _Chat {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int clientId)? chat,
-    TResult Function(int clientId)? profile,
+    TResult? Function(int clientId)? chat,
+    TResult? Function(int clientId)? profile,
   }) {
     return chat?.call(clientId);
   }
@@ -194,8 +200,8 @@ class _$_Chat implements _Chat {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Chat value)? chat,
-    TResult Function(_Profile value)? profile,
+    TResult? Function(_Chat value)? chat,
+    TResult? Function(_Profile value)? profile,
   }) {
     return chat?.call(this);
   }
@@ -215,40 +221,42 @@ class _$_Chat implements _Chat {
 }
 
 abstract class _Chat implements FeedRouterType {
-  const factory _Chat(final int clientId) = _$_Chat;
+  const factory _Chat(final int clientId) = _$ChatImpl;
 
   @override
   int get clientId;
   @override
   @JsonKey(ignore: true)
-  _$$_ChatCopyWith<_$_Chat> get copyWith => throw _privateConstructorUsedError;
+  _$$ChatImplCopyWith<_$ChatImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ProfileCopyWith<$Res>
+abstract class _$$ProfileImplCopyWith<$Res>
     implements $FeedRouterTypeCopyWith<$Res> {
-  factory _$$_ProfileCopyWith(
-          _$_Profile value, $Res Function(_$_Profile) then) =
-      __$$_ProfileCopyWithImpl<$Res>;
+  factory _$$ProfileImplCopyWith(
+          _$ProfileImpl value, $Res Function(_$ProfileImpl) then) =
+      __$$ProfileImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({int clientId});
 }
 
 /// @nodoc
-class __$$_ProfileCopyWithImpl<$Res> extends _$FeedRouterTypeCopyWithImpl<$Res>
-    implements _$$_ProfileCopyWith<$Res> {
-  __$$_ProfileCopyWithImpl(_$_Profile _value, $Res Function(_$_Profile) _then)
-      : super(_value, (v) => _then(v as _$_Profile));
+class __$$ProfileImplCopyWithImpl<$Res>
+    extends _$FeedRouterTypeCopyWithImpl<$Res, _$ProfileImpl>
+    implements _$$ProfileImplCopyWith<$Res> {
+  __$$ProfileImplCopyWithImpl(
+      _$ProfileImpl _value, $Res Function(_$ProfileImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_Profile get _value => super._value as _$_Profile;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? clientId = freezed,
+    Object? clientId = null,
   }) {
-    return _then(_$_Profile(
-      clientId == freezed
+    return _then(_$ProfileImpl(
+      null == clientId
           ? _value.clientId
           : clientId // ignore: cast_nullable_to_non_nullable
               as int,
@@ -258,8 +266,8 @@ class __$$_ProfileCopyWithImpl<$Res> extends _$FeedRouterTypeCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Profile implements _Profile {
-  const _$_Profile(this.clientId);
+class _$ProfileImpl implements _Profile {
+  const _$ProfileImpl(this.clientId);
 
   @override
   final int clientId;
@@ -270,21 +278,22 @@ class _$_Profile implements _Profile {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Profile &&
-            const DeepCollectionEquality().equals(other.clientId, clientId));
+            other is _$ProfileImpl &&
+            (identical(other.clientId, clientId) ||
+                other.clientId == clientId));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(clientId));
+  int get hashCode => Object.hash(runtimeType, clientId);
 
   @JsonKey(ignore: true)
   @override
-  _$$_ProfileCopyWith<_$_Profile> get copyWith =>
-      __$$_ProfileCopyWithImpl<_$_Profile>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$ProfileImplCopyWith<_$ProfileImpl> get copyWith =>
+      __$$ProfileImplCopyWithImpl<_$ProfileImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -298,8 +307,8 @@ class _$_Profile implements _Profile {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int clientId)? chat,
-    TResult Function(int clientId)? profile,
+    TResult? Function(int clientId)? chat,
+    TResult? Function(int clientId)? profile,
   }) {
     return profile?.call(clientId);
   }
@@ -329,8 +338,8 @@ class _$_Profile implements _Profile {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Chat value)? chat,
-    TResult Function(_Profile value)? profile,
+    TResult? Function(_Chat value)? chat,
+    TResult? Function(_Profile value)? profile,
   }) {
     return profile?.call(this);
   }
@@ -350,12 +359,12 @@ class _$_Profile implements _Profile {
 }
 
 abstract class _Profile implements FeedRouterType {
-  const factory _Profile(final int clientId) = _$_Profile;
+  const factory _Profile(final int clientId) = _$ProfileImpl;
 
   @override
   int get clientId;
   @override
   @JsonKey(ignore: true)
-  _$$_ProfileCopyWith<_$_Profile> get copyWith =>
+  _$$ProfileImplCopyWith<_$ProfileImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -3,12 +3,9 @@ import 'chat_channel_session_model.dart';
 
 class ChatChannelOpenModel extends ChatChannelOpenEntity {
   const ChatChannelOpenModel({
-    required String? token,
-    required ChatChannelSessionModel? session,
-  }) : super(
-          token: token,
-          session: session,
-        );
+    required super.token,
+    required ChatChannelSessionModel? super.session,
+  });
 
   factory ChatChannelOpenModel.fromJson(Map<String, dynamic> jsonData) =>
       ChatChannelOpenModel(

@@ -6,11 +6,10 @@ import '../../text_styles.dart';
 
 class UserCloseBadgeWidget extends StatelessWidget {
   const UserCloseBadgeWidget(
-      {Key? key,
+      {super.key,
       required this.badgePopUp,
       required this.badgeImageUrl,
-      required this.badgeName})
-      : super(key: key);
+      required this.badgeName});
 
   final int badgePopUp;
   final String badgeImageUrl;
@@ -35,7 +34,9 @@ class UserCloseBadgeWidget extends StatelessWidget {
                           badgeImageUrl,
                           width: 12,
                           height: 12,
-                          color: DesignSystemColors.darkIndigoThree,
+                          colorFilter: const ColorFilter.mode(
+                              DesignSystemColors.darkIndigoThree,
+                              BlendMode.srcIn),
                         )
                       : const SizedBox.shrink()),
               Text(

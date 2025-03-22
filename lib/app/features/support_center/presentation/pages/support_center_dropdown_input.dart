@@ -4,14 +4,14 @@ import '../../../../shared/design_system/colors.dart';
 
 class SupportCenterDropdownInput extends StatelessWidget {
   const SupportCenterDropdownInput({
-    Key? key,
+    super.key,
     this.maxLines = 1,
     required this.labelText,
     required this.errorMessage,
     required this.currentValue,
     required this.dataSource,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   final int maxLines;
   final String labelText;

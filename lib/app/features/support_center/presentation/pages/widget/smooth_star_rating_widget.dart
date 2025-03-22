@@ -4,7 +4,7 @@ typedef RatingChangeCallback = void Function(double rating);
 
 class SmoothStarRatingWidget extends StatelessWidget {
   const SmoothStarRatingWidget({
-    Key? key,
+    super.key,
     this.starCount = 5,
     this.spacing = 0.0,
     this.rating = 0.0,
@@ -16,7 +16,7 @@ class SmoothStarRatingWidget extends StatelessWidget {
     this.filledIconData,
     this.halfFilledIconData,
     this.allowHalfRating = true,
-  }) : super(key: key);
+  });
 
   final int starCount;
   final double rating;
@@ -60,8 +60,8 @@ class SmoothStarRatingWidget extends StatelessWidget {
       },
       onHorizontalDragUpdate: (dragDetails) {
         RenderBox box = context.findRenderObject() as RenderBox;
-        var _pos = box.globalToLocal(dragDetails.globalPosition);
-        var i = _pos.dx / size;
+        var pos = box.globalToLocal(dragDetails.globalPosition);
+        var i = pos.dx / size;
         var newRating = allowHalfRating ? i : i.round().toDouble();
         if (newRating > starCount) {
           newRating = starCount.toDouble();

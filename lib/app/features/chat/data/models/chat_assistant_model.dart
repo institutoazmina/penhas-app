@@ -1,19 +1,13 @@
 import '../../../appstate/data/model/app_state_model.dart';
-import '../../../appstate/domain/entities/app_state_entity.dart';
 import '../../domain/entities/chat_assistant_entity.dart';
 
 class ChatAssistantModel extends ChatAssistantEntity {
   const ChatAssistantModel({
-    required String? title,
-    required String? subtitle,
-    required String? avatar,
-    required QuizSessionEntity? quizSession,
-  }) : super(
-          title: title,
-          subtitle: subtitle,
-          avatar: avatar,
-          quizSession: quizSession,
-        );
+    required super.title,
+    required super.subtitle,
+    required super.avatar,
+    required super.quizSession,
+  });
 
   factory ChatAssistantModel.fromJson(Map<String, dynamic> jsonData) {
     final appModel = AppStateModel.fromJson(jsonData);

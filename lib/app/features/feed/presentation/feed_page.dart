@@ -21,18 +21,18 @@ import 'tweet/widgets/tweet_related_news.dart';
 
 class FeedPage extends StatefulWidget {
   const FeedPage({
-    Key? key,
+    super.key,
     this.title = 'Feed',
     required this.tweetController,
     required this.feedController,
-  }) : super(key: key);
+  });
 
   final String title;
   final ITweetController tweetController;
   final FeedController feedController;
 
   @override
-  _FeedPageState createState() => _FeedPageState();
+  State<FeedPage> createState() => _FeedPageState();
 }
 
 class _FeedPageState extends State<FeedPage>
@@ -255,10 +255,8 @@ class _FeedPageState extends State<FeedPage>
 
 class _NewPostFab extends StatelessWidget {
   const _NewPostFab({
-    Key? key,
     required bool isFabCollapsed,
-  })  : _isFabCollapsed = isFabCollapsed,
-        super(key: key);
+  }) : _isFabCollapsed = isFabCollapsed;
 
   final bool _isFabCollapsed;
 
@@ -283,7 +281,8 @@ class _NewPostFab extends StatelessWidget {
         children: [
           SvgPicture.asset(
             'assets/images/svg/bottom_bar/compose_tweet.svg',
-            color: DesignSystemColors.white,
+            colorFilter: const ColorFilter.mode(
+                DesignSystemColors.white, BlendMode.srcIn),
             width: 24,
             height: 24,
             fit: BoxFit.contain,

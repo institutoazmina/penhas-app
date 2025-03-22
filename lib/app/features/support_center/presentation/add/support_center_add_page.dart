@@ -23,14 +23,14 @@ import 'support_center_add_controller.dart';
 
 class SupportCenterAddPage extends StatefulWidget {
   const SupportCenterAddPage({
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final SupportCenterAddController controller;
 
   @override
-  _SupportCenterAddPageState createState() => _SupportCenterAddPageState();
+  State<SupportCenterAddPage> createState() => _SupportCenterAddPageState();
 }
 
 class _SupportCenterAddPageState extends State<SupportCenterAddPage>
@@ -58,6 +58,7 @@ class _SupportCenterAddPageState extends State<SupportCenterAddPage>
           title: const Text('Adicionar Ponto'),
           elevation: 0.0,
           backgroundColor: DesignSystemColors.easterPurple,
+          foregroundColor: DesignSystemColors.white,
         ),
         body: Observer(
           builder: (_) {
@@ -172,7 +173,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
       'Não',
     ]);
 
-    final _maskCep = MaskTextInputFormatter(
+    final maskCep = MaskTextInputFormatter(
       mask: '#####-###',
       filter: {'#': RegExp('[0-9]')},
     );
@@ -253,7 +254,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
           SupportCenterInputCep(
             hintText: 'CEP',
             onChanged: controller.setCep,
-            mask: [_maskCep],
+            mask: [maskCep],
           ),
           SupportCenterInputDDD(
             hintText: 'DDD primário',

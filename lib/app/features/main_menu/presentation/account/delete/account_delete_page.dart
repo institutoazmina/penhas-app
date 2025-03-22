@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../../shared/design_system/colors.dart';
@@ -12,12 +12,11 @@ import '../../../domain/states/profile_delete_state.dart';
 import 'account_delete_controller.dart';
 
 class AccountDeletePage extends StatefulWidget {
-  const AccountDeletePage({Key? key, required this.controller})
-      : super(key: key);
+  const AccountDeletePage({super.key, required this.controller});
   final AccountDeleteController controller;
 
   @override
-  _AccountDeletePageState createState() => _AccountDeletePageState();
+  State<AccountDeletePage> createState() => _AccountDeletePageState();
 }
 
 class _AccountDeletePageState extends State<AccountDeletePage>
@@ -52,6 +51,7 @@ class _AccountDeletePageState extends State<AccountDeletePage>
         elevation: 0.0,
         title: const Text('Exclusão de conta'),
         backgroundColor: DesignSystemColors.easterPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: Observer(
         builder: (context) => bodyBuilder(_controller.state),
@@ -116,8 +116,8 @@ extension _PageBuilder on _AccountDeletePageState {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: HtmlWidget(
-                    bodyMessage,
+                  child: Html(
+                    data: bodyMessage,
                   ),
                 ),
                 Padding(

@@ -21,14 +21,13 @@ import 'new_guardian_controller.dart';
 
 class NewGuardianPage extends StatefulWidget {
   const NewGuardianPage(
-      {Key? key, this.title = 'NewGuardian', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'NewGuardian', required this.controller});
 
   final String title;
   final NewGuardianController controller;
 
   @override
-  _NewGuardianPageState createState() => _NewGuardianPageState();
+  State<NewGuardianPage> createState() => _NewGuardianPageState();
 }
 
 class _NewGuardianPageState extends State<NewGuardianPage>
@@ -72,6 +71,7 @@ class _NewGuardianPageState extends State<NewGuardianPage>
       appBar: AppBar(
         title: const Text('Novo Guardião'),
         backgroundColor: DesignSystemColors.ligthPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: PageProgressIndicator(
         progressState: _loadState,

@@ -19,12 +19,12 @@ import '../pages/card_profile_skill_page.dart';
 import 'profile_edit_controller.dart';
 
 class ProfileEditPage extends StatefulWidget {
-  const ProfileEditPage({Key? key, required this.controller}) : super(key: key);
+  const ProfileEditPage({super.key, required this.controller});
 
   final ProfileEditController controller;
 
   @override
-  _ProfileEditPageState createState() => _ProfileEditPageState();
+  State<ProfileEditPage> createState() => _ProfileEditPageState();
 }
 
 class _ProfileEditPageState extends State<ProfileEditPage>
@@ -56,6 +56,7 @@ class _ProfileEditPageState extends State<ProfileEditPage>
         ),
         title: const Text('Meu perfil'),
         backgroundColor: DesignSystemColors.easterPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: Observer(
         builder: (context) => bodyBuilder(_controller.state),

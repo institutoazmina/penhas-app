@@ -20,14 +20,13 @@ import 'sign_in_controller.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage(
-      {Key? key, this.title = 'Authentication', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'Authentication', required this.controller});
 
   final String title;
   final SignInController controller;
 
   @override
-  _SignInPageState createState() => _SignInPageState();
+  State<SignInPage> createState() => _SignInPageState();
 }
 
 class _SignInPageState extends State<SignInPage> with SnackBarHandler {

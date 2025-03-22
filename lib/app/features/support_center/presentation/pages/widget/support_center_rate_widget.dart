@@ -7,10 +7,10 @@ import 'smooth_star_rating_widget.dart';
 
 class SupportCenterRateWidget extends StatelessWidget {
   const SupportCenterRateWidget({
-    Key? key,
+    super.key,
     required this.detail,
     required this.onRated,
-  }) : super(key: key);
+  });
 
   final SupportCenterPlaceDetailEntity detail;
   final void Function(double) onRated;

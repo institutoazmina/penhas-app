@@ -8,12 +8,12 @@ import 'pages/filter_initial_state_page.dart';
 import 'pages/filter_loaded_state_page.dart';
 
 class FilterPage extends StatefulWidget {
-  const FilterPage({Key? key, required this.controller}) : super(key: key);
+  const FilterPage({super.key, required this.controller});
 
   final FilterController controller;
 
   @override
-  _FilterPageState createState() => _FilterPageState();
+  State<FilterPage> createState() => _FilterPageState();
 }
 
 class _FilterPageState extends State<FilterPage> with SnackBarHandler {

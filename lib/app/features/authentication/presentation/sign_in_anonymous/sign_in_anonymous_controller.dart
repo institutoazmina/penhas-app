@@ -15,11 +15,11 @@ import '../shared/page_progress_indicator.dart';
 
 part 'sign_in_anonymous_controller.g.dart';
 
-class SignInAnonymousController = _SignInAnonymousController
+class SignInAnonymousController = SignInAnonymousControllerBase
     with _$SignInAnonymousController;
 
-abstract class _SignInAnonymousController with Store, MapFailureMessage {
-  _SignInAnonymousController({
+abstract class SignInAnonymousControllerBase with Store, MapFailureMessage {
+  SignInAnonymousControllerBase({
     required AuthenticateAnonymousUserUseCase authenticateAnonymousUserUseCase,
     required LocalStore<UserProfileEntity> userProfileStore,
     required PasswordValidator passwordValidator,

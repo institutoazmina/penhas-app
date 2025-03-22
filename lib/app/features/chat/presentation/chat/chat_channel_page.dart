@@ -17,12 +17,12 @@ import '../pages/channel/chat_channel_message_page.dart';
 import 'chat_channel_controller.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key, required this.controller}) : super(key: key);
+  const ChatPage({super.key, required this.controller});
 
   final ChatChannelController controller;
 
   @override
-  _ChatPageState createState() => _ChatPageState();
+  State<ChatPage> createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
@@ -59,6 +59,7 @@ extension _ChatPageStateMethods on _ChatPageState {
   ) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: DesignSystemColors.white,
         leadingWidth: 35,
         leading: Padding(
           padding: const EdgeInsets.only(left: 8.0),

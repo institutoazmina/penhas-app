@@ -10,7 +10,7 @@ import 'help_center_controller.dart';
 import 'help_center_page.dart';
 
 class HelpCenterModule extends WidgetModule {
-  HelpCenterModule({Key? key}) : super(key: key);
+  HelpCenterModule({super.key});
 
   @override
   List<Bind> get binds => [];

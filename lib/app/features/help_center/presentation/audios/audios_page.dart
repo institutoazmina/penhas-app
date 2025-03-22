@@ -20,14 +20,14 @@ import '../pages/guardian_error_page.dart';
 import 'audios_controller.dart';
 
 class AudiosPage extends StatefulWidget {
-  const AudiosPage({Key? key, this.title = 'Audios', required this.controller})
-      : super(key: key);
+  const AudiosPage(
+      {super.key, this.title = 'Audios', required this.controller});
 
   final String title;
   final AudiosController controller;
 
   @override
-  _AudiosPageState createState() => _AudiosPageState();
+  State<AudiosPage> createState() => _AudiosPageState();
 }
 
 class _AudiosPageState extends State<AudiosPage> with SnackBarHandler {
@@ -80,6 +80,7 @@ class _AudiosPageState extends State<AudiosPage> with SnackBarHandler {
         elevation: 0.0,
         title: const Text('Minhas gravações'),
         backgroundColor: DesignSystemColors.ligthPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: PageProgressIndicator(
         progressState: _loadState,
@@ -127,7 +128,7 @@ class _AudiosPageState extends State<AudiosPage> with SnackBarHandler {
                     child: ListView(
                       shrinkWrap: true,
                       children: [
-                        ..._buildListElements(tiles).toList(),
+                        ..._buildListElements(tiles),
                       ],
                     ),
                   ),
@@ -235,9 +236,9 @@ class _AudiosPageState extends State<AudiosPage> with SnackBarHandler {
   }
 
   Future<void> _actionSheet(AudioEntity audio) async {
-    final BuildContext _context = _scaffoldKey.currentContext!;
+    final BuildContext context = _scaffoldKey.currentContext!;
     await showModalBottomSheet(
-      context: _context,
+      context: context,
       backgroundColor: Colors.transparent,
       builder: (context) {
         return Container(
@@ -266,7 +267,7 @@ class _AudiosPageState extends State<AudiosPage> with SnackBarHandler {
                 ),
                 title: const Text('Apagar'),
                 onTap: () {
-                  Navigator.of(_context).pop();
+                  Navigator.of(context).pop();
                   controller.delete(audio);
                 },
               ),

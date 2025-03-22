@@ -8,17 +8,17 @@ part of 'sign_in_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$SignInController on _SignInControllerBase, Store {
+mixin _$SignInController on SignInControllerBase, Store {
   Computed<PageProgressState>? _$currentStateComputed;
 
   @override
   PageProgressState get currentState => (_$currentStateComputed ??=
           Computed<PageProgressState>(() => super.currentState,
-              name: '_SignInControllerBase.currentState'))
+              name: 'SignInControllerBase.currentState'))
       .value;
 
   late final _$_progressAtom =
-      Atom(name: '_SignInControllerBase._progress', context: context);
+      Atom(name: 'SignInControllerBase._progress', context: context);
 
   @override
   ObservableFuture<Either<Failure, SessionEntity>>? get _progress {
@@ -34,7 +34,7 @@ mixin _$SignInController on _SignInControllerBase, Store {
   }
 
   late final _$warningEmailAtom =
-      Atom(name: '_SignInControllerBase.warningEmail', context: context);
+      Atom(name: 'SignInControllerBase.warningEmail', context: context);
 
   @override
   String get warningEmail {
@@ -50,7 +50,7 @@ mixin _$SignInController on _SignInControllerBase, Store {
   }
 
   late final _$warningPasswordAtom =
-      Atom(name: '_SignInControllerBase.warningPassword', context: context);
+      Atom(name: 'SignInControllerBase.warningPassword', context: context);
 
   @override
   String get warningPassword {
@@ -66,7 +66,7 @@ mixin _$SignInController on _SignInControllerBase, Store {
   }
 
   late final _$errorMessageAtom =
-      Atom(name: '_SignInControllerBase.errorMessage', context: context);
+      Atom(name: 'SignInControllerBase.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -82,7 +82,7 @@ mixin _$SignInController on _SignInControllerBase, Store {
   }
 
   late final _$signInWithEmailAndPasswordPressedAsyncAction = AsyncAction(
-      '_SignInControllerBase.signInWithEmailAndPasswordPressed',
+      'SignInControllerBase.signInWithEmailAndPasswordPressed',
       context: context);
 
   @override
@@ -91,9 +91,8 @@ mixin _$SignInController on _SignInControllerBase, Store {
         .run(() => super.signInWithEmailAndPasswordPressed());
   }
 
-  late final _$registerUserPressedAsyncAction = AsyncAction(
-      '_SignInControllerBase.registerUserPressed',
-      context: context);
+  late final _$registerUserPressedAsyncAction =
+      AsyncAction('SignInControllerBase.registerUserPressed', context: context);
 
   @override
   Future<void> registerUserPressed() {
@@ -102,7 +101,7 @@ mixin _$SignInController on _SignInControllerBase, Store {
   }
 
   late final _$resetPasswordPressedAsyncAction = AsyncAction(
-      '_SignInControllerBase.resetPasswordPressed',
+      'SignInControllerBase.resetPasswordPressed',
       context: context);
 
   @override
@@ -111,28 +110,28 @@ mixin _$SignInController on _SignInControllerBase, Store {
         .run(() => super.resetPasswordPressed());
   }
 
-  late final _$_SignInControllerBaseActionController =
-      ActionController(name: '_SignInControllerBase', context: context);
+  late final _$SignInControllerBaseActionController =
+      ActionController(name: 'SignInControllerBase', context: context);
 
   @override
   void setEmail(String address) {
-    final _$actionInfo = _$_SignInControllerBaseActionController.startAction(
-        name: '_SignInControllerBase.setEmail');
+    final _$actionInfo = _$SignInControllerBaseActionController.startAction(
+        name: 'SignInControllerBase.setEmail');
     try {
       return super.setEmail(address);
     } finally {
-      _$_SignInControllerBaseActionController.endAction(_$actionInfo);
+      _$SignInControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setPassword(String password) {
-    final _$actionInfo = _$_SignInControllerBaseActionController.startAction(
-        name: '_SignInControllerBase.setPassword');
+    final _$actionInfo = _$SignInControllerBaseActionController.startAction(
+        name: 'SignInControllerBase.setPassword');
     try {
       return super.setPassword(password);
     } finally {
-      _$_SignInControllerBaseActionController.endAction(_$actionInfo);
+      _$SignInControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 

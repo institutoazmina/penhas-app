@@ -3,16 +3,11 @@ import 'chat_user_model.dart';
 
 class ChatChannelModel extends ChatChannelEntity {
   const ChatChannelModel({
-    required String? token,
-    required DateTime lastMessageTime,
-    required bool lastMessageIsMime,
-    required ChatUserModel user,
-  }) : super(
-          token: token,
-          lastMessageIsMime: lastMessageIsMime,
-          lastMessageTime: lastMessageTime,
-          user: user,
-        );
+    required super.token,
+    required DateTime super.lastMessageTime,
+    required bool super.lastMessageIsMime,
+    required ChatUserModel super.user,
+  });
 
   factory ChatChannelModel.fromJson(Map<String, dynamic> jsonData) =>
       ChatChannelModel(

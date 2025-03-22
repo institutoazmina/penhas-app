@@ -6,10 +6,10 @@ import '../../../../../shared/design_system/text_styles.dart';
 
 class ChoicesBox extends StatelessWidget {
   const ChoicesBox({
-    Key? key,
+    super.key,
     required this.children,
     this.onSend,
-  }) : super(key: key);
+  });
 
   final List<Widget> children;
   final VoidCallback? onSend;
@@ -38,15 +38,15 @@ class ChoicesBox extends StatelessWidget {
               const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: onSend,
-                child: const Text(
-                  'ENVIAR',
-                  style: kTextStyleDefaultFilledButtonLabel,
-                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: DesignSystemColors.ligthPurple,
                   elevation: 0,
                   shape: kButtonShapeFilled,
                   minimumSize: const Size(double.infinity, 52),
+                ),
+                child: const Text(
+                  'ENVIAR',
+                  style: kTextStyleDefaultFilledButtonLabel,
                 ),
               ),
             ],

@@ -9,8 +9,8 @@ class ZodiacActionButton extends StatelessWidget {
     required this.listOfSign,
     required this.isRunning,
     required this.onPressed,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final IZodiac sign;
   final List<IZodiac> listOfSign;
@@ -39,7 +39,6 @@ class ZodiacActionButton extends StatelessWidget {
               key: const Key('zodiac_action_button'),
               onPressed: () {},
               onLongPress: onPressed,
-              child: sign.icon,
               style: TextButton.styleFrom(
                 backgroundColor: isRunning
                     ? DesignSystemColors.pinky
@@ -48,6 +47,7 @@ class ZodiacActionButton extends StatelessWidget {
                   borderRadius: BorderRadius.circular(isRunning ? 12 : 20),
                 ),
               ),
+              child: sign.icon,
             ),
           ),
           listOfSign[4].icon,

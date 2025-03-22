@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'filter_action_observer.dart';
 
@@ -12,7 +12,7 @@ part of 'filter_action_observer.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$FilterActionObserver {
@@ -24,8 +24,8 @@ mixin _$FilterActionObserver {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? reset,
-    TResult Function(List<FilterTagEntity> tags)? updated,
+    TResult? Function()? reset,
+    TResult? Function(List<FilterTagEntity> tags)? updated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,8 +43,8 @@ mixin _$FilterActionObserver {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Reset value)? reset,
-    TResult Function(_Updated value)? updated,
+    TResult? Function(_Reset value)? reset,
+    TResult? Function(_Updated value)? updated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,40 +60,41 @@ mixin _$FilterActionObserver {
 abstract class $FilterActionObserverCopyWith<$Res> {
   factory $FilterActionObserverCopyWith(FilterActionObserver value,
           $Res Function(FilterActionObserver) then) =
-      _$FilterActionObserverCopyWithImpl<$Res>;
+      _$FilterActionObserverCopyWithImpl<$Res, FilterActionObserver>;
 }
 
 /// @nodoc
-class _$FilterActionObserverCopyWithImpl<$Res>
+class _$FilterActionObserverCopyWithImpl<$Res,
+        $Val extends FilterActionObserver>
     implements $FilterActionObserverCopyWith<$Res> {
   _$FilterActionObserverCopyWithImpl(this._value, this._then);
 
-  final FilterActionObserver _value;
   // ignore: unused_field
-  final $Res Function(FilterActionObserver) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$$_ResetCopyWith<$Res> {
-  factory _$$_ResetCopyWith(_$_Reset value, $Res Function(_$_Reset) then) =
-      __$$_ResetCopyWithImpl<$Res>;
+abstract class _$$ResetImplCopyWith<$Res> {
+  factory _$$ResetImplCopyWith(
+          _$ResetImpl value, $Res Function(_$ResetImpl) then) =
+      __$$ResetImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_ResetCopyWithImpl<$Res>
-    extends _$FilterActionObserverCopyWithImpl<$Res>
-    implements _$$_ResetCopyWith<$Res> {
-  __$$_ResetCopyWithImpl(_$_Reset _value, $Res Function(_$_Reset) _then)
-      : super(_value, (v) => _then(v as _$_Reset));
-
-  @override
-  _$_Reset get _value => super._value as _$_Reset;
+class __$$ResetImplCopyWithImpl<$Res>
+    extends _$FilterActionObserverCopyWithImpl<$Res, _$ResetImpl>
+    implements _$$ResetImplCopyWith<$Res> {
+  __$$ResetImplCopyWithImpl(
+      _$ResetImpl _value, $Res Function(_$ResetImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Reset implements _Reset {
-  const _$_Reset();
+class _$ResetImpl implements _Reset {
+  const _$ResetImpl();
 
   @override
   String toString() {
@@ -101,9 +102,9 @@ class _$_Reset implements _Reset {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Reset);
+        (other.runtimeType == runtimeType && other is _$ResetImpl);
   }
 
   @override
@@ -121,8 +122,8 @@ class _$_Reset implements _Reset {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? reset,
-    TResult Function(List<FilterTagEntity> tags)? updated,
+    TResult? Function()? reset,
+    TResult? Function(List<FilterTagEntity> tags)? updated,
   }) {
     return reset?.call();
   }
@@ -152,8 +153,8 @@ class _$_Reset implements _Reset {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Reset value)? reset,
-    TResult Function(_Updated value)? updated,
+    TResult? Function(_Reset value)? reset,
+    TResult? Function(_Updated value)? updated,
   }) {
     return reset?.call(this);
   }
@@ -173,33 +174,33 @@ class _$_Reset implements _Reset {
 }
 
 abstract class _Reset implements FilterActionObserver {
-  const factory _Reset() = _$_Reset;
+  const factory _Reset() = _$ResetImpl;
 }
 
 /// @nodoc
-abstract class _$$_UpdatedCopyWith<$Res> {
-  factory _$$_UpdatedCopyWith(
-          _$_Updated value, $Res Function(_$_Updated) then) =
-      __$$_UpdatedCopyWithImpl<$Res>;
+abstract class _$$UpdatedImplCopyWith<$Res> {
+  factory _$$UpdatedImplCopyWith(
+          _$UpdatedImpl value, $Res Function(_$UpdatedImpl) then) =
+      __$$UpdatedImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({List<FilterTagEntity> tags});
 }
 
 /// @nodoc
-class __$$_UpdatedCopyWithImpl<$Res>
-    extends _$FilterActionObserverCopyWithImpl<$Res>
-    implements _$$_UpdatedCopyWith<$Res> {
-  __$$_UpdatedCopyWithImpl(_$_Updated _value, $Res Function(_$_Updated) _then)
-      : super(_value, (v) => _then(v as _$_Updated));
+class __$$UpdatedImplCopyWithImpl<$Res>
+    extends _$FilterActionObserverCopyWithImpl<$Res, _$UpdatedImpl>
+    implements _$$UpdatedImplCopyWith<$Res> {
+  __$$UpdatedImplCopyWithImpl(
+      _$UpdatedImpl _value, $Res Function(_$UpdatedImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_Updated get _value => super._value as _$_Updated;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? tags = freezed,
+    Object? tags = null,
   }) {
-    return _then(_$_Updated(
-      tags == freezed
+    return _then(_$UpdatedImpl(
+      null == tags
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<FilterTagEntity>,
@@ -209,12 +210,13 @@ class __$$_UpdatedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Updated implements _Updated {
-  const _$_Updated(final List<FilterTagEntity> tags) : _tags = tags;
+class _$UpdatedImpl implements _Updated {
+  const _$UpdatedImpl(final List<FilterTagEntity> tags) : _tags = tags;
 
   final List<FilterTagEntity> _tags;
   @override
   List<FilterTagEntity> get tags {
+    if (_tags is EqualUnmodifiableListView) return _tags;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_tags);
   }
@@ -225,10 +227,10 @@ class _$_Updated implements _Updated {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Updated &&
+            other is _$UpdatedImpl &&
             const DeepCollectionEquality().equals(other._tags, _tags));
   }
 
@@ -238,8 +240,9 @@ class _$_Updated implements _Updated {
 
   @JsonKey(ignore: true)
   @override
-  _$$_UpdatedCopyWith<_$_Updated> get copyWith =>
-      __$$_UpdatedCopyWithImpl<_$_Updated>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$UpdatedImplCopyWith<_$UpdatedImpl> get copyWith =>
+      __$$UpdatedImplCopyWithImpl<_$UpdatedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -253,8 +256,8 @@ class _$_Updated implements _Updated {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? reset,
-    TResult Function(List<FilterTagEntity> tags)? updated,
+    TResult? Function()? reset,
+    TResult? Function(List<FilterTagEntity> tags)? updated,
   }) {
     return updated?.call(tags);
   }
@@ -284,8 +287,8 @@ class _$_Updated implements _Updated {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Reset value)? reset,
-    TResult Function(_Updated value)? updated,
+    TResult? Function(_Reset value)? reset,
+    TResult? Function(_Updated value)? updated,
   }) {
     return updated?.call(this);
   }
@@ -305,10 +308,10 @@ class _$_Updated implements _Updated {
 }
 
 abstract class _Updated implements FilterActionObserver {
-  const factory _Updated(final List<FilterTagEntity> tags) = _$_Updated;
+  const factory _Updated(final List<FilterTagEntity> tags) = _$UpdatedImpl;
 
   List<FilterTagEntity> get tags;
   @JsonKey(ignore: true)
-  _$$_UpdatedCopyWith<_$_Updated> get copyWith =>
+  _$$UpdatedImplCopyWith<_$UpdatedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

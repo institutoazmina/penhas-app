@@ -7,10 +7,10 @@ import 'card_profile_header_edit_page.dart';
 
 class CardProfileSkillPage extends StatelessWidget {
   const CardProfileSkillPage({
-    Key? key,
+    super.key,
     required this.skills,
     required this.onEditAction,
-  }) : super(key: key);
+  });
 
   final List<FilterTagEntity?> skills;
   final void Function() onEditAction;

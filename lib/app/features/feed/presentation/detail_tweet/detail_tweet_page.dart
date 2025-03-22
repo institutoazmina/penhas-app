@@ -20,18 +20,18 @@ Color _highlightColor = DesignSystemColors.ligthPurple.withOpacity(0.1);
 
 class DetailTweetPage extends StatefulWidget {
   const DetailTweetPage({
-    Key? key,
+    super.key,
     this.title = 'DetailTweet',
     required this.tweetController,
     required this.detailTweetController,
-  }) : super(key: key);
+  });
 
   final String title;
   final ITweetController tweetController;
   final DetailTweetController detailTweetController;
 
   @override
-  _DetailTweetPageState createState() => _DetailTweetPageState();
+  State<DetailTweetPage> createState() => _DetailTweetPageState();
 }
 
 class _DetailTweetPageState extends State<DetailTweetPage>
@@ -140,6 +140,7 @@ class _DetailTweetPageState extends State<DetailTweetPage>
     return AppBar(
       title: const Text('Detalhe'),
       backgroundColor: DesignSystemColors.ligthPurple,
+      foregroundColor: DesignSystemColors.white,
     );
   }
 
@@ -199,13 +200,12 @@ class _DetailTweetPageState extends State<DetailTweetPage>
 
 class _ReplyTweet extends StatefulWidget {
   const _ReplyTweet({
-    Key? key,
     required this.tweet,
     required this.controller,
     required this.isComment,
     required this.isHighlighted,
     required this.onHighlightFinish,
-  }) : super(key: key);
+  });
 
   final TweetEntity tweet;
   final ITweetController controller;

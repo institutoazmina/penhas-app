@@ -7,9 +7,9 @@ import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 
 class FeedCategoryFilter extends StatelessWidget {
   const FeedCategoryFilter({
-    Key? key,
+    super.key,
     required this.reloadFeed,
-  }) : super(key: key);
+  });
 
   final void Function() reloadFeed;
 
@@ -25,8 +25,8 @@ class FeedCategoryFilter extends StatelessWidget {
             }
           });
         },
-        child: Row(
-          children: const <Widget>[
+        child: const Row(
+          children: <Widget>[
             Icon(
               Icons.arrow_drop_down,
               color: DesignSystemColors.ligthPurple,

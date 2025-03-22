@@ -4,7 +4,7 @@ import 'text_styles.dart';
 import 'widgets/buttons/penhas_button.dart';
 
 class LinkButton extends StatelessWidget {
-  const LinkButton({Key? key, this.onPressed, this.text}) : super(key: key);
+  const LinkButton({super.key, this.onPressed, this.text});
 
   final VoidCallback? onPressed;
   final String? text;

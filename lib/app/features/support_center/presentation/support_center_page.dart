@@ -15,14 +15,14 @@ import 'support_center_controller.dart';
 
 class SupportCenterPage extends StatefulWidget {
   const SupportCenterPage({
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final SupportCenterController controller;
 
   @override
-  _SupportCenterPageState createState() => _SupportCenterPageState();
+  State<SupportCenterPage> createState() => _SupportCenterPageState();
 }
 
 class _SupportCenterPageState extends State<SupportCenterPage>

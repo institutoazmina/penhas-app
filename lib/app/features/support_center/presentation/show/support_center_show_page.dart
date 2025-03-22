@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:map_launcher/map_launcher.dart';
 
 import '../../../../shared/design_system/colors.dart';
@@ -17,14 +17,14 @@ import 'support_center_show_controller.dart';
 
 class SupportCenterShowPage extends StatefulWidget {
   const SupportCenterShowPage({
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final SupportCenterShowController controller;
 
   @override
-  _SupportCenterShowPageState createState() => _SupportCenterShowPageState();
+  State<SupportCenterShowPage> createState() => _SupportCenterShowPageState();
 }
 
 class _SupportCenterShowPageState extends State<SupportCenterShowPage> {
@@ -45,6 +45,7 @@ class _SupportCenterShowPageState extends State<SupportCenterShowPage> {
         title: const Text('Detalhe do Ponto'),
         elevation: 0.0,
         backgroundColor: DesignSystemColors.easterPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: Observer(
         builder: (_) {
@@ -133,11 +134,10 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
             Container(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-              child: HtmlWidget(
-                detail.place!.htmlContent!,
-                factoryBuilder: () => _DisabledWebViewJsWidgetFactory(),
-                textStyle: htmlContentTextStyle,
-              ),
+              child: Html(data: detail.place!.htmlContent!, style: {
+                'body': Style.fromTextStyle(htmlContentTextStyle),
+                'iframe': Style(display: Display.none),
+              }),
             ),
             Row(
               children: [
@@ -188,6 +188,7 @@ extension _Maps on _SupportCenterShowPageState {
       final availableMaps = await MapLauncher.installedMaps;
 
       showModalBottomSheet(
+        // ignore: use_build_context_synchronously
         context: context,
         backgroundColor: Colors.white,
         shape: const RoundedRectangleBorder(
@@ -278,7 +279,7 @@ extension _TextStyle on _SupportCenterShowPageState {
       );
 }
 
-class _DisabledWebViewJsWidgetFactory extends WidgetFactory {
-  @override
-  bool get webViewJs => false;
-}
+// TODO: class _DisabledWebViewJsWidgetFactory extends WidgetFactory {
+//   @override
+//   bool get webViewJs => false;
+// }

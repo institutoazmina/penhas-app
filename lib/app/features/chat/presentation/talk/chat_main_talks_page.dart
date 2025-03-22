@@ -12,13 +12,12 @@ import '../pages/chat_channel_card.dart';
 import 'chat_main_talks_controller.dart';
 
 class ChatMainTalksPage extends StatefulWidget {
-  const ChatMainTalksPage({Key? key, required this.controller})
-      : super(key: key);
+  const ChatMainTalksPage({super.key, required this.controller});
 
   final ChatMainTalksController controller;
 
   @override
-  _ChatMainTalksPageState createState() => _ChatMainTalksPageState();
+  State<ChatMainTalksPage> createState() => _ChatMainTalksPageState();
 }
 
 class _ChatMainTalksPageState extends State<ChatMainTalksPage> {
@@ -122,20 +121,18 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ...tile.cards
-                  .map(
-                    (e) => Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
-                      child: ChatAssistantCard(
-                        title: e.title,
-                        description: e.content,
-                        icon: buildNetworkIcon(e),
-                        channel: e,
-                        onPressed: controller.openAssistantCard,
-                      ),
-                    ),
-                  )
-                  .toList()
+              ...tile.cards.map(
+                (e) => Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: ChatAssistantCard(
+                    title: e.title,
+                    description: e.content,
+                    icon: buildNetworkIcon(e),
+                    channel: e,
+                    onPressed: controller.openAssistantCard,
+                  ),
+                ),
+              )
             ],
           ),
         ],

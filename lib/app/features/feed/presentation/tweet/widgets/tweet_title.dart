@@ -13,13 +13,12 @@ import '../../stores/tweet_controller.dart';
 
 class TweetTitle extends StatelessWidget {
   const TweetTitle({
-    Key? key,
+    super.key,
     required this.tweet,
     required BuildContext context,
     required this.controller,
     this.isDetail = false,
-  })  : _context = context,
-        super(key: key);
+  }) : _context = context;
 
   final TweetEntity tweet;
   final BuildContext _context;

@@ -6,7 +6,7 @@ import 'feed_page.dart';
 import 'stores/tweet_controller.dart';
 
 class FeedModule extends WidgetModule {
-  FeedModule({Key? key}) : super(key: key);
+  FeedModule({super.key});
 
   @override
   List<Bind> get binds => [];

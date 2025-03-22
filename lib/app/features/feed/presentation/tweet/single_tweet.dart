@@ -11,12 +11,11 @@ import 'widgets/tweet_title.dart';
 
 class SingleTweet extends StatelessWidget {
   const SingleTweet({
-    Key? key,
+    super.key,
     required this.tweet,
     required BuildContext context,
     required this.controller,
-  })  : _context = context,
-        super(key: key);
+  }) : _context = context;
 
   final TweetEntity tweet;
   final BuildContext _context;

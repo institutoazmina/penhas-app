@@ -13,18 +13,18 @@ import 'compose_tweet_controller.dart';
 
 class ComposeTweetPage extends StatefulWidget {
   const ComposeTweetPage({
-    Key? key,
+    super.key,
     this.title = 'Publicar',
     this.showAppBar = false,
     required this.composeTweetController,
-  }) : super(key: key);
+  });
 
   final String title;
   final bool showAppBar;
   final ComposeTweetController composeTweetController;
 
   @override
-  _ComposeTweetPageState createState() => _ComposeTweetPageState();
+  State<ComposeTweetPage> createState() => _ComposeTweetPageState();
 }
 
 class _ComposeTweetPageState extends State<ComposeTweetPage>
@@ -78,6 +78,7 @@ class _ComposeTweetPageState extends State<ComposeTweetPage>
           ? AppBar(
               title: Text(widget.title),
               backgroundColor: DesignSystemColors.ligthPurple,
+              foregroundColor: DesignSystemColors.white,
             )
           : null,
       body: SizedBox.expand(
@@ -191,7 +192,8 @@ class _ComposeTweetPageState extends State<ComposeTweetPage>
                   children: <Widget>[
                     SvgPicture.asset(
                       'assets/images/svg/drawer/user_profile.svg',
-                      color: DesignSystemColors.darkIndigoThree,
+                      colorFilter: const ColorFilter.mode(
+                          DesignSystemColors.darkIndigoThree, BlendMode.srcIn),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 12.0),

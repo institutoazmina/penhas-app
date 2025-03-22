@@ -6,9 +6,9 @@ import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 
 class ChatPeopleFilterCard extends StatelessWidget {
   const ChatPeopleFilterCard({
-    Key? key,
+    super.key,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final void Function() onPressed;
 

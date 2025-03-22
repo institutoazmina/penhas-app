@@ -24,7 +24,7 @@ void main() {
       iSeeWidget(IconButton);
     });
 
-    screenshotTest(
+    screenshotTestSimplified(
       'should render correctly',
       fileName: 'card_profile_name_page',
       pageBuilder: () => Scaffold(

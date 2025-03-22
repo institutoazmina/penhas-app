@@ -6,10 +6,10 @@ import '../../../../../../shared/design_system/colors.dart';
 import '../../../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 
 class GuardianTutorialPage extends StatefulWidget {
-  const GuardianTutorialPage({Key? key}) : super(key: key);
+  const GuardianTutorialPage({super.key});
 
   @override
-  _GuardianTutorialPageState createState() => _GuardianTutorialPageState();
+  State<GuardianTutorialPage> createState() => _GuardianTutorialPageState();
 }
 
 class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
@@ -60,6 +60,7 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
       backgroundColor: DesignSystemColors.charcoalGrey,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        foregroundColor: DesignSystemColors.white,
         elevation: 0.0,
         leading: IconButton(
           splashColor: Colors.transparent,

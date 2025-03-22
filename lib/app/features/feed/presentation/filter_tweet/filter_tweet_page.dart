@@ -11,12 +11,12 @@ import '../../domain/entities/tweet_filter_session_entity.dart';
 import 'filter_tweet_controller.dart';
 
 class FilterTweetPage extends StatefulWidget {
-  const FilterTweetPage({Key? key, required this.controller}) : super(key: key);
+  const FilterTweetPage({super.key, required this.controller});
 
   final FilterTweetController controller;
 
   @override
-  _FilterTweetPageState createState() => _FilterTweetPageState();
+  State<FilterTweetPage> createState() => _FilterTweetPageState();
 }
 
 class _FilterTweetPageState extends State<FilterTweetPage>
@@ -60,6 +60,7 @@ class _FilterTweetPageState extends State<FilterTweetPage>
       appBar: AppBar(
         title: const Text('Filtrar temas'),
         backgroundColor: DesignSystemColors.ligthPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: PageProgressIndicator(
         progressState: _currentState,

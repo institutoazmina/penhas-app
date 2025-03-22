@@ -13,13 +13,12 @@ import '../../../domain/states/account_preference_state.dart';
 import 'account_preference_controller.dart';
 
 class AccountPreferencePage extends StatefulWidget {
-  const AccountPreferencePage({Key? key, required this.controller})
-      : super(key: key);
+  const AccountPreferencePage({super.key, required this.controller});
 
   final AccountPreferenceController controller;
 
   @override
-  _AccountPreferencePageState createState() => _AccountPreferencePageState();
+  State<AccountPreferencePage> createState() => _AccountPreferencePageState();
 }
 
 class _AccountPreferencePageState extends State<AccountPreferencePage>
@@ -44,6 +43,7 @@ class _AccountPreferencePageState extends State<AccountPreferencePage>
       key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0.0,
+        foregroundColor: DesignSystemColors.white,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios,
