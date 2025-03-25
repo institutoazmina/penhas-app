@@ -31,6 +31,7 @@ class BackgroundTaskManager extends IBackgroundTaskManager {
         onStart: _onBackgroundServiceStart,
         isForegroundMode: true,
         autoStart: true,
+        foregroundServiceTypes: [AndroidForegroundType.location]
       ),
       iosConfiguration: IosConfiguration(
         onForeground: _onBackgroundServiceStart,
@@ -44,9 +45,16 @@ class BackgroundTaskManager extends IBackgroundTaskManager {
   }
 
   static void _onBackgroundServiceStart(ServiceInstance service) {
+       if (service is AndroidServiceInstance) {
+    service.setAsForegroundService();
+    
+    }
     if (kDebugMode) {
       log('Background service started');
-    }
+  }
+  service.on('stopService').listen((event) {
+    service.stopSelf();
+  });
   }
 
   @override
