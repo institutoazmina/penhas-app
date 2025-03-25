@@ -72,7 +72,7 @@ class TweetController implements ITweetController {
               onPressed: () {
                 _useCase
                     .report(tweet, controller.text)
-                    .then((value) => Navigator.of(context).pop());
+                    .then((value) { if (context.mounted) {Navigator.of(context).pop();}});
               },
             ),
           ],

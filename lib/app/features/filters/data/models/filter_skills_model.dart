@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
@@ -15,7 +14,7 @@ class FilterSkillsModel extends Equatable {
     final List<dynamic> jsonSkills = jsonData['skills'];
     final List<FilterTagEntity> skills = jsonSkills
         .map((e) => FilterTagModel.fromJson(e))
-        .whereNotNull()
+        .nonNulls
         .toList();
 
     return FilterSkillsModel(skills: skills);
