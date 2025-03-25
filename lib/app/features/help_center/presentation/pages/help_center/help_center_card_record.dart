@@ -33,7 +33,7 @@ class HelpCenterCardRecord extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.5),
+              color: Colors.black.withValues(alpha: 0.5),
               offset: const Offset(0.0, 2.0),
               blurRadius: 4.0,
             )

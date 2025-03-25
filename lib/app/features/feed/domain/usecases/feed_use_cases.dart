@@ -365,7 +365,9 @@ class FeedUseCases {
 
   void _updateInReplyMap(TweetEntity tweet) {
     if (!_tweetReplyMap.containsKey(tweet.id) &&
-        !_tweetReplyMap.containsKey(tweet.parentId)) return;
+        !_tweetReplyMap.containsKey(tweet.parentId)) {
+      return;
+    }
 
     final isUpdated = _tweetReplyMap.entries.fold<bool>(
       false,

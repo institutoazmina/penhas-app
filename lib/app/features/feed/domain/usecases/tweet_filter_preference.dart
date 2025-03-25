@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/failures.dart';
@@ -60,7 +59,7 @@ class TweetFilterPreference {
   }
 
   void saveTags(List<String?> tags) {
-    _currentTags = tags.whereNotNull().toList();
+    _currentTags = tags.nonNulls.toList();
   }
 
   List<String> getTags() {

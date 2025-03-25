@@ -34,31 +34,31 @@ import '../../../styles/penhas_text_style.dart';
 class RoundedOutlinedButtonStyle extends ButtonStyle {
   RoundedOutlinedButtonStyle()
       : super(
-          foregroundColor: MaterialStateProperty.resolveWith<Color>(
+          foregroundColor: WidgetStateProperty.resolveWith<Color>(
             (states) {
-              return states.contains(MaterialState.disabled)
+              return states.contains(WidgetState.disabled)
                   ? PenhasColors.disabledBackground
                   : PenhasColors.white;
             },
           ),
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
-          shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
-            (Set<MaterialState> states) {
+          backgroundColor: WidgetStateProperty.all<Color>(Colors.transparent),
+          shape: WidgetStateProperty.resolveWith<OutlinedBorder>(
+            (Set<WidgetState> states) {
               return RoundedRectangleBorder(
                 borderRadius: const BorderRadius.all(Radius.circular(20.0)),
                 side: BorderSide(
-                  color: states.contains(MaterialState.disabled)
+                  color: states.contains(WidgetState.disabled)
                       ? PenhasColors.disabledBackground
                       : PenhasColors.lightPurple,
                 ),
               );
             },
           ),
-          elevation: MaterialStateProperty.all<double>(0.0),
-          textStyle: MaterialStateProperty.resolveWith<TextStyle>(
-            (Set<MaterialState> states) {
+          elevation: WidgetStateProperty.all<double>(0.0),
+          textStyle: WidgetStateProperty.resolveWith<TextStyle>(
+            (Set<WidgetState> states) {
               return PenhasTextStyle.labelLarge.copyWith(
-                color: states.contains(MaterialState.disabled)
+                color: states.contains(WidgetState.disabled)
                     ? PenhasColors.disabledBackground
                     : PenhasColors.white,
               );
