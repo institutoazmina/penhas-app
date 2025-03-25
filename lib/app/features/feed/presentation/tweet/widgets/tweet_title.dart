@@ -175,7 +175,7 @@ class TweetTitle extends StatelessWidget {
           onTap: () {
             controller!
                 .delete(tweet)
-                .whenComplete(() => Navigator.of(_context).pop());
+                .whenComplete(() {if (_context.mounted) {Navigator.of(_context).pop();}});
           },
         ),
       );

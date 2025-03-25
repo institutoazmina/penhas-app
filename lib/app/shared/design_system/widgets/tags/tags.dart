@@ -198,7 +198,7 @@ class _TagItemState extends State<TagItem> {
         border: Border.all(
           color: _active
               ? widget.activeColor
-              : widget.activeColor.withOpacity(0.5),
+              : widget.activeColor.withValues(alpha: 0.5),
           width: 0.5,
         ),
       ),

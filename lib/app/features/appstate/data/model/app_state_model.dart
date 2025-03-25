@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:collection/collection.dart';
-
 import '../../domain/entities/app_state_entity.dart';
 import '../../domain/entities/user_profile_entity.dart';
 import 'quiz_session_model.dart';
@@ -54,7 +52,7 @@ class AppStateModel extends AppStateEntity {
       return [];
     }
 
-    return data.map((e) => _buildModule(e)).whereNotNull().toList();
+    return data.map((e) => _buildModule(e)).nonNulls.toList();
   }
 
   static AppStateModuleEntity? _buildModule(Map<String, dynamic> module) {

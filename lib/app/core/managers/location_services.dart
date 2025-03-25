@@ -126,7 +126,9 @@ class LocationServices implements ILocationServices {
                           .then(
                             (value) => _requestDeniedPermissionIfNeeded(value),
                           )
-                          .then((value) => Navigator.of(context).pop(value));
+                          .then((value) {
+                            if (context.mounted) {
+                            Navigator.of(context).pop(value);}});
                     },
                   ),
                 ),
@@ -230,8 +232,10 @@ class LocationServices implements ILocationServices {
                     ),
                     onPressed: () async {
                       openAppSettings().then(
-                        (value) => Navigator.of(context)
-                            .pop(const LocationPermissionState.undefined()),
+                        (value) {
+                          if (context.mounted) {
+                            Navigator.of(context)
+                            .pop(const LocationPermissionState.undefined());}}
                       );
                     },
                   ),

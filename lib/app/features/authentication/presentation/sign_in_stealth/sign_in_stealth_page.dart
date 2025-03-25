@@ -50,7 +50,7 @@ class _SignInStealthPageState extends State<SignInStealthPage>
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvoked: (didPop) async {
+      onPopInvokedWithResult: (didPop, result) async {
         if (didPop) return;
         SystemNavigator.pop();
       },
