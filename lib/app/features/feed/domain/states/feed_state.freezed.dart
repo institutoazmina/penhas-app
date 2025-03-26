@@ -77,6 +77,9 @@ class _$FeedStateCopyWithImpl<$Res, $Val extends FeedState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of FeedState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -93,6 +96,9 @@ class __$$InitialStateImplCopyWithImpl<$Res>
   __$$InitialStateImplCopyWithImpl(
       _$InitialStateImpl _value, $Res Function(_$InitialStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of FeedState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -204,6 +210,8 @@ class __$$LoadedStateImplCopyWithImpl<$Res>
       _$LoadedStateImpl _value, $Res Function(_$LoadedStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FeedState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -248,7 +256,9 @@ class _$LoadedStateImpl implements _LoadedState {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_items));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FeedState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$LoadedStateImplCopyWith<_$LoadedStateImpl> get copyWith =>
@@ -327,7 +337,10 @@ abstract class _LoadedState implements FeedState {
   const factory _LoadedState(final List<TweetTiles> items) = _$LoadedStateImpl;
 
   List<TweetTiles> get items;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of FeedState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LoadedStateImplCopyWith<_$LoadedStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -349,6 +362,8 @@ class __$$ErrorStateImplCopyWithImpl<$Res>
       _$ErrorStateImpl _value, $Res Function(_$ErrorStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FeedState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -387,7 +402,9 @@ class _$ErrorStateImpl implements _ErrorState {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FeedState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ErrorStateImplCopyWith<_$ErrorStateImpl> get copyWith =>
@@ -466,7 +483,10 @@ abstract class _ErrorState implements FeedState {
   const factory _ErrorState(final String message) = _$ErrorStateImpl;
 
   String get message;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of FeedState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorStateImplCopyWith<_$ErrorStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
