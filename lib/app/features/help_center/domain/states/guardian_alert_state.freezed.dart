@@ -72,6 +72,9 @@ class _$GuardianAlertStateCopyWithImpl<$Res, $Val extends GuardianAlertState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of GuardianAlertState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -88,6 +91,9 @@ class __$$InitialImplCopyWithImpl<$Res>
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of GuardianAlertState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -193,6 +199,8 @@ class __$$AlertImplCopyWithImpl<$Res>
       _$AlertImpl _value, $Res Function(_$AlertImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GuardianAlertState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -231,7 +239,9 @@ class _$AlertImpl implements _Alert {
   @override
   int get hashCode => Object.hash(runtimeType, action);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GuardianAlertState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AlertImplCopyWith<_$AlertImpl> get copyWith =>
@@ -304,7 +314,10 @@ abstract class _Alert implements GuardianAlertState {
   const factory _Alert(final GuardianAlertMessageAction action) = _$AlertImpl;
 
   GuardianAlertMessageAction get action;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GuardianAlertState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AlertImplCopyWith<_$AlertImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
