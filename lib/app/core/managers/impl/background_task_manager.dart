@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../../shared/logger/log.dart';
 import '../background_task_manager.dart';
@@ -26,12 +26,14 @@ class BackgroundTaskManager extends IBackgroundTaskManager {
 
   @override
   Future<void> registerDispatcher(Function callbackDispatcher) async {
+    await _requestPermissions();
+
     _service.configure(
       androidConfiguration: AndroidConfiguration(
         onStart: _onBackgroundServiceStart,
         isForegroundMode: true,
         autoStart: true,
-        foregroundServiceTypes: [AndroidForegroundType.location]
+        foregroundServiceTypes: [AndroidForegroundType.location],
       ),
       iosConfiguration: IosConfiguration(
         onForeground: _onBackgroundServiceStart,
@@ -41,26 +43,37 @@ class BackgroundTaskManager extends IBackgroundTaskManager {
   }
 
   static Future<bool> _onIosBackground(ServiceInstance service) async {
+    log('iOS Background Task Running');
     return true;
   }
 
-  static void _onBackgroundServiceStart(ServiceInstance service) {
-       if (service is AndroidServiceInstance) {
-    service.setAsForegroundService();
-    
+  static void _onBackgroundServiceStart(ServiceInstance service) async {
+    if (service is AndroidServiceInstance) {
+      service.setAsForegroundService();
+      
+      service.setForegroundNotificationInfo(
+        title: 'Background Service Running',
+        content: 'Tap to return to the app',
+      );
     }
-    if (kDebugMode) {
-      log('Background service started');
-  }
-  service.on('stopService').listen((event) {
-    service.stopSelf();
-  });
+
+    log('Background service started');
+
+    service.on('stopService').listen((event) {
+      log('Stopping background service...');
+      service.stopSelf();
+    });
   }
 
   @override
   void schedule(String taskName) {
-    _service.startService();
-    _service.invoke(taskName);
+    log('Scheduling task: $taskName');
+
+    _service.startService().then((_) {
+      _service.invoke(taskName);
+    }).catchError((e, stack) {
+      logError('Error starting service: $e', stack);
+    });
   }
 
   @override
@@ -69,9 +82,10 @@ class BackgroundTaskManager extends IBackgroundTaskManager {
       final taskName = event?['taskName'] as String?;
       if (taskName != null) {
         try {
+          log('Executing task: $taskName');
           await _runTaskByName(taskName);
         } catch (e, stack) {
-          logError(e, stack);
+          logError('Task execution error: $e', stack);
         }
       }
     });
@@ -81,5 +95,18 @@ class BackgroundTaskManager extends IBackgroundTaskManager {
     final taskDefinition = _registry.definitionByName(taskName);
     final task = taskDefinition.taskProvider();
     await task.execute();
+  }
+
+  Future<void> _requestPermissions() async {
+    if (await Permission.location.isDenied ||
+        await Permission.location.isPermanentlyDenied) {
+      log('Requesting location permission...');
+      await Permission.location.request();
+    }
+
+    if (await Permission.ignoreBatteryOptimizations.isDenied) {
+      log('Requesting battery optimization exception...');
+      await Permission.ignoreBatteryOptimizations.request();
+    }
   }
 }
