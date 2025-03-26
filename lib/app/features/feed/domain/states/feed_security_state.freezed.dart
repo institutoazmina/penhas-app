@@ -72,6 +72,9 @@ class _$FeedSecurityStateCopyWithImpl<$Res, $Val extends FeedSecurityState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of FeedSecurityState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -88,6 +91,9 @@ class __$$EnableImplCopyWithImpl<$Res>
   __$$EnableImplCopyWithImpl(
       _$EnableImpl _value, $Res Function(_$EnableImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of FeedSecurityState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -190,6 +196,9 @@ class __$$DisableImplCopyWithImpl<$Res>
   __$$DisableImplCopyWithImpl(
       _$DisableImpl _value, $Res Function(_$DisableImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of FeedSecurityState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

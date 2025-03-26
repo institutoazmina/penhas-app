@@ -78,6 +78,9 @@ class _$GuardianStateCopyWithImpl<$Res, $Val extends GuardianState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of GuardianState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -94,6 +97,9 @@ class __$$InitialImplCopyWithImpl<$Res>
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of GuardianState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -205,6 +211,8 @@ class __$$LoadedImplCopyWithImpl<$Res>
       _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GuardianState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -249,7 +257,9 @@ class _$LoadedImpl implements _Loaded {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_tiles));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GuardianState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
@@ -328,7 +338,10 @@ abstract class _Loaded implements GuardianState {
   const factory _Loaded(final List<GuardianTileEntity> tiles) = _$LoadedImpl;
 
   List<GuardianTileEntity> get tiles;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GuardianState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -350,6 +363,8 @@ class __$$ErrorDetailsImplCopyWithImpl<$Res>
       _$ErrorDetailsImpl _value, $Res Function(_$ErrorDetailsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GuardianState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -388,7 +403,9 @@ class _$ErrorDetailsImpl implements _ErrorDetails {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GuardianState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ErrorDetailsImplCopyWith<_$ErrorDetailsImpl> get copyWith =>
@@ -467,7 +484,10 @@ abstract class _ErrorDetails implements GuardianState {
   const factory _ErrorDetails(final String message) = _$ErrorDetailsImpl;
 
   String get message;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GuardianState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorDetailsImplCopyWith<_$ErrorDetailsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -50,7 +50,9 @@ mixin _$EditTrustedContactsState {
   }) =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of EditTrustedContactsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $EditTrustedContactsStateCopyWith<EditTrustedContactsState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -75,6 +77,8 @@ class _$EditTrustedContactsStateCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of EditTrustedContactsState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -108,6 +112,8 @@ class __$$LoadedStateImplCopyWithImpl<$Res>
       _$LoadedStateImpl _value, $Res Function(_$LoadedStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of EditTrustedContactsState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -153,7 +159,9 @@ class _$LoadedStateImpl implements _LoadedState {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_contacts));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of EditTrustedContactsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$LoadedStateImplCopyWith<_$LoadedStateImpl> get copyWith =>
@@ -222,8 +230,11 @@ abstract class _LoadedState implements EditTrustedContactsState {
 
   @override
   List<ContactEntity> get contacts;
+
+  /// Create a copy of EditTrustedContactsState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LoadedStateImplCopyWith<_$LoadedStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -272,7 +283,9 @@ mixin _$EditTrustedContactsReaction {
   }) =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of EditTrustedContactsReaction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $EditTrustedContactsReactionCopyWith<EditTrustedContactsReaction>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -299,6 +312,8 @@ class _$EditTrustedContactsReactionCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of EditTrustedContactsReaction
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -333,6 +348,8 @@ class __$$RequestContactInfoImplCopyWithImpl<$Res>
       $Res Function(_$RequestContactInfoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of EditTrustedContactsReaction
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -371,7 +388,9 @@ class _$RequestContactInfoImpl implements _RequestContactInfo {
   @override
   int get hashCode => Object.hash(runtimeType, contact);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of EditTrustedContactsReaction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RequestContactInfoImplCopyWith<_$RequestContactInfoImpl> get copyWith =>
@@ -449,8 +468,11 @@ abstract class _RequestContactInfo implements EditTrustedContactsReaction {
 
   @override
   ContactEntity get contact;
+
+  /// Create a copy of EditTrustedContactsReaction
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RequestContactInfoImplCopyWith<_$RequestContactInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -477,6 +499,8 @@ class __$$AskForDeleteConfirmationImplCopyWithImpl<$Res>
       $Res Function(_$AskForDeleteConfirmationImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of EditTrustedContactsReaction
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -515,7 +539,9 @@ class _$AskForDeleteConfirmationImpl implements _AskForDeleteConfirmation {
   @override
   int get hashCode => Object.hash(runtimeType, contact);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of EditTrustedContactsReaction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AskForDeleteConfirmationImplCopyWith<_$AskForDeleteConfirmationImpl>
@@ -594,8 +620,11 @@ abstract class _AskForDeleteConfirmation
 
   @override
   ContactEntity get contact;
+
+  /// Create a copy of EditTrustedContactsReaction
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AskForDeleteConfirmationImplCopyWith<_$AskForDeleteConfirmationImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
