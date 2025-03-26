@@ -173,9 +173,11 @@ class TweetTitle extends StatelessWidget {
           ),
           title: const Text('Apagar'),
           onTap: () {
-            controller!
-                .delete(tweet)
-                .whenComplete(() {if (_context.mounted) {Navigator.of(_context).pop();}});
+            controller!.delete(tweet).whenComplete(() {
+              if (_context.mounted) {
+                Navigator.of(_context).pop();
+              }
+            });
           },
         ),
       );
