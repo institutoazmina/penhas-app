@@ -70,9 +70,11 @@ class TweetController implements ITweetController {
             PenhasButton.text(
               child: const Text('Enviar'),
               onPressed: () {
-                _useCase
-                    .report(tweet, controller.text)
-                    .then((value) { if (context.mounted) {Navigator.of(context).pop();}});
+                _useCase.report(tweet, controller.text).then((value) {
+                  if (context.mounted) {
+                    Navigator.of(context).pop();
+                  }
+                });
               },
             ),
           ],

@@ -14,15 +14,11 @@ class SupportCenterMetadataModel extends SupportCenterMetadataEntity {
     final List jsonCategories = jsonData['categorias'];
     final List jsonProjects = jsonData['projetos'];
 
-    final List<FilterTagModel> categories = jsonCategories
-        .map((e) => FilterTagModel.fromJson(e))
-        .nonNulls
-        .toList();
+    final List<FilterTagModel> categories =
+        jsonCategories.map((e) => FilterTagModel.fromJson(e)).nonNulls.toList();
 
-    final List<FilterTagModel> projects = jsonProjects
-        .map((e) => FilterTagModel.fromJson(e))
-        .nonNulls
-        .toList();
+    final List<FilterTagModel> projects =
+        jsonProjects.map((e) => FilterTagModel.fromJson(e)).nonNulls.toList();
 
     return SupportCenterMetadataModel(
       categories: categories,
