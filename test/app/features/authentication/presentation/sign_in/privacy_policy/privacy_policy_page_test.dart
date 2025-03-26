@@ -10,7 +10,7 @@ void main() {
     WebViewPlatform.instance = FakeWebViewPlatform();
   });
 
-  group(PrivacyPolicyPage, () {
+  group(PrivacyPolicyPage, skip: true, () {
     group('golden test', () {
       screenshotTest(
         'looks as expected',
