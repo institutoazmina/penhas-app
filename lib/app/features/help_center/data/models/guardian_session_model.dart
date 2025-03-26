@@ -11,10 +11,8 @@ class GuardianSessionModel extends GuardianSessionEntity {
     final int remainingInvites = jsonData['remaing_invites'] ?? 0;
     final int maximumInvites = jsonData['invites_max'] ?? 0;
     final List<dynamic> guardsData = jsonData['guards'];
-    final List<GuardianEntity> guards = guardsData
-        .map((e) => _GuardianModel.fromJson(e))
-        .nonNulls
-        .toList();
+    final List<GuardianEntity> guards =
+        guardsData.map((e) => _GuardianModel.fromJson(e)).nonNulls.toList();
 
     return GuardianSessionModel(
       guards: guards,

@@ -50,7 +50,7 @@ class BackgroundTaskManager extends IBackgroundTaskManager {
   static void _onBackgroundServiceStart(ServiceInstance service) async {
     if (service is AndroidServiceInstance) {
       service.setAsForegroundService();
-      
+
       service.setForegroundNotificationInfo(
         title: 'Background Service Running',
         content: 'Tap to return to the app',
