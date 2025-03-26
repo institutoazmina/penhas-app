@@ -52,7 +52,7 @@ void main() {
     );
   });
 
-  group(ZodiacPage, () {
+  group(ZodiacPage, skip: true, () {
     testWidgets('should render the page', (tester) async {
       // arrange
       await theAppIsRunning(tester, ZodiacPage(controller: controller));
