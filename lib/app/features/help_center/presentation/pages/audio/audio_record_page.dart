@@ -52,7 +52,7 @@ class _AudioRecordState extends State<AudioRecordPage> with SnackBarHandler {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvoked: (didPop) async {
+      onPopInvokedWithResult: (didPop, result) async {
         if (didPop) return;
         controller.stopAudioRecord();
       },

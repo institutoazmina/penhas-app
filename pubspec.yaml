@@ -15,15 +15,15 @@ version: 3.7.1+68
 publish_to: none
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.2.0 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  asuka: ^2.0.1+3
-  badges: ^3.1.2
+  asuka: ^2.2.1
+  badges: ^2.0.2
   collection: ^1.16.0
   crypt: ^4.3.1
   crypto: ^3.0.1
@@ -32,27 +32,28 @@ dependencies:
   device_info_plus:
   email_validator: ^3.0.0
   equatable: ^2.0.3
-  firebase_analytics: ^11.3.0
-  firebase_core: ^3.4.0
-  firebase_core_platform_interface: ^5.4.0
-  firebase_crashlytics: ^4.1.0
-  firebase_remote_config: ^5.0.0
+  firebase_analytics: '11.4.3'
+  firebase_core: '3.12.1'
+  firebase_core_platform_interface: '5.4.0'
+  firebase_crashlytics: '4.3.4'
+  firebase_remote_config: ^5.4.2
   flutter_mobx: ^2.0.5
   flutter_modular: ^5.0.3
   flutter_secure_storage: ^9.2.4
-  flutter_sound: ^9.3.0+1
-  flutter_svg: ^2.0.10+1
+  flutter_sound: ^9.25.4
+  flutter_svg: ^2.0.0
+  flutter_widget_from_html: ^0.16.0
   freezed_annotation: ^2.1.0
   geolocator: ^12.0.0
   google_maps_flutter: ^2.1.1
   hive_flutter: ^1.1.0
   http: ^1.2.2
   http_parser: ^4.0.0
-  intl: ^0.18.1
-  json_annotation: ^4.9.0
-  logger: ^2.5.0
+  intl: ^0.19.0
+  json_annotation: ^4.6.0
+  logger: ^2.0.2
   logging: ^1.0.2
-  map_launcher: ^3.5.0
+  map_launcher: ^3.0.0
   mask_text_input_formatter: ^2.0.0
   meta: ^1.7.0
   mobx: ^2.0.5
@@ -61,8 +62,8 @@ dependencies:
   path_provider: ^2.0.8
   path_provider_android: ^2.0.22
   path_provider_ios: ^2.0.11
-  permission_handler: ^11.3.1
-  permission_handler_platform_interface: ^4.2.3
+  permission_handler: ^11.4.0
+  permission_handler_platform_interface: 4.3.0
   provider: ^6.0.1
   scroll_to_index: ^3.0.1
   shared_preferences: ^2.0.11
@@ -72,23 +73,23 @@ dependencies:
   synchronized: ^3.0.0+3
   timeago: ^3.1.0
   url_launcher: ^6.1.7
-  uuid: ^4.5.1
-  webview_flutter: ^4.8.0
-  workmanager: ^0.5.1
+  uuid: ^4.3.3
+  flutter_background_service: ^5.1.0
   platform: ^3.1.6
+  flutter_html: ^3.0.0
   rxdart: ^0.28.0
-  flutter_html: ^3.0.0-beta.2
+  webview_flutter: ^4.9.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  alchemist: ^0.11.0 # snapshot test
+  alchemist: ^0.11.0
   build_runner: ^2.1.5
   flutter_lints: ^4.0.0
   modular_test: any
   freezed: ^2.0.4
   geolocator_platform_interface: ^4.0.3
-  golden_toolkit: ^0.15.0 # snapshot test
+  golden_toolkit: ^0.15.0
   json_serializable: ^6.3.1
   lint: ^2.4.0
   mobx_codegen: ^2.0.4

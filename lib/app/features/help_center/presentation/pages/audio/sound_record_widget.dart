@@ -49,7 +49,7 @@ class _SoundRecordWidgetState extends State<SoundRecordWidget>
               for (int i = 1; i <= 5; i++)
                 BoxShadow(
                   color: DesignSystemColors.easterPurple
-                      .withOpacity(_animationController.value / 2),
+                      .withValues(alpha: _animationController.value / 2),
                   spreadRadius: i * _animation.value as double,
                 )
             ],

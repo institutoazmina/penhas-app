@@ -70,7 +70,25 @@ jobs:
         run: base64 -d <<< "${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64 }}" > $GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_PATH
         env:
           GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_PATH: ${{ runner.temp }}/play-store-api-key.json
+      
+      - name: Increase Watcher Limit
+        run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
+      - name: Clean Gradle & Flutter Build
+        run: |
+          flutter clean
+          rm -rf android/.gradle
+          rm -rf android/app/build
+          rm -rf build
+          rm -rf ~/.gradle/caches/
+          rm -rf ~/.gradle/wrapper/
+
+      - name: Disable Gradle Incremental Builds
+        run: echo "org.gradle.configureondemand=false" >> android/gradle.properties
+
+      - name: Set Gradle JVM Options
+        run: echo "org.gradle.jvmargs=-Xmx4g" >> android/gradle.properties
+        
       - name: Run lane to distribute
         uses: maierj/fastlane-action@v3.0.0
         with:

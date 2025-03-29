@@ -57,7 +57,7 @@ class TutorialPageViewWidget extends StatelessWidget {
         ? Container()
         : Center(
             child: Text(
-              _title!,
+              _title,
               style: const TextStyle(
                 fontFamily: 'Lato',
                 fontSize: 22.0,

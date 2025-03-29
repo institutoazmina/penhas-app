@@ -10,8 +10,6 @@ extension ChatTabTitle on ChatTabItem {
         return 'Todas as usuárias';
       case ChatTabItem.talks:
         return 'Conversas';
-      default:
-        return null;
     }
   }
 }

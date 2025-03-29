@@ -78,6 +78,9 @@ class _$AudioTileActionCopyWithImpl<$Res, $Val extends AudioTileAction>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of AudioTileAction
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -94,6 +97,9 @@ class __$$InitialImplCopyWithImpl<$Res>
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of AudioTileAction
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -205,6 +211,8 @@ class __$$NoticeImplCopyWithImpl<$Res>
       _$NoticeImpl _value, $Res Function(_$NoticeImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AudioTileAction
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -243,7 +251,9 @@ class _$NoticeImpl implements _Notice {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AudioTileAction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$NoticeImplCopyWith<_$NoticeImpl> get copyWith =>
@@ -322,7 +332,10 @@ abstract class _Notice implements AudioTileAction {
   const factory _Notice(final String message) = _$NoticeImpl;
 
   String get message;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AudioTileAction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$NoticeImplCopyWith<_$NoticeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -344,6 +357,8 @@ class __$$ActionSheetImplCopyWithImpl<$Res>
       _$ActionSheetImpl _value, $Res Function(_$ActionSheetImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AudioTileAction
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -382,7 +397,9 @@ class _$ActionSheetImpl implements _ActionSheet {
   @override
   int get hashCode => Object.hash(runtimeType, audio);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AudioTileAction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ActionSheetImplCopyWith<_$ActionSheetImpl> get copyWith =>
@@ -461,7 +478,10 @@ abstract class _ActionSheet implements AudioTileAction {
   const factory _ActionSheet(final AudioEntity audio) = _$ActionSheetImpl;
 
   AudioEntity get audio;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AudioTileAction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ActionSheetImplCopyWith<_$ActionSheetImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

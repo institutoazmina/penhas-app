@@ -96,6 +96,9 @@ class _$MainboardStateCopyWithImpl<$Res, $Val extends MainboardState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of MainboardState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -111,6 +114,9 @@ class __$$ChatImplCopyWithImpl<$Res>
     implements _$$ChatImplCopyWith<$Res> {
   __$$ChatImplCopyWithImpl(_$ChatImpl _value, $Res Function(_$ChatImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of MainboardState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -236,6 +242,9 @@ class __$$FeedImplCopyWithImpl<$Res>
     implements _$$FeedImplCopyWith<$Res> {
   __$$FeedImplCopyWithImpl(_$FeedImpl _value, $Res Function(_$FeedImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of MainboardState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -362,6 +371,9 @@ class __$$EscapeManualImplCopyWithImpl<$Res>
   __$$EscapeManualImplCopyWithImpl(
       _$EscapeManualImpl _value, $Res Function(_$EscapeManualImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of MainboardState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -488,6 +500,9 @@ class __$$ComposeImplCopyWithImpl<$Res>
   __$$ComposeImplCopyWithImpl(
       _$ComposeImpl _value, $Res Function(_$ComposeImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of MainboardState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -614,6 +629,9 @@ class __$$SupportPointImplCopyWithImpl<$Res>
   __$$SupportPointImplCopyWithImpl(
       _$SupportPointImpl _value, $Res Function(_$SupportPointImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of MainboardState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -740,6 +758,9 @@ class __$$HelpCenterImplCopyWithImpl<$Res>
   __$$HelpCenterImplCopyWithImpl(
       _$HelpCenterImpl _value, $Res Function(_$HelpCenterImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of MainboardState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

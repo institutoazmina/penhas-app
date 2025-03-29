@@ -40,7 +40,7 @@ class _EditTrustedContactsPageState extends State<EditTrustedContactsPage> {
     final textTheme = Theme.of(context).textTheme;
     return PopScope(
       canPop: false,
-      onPopInvoked: (didPop) async {
+      onPopInvokedWithResult: (didPop, result) async {
         if (didPop) return;
         Timer.run(() => Modular.to.pop(controller.contacts));
       },

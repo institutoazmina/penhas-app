@@ -34,28 +34,28 @@ import '../../../styles/penhas_text_style.dart';
 class RoundedFilledButtonStyle extends ButtonStyle {
   RoundedFilledButtonStyle()
       : super(
-          foregroundColor: MaterialStateProperty.all<Color>(PenhasColors.white),
-          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+          foregroundColor: WidgetStateProperty.all<Color>(PenhasColors.white),
+          backgroundColor: WidgetStateProperty.resolveWith<Color>(
             (states) {
-              return states.contains(MaterialState.disabled)
+              return states.contains(WidgetState.disabled)
                   ? PenhasColors.disabledBackground
                   : PenhasColors.lightPurple;
             },
           ),
-          shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
-            (Set<MaterialState> states) {
+          shape: WidgetStateProperty.resolveWith<OutlinedBorder>(
+            (Set<WidgetState> states) {
               return RoundedRectangleBorder(
                 borderRadius: const BorderRadius.all(Radius.circular(20.0)),
                 side: BorderSide(
-                  color: states.contains(MaterialState.disabled)
+                  color: states.contains(WidgetState.disabled)
                       ? PenhasColors.disabledBackground
                       : PenhasColors.lightPurple,
                 ),
               );
             },
           ),
-          elevation: MaterialStateProperty.all<double>(0.0),
-          textStyle: MaterialStateProperty.all<TextStyle>(
+          elevation: WidgetStateProperty.all<double>(0.0),
+          textStyle: WidgetStateProperty.all<TextStyle>(
             PenhasTextStyle.labelLarge.copyWith(
               color: PenhasColors.white,
             ),

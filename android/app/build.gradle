@@ -3,7 +3,7 @@ plugins {
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
     id "com.google.gms.google-services"
-    id "com.google.firebase.crashlytics"
+    id'com.google.firebase.crashlytics'
 }
 
 def localProperties = new Properties()
@@ -29,29 +29,34 @@ if (secretsPropertiesFile.exists()){
     secretsProperties.load(new FileInputStream(secretsPropertiesFile))
 }
 
+
+
 def isFirebaseDistribution = System.getenv('IS_FIREBASE_DISTRIBUTION') == 'true'
+
 
 android {
     namespace 'br.com.azmina.penhas'
-    compileSdkVersion 34
+
+    compileSdkVersion 35
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-    lintOptions {
-        disable 'InvalidPackage'
-    }
 
     defaultConfig {
-        applicationId "penhas.com.br"
-        minSdkVersion 22
-        targetSdkVersion 34
+        applicationId "br.com.azmina.penhas"
+        minSdkVersion 24
+        targetSdkVersion 35
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         manifestPlaceholders["GEO_API_KEY"] = System.getenv('GEO_API_KEY') ?: secretsProperties.getProperty('GEO_API_KEY')
+    }
+    
+    buildFeatures {
+        buildConfig true
     }
 
     compileOptions {
@@ -76,6 +81,9 @@ android {
         release {
             signingConfig signingConfigs.release
         }
+    }
+    lint {
+        disable 'InvalidPackage'
     }
 
     applicationVariants.all { variant ->

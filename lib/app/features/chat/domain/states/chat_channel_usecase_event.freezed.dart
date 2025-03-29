@@ -99,6 +99,9 @@ class _$ChatChannelUseCaseEventCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of ChatChannelUseCaseEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -115,6 +118,9 @@ class __$$InitialImplCopyWithImpl<$Res>
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of ChatChannelUseCaseEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -243,6 +249,9 @@ class __$$LoadedImplCopyWithImpl<$Res>
   __$$LoadedImplCopyWithImpl(
       _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of ChatChannelUseCaseEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -374,6 +383,8 @@ class __$$UpdateUserImplCopyWithImpl<$Res>
       _$UpdateUserImpl _value, $Res Function(_$UpdateUserImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ChatChannelUseCaseEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -412,7 +423,9 @@ class _$UpdateUserImpl implements _UpdateUser {
   @override
   int get hashCode => Object.hash(runtimeType, user);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ChatChannelUseCaseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UpdateUserImplCopyWith<_$UpdateUserImpl> get copyWith =>
@@ -511,7 +524,10 @@ abstract class _UpdateUser implements ChatChannelUseCaseEvent {
   const factory _UpdateUser(final ChatUserEntity user) = _$UpdateUserImpl;
 
   ChatUserEntity get user;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ChatChannelUseCaseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UpdateUserImplCopyWith<_$UpdateUserImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -533,6 +549,8 @@ class __$$UpdateMetadataImplCopyWithImpl<$Res>
       _$UpdateMetadataImpl _value, $Res Function(_$UpdateMetadataImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ChatChannelUseCaseEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -572,7 +590,9 @@ class _$UpdateMetadataImpl implements _UpdateMetadata {
   @override
   int get hashCode => Object.hash(runtimeType, metadata);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ChatChannelUseCaseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UpdateMetadataImplCopyWith<_$UpdateMetadataImpl> get copyWith =>
@@ -673,7 +693,10 @@ abstract class _UpdateMetadata implements ChatChannelUseCaseEvent {
       final ChatChannelSessionMetadataEntity metadata) = _$UpdateMetadataImpl;
 
   ChatChannelSessionMetadataEntity get metadata;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ChatChannelUseCaseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UpdateMetadataImplCopyWith<_$UpdateMetadataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -695,6 +718,8 @@ class __$$UpdateMessageImplCopyWithImpl<$Res>
       _$UpdateMessageImpl _value, $Res Function(_$UpdateMessageImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ChatChannelUseCaseEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -740,7 +765,9 @@ class _$UpdateMessageImpl implements _UpdateMessage {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_messages));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ChatChannelUseCaseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UpdateMessageImplCopyWith<_$UpdateMessageImpl> get copyWith =>
@@ -840,7 +867,10 @@ abstract class _UpdateMessage implements ChatChannelUseCaseEvent {
       _$UpdateMessageImpl;
 
   List<ChatChannelMessage> get messages;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ChatChannelUseCaseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UpdateMessageImplCopyWith<_$UpdateMessageImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -862,6 +892,8 @@ class __$$ErrorOnLoadingImplCopyWithImpl<$Res>
       _$ErrorOnLoadingImpl _value, $Res Function(_$ErrorOnLoadingImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ChatChannelUseCaseEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -900,7 +932,9 @@ class _$ErrorOnLoadingImpl implements _ErrorOnLoading {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ChatChannelUseCaseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ErrorOnLoadingImplCopyWith<_$ErrorOnLoadingImpl> get copyWith =>
@@ -1000,7 +1034,10 @@ abstract class _ErrorOnLoading implements ChatChannelUseCaseEvent {
   const factory _ErrorOnLoading(final String message) = _$ErrorOnLoadingImpl;
 
   String get message;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ChatChannelUseCaseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorOnLoadingImplCopyWith<_$ErrorOnLoadingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

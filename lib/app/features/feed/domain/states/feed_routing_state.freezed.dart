@@ -56,7 +56,9 @@ mixin _$FeedRoutingState {
   }) =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FeedRoutingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $FeedRoutingStateCopyWith<FeedRoutingState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -80,6 +82,8 @@ class _$FeedRoutingStateCopyWithImpl<$Res, $Val extends FeedRoutingState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of FeedRoutingState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -113,6 +117,8 @@ class __$$InitialImplCopyWithImpl<$Res>
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FeedRoutingState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -151,7 +157,9 @@ class _$InitialImpl implements _Initial {
   @override
   int get hashCode => Object.hash(runtimeType, title);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FeedRoutingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
@@ -225,8 +233,11 @@ abstract class _Initial implements FeedRoutingState {
 
   @override
   String get title;
+
+  /// Create a copy of FeedRoutingState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -250,6 +261,8 @@ class __$$ErrorDetailsImplCopyWithImpl<$Res>
       _$ErrorDetailsImpl _value, $Res Function(_$ErrorDetailsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FeedRoutingState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -296,7 +309,9 @@ class _$ErrorDetailsImpl implements _ErrorDetails {
   @override
   int get hashCode => Object.hash(runtimeType, title, message);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FeedRoutingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ErrorDetailsImplCopyWith<_$ErrorDetailsImpl> get copyWith =>
@@ -372,8 +387,11 @@ abstract class _ErrorDetails implements FeedRoutingState {
   @override
   String get title;
   String get message;
+
+  /// Create a copy of FeedRoutingState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorDetailsImplCopyWith<_$ErrorDetailsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

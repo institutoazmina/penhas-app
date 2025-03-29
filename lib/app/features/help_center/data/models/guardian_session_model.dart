@@ -1,5 +1,3 @@
-import 'package:collection/collection.dart';
-
 import '../../domain/entities/guardian_session_entity.dart';
 
 class GuardianSessionModel extends GuardianSessionEntity {
@@ -13,10 +11,8 @@ class GuardianSessionModel extends GuardianSessionEntity {
     final int remainingInvites = jsonData['remaing_invites'] ?? 0;
     final int maximumInvites = jsonData['invites_max'] ?? 0;
     final List<dynamic> guardsData = jsonData['guards'];
-    final List<GuardianEntity> guards = guardsData
-        .map((e) => _GuardianModel.fromJson(e))
-        .whereNotNull()
-        .toList();
+    final List<GuardianEntity> guards =
+        guardsData.map((e) => _GuardianModel.fromJson(e)).nonNulls.toList();
 
     return GuardianSessionModel(
       guards: guards,
@@ -45,7 +41,7 @@ class _GuardianModel {
 
     final List<GuardianContactEntity> contacts = contactsData
         .map((e) => _GuardianContactModel.fromJson(e))
-        .whereNotNull()
+        .nonNulls
         .toList();
 
     return GuardianEntity(meta: meta, contacts: contacts);

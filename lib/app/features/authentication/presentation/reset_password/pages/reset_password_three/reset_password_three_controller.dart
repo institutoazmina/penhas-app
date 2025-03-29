@@ -60,20 +60,20 @@ abstract class _ResetPasswordThreeControllerBase with Store, MapFailureMessage {
   @action
   void setPassword(String password) {
     _userRegisterModel!.password = SignUpPassword(password, _passwordValidator);
-    warningPassword = _userRegisterModel!.password!.mapFailure;
+    warningPassword = _userRegisterModel.password!.mapFailure;
     warningConfirmationPassword =
-        (_userRegisterModel!.passwordConfirmation ?? '').isEmpty
+        (_userRegisterModel.passwordConfirmation ?? '').isEmpty
             ? ''
-            : _userRegisterModel!.validatePasswordConfirmation;
+            : _userRegisterModel.validatePasswordConfirmation;
   }
 
   @action
   void setConfirmationPassword(String password) {
     _userRegisterModel!.passwordConfirmation = password;
     warningConfirmationPassword =
-        (_userRegisterModel!.passwordConfirmation ?? '').isEmpty
+        (_userRegisterModel.passwordConfirmation ?? '').isEmpty
             ? ''
-            : _userRegisterModel!.validatePasswordConfirmation;
+            : _userRegisterModel.validatePasswordConfirmation;
   }
 
   @action
@@ -86,8 +86,8 @@ abstract class _ResetPasswordThreeControllerBase with Store, MapFailureMessage {
     _progress = ObservableFuture(
       _repository.reset(
         emailAddress: _userRegisterModel!.emailAddress!,
-        password: _userRegisterModel!.password!,
-        resetToken: _userRegisterModel!.token!,
+        password: _userRegisterModel.password!,
+        resetToken: _userRegisterModel.token!,
       ),
     );
 
@@ -109,7 +109,7 @@ abstract class _ResetPasswordThreeControllerBase with Store, MapFailureMessage {
     if (_userRegisterModel!.validatePasswordConfirmation.isNotEmpty) {
       isValid = false;
       warningConfirmationPassword =
-          _userRegisterModel!.validatePasswordConfirmation;
+          _userRegisterModel.validatePasswordConfirmation;
     }
 
     return isValid;

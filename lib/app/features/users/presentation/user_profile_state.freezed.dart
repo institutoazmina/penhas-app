@@ -78,6 +78,9 @@ class _$UserProfileStateCopyWithImpl<$Res, $Val extends UserProfileState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -94,6 +97,9 @@ class __$$InitialImplCopyWithImpl<$Res>
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -205,6 +211,8 @@ class __$$LoadedImplCopyWithImpl<$Res>
       _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -243,7 +251,9 @@ class _$LoadedImpl implements _Loaded {
   @override
   int get hashCode => Object.hash(runtimeType, person);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
@@ -322,7 +332,10 @@ abstract class _Loaded implements UserProfileState {
   const factory _Loaded(final UserDetailEntity person) = _$LoadedImpl;
 
   UserDetailEntity get person;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -344,6 +357,8 @@ class __$$ErrorDetailsImplCopyWithImpl<$Res>
       _$ErrorDetailsImpl _value, $Res Function(_$ErrorDetailsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -382,7 +397,9 @@ class _$ErrorDetailsImpl implements _ErrorDetails {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ErrorDetailsImplCopyWith<_$ErrorDetailsImpl> get copyWith =>
@@ -461,7 +478,10 @@ abstract class _ErrorDetails implements UserProfileState {
   const factory _ErrorDetails(final String message) = _$ErrorDetailsImpl;
 
   String get message;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorDetailsImplCopyWith<_$ErrorDetailsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -524,6 +544,9 @@ class _$UserMenuStateCopyWithImpl<$Res, $Val extends UserMenuState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of UserMenuState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -540,6 +563,9 @@ class __$$MenuStateHiddenImplCopyWithImpl<$Res>
   __$$MenuStateHiddenImplCopyWithImpl(
       _$MenuStateHiddenImpl _value, $Res Function(_$MenuStateHiddenImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of UserMenuState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -642,6 +668,9 @@ class __$$MenuStateVisibleImplCopyWithImpl<$Res>
   __$$MenuStateVisibleImplCopyWithImpl(_$MenuStateVisibleImpl _value,
       $Res Function(_$MenuStateVisibleImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of UserMenuState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -824,6 +853,9 @@ class _$UserProfileReactionCopyWithImpl<$Res, $Val extends UserProfileReaction>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of UserProfileReaction
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -843,6 +875,8 @@ class __$$ReactionShowSnackBarImplCopyWithImpl<$Res>
       $Res Function(_$ReactionShowSnackBarImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UserProfileReaction
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -891,7 +925,9 @@ class _$ReactionShowSnackBarImpl implements _ReactionShowSnackBar {
   @override
   int get hashCode => Object.hash(runtimeType, message, inMainboardPage);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UserProfileReaction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ReactionShowSnackBarImplCopyWith<_$ReactionShowSnackBarImpl>
@@ -1004,7 +1040,10 @@ abstract class _ReactionShowSnackBar implements UserProfileReaction {
 
   String get message;
   bool get inMainboardPage;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of UserProfileReaction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ReactionShowSnackBarImplCopyWith<_$ReactionShowSnackBarImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -1026,6 +1065,9 @@ class __$$ReactionShowProfileOptionsImplCopyWithImpl<$Res>
       _$ReactionShowProfileOptionsImpl _value,
       $Res Function(_$ReactionShowProfileOptionsImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of UserProfileReaction
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1171,6 +1213,8 @@ class __$$ReactionAskReportReasonDialogImplCopyWithImpl<$Res>
       $Res Function(_$ReactionAskReportReasonDialogImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UserProfileReaction
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1211,7 +1255,9 @@ class _$ReactionAskReportReasonDialogImpl
   @override
   int get hashCode => Object.hash(runtimeType, reason);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UserProfileReaction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ReactionAskReportReasonDialogImplCopyWith<
@@ -1323,7 +1369,10 @@ abstract class _ReactionAskReportReasonDialog implements UserProfileReaction {
       _$ReactionAskReportReasonDialogImpl;
 
   String? get reason;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of UserProfileReaction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ReactionAskReportReasonDialogImplCopyWith<
           _$ReactionAskReportReasonDialogImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -1349,6 +1398,8 @@ class __$$ReactionShowBlockConfirmationDialogImplCopyWithImpl<$Res>
       $Res Function(_$ReactionShowBlockConfirmationDialogImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UserProfileReaction
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1388,7 +1439,9 @@ class _$ReactionShowBlockConfirmationDialogImpl
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UserProfileReaction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ReactionShowBlockConfirmationDialogImplCopyWith<
@@ -1501,7 +1554,10 @@ abstract class _ReactionShowBlockConfirmationDialog
       _$ReactionShowBlockConfirmationDialogImpl;
 
   String get message;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of UserProfileReaction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ReactionShowBlockConfirmationDialogImplCopyWith<
           _$ReactionShowBlockConfirmationDialogImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -1524,6 +1580,9 @@ class __$$ReactionShowProgressDialogImplCopyWithImpl<$Res>
       _$ReactionShowProgressDialogImpl _value,
       $Res Function(_$ReactionShowProgressDialogImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of UserProfileReaction
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1666,6 +1725,9 @@ class __$$ReactionDismissProgressDialogImplCopyWithImpl<$Res>
       _$ReactionDismissProgressDialogImpl _value,
       $Res Function(_$ReactionDismissProgressDialogImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of UserProfileReaction
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1852,6 +1914,9 @@ class _$UserProfileSelectedOptionCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of UserProfileSelectedOption
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1869,6 +1934,9 @@ class __$$SelectedOptionReportImplCopyWithImpl<$Res>
   __$$SelectedOptionReportImplCopyWithImpl(_$SelectedOptionReportImpl _value,
       $Res Function(_$SelectedOptionReportImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of UserProfileSelectedOption
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1973,6 +2041,9 @@ class __$$SelectedOptionBlockImplCopyWithImpl<$Res>
   __$$SelectedOptionBlockImplCopyWithImpl(_$SelectedOptionBlockImpl _value,
       $Res Function(_$SelectedOptionBlockImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of UserProfileSelectedOption
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

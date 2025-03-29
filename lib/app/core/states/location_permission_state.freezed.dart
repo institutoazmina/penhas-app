@@ -91,6 +91,9 @@ class _$LocationPermissionStateCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of LocationPermissionState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -107,6 +110,9 @@ class __$$GrantedImplCopyWithImpl<$Res>
   __$$GrantedImplCopyWithImpl(
       _$GrantedImpl _value, $Res Function(_$GrantedImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of LocationPermissionState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -227,6 +233,9 @@ class __$$DeniedImplCopyWithImpl<$Res>
   __$$DeniedImplCopyWithImpl(
       _$DeniedImpl _value, $Res Function(_$DeniedImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of LocationPermissionState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -347,6 +356,9 @@ class __$$PermanentlyDeniedImplCopyWithImpl<$Res>
   __$$PermanentlyDeniedImplCopyWithImpl(_$PermanentlyDeniedImpl _value,
       $Res Function(_$PermanentlyDeniedImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of LocationPermissionState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -467,6 +479,9 @@ class __$$RestrictedImplCopyWithImpl<$Res>
   __$$RestrictedImplCopyWithImpl(
       _$RestrictedImpl _value, $Res Function(_$RestrictedImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of LocationPermissionState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -587,6 +602,9 @@ class __$$UndefinedImplCopyWithImpl<$Res>
   __$$UndefinedImplCopyWithImpl(
       _$UndefinedImpl _value, $Res Function(_$UndefinedImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of LocationPermissionState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

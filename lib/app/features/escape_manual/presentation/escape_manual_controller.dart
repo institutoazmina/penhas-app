@@ -69,7 +69,9 @@ abstract class EscapeManualControllerBase with Store, MapFailureMessage {
   @action
   Future<void> load() async {
     if (progressState == PageProgressState.loading ||
-        _loadProgress.state == PageProgressState.loading) return;
+        _loadProgress.state == PageProgressState.loading) {
+      return;
+    }
 
     subscription?.cancel();
 

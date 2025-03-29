@@ -311,11 +311,15 @@ extension _AudioRecordServices on AudioRecordServices {
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () async {
-                      Permission.microphone
-                          .request()
-                          .then((value) => value.mapFrom())
-                          .then((value) => _askForPermissionIfNeeded(value))
-                          .then((value) => Navigator.of(context).pop(value));
+                      final permissionStatus =
+                          await Permission.microphone.request();
+                      final mappedValue = permissionStatus.mapFrom();
+                      final finalValue =
+                          await _askForPermissionIfNeeded(mappedValue);
+
+                      if (!context.mounted) return;
+
+                      Navigator.of(context).pop(finalValue);
                     },
                   ),
                 ),
@@ -409,10 +413,12 @@ extension _AudioRecordServices on AudioRecordServices {
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () async {
-                      openAppSettings().then(
-                        (value) => Navigator.of(context)
-                            .pop(const AudioPermissionState.undefined()),
-                      );
+                      openAppSettings().then((value) {
+                        if (context.mounted) {
+                          Navigator.of(context)
+                              .pop(const AudioPermissionState.undefined());
+                        }
+                      });
                     },
                   ),
                 ),
