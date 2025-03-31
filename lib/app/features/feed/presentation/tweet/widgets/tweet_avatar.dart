@@ -3,7 +3,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../shared/design_system/colors.dart';
-import '../../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../../domain/entities/tweet_entity.dart';
 import '../../../domain/states/feed_router_type.dart';
 
@@ -40,10 +39,9 @@ extension _PrivateMethod on TweetAvatar {
   }
 
   Widget authenticatedAvatar() {
-    return PenhasButton.text(
-      onPressed: () => showUserProfile(),
-      child: avatar(),
-    );
+    return GestureDetector(
+      onTap: () => showUserProfile(),
+      child: avatar());
   }
 
   void showUserProfile() {
