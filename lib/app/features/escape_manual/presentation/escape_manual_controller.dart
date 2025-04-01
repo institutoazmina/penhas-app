@@ -74,7 +74,7 @@ abstract class EscapeManualControllerBase with Store, MapFailureMessage {
   bool get isDataFresh {
     if (_lastFetchTime == null) return false;
     final timeSinceLastLoad = DateTime.now().difference(_lastFetchTime!);
-    return timeSinceLastLoad < dataFreshnessDuration; 
+    return timeSinceLastLoad < dataFreshnessDuration;
   }
 
   @action

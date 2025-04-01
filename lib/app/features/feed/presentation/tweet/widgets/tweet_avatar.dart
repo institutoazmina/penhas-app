@@ -39,9 +39,7 @@ extension _PrivateMethod on TweetAvatar {
   }
 
   Widget authenticatedAvatar() {
-    return GestureDetector(
-      onTap: () => showUserProfile(),
-      child: avatar());
+    return GestureDetector(onTap: () => showUserProfile(), child: avatar());
   }
 
   void showUserProfile() {

@@ -190,11 +190,11 @@ class TweetTitle extends StatelessWidget {
       children: <Widget>[
         Expanded(
           flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(tweet.userName, style: kTextStyleFeedTweetTitle),
-            ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Text(tweet.userName, style: kTextStyleFeedTweetTitle),
           ),
+        ),
         if (isDetail) _buildDetailTime() else _buildTime(),
         if (controller == null)
           Container()
@@ -216,13 +216,12 @@ class TweetTitle extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: GestureDetector(
-                onTap: () => _showUserProfile(),
-                child: _buttonTitle()),
-            ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: GestureDetector(
+                onTap: () => _showUserProfile(), child: _buttonTitle()),
           ),
+        ),
         if (controller == null)
           Container()
         else
