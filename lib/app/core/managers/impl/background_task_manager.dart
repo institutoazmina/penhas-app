@@ -25,7 +25,6 @@ class BackgroundTaskManager extends IBackgroundTaskManager {
 
   @override
   Future<void> registerDispatcher(Function callbackDispatcher) async {
-
     _service.configure(
       androidConfiguration: AndroidConfiguration(
         onStart: _onBackgroundServiceStart,
@@ -97,5 +96,4 @@ class BackgroundTaskManager extends IBackgroundTaskManager {
     final task = taskDefinition.taskProvider();
     await task.execute();
   }
-
 }
