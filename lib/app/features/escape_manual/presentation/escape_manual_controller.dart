@@ -66,8 +66,20 @@ abstract class EscapeManualControllerBase with Store, MapFailureMessage {
   ObservableStream<EscapeManualEntity>? _loadProgress;
   late ObservableFuture<Either<Failure, QuizSessionEntity>> _startProgress;
 
+  DateTime? _lastFetchTime; // Stores the last time data was loaded
+
+  // Define a time limit for data freshness
+  Duration dataFreshnessDuration = const Duration(minutes: 5);
+
+  bool get isDataFresh {
+    if (_lastFetchTime == null) return false;
+    final timeSinceLastLoad = DateTime.now().difference(_lastFetchTime!);
+    return timeSinceLastLoad < dataFreshnessDuration; 
+  }
+
   @action
   Future<void> load() async {
+    _lastFetchTime = DateTime.now();
     if (progressState == PageProgressState.loading ||
         _loadProgress.state == PageProgressState.loading) {
       return;

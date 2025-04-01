@@ -44,8 +44,18 @@ class _EscapeManualPageState extends State<EscapeManualPage>
   );
 
   @override
+void didUpdateWidget(covariant EscapeManualPage oldWidget) {
+  super.didUpdateWidget(oldWidget);
+  if (!controller.isDataFresh) { // Only reload if needed
+    controller.load();
+  }
+}
+
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    _disposer?.call(); 
     _disposer ??= controller.onReaction(_onReaction);
     controller.load();
   }
