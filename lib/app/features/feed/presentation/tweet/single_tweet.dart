@@ -52,7 +52,7 @@ class SingleTweet extends StatelessWidget {
               Expanded(
                 flex: 5,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     TweetTitle(
                       tweet: tweet,

@@ -37,9 +37,11 @@ class SupportCenterInputFilter extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 2.0),
             child: Row(
               children: [
-                const Text(
-                  'Encontre um ponto de apoio próximo de você',
-                  style: TextStyle(color: Colors.black, fontSize: 15),
+                const Expanded(
+                  child: Text(
+                    'Encontre um ponto de apoio próximo de você',
+                    style: TextStyle(color: Colors.black, fontSize: 15),
+                  ),
                 ),
                 IconButton(
                   icon: const Icon(

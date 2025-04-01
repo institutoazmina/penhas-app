@@ -59,12 +59,11 @@
             android:name="id.flutter.flutter_background_service.BackgroundService"
             android:permission="android.permission.FOREGROUND_SERVICE"
             android:exported="true"
-            android:foregroundServiceType="location">
+            android:foregroundServiceType="mediaPlayback|dataSync">
             <intent-filter>
                 <action android:name="id.flutter.flutter_background_service.action.BACKGROUND_SERVICE"/>
             </intent-filter>
         </service>
-
 
     </application>
 
@@ -73,6 +72,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
 
 </manifest>

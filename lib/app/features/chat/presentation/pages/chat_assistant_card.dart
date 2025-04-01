@@ -50,18 +50,21 @@ class ChatAssistantCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
+                    padding: const EdgeInsets.only(bottom: 8, top: 8),
                     child: Text(
                       title!,
                       style: titleStyle,
                       textAlign: TextAlign.left,
                     ),
                   ),
-                  Text(
-                    description!,
-                    style: descriptionStyle,
-                    textAlign: TextAlign.left,
-                    softWrap: true,
+                  SizedBox(
+                    width: 250,
+                    child: Text(
+                      description!,
+                      style: descriptionStyle,
+                      textAlign: TextAlign.left,
+                      softWrap: true,
+                    ),
                   ),
                 ],
               ),

@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter_background_service/flutter_background_service.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import '../../../shared/logger/log.dart';
 import '../background_task_manager.dart';
@@ -26,14 +25,15 @@ class BackgroundTaskManager extends IBackgroundTaskManager {
 
   @override
   Future<void> registerDispatcher(Function callbackDispatcher) async {
-    await _requestPermissions();
-
     _service.configure(
       androidConfiguration: AndroidConfiguration(
         onStart: _onBackgroundServiceStart,
         isForegroundMode: true,
         autoStart: true,
-        foregroundServiceTypes: [AndroidForegroundType.location],
+        foregroundServiceTypes: [
+          AndroidForegroundType.mediaPlayback,
+          AndroidForegroundType.dataSync
+        ],
       ),
       iosConfiguration: IosConfiguration(
         onForeground: _onBackgroundServiceStart,
@@ -95,18 +95,5 @@ class BackgroundTaskManager extends IBackgroundTaskManager {
     final taskDefinition = _registry.definitionByName(taskName);
     final task = taskDefinition.taskProvider();
     await task.execute();
-  }
-
-  Future<void> _requestPermissions() async {
-    if (await Permission.location.isDenied ||
-        await Permission.location.isPermanentlyDenied) {
-      log('Requesting location permission...');
-      await Permission.location.request();
-    }
-
-    if (await Permission.ignoreBatteryOptimizations.isDenied) {
-      log('Requesting battery optimization exception...');
-      await Permission.ignoreBatteryOptimizations.request();
-    }
   }
 }

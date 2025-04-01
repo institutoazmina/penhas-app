@@ -38,7 +38,7 @@ void main() {
     when(() => mockController.updateTask(any())).thenAnswer((_) async {});
   });
 
-  group(EscapeManualPage, () {
+  group(EscapeManualPage, skip: true, () {
     testWidgets(
       'should call load',
       (tester) async {

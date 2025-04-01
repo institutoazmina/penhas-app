@@ -23,26 +23,29 @@ class MainboardBottomNavigationPage extends StatelessWidget {
       orElse: () => DesignSystemColors.white,
     );
 
-    return BottomAppBar(
-      notchMargin: 0,
-      shape: const CircularNotchedRectangle(),
-      elevation: 20.0,
+    return ColoredBox(
       color: bottomColor,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: pages
-              .map(
-                (page) => MainboardNavigationButton(
-                  page: page,
-                  selectedPage: currentPage,
-                  onSelect: () => onSelect(page),
-                ),
-              )
-              .toList(),
+      child: BottomAppBar(
+        notchMargin: 0,
+        shape: const CircularNotchedRectangle(),
+        elevation: 20.0,
+        color: bottomColor,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: pages
+                .map(
+                  (page) => MainboardNavigationButton(
+                    page: page,
+                    selectedPage: currentPage,
+                    onSelect: () => onSelect(page),
+                  ),
+                )
+                .toList(),
+          ),
         ),
       ),
     );
