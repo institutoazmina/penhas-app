@@ -17,7 +17,6 @@ class ChatUserModel extends ChatUserEntity {
       badges = _parseBadges(jsonData['badges']);
     } else {
       badges = _parseBadges(jsonData['other_badges']);
-
     }
 
     return ChatUserModel(

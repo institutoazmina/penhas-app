@@ -401,7 +401,7 @@ void main() {
         fileName: 'escape_manual_page_sections',
         setUp: () {
           when(() => mockController.isDataFresh).thenReturn(true);
-          
+
           when(() => mockController.state).thenReturn(
             EscapeManualState.loaded(escapeManualEntity),
           );
