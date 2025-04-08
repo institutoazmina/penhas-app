@@ -38,7 +38,7 @@ void main() {
     when(() => mockController.updateTask(any())).thenAnswer((_) async {});
   });
 
-  group(EscapeManualPage, skip: true, () {
+  group(EscapeManualPage, () {
     testWidgets(
       'should call load',
       (tester) async {
@@ -387,6 +387,8 @@ void main() {
         'should populate load state',
         fileName: 'escape_manual_page_loaded',
         setUp: () {
+          when(() => mockController.isDataFresh).thenReturn(true);
+
           when(() => mockController.state).thenReturn(
             EscapeManualState.loaded(escapeManualEntity),
           );
@@ -398,6 +400,8 @@ void main() {
         'should show tasks after open section',
         fileName: 'escape_manual_page_sections',
         setUp: () {
+          when(() => mockController.isDataFresh).thenReturn(true);
+          
           when(() => mockController.state).thenReturn(
             EscapeManualState.loaded(escapeManualEntity),
           );
@@ -413,7 +417,9 @@ void main() {
       screenshotTest(
         'should check task with opened section',
         fileName: 'escape_manual_page_task_check',
-        setUp: () {
+        setUp: () async {
+          when(() => mockController.isDataFresh).thenReturn(true);
+
           when(() => mockController.state).thenReturn(
             EscapeManualState.loaded(escapeManualEntity),
           );
@@ -483,6 +489,8 @@ void main() {
         'should show error message when state is error',
         fileName: 'escape_manual_page_error',
         setUp: () {
+          when(() => mockController.isDataFresh).thenReturn(true);
+
           when(() => mockController.state)
               .thenReturn(const EscapeManualState.error('error message'));
         },
@@ -492,7 +500,9 @@ void main() {
       screenshotTest(
         'should show call snackbar message when reaction is showSnackbar',
         fileName: 'escape_manual_page_reaction_error',
-        setUp: () {
+        setUp: () async {
+          when(() => mockController.isDataFresh).thenReturn(true);
+
           when(() => mockController.state).thenReturn(
             EscapeManualState.loaded(escapeManualEntity),
           );

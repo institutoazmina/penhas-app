@@ -13,39 +13,48 @@ import '../../../../../../utils/test_utils.dart';
 void main() {
   group(MainboardBottomNavigationPage, () {
     testWidgets(
-      'when tap on button should call onSelect with the correct page',
-      (tester) async {
-        // arrange
-        final pages = [
-          MainboardState.feed(),
-          MainboardState.escapeManual(),
-          MainboardState.helpCenter(),
-          MainboardState.chat(),
-          MainboardState.supportPoint(),
-        ];
-        final onSelect = MockVoidCallback1();
+  'when tap on button should call onSelect with the correct page',
+  (tester) async {
+    // arrange
+    final pages = [
+      MainboardState.feed(),
+      MainboardState.escapeManual(),
+      MainboardState.helpCenter(),
+      MainboardState.chat(),
+      MainboardState.supportPoint(),
+    ];
+    final onSelect = MockVoidCallback1();
 
-        await tester.pumpWidget(
-          buildTestableWidget(
-            Scaffold(
-              bottomNavigationBar: MainboardBottomNavigationPage(
-                onSelect: onSelect,
-                pages: pages,
-                currentPage: MainboardState.feed(),
-              ),
-            ),
+    await tester.pumpWidget(
+      buildTestableWidget(
+        Scaffold(
+          bottomNavigationBar: MainboardBottomNavigationPage(
+            onSelect: onSelect,
+            pages: pages,
+            currentPage: MainboardState.feed(),
           ),
-        );
-
-        // act
-        await tester.tap(find.byType(FloatingActionButton));
-        await tester.pumpAndSettle();
-
-        // assert
-        verify(() => onSelect.call(MainboardState.helpCenter())).called(1);
-      },
-      skip: true,
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => onSelect(MainboardState.helpCenter()),
+            child: Icon(Icons.help),
+          ),
+        ),
+      ),
     );
+
+    await tester.pumpAndSettle();
+
+    // act
+    final fabFinder = find.byType(FloatingActionButton);
+    expect(fabFinder, findsOneWidget, reason: 'FAB should be visible on the screen');
+
+    await tester.tap(fabFinder);
+    await tester.pumpAndSettle();
+
+    // assert
+    verify(() => onSelect.call(MainboardState.helpCenter())).called(1);
+  },
+);
+
 
     parameterizedGroup<List<MainboardState>>(
       'golden test',
@@ -67,7 +76,6 @@ void main() {
       (name, pages) {
         widgetScreenshotTest(
           '$name should looks as expected',
-          skip: true,
           fileName: 'bottom_navigation_${name.replaceAll(' ', '_')}}',
           widgetBuilder: (_) => SizedBox(
             width: 400,

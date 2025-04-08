@@ -24,7 +24,8 @@
       "last_message_is_me": 1,
       "other_activity": "há pouco tempo",
       "other_apelido": "Maria",
-      "other_avatar_url": "https:\/\/api.example.com\/avatar\/padrao.svg"
+      "other_avatar_url": "https:\/\/api.example.com\/avatar\/padrao.svg",
+      "badges": []
     },
     {
       "chat_auth": "__my_very_secret_session__",
@@ -32,7 +33,8 @@
       "last_message_is_me": 1,
       "other_activity": "há alguns dias",
       "other_apelido": "Julia",
-      "other_avatar_url": "https:\/\/api.example.com\/avatar\/padrao.svg"
+      "other_avatar_url": "https:\/\/api.example.com\/avatar\/padrao.svg",
+      "badges": []
     }
   ],
   "support": {
@@ -41,6 +43,7 @@
     "last_message_is_me": 1,
     "other_activity": "",
     "other_apelido": "Suporte PenhaS",
-    "other_avatar_url": "https:\/\/api.example.com\/avatar\/suporte-chat.png"
+    "other_avatar_url": "https:\/\/api.example.com\/avatar\/suporte-chat.png",
+    "badges": []
   }
 }

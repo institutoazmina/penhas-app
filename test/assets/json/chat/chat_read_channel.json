@@ -22,6 +22,7 @@
     "activity": "há pouco tempo",
     "apelido": "Julia",
     "avatar_url": "https:\/\/api.example.com\/avatar\/padrao.svg",
-    "cliente_id": 3191
+    "cliente_id": 3191,
+    "badges": []
   }
 }

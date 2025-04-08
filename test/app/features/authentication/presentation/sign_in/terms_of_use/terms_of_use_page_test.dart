@@ -22,7 +22,6 @@ void main() {
             path: 'web/politica-privacidade',
           ),
         ),
-        skip: true,
       );
     });
   });
