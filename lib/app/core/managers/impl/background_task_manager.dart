@@ -48,6 +48,9 @@ class BackgroundTaskManager extends IBackgroundTaskManager {
   }
 
   static void _onBackgroundServiceStart(ServiceInstance service) async {
+    service.on('stopService').listen((event) {
+      service.stopSelf();
+    });
     if (service is AndroidServiceInstance) {
       service.setAsForegroundService();
 

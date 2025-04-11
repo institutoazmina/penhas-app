@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -38,9 +40,12 @@ class AppConfiguration implements IAppConfiguration {
     String apiBaseUrl = _apiBaseUrl,
     required ILocalStorage storage,
     HiveInterface? hive,
+    FlutterBackgroundService? flutterBackgroundService,
   })  : penhasServer = Uri.parse(apiBaseUrl),
         _storage = storage,
-        _hive = hive ?? Hive;
+        _hive = hive ?? Hive,
+        _flutterBackgroundService =
+            flutterBackgroundService ?? FlutterBackgroundService();
 
   final _tokenKey = 'br.com.penhas.tokenServer';
   final _appModes = 'br.com.penhas.appConfigurationModes';
@@ -48,6 +53,7 @@ class AppConfiguration implements IAppConfiguration {
 
   final ILocalStorage _storage;
   final HiveInterface _hive;
+  final FlutterBackgroundService _flutterBackgroundService;
 
   @override
   Future<String> get apiToken =>
@@ -92,6 +98,8 @@ class AppConfiguration implements IAppConfiguration {
       _storage.delete(_offlineHash),
       _hive.deleteFromDisk(),
     ]);
+    _flutterBackgroundService.invoke('stopService');
+
     await _clearUserData();
   }
 
