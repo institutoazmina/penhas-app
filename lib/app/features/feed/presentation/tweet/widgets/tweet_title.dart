@@ -5,7 +5,6 @@ import 'package:timeago/timeago.dart' as timeago;
 
 import '../../../../../shared/design_system/text_styles.dart';
 import '../../../../../shared/design_system/widgets/badges/user_badge_widget.dart';
-import '../../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../../domain/entities/tweet_badge_entity.dart';
 import '../../../domain/entities/tweet_entity.dart';
 import '../../../domain/states/feed_router_type.dart';
@@ -191,7 +190,10 @@ class TweetTitle extends StatelessWidget {
       children: <Widget>[
         Expanded(
           flex: 2,
-          child: Text(tweet.userName, style: kTextStyleFeedTweetTitle),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Text(tweet.userName, style: kTextStyleFeedTweetTitle),
+          ),
         ),
         if (isDetail) _buildDetailTime() else _buildTime(),
         if (controller == null)
@@ -214,9 +216,10 @@ class TweetTitle extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
-          child: PenhasButton.text(
-            onPressed: () => _showUserProfile(),
-            child: _buttonTitle(),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: GestureDetector(
+                onTap: () => _showUserProfile(), child: _buttonTitle()),
           ),
         ),
         if (controller == null)
