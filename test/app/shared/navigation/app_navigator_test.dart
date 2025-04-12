@@ -67,13 +67,13 @@ void main() {
     test('popAndPush call popAndPushNamed with correct path and arguments', () {
       // arrange
       when(
-        () => mockModular.popAndPushNamed(any(),
+        () => mockModular.pushReplacementNamed(any(),
             arguments: any(named: 'arguments')),
       ).thenAnswer((_) => Future.value());
       // action
       AppNavigator.popAndPush(appRoute);
       // expect
-      verify(() => mockModular.popAndPushNamed(
+      verify(() => mockModular.pushReplacementNamed(
             appRoute.path,
             arguments: appRoute.args,
           )).called(1);

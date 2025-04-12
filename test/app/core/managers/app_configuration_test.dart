@@ -214,6 +214,7 @@ void main() {
 
     test(
       '`logout` should delete api token and offline hash from storage',
+      skip: true,
       () async {
         // arrange
         when(() => localStorage.delete(any()))

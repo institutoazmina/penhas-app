@@ -118,14 +118,15 @@ void main() {
               (_) async => FakeUserProfileEntity(),
             );
 
-            when(() => AppModulesMock.modularNavigator
-                    .popAndPushNamed(any(), arguments: any(named: 'arguments')))
+            when(() => AppModulesMock.modularNavigator.pushReplacementNamed(
+                    any(),
+                    arguments: any(named: 'arguments')))
                 .thenAnswer((i) => Future.value());
 
             await theAppIsRunning(tester, SplashPage(controller: controller));
-            verify(() => AppModulesMock.modularNavigator
-                    .popAndPushNamed('/mainboard', arguments: {'page': 'feed'}))
-                .called(1);
+            verify(() => AppModulesMock.modularNavigator.pushReplacementNamed(
+                '/mainboard',
+                arguments: {'page': 'feed'})).called(1);
           },
         );
 
@@ -164,14 +165,15 @@ void main() {
               (_) async => FakeUserProfileEntity(),
             );
 
-            when(() => AppModulesMock.modularNavigator
-                    .popAndPushNamed(any(), arguments: any(named: 'arguments')))
+            when(() => AppModulesMock.modularNavigator.pushReplacementNamed(
+                    any(),
+                    arguments: any(named: 'arguments')))
                 .thenAnswer((i) => Future.value());
 
             await theAppIsRunning(tester, SplashPage(controller: controller));
-            verify(() => AppModulesMock.modularNavigator
-                    .popAndPushNamed('/mainboard', arguments: {'page': 'feed'}))
-                .called(1);
+            verify(() => AppModulesMock.modularNavigator.pushReplacementNamed(
+                '/mainboard',
+                arguments: {'page': 'feed'})).called(1);
           },
         );
       });
