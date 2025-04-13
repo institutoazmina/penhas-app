@@ -25,9 +25,11 @@ void main() {
   group('main', () {
     test(
       'should call Bootstrap with MainAppRunner',
-      skip: true,
       () {
         // arrange
+        when(() => mockBackgroundTaskManager.registerDispatcher(any()))
+            .thenAnswer((_) async {});
+
         when(
           () => mockBootstrap.withRunner(
             any(),

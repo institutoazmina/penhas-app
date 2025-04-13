@@ -33,18 +33,27 @@ void main() {
                 pages: pages,
                 currentPage: MainboardState.feed(),
               ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: () => onSelect(MainboardState.helpCenter()),
+                child: Icon(Icons.help),
+              ),
             ),
           ),
         );
 
+        await tester.pumpAndSettle();
+
         // act
-        await tester.tap(find.byType(FloatingActionButton));
+        final fabFinder = find.byType(FloatingActionButton);
+        expect(fabFinder, findsOneWidget,
+            reason: 'FAB should be visible on the screen');
+
+        await tester.tap(fabFinder);
         await tester.pumpAndSettle();
 
         // assert
         verify(() => onSelect.call(MainboardState.helpCenter())).called(1);
       },
-      skip: true,
     );
 
     parameterizedGroup<List<MainboardState>>(
@@ -67,7 +76,6 @@ void main() {
       (name, pages) {
         widgetScreenshotTest(
           '$name should looks as expected',
-          skip: true,
           fileName: 'bottom_navigation_${name.replaceAll(' ', '_')}}',
           widgetBuilder: (_) => SizedBox(
             width: 400,

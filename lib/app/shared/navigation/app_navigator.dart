@@ -13,7 +13,7 @@ class AppNavigator {
   static AppNavigator get instance => _instance ??= const AppNavigator();
 
   static void popAndPush(AppRoute route) {
-    Modular.to.popAndPushNamed(route.path, arguments: route.args);
+    Modular.to.pushReplacementNamed(route.path, arguments: route.args);
   }
 
   Future<T?> navigateTo<T extends Object?>(AppRoute route) =>

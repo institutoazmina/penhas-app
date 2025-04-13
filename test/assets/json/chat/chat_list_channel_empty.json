@@ -24,6 +24,7 @@
     "last_message_is_me": 1,
     "other_activity": "",
     "other_apelido": "Suporte PenhaS",
-    "other_avatar_url": "https:\/\/api.example.com\/avatar\/suporte-chat.png"
+    "other_avatar_url": "https:\/\/api.example.com\/avatar\/suporte-chat.png",
+    "badges": []
   }
 }

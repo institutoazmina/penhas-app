@@ -44,10 +44,16 @@ class BackgroundTaskManager extends IBackgroundTaskManager {
 
   static Future<bool> _onIosBackground(ServiceInstance service) async {
     log('iOS Background Task Running');
+    service.on('stopService').listen((event) {
+      service.stopSelf();
+    });
     return true;
   }
 
   static void _onBackgroundServiceStart(ServiceInstance service) async {
+    service.on('stopService').listen((event) {
+      service.stopSelf();
+    });
     if (service is AndroidServiceInstance) {
       service.setAsForegroundService();
 

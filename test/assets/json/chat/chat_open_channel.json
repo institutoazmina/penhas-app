@@ -16,7 +16,8 @@
       "activity": "há poucos dias",
       "apelido": "Maria",
       "avatar_url": "https:\/\/api.example.com\/avatar\/padrao.svg",
-      "cliente_id": 180
+      "cliente_id": 180,
+      "badges": []
     }
   }
 }

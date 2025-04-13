@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/design_system/widgets/badges/user_badge_widget.dart';
+import '../../data/models/chat_user_model.dart';
 import '../../domain/entities/chat_badge_entity.dart';
 import '../../domain/entities/chat_channel_message.dart';
 import '../../domain/entities/chat_channel_session_entity.dart';
@@ -201,7 +202,7 @@ extension _ChatPageStateMethods on _ChatPageState {
     if (badges.isEmpty) {
       return const SizedBox.shrink();
     }
-    final emptyBadge = ChatBadgeEntity(
+    final emptyBadge = ChatBadgeModel(
         code: '',
         description: '',
         imageUrl: '',

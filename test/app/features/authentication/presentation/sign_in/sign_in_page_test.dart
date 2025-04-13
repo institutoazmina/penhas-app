@@ -244,7 +244,7 @@ void main() {
 
         when(
           () => AppModulesMock.modularNavigator
-              .popAndPushNamed(any(), arguments: any(named: 'arguments')),
+              .pushReplacementNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
         await theAppIsRunning(tester, SignInPage(controller: controller));
@@ -254,9 +254,9 @@ void main() {
             text: 'Senha', password: validPassword);
         await iTapText(tester, text: 'Entrar');
 
-        verify(() => AppModulesMock.modularNavigator
-                .popAndPushNamed('/mainboard', arguments: {'page': 'feed'}))
-            .called(1);
+        verify(() => AppModulesMock.modularNavigator.pushReplacementNamed(
+            '/mainboard',
+            arguments: {'page': 'feed'})).called(1);
       },
     );
 
