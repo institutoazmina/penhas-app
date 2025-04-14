@@ -71,12 +71,6 @@ jobs:
         env:
           APPLE_API_KEY_PATH: ${{ runner.temp }}/app-store-api-key.json
       
-      - name: Download provisioning profile
-        run: |
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          echo "$PROVISIONING_PROFILE" | base64 -d > ~/Library/MobileDevice/Provisioning\ Profiles/my_ad_hoc_profile.mobileprovision
-
-
       - name: Create default keychain
         run: |
           security create-keychain -p "$KEYCHAIN_PWD" $KEYCHAIN_PATH
@@ -85,13 +79,9 @@ jobs:
           security unlock-keychain -p "$KEYCHAIN_PWD" $KEYCHAIN_PATH
           base64 -d <<< "$CERTIFICATE_CONTENT" > $CERTIFICATE_PATH
 
-          security import $CERTIFICATE_PATH -k $KEYCHAIN_PATH -P "$CERTIFICATE_PWD" -T /usr/bin/codesign
-          security list-keychains -d user -s $KEYCHAIN_PATH
-          security find-identity -v -p codesigning
         env:
           APPLE_API_KEY_PATH: ${{ runner.temp }}/app-store-api-key.json
           CERTIFICATE_CONTENT: ${{ secrets.CERTIFICATE_CONTENT }}
-          CERTIFICATE_PWD: ${{ secrets.CERTIFICATE_PWD }}
           CERTIFICATE_PATH: ${{ runner.temp }}/build_certificate.p12
           KEYCHAIN_PATH: ${{ runner.temp }}/app-signing.keychain-db
           KEYCHAIN_PWD: ${{ secrets.KEYCHAIN_PWD }}
