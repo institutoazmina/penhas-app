@@ -84,7 +84,12 @@ platform :ios do
       archive_path: "#{$project_path}/build/ios/Runner.xcarchive",
       output_directory: "#{$project_path}/build/ios/Runner",
       export_method: options[:profile_type],
-      xcargs: "PROVISIONING_PROFILE_SPECIFIER='#{profile_uuid}'",
+      export_options: {
+        provisioningProfiles: {
+          ENV['IOS_BUNDLE_ID'] => provisioning_names[options[:profile_type].to_sym]
+        }
+      },
+      xcargs: "CODE_SIGN_STYLE=Manual PROVISIONING_PROFILE_SPECIFIER='#{profile_uuid}'",
     )
   end
 
