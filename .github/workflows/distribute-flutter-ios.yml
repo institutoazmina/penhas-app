@@ -78,9 +78,13 @@ jobs:
           security default-keychain -s $KEYCHAIN_PATH
           security unlock-keychain -p "$KEYCHAIN_PWD" $KEYCHAIN_PATH
           base64 -d <<< "$CERTIFICATE_CONTENT" > $CERTIFICATE_PATH
+
+          security import $CERTIFICATE_PATH -k $KEYCHAIN_PATH -P "$CERTIFICATE_PWD" -T /usr/bin/codesign
+          security list-keychains -d user -s $KEYCHAIN_PATH
         env:
           APPLE_API_KEY_PATH: ${{ runner.temp }}/app-store-api-key.json
           CERTIFICATE_CONTENT: ${{ secrets.CERTIFICATE_CONTENT }}
+          CERTIFICATE_PWD: ${{ secrets.CERTIFICATE_PWD }}
           CERTIFICATE_PATH: ${{ runner.temp }}/build_certificate.p12
           KEYCHAIN_PATH: ${{ runner.temp }}/app-signing.keychain-db
           KEYCHAIN_PWD: ${{ secrets.KEYCHAIN_PWD }}
