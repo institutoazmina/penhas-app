@@ -31,7 +31,7 @@ on:
 jobs:
 
   distribute:
-    runs-on: macos-latest
+    runs-on: macos-15
     environment: ${{ inputs.environment }}
     
     # Add permissions here
@@ -46,7 +46,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Select Xcode version
-        run: sudo xcode-select -s /Applications/Xcode_16.3.app	
+        run: sudo xcode-select -s /Applications/Xcode_16.3.app
 
       - name: Retrieve Flutter version from FVM config
         uses: kuhnroyal/flutter-fvm-config-action@v1
