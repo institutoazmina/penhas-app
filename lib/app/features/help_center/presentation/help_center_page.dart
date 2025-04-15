@@ -208,7 +208,8 @@ class _HelpCenterPageState extends State<HelpCenterPage> with SnackBarHandler {
   }
 
   Future<void> _actionOnTap(String callingNumber) async {
-    final phoneUri = Uri.parse(callingNumber);
+    final phoneUri = Uri(scheme: 'tel', path: callingNumber);
+
     if (await canLaunchUrl(phoneUri)) {
       await launchUrl(phoneUri);
     } else {
