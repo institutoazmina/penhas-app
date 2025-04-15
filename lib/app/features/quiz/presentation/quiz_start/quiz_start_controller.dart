@@ -7,6 +7,7 @@ import '../../../../core/extension/mobx.dart';
 import '../../../appstate/domain/entities/app_state_entity.dart';
 import '../../../authentication/presentation/shared/map_failure_message.dart';
 import '../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../../escape_manual/domain/entity/quiz_page_args.dart';
 import '../../domain/start_quiz.dart';
 import 'quiz_start_state.dart';
 
@@ -50,9 +51,9 @@ abstract class QuizStartControllerBase with Store, MapFailureMessage {
   }
 
   void _handleSuccess(QuizSessionEntity session) {
-    Modular.to.pushReplacementNamed(
-      '/quiz?origin=start-quiz',
-      arguments: session,
+    Modular.to.pushNamed(
+      '/quiz',
+      arguments: QuizPageArgs(origin: 'start-quiz', session: session),
     );
   }
 }
