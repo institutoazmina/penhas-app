@@ -10,6 +10,7 @@ import '../../shared/navigation/app_route.dart';
 import '../appstate/domain/entities/app_state_entity.dart';
 import '../appstate/domain/entities/user_profile_entity.dart';
 import '../appstate/domain/usecases/app_state_usecase.dart';
+import '../escape_manual/domain/entity/quiz_page_args.dart';
 
 part 'splash_controller.g.dart';
 
@@ -82,9 +83,11 @@ abstract class _SplashControllerBase with Store {
   void _handleAppStates(AppStateEntity session) {
     if (session.quizSession?.isFinished == false) {
       Modular.to.popAndPushNamed(
-        '/quiz?origin=splash',
-        arguments: session.quizSession,
+        '/quiz',
+        arguments:
+            QuizPageArgs(origin: 'splash', session: session.quizSession!),
       );
+
       return;
     }
 

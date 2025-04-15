@@ -16,6 +16,7 @@ import '../../authentication/presentation/shared/map_failure_message.dart';
 import '../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../domain/delete_escape_manual_task.dart';
 import '../domain/entity/escape_manual.dart';
+import '../domain/entity/quiz_page_args.dart';
 import '../domain/get_escape_manual.dart';
 import '../domain/start_escape_manual.dart';
 import '../domain/update_escape_manual_task.dart';
@@ -178,8 +179,9 @@ abstract class EscapeManualControllerBase with Store, MapFailureMessage {
   void _handleOpenAssistant(QuizSessionEntity quizSession) {
     Modular.to
         .pushNamed(
-          '/quiz?origin=escape-manual',
-          arguments: quizSession,
+          '/quiz',
+          arguments:
+              QuizPageArgs(origin: 'escape-manual', session: quizSession),
         )
         .then((_) => load());
   }

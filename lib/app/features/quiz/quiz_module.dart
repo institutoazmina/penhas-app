@@ -5,6 +5,7 @@ import '../../core/network/api_client.dart';
 import '../../core/remoteconfig/i_remote_config.dart';
 import '../../shared/navigation/app_navigator.dart';
 import '../appstate/domain/usecases/app_state_usecase.dart';
+import '../escape_manual/domain/entity/quiz_page_args.dart';
 import '../help_center/presentation/pages/tutorial/guardian/guardian_tutorial_page.dart';
 import 'data/repositories/quiz_repository.dart';
 import 'domain/quiz_remote_config.dart';
@@ -21,16 +22,17 @@ import 'presentation/tutorial/stealth_mode_tutorial_page_controller.dart';
 class QuizModule extends Module {
   @override
   List<Bind> get binds => [
-        Bind.factory<IQuizController>(
-          (i) => IQuizController.legacy(
-            quiz: i.args.data,
+        Bind.factory<IQuizController>((i) {
+          final args = i.args.data as QuizPageArgs;
+          return IQuizController.legacy(
+            quiz: args.session,
             sendAnswer: i.get<SendAnswerUseCase>(),
             remoteConfig: QuizRemoteConfig(
               remoteConfig: i.get<IRemoteConfigService>(),
             ),
             navigator: i.get<AppNavigator>(),
-          ),
-        ),
+          );
+        }),
         Bind.factory<QuizStartController>(
           (i) => QuizStartController(
             sessionId: i.args.queryParams['session_id'],
