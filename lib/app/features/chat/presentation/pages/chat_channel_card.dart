@@ -110,10 +110,9 @@ class ChatChannelCard extends StatelessWidget {
   }
 
   Widget buildCloseUser(List<ChatBadgeEntity> badges) {
-    if (badges.isEmpty) {
-      return const SizedBox.shrink();
-    }
-    final emptyBadge = ChatBadgeModel(
+    final badge = badges.firstWhere(
+      (b) => b.style == 'inline-block',
+      orElse: () => ChatBadgeModel(
         code: '',
         description: '',
         imageUrl: '',
@@ -121,19 +120,17 @@ class ChatChannelCard extends StatelessWidget {
         popUp: 0,
         showDescription: 0,
         style: '',
-        imageUrlBlack: '');
-    final badge = badges.firstWhere(
-      (badge) => badge.style == 'inline-block',
-      orElse: () => emptyBadge,
+        imageUrlBlack: '',
+      ),
     );
-    if (badge.style.isEmpty) {
-      return const SizedBox.shrink();
-    }
-    return UserCloseBadgeWidget(
-      badgeImageUrl: badge.imageUrl,
-      badgeName: badge.name,
-      badgePopUp: badge.popUp,
-    );
+
+    return badge.style.isEmpty
+        ? const SizedBox.shrink()
+        : UserCloseBadgeWidget(
+            badgeImageUrl: badge.imageUrl,
+            badgeName: badge.name,
+            badgePopUp: badge.popUp,
+          );
   }
 
   String transformDate(DateTime time) {
