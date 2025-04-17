@@ -55,13 +55,15 @@ class ChatPeopleCard extends StatelessWidget {
                         ],
                       ),
                       person.badges.isNotEmpty
-                          ? Padding(
-                              padding: const EdgeInsets.only(top: 6.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  buildCloseUser(person.badges),
-                                ],
+                          ? Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 6.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    buildCloseUser(person.badges),
+                                  ],
+                                ),
                               ),
                             )
                           : Text(person.activity!, style: cardStatusTextStyle),

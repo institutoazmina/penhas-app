@@ -99,7 +99,10 @@ class ReplyTweet extends StatelessWidget {
                       ],
                     ),
                   ),
-                  TweetBody(content: tweet.content),
+                  TweetBody(
+                    content: tweet.content,
+                    badges: tweet.badges,
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
                     child: TweetBottom(
@@ -202,7 +205,10 @@ class _RepliedTweet extends StatelessWidget {
                       ],
                     ),
                   ),
-                  TweetBody(content: repliedTweet.content),
+                  TweetBody(
+                    content: repliedTweet.content,
+                    badges: repliedTweet.badges,
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 20.0),
                     child: TweetBottom(

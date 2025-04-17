@@ -59,17 +59,10 @@ class SingleTweet extends StatelessWidget {
                       context: _context,
                       controller: controller,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          bottom: tweet.badges.isEmpty ? 0.0 : 8.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          buildCloseUser(tweet),
-                        ],
-                      ),
+                    TweetBody(
+                      content: tweet.content,
+                      badges: tweet.badges,
                     ),
-                    TweetBody(content: tweet.content),
                     TweetBottom(tweet: tweet, controller: controller)
                   ],
                 ),

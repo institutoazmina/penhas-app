@@ -173,11 +173,15 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
                     ],
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    buildCloseUser(user.badges),
-                  ],
+                Padding(
+                  padding:
+                      EdgeInsets.only(bottom: user.badges.isEmpty ? 0 : 18),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      buildCloseUser(user.badges),
+                    ],
+                  ),
                 ),
               ],
             ),
