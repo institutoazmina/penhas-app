@@ -257,7 +257,10 @@ class _ReplyTweetState extends State<_ReplyTweet> {
                 isDetail: true,
                 controller: controller,
               ),
-              TweetBody(content: _tweet.content),
+              TweetBody(
+                content: _tweet.content,
+                badges: _tweet.badges,
+              ),
               TweetBottom(tweet: _tweet, controller: controller),
               if (_isComment && _tweet.totalReply > 0)
                 _ShowReplyWidget(controller, _tweet),

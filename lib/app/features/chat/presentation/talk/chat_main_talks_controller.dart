@@ -4,6 +4,7 @@ import 'package:mobx/mobx.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../authentication/presentation/shared/map_failure_message.dart';
+import '../../../escape_manual/domain/entity/quiz_page_args.dart';
 import '../../domain/entities/chat_channel_available_entity.dart';
 import '../../domain/entities/chat_channel_entity.dart';
 import '../../domain/entities/chat_channel_open_entity.dart';
@@ -50,10 +51,11 @@ abstract class IChatMainTalksController with Store, MapFailureMessage {
   @action
   Future<void> openAssistantCard(ChatMainSupportTile data) async {
     if (data.quizSession != null) {
-      await Modular.to.popAndPushNamed(
-        '/quiz?origin=chat',
-        arguments: data.quizSession,
+      await Modular.to.pushNamed(
+        '/quiz',
+        arguments: QuizPageArgs(origin: 'chat', session: data.quizSession!),
       );
+
       return;
     }
 

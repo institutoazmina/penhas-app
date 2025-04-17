@@ -27,19 +27,15 @@ class Bootstrap {
     Runner runner, {
     OnBeforeRun? onBeforeRun,
   }) async {
-    await runner.initialize();
+    try {
+      await runner.initialize();
+      await runner.configure();
+      if (onBeforeRun != null) await onBeforeRun();
 
-    return runZonedGuarded(
-      () async {
-        await runner.configure();
-        if (onBeforeRun != null) await onBeforeRun();
-
-        runner.run();
-      },
-      (error, stack) {
-        _logger.shout('Uncaught error', error, stack);
-      },
-    );
+      runner.run();
+    } catch (error, stack) {
+      _logger.shout('Uncaught error', error, stack);
+    }
   }
 }
 

@@ -16,6 +16,7 @@ import 'package:penhas/app/features/chat/presentation/pages/chat_assistant_card.
 import 'package:penhas/app/features/chat/presentation/pages/chat_channel_card.dart';
 import 'package:penhas/app/features/chat/presentation/talk/chat_main_talks_controller.dart';
 import 'package:penhas/app/features/chat/presentation/talk/chat_main_talks_page.dart';
+import 'package:penhas/app/features/escape_manual/domain/entity/quiz_page_args.dart';
 
 import '../../../../../utils/golden_tests.dart';
 import '../../../../../utils/test_utils.dart';
@@ -82,10 +83,13 @@ void main() {
 
         // assert
         verify(
-          () => mockNavigator.popAndPushNamed(
-            '/quiz?origin=chat',
-            arguments: QuizSessionEntity(
-              sessionId: 'assistant-quiz-session',
+          () => mockNavigator.pushNamed(
+            '/quiz',
+            arguments: QuizPageArgs(
+              origin: 'chat',
+              session: QuizSessionEntity(
+                sessionId: 'assistant-quiz-session',
+              ),
             ),
           ),
         ).called(1);
@@ -209,9 +213,10 @@ void main() {
           (_) async => right(_chatChannelAvailableFixture),
         );
 
-        when(() => mockNavigator.popAndPushNamed(any(),
-                arguments: any(named: 'arguments')))
-            .thenAnswer((_) => Future.value());
+        when(() => mockNavigator.pushNamed(
+              any(),
+              arguments: any(named: 'arguments'),
+            )).thenAnswer((_) async => null);
 
         await tester.pumpWidget(
           MaterialApp(
@@ -223,12 +228,10 @@ void main() {
         await tester.tap(find.text('Assistente PenhaS'));
         await tester.pumpAndSettle();
         // assert
-        verify(
-          () => mockNavigator.popAndPushNamed(
-            '/quiz?origin=chat',
-            arguments: any(named: 'arguments'),
-          ),
-        ).called(1);
+        verify(() => mockNavigator.pushNamed(
+              any(),
+              arguments: any(named: 'arguments'),
+            )).called(1);
       }),
     );
   });

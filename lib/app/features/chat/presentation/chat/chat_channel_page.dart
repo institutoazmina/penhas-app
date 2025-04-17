@@ -5,7 +5,6 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/design_system/widgets/badges/user_badge_widget.dart';
-import '../../data/models/chat_user_model.dart';
 import '../../domain/entities/chat_badge_entity.dart';
 import '../../domain/entities/chat_channel_message.dart';
 import '../../domain/entities/chat_channel_session_entity.dart';
@@ -155,10 +154,6 @@ extension _ChatPageStateMethods on _ChatPageState {
             children: [
               Padding(
                 padding: EdgeInsets.only(right: _returnPadding(user.badges)),
-                child: buildCloseBadgeWidget(user.badges),
-              ),
-              Padding(
-                padding: EdgeInsets.only(right: _returnPadding(user.badges)),
                 child: Text(user.nickname!, style: titleTextStyle),
               ),
               buildBadgeWidget(user.badges),
@@ -195,37 +190,6 @@ extension _ChatPageStateMethods on _ChatPageState {
                 badgeImageUrlBlack: badge.imageUrlBlack,
               )))
           .toList(),
-    );
-  }
-
-  Widget buildCloseBadgeWidget(List<ChatBadgeEntity> badges) {
-    if (badges.isEmpty) {
-      return const SizedBox.shrink();
-    }
-    final emptyBadge = ChatBadgeModel(
-        code: '',
-        description: '',
-        imageUrl: '',
-        name: '',
-        popUp: 0,
-        showDescription: 0,
-        style: '',
-        imageUrlBlack: '');
-    final badge = badges.firstWhere(
-      (badge) => badge.style == 'inline-block',
-      orElse: () => emptyBadge,
-    );
-    if (badge.style == '') {
-      return const SizedBox.shrink();
-    }
-    return UserBadgeWidget(
-      badgeDescription: badge.description,
-      badgeImageUrl: badge.imageUrlBlack,
-      badgeName: badge.name,
-      badgePopUp: badge.popUp,
-      badgeShowDescription: badge.showDescription,
-      isLightBackground: false,
-      badgeImageUrlBlack: badge.imageUrlBlack,
     );
   }
 

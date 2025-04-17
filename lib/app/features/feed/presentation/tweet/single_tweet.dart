@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../shared/design_system/widgets/badges/user_close_badge_widget.dart';
-import '../../data/models/tweet_model.dart';
 import '../../domain/entities/tweet_entity.dart';
 import '../stores/tweet_controller.dart';
 import 'widgets/tweet_avatar.dart';
@@ -59,17 +57,10 @@ class SingleTweet extends StatelessWidget {
                       context: _context,
                       controller: controller,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          bottom: tweet.badges.isEmpty ? 0.0 : 8.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          buildCloseUser(tweet),
-                        ],
-                      ),
+                    TweetBody(
+                      content: tweet.content,
+                      badges: tweet.badges,
                     ),
-                    TweetBody(content: tweet.content),
                     TweetBottom(tweet: tweet, controller: controller)
                   ],
                 ),
@@ -80,31 +71,4 @@ class SingleTweet extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget buildCloseUser(TweetEntity tweet) {
-  if (tweet.badges.isEmpty) {
-    return const SizedBox.shrink();
-  }
-  final emptyBadge = TweetBadgeModel(
-      code: '',
-      description: '',
-      imageUrl: '',
-      name: '',
-      popUp: 0,
-      showDescription: 0,
-      style: '');
-
-  final badge = tweet.badges.firstWhere(
-    (badge) => badge.style == 'inline-block',
-    orElse: () => emptyBadge,
-  );
-  if (badge.style.isEmpty) {
-    return const SizedBox.shrink();
-  }
-  return UserCloseBadgeWidget(
-    badgeImageUrl: badge.imageUrl,
-    badgeName: badge.name,
-    badgePopUp: badge.popUp,
-  );
 }

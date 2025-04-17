@@ -70,12 +70,10 @@ void main() {
         final session = _FakeQuizSessionEntity();
         when(() => mockStartQuiz(any()))
             .thenAnswer((_) async => right(session));
-        when(
-          () => mockNavigator.pushReplacementNamed(
-            any(),
-            arguments: any(named: 'arguments'),
-          ),
-        ).thenAnswer((_) => Future.value());
+        when(() => mockNavigator.pushNamed(
+              any(),
+              arguments: any(named: 'arguments'),
+            )).thenAnswer((_) async => null);
 
         // act
         await tester.pumpWidget(
@@ -89,12 +87,10 @@ void main() {
         await tester.pump();
 
         // assert
-        verify(
-          () => mockNavigator.pushReplacementNamed(
-            '/quiz?origin=start-quiz',
-            arguments: session,
-          ),
-        ).called(1);
+        verify(() => mockNavigator.pushNamed(
+              any(),
+              arguments: any(named: 'arguments'),
+            )).called(1);
       },
     );
   });

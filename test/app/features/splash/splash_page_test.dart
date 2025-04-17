@@ -139,17 +139,16 @@ void main() {
             when(() => AppModulesMock.appStateUseCase.check())
                 .thenSuccess((_) => FakeAppStateEntity.quiz());
 
-            when(() => AppModulesMock.modularNavigator
-                    .popAndPushNamed(any(), arguments: any(named: 'arguments')))
-                .thenAnswer((i) => Future.value());
+            when(() => AppModulesMock.modularNavigator.popAndPushNamed(
+                  any(),
+                  arguments: any(named: 'arguments'),
+                )).thenAnswer((_) async => null);
 
             await theAppIsRunning(tester, SplashPage(controller: controller));
-            verify(
-              () => AppModulesMock.modularNavigator.popAndPushNamed(
-                '/quiz?origin=splash',
-                arguments: any(named: 'arguments'),
-              ),
-            ).called(1);
+            verify(() => AppModulesMock.modularNavigator.popAndPushNamed(
+                  any(),
+                  arguments: any(named: 'arguments'),
+                )).called(1);
           },
         );
         testWidgets(

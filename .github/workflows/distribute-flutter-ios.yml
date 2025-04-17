@@ -70,7 +70,7 @@ jobs:
         run: base64 -d <<< "${{ secrets.APPLE_API_KEY_B64 }}" > $APPLE_API_KEY_PATH
         env:
           APPLE_API_KEY_PATH: ${{ runner.temp }}/app-store-api-key.json
-
+      
       - name: Create default keychain
         run: |
           security create-keychain -p "$KEYCHAIN_PWD" $KEYCHAIN_PATH
@@ -78,6 +78,7 @@ jobs:
           security default-keychain -s $KEYCHAIN_PATH
           security unlock-keychain -p "$KEYCHAIN_PWD" $KEYCHAIN_PATH
           base64 -d <<< "$CERTIFICATE_CONTENT" > $CERTIFICATE_PATH
+
         env:
           APPLE_API_KEY_PATH: ${{ runner.temp }}/app-store-api-key.json
           CERTIFICATE_CONTENT: ${{ secrets.CERTIFICATE_CONTENT }}

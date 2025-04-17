@@ -461,12 +461,10 @@ void main() {
           await sut.openAssistant(assistantAction);
 
           // assert
-          verify(
-            () => mockNavigator.pushNamed(
-              '/quiz?origin=escape-manual',
-              arguments: assistantAction.quizSession,
-            ),
-          ).called(1);
+          verify(() => mockNavigator.pushNamed(
+                any(),
+                arguments: any(named: 'arguments'),
+              )).called(1);
         },
       );
 

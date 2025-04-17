@@ -55,13 +55,16 @@ class ChatPeopleCard extends StatelessWidget {
                         ],
                       ),
                       person.badges.isNotEmpty
-                          ? Padding(
-                              padding: const EdgeInsets.only(top: 6.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  buildCloseUser(person.badges),
-                                ],
+                          ? Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: setCloseUserPadding(person.badges)),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    buildCloseUser(person.badges),
+                                  ],
+                                ),
                               ),
                             )
                           : Text(person.activity!, style: cardStatusTextStyle),
@@ -105,31 +108,31 @@ class ChatPeopleCard extends StatelessWidget {
   }
 }
 
+double setCloseUserPadding(List<UserDetailBadgeEntity> badges) {
+  return badges.any((badge) => badge.style == 'inline-block') ? 6.0 : 0.0;
+}
+
 Widget buildCloseUser(List<UserDetailBadgeEntity> badges) {
-  if (badges.isEmpty) {
-    return const SizedBox.shrink();
-  }
-  final emptyBadge = UserDetailBadgeModel(
+  final badge = badges.firstWhere(
+    (b) => b.style == 'inline-block',
+    orElse: () => UserDetailBadgeModel(
       code: '',
       description: '',
       imageUrl: '',
       name: '',
       popUp: 0,
       showDescription: 0,
-      style: '');
-  final badge = badges.firstWhere(
-    (badge) => badge.style == 'inline-block',
-    orElse: () => emptyBadge,
+      style: '',
+    ),
   );
-  if (badge.style.isEmpty) {
-    return const SizedBox.shrink();
-  }
 
-  return UserCloseBadgeWidget(
-    badgeImageUrl: badge.imageUrl,
-    badgeName: badge.name,
-    badgePopUp: badge.popUp,
-  );
+  return badge.style.isEmpty
+      ? const SizedBox.shrink()
+      : UserCloseBadgeWidget(
+          badgeImageUrl: badge.imageUrl,
+          badgeName: badge.name,
+          badgePopUp: badge.popUp,
+        );
 }
 
 extension _ChatTalkCardPrivate on ChatPeopleCard {

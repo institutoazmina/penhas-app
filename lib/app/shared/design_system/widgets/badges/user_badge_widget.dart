@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -132,9 +133,8 @@ class _DescriptionBottomSheetWidget extends StatelessWidget {
                 ],
               ),
               badgeShowDescription == 1
-                  ? Text(
-                      badgeDescription,
-                      style: kTextStyleGuardianBodyTextStyle,
+                  ? Html(
+                      data: badgeDescription,
                     )
                   : const SizedBox.shrink(),
             ],
