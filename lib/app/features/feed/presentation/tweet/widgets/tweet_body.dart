@@ -32,7 +32,7 @@ class TweetBody extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(bottom: badges.isEmpty ? 0.0 : 8.0),
+            padding: EdgeInsets.only(bottom: setCloseUserPadding(badges)),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -44,6 +44,10 @@ class TweetBody extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  double setCloseUserPadding(List<TweetBadgeEntity> badges) {
+    return badges.any((badge) => badge.style == 'inline-block') ? 8.0 : 0.0;
   }
 
   Widget buildCloseUser(List<TweetBadgeEntity> badges) {

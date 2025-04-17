@@ -56,9 +56,8 @@ class ChatChannelCard extends StatelessWidget {
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.only(
-                          bottom: _returnPadding(channel.user.badges),
-                          top: _returnPadding(channel.user.badges)),
+                      padding: EdgeInsets.symmetric(
+                          vertical: setCloseUserPadding(channel.user.badges)),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -106,12 +105,8 @@ class ChatChannelCard extends StatelessWidget {
     );
   }
 
-  double _returnPadding(List<ChatBadgeEntity> badge) {
-    if (badge.isEmpty) {
-      return 0.0;
-    } else {
-      return 4.0;
-    }
+  double setCloseUserPadding(List<ChatBadgeEntity> badges) {
+    return badges.any((badge) => badge.style == 'inline-block') ? 4.0 : 0.0;
   }
 
   Widget buildCloseUser(List<ChatBadgeEntity> badges) {

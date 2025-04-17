@@ -57,7 +57,8 @@ class ChatPeopleCard extends StatelessWidget {
                       person.badges.isNotEmpty
                           ? Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 6.0),
+                                padding: EdgeInsets.only(
+                                    top: setCloseUserPadding(person.badges)),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
@@ -105,6 +106,10 @@ class ChatPeopleCard extends StatelessWidget {
           .toList(),
     );
   }
+}
+
+double setCloseUserPadding(List<UserDetailBadgeEntity> badges) {
+  return badges.any((badge) => badge.style == 'inline-block') ? 6.0 : 0.0;
 }
 
 Widget buildCloseUser(List<UserDetailBadgeEntity> badges) {

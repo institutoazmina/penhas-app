@@ -175,7 +175,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
                 ),
                 Padding(
                   padding:
-                      EdgeInsets.only(bottom: user.badges.isEmpty ? 0 : 18),
+                      EdgeInsets.only(bottom: setCloseUserPadding(user.badges)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -189,6 +189,10 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
         ),
       ),
     );
+  }
+
+  double setCloseUserPadding(List<UserDetailBadgeEntity> badges) {
+    return badges.any((badge) => badge.style == 'inline-block') ? 18.0 : 0.0;
   }
 
   Widget buildBadgeWidget(List<UserDetailBadgeEntity> badges) {
