@@ -35,7 +35,8 @@ class UserBadgeWidget extends StatelessWidget {
               barrierColor: Colors.transparent,
               builder: (context) {
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(
+                      top: 8.0, right: 8.0, left: 8.0, bottom: 30),
                   child: _DescriptionBottomSheetWidget(
                     badgeDescription: badgeDescription,
                     badgeName: badgeName,
