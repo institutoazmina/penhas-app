@@ -105,7 +105,10 @@ class _ReplyTweetPageState extends State<ReplyTweetPage> with SnackBarHandler {
                                   context: context,
                                   controller: null,
                                 ),
-                                TweetBody(content: _controller.tweet!.content),
+                                TweetBody(
+                                  content: _controller.tweet!.content,
+                                  badges: _controller.tweet!.badges,
+                                ),
                               ],
                             ),
                           ),

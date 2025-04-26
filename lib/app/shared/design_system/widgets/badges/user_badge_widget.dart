@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -34,7 +35,8 @@ class UserBadgeWidget extends StatelessWidget {
               barrierColor: Colors.transparent,
               builder: (context) {
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(
+                      top: 8.0, right: 8.0, left: 8.0, bottom: 30),
                   child: _DescriptionBottomSheetWidget(
                     badgeDescription: badgeDescription,
                     badgeName: badgeName,
@@ -132,9 +134,8 @@ class _DescriptionBottomSheetWidget extends StatelessWidget {
                 ],
               ),
               badgeShowDescription == 1
-                  ? Text(
-                      badgeDescription,
-                      style: kTextStyleGuardianBodyTextStyle,
+                  ? Html(
+                      data: badgeDescription,
                     )
                   : const SizedBox.shrink(),
             ],

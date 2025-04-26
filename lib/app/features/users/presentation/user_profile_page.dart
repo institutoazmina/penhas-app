@@ -173,11 +173,15 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
                     ],
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    buildCloseUser(user.badges),
-                  ],
+                Padding(
+                  padding:
+                      EdgeInsets.only(bottom: setCloseUserPadding(user.badges)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      buildCloseUser(user.badges),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -185,6 +189,10 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
         ),
       ),
     );
+  }
+
+  double setCloseUserPadding(List<UserDetailBadgeEntity> badges) {
+    return badges.any((badge) => badge.style == 'inline-block') ? 18.0 : 0.0;
   }
 
   Widget buildBadgeWidget(List<UserDetailBadgeEntity> badges) {
@@ -216,35 +224,32 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
   }
 
   Widget buildCloseUser(List<UserDetailBadgeEntity> badges) {
-    if (badges.isEmpty) {
-      return const SizedBox.shrink();
-    }
-    final emptyBadge = UserDetailBadgeModel(
+    final badge = badges.firstWhere(
+      (b) => b.style == 'inline-block',
+      orElse: () => UserDetailBadgeModel(
         code: '',
         description: '',
         imageUrl: '',
         name: '',
         popUp: 0,
         showDescription: 0,
-        style: '');
-    final badge = badges.firstWhere(
-      (badge) => badge.style == 'inline-block',
-      orElse: () => emptyBadge,
-    );
-    if (badge.style == '') {
-      return const SizedBox.shrink();
-    }
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6),
-        color: DesignSystemColors.white,
-      ),
-      child: UserCloseBadgeWidget(
-        badgeImageUrl: badge.imageUrl,
-        badgeName: badge.name,
-        badgePopUp: badge.popUp,
+        style: '',
       ),
     );
+
+    return badge.style.isEmpty
+        ? const SizedBox.shrink()
+        : DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6),
+              color: DesignSystemColors.white,
+            ),
+            child: UserCloseBadgeWidget(
+              badgeImageUrl: badge.imageUrl,
+              badgeName: badge.name,
+              badgePopUp: badge.popUp,
+            ),
+          );
   }
 
   Widget buildContent(UserDetailProfileEntity user) {

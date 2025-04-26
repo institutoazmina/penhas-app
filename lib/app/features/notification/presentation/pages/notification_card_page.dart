@@ -58,8 +58,14 @@ class NotificationCardPage extends StatelessWidget {
                                   child: Text(notification.name!,
                                       style: titleTextStyle),
                                 ),
-                                Text(notification.title!,
-                                    style: titleTextStyle),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.50,
+                                  child: Text(
+                                    notification.title!,
+                                    style: titleTextStyle,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
