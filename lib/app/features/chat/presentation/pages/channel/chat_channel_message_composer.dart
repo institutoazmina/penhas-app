@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../../../shared/design_system/colors.dart';
 import '../../../../../shared/design_system/widgets/buttons/penhas_button.dart';
@@ -54,7 +55,6 @@ class _ChatChannelMessageComposerState
       padding:
           const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0, top: 8),
       child: Container(
-        height: 40.0,
         decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -68,18 +68,29 @@ class _ChatChannelMessageComposerState
         ),
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Expanded(
-              child: TextField(
-                maxLines: null,
-                expands: true,
-                decoration: const InputDecoration.collapsed(
-                  hintText: 'Digite uma mensagem',
+              child: KeyboardListener(
+                focusNode: FocusNode(),
+                onKeyEvent: (event) {
+                  if (event is KeyDownEvent &&
+                      event.logicalKey == LogicalKeyboardKey.enter) {
+                    _submitMessageAction(context);
+                  }
+                },
+                child: TextField(
+                  keyboardType: TextInputType.multiline,
+                  minLines: 1,
+                  maxLines: 5,
+                  decoration: const InputDecoration.collapsed(
+                    hintText: 'Digite uma mensagem',
+                  ),
+                  textInputAction: TextInputAction.send,
+                  textCapitalization: TextCapitalization.sentences,
+                  controller: _textController,
+                  onSubmitted: (t) => _submitMessageAction(context),
                 ),
-                textInputAction: TextInputAction.send,
-                textCapitalization: TextCapitalization.sentences,
-                controller: _textController,
-                onSubmitted: (t) => _submitMessageAction(context),
               ),
             ),
           ],
