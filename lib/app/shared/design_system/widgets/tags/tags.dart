@@ -51,8 +51,47 @@ class TagsState extends State<Tags> {
     _items.clear();
     for (int i = 0; i < widget.itemCount; i++) {
       final item = widget.itemBuilder(i);
-      if (item is TagItem) {
-        _items.add(item);
+      if (item is Tooltip && item.child is TagItem) {
+        final tagItem = item.child as TagItem;
+        _items.add(TagItem(
+          key: tagItem.key,
+          index: tagItem.index,
+          title: tagItem.title,
+          active: tagItem.active,
+          customData: tagItem.customData,
+          activeColor: tagItem.activeColor,
+          backgroundColor: tagItem.backgroundColor,
+          textColor: tagItem.textColor,
+          textActiveColor: tagItem.textActiveColor,
+          elevation: tagItem.elevation,
+          borderRadius: tagItem.borderRadius,
+          padding: tagItem.padding,
+          textStyle: tagItem.textStyle,
+          onPressed: tagItem.onPressed,
+          pressEnabled: tagItem.pressEnabled,
+          onStateChanged: (isActive) {
+            setState(() {
+              _items[tagItem.index] = TagItem(
+                key: tagItem.key,
+                index: tagItem.index,
+                title: tagItem.title,
+                active: isActive,
+                customData: tagItem.customData,
+                activeColor: tagItem.activeColor,
+                backgroundColor: tagItem.backgroundColor,
+                textColor: tagItem.textColor,
+                textActiveColor: tagItem.textActiveColor,
+                elevation: tagItem.elevation,
+                borderRadius: tagItem.borderRadius,
+                padding: tagItem.padding,
+                textStyle: tagItem.textStyle,
+                onPressed: tagItem.onPressed,
+                pressEnabled: tagItem.pressEnabled,
+                onStateChanged: tagItem.onStateChanged,
+              );
+            });
+          },
+        ));
       }
     }
   }
@@ -76,10 +115,7 @@ class TagsState extends State<Tags> {
       alignment: widget.alignment,
       runAlignment: widget.runAlignment,
       crossAxisAlignment: widget.crossAxisAlignment,
-      children: List.generate(
-        widget.itemCount,
-        (index) => widget.itemBuilder(index),
-      ),
+      children: _items,
     );
   }
 }
@@ -102,6 +138,7 @@ class TagItem extends StatefulWidget {
     this.textStyle,
     this.onPressed,
     this.pressEnabled = true,
+    this.onStateChanged,
   });
 
   /// Index of the tag
@@ -146,6 +183,8 @@ class TagItem extends StatefulWidget {
   /// Whether the tag is pressable
   final bool pressEnabled;
 
+  final ValueChanged<bool>? onStateChanged;
+
   @override
   State<TagItem> createState() => _TagItemState();
 }
@@ -180,6 +219,9 @@ class _TagItemState extends State<TagItem> {
                 setState(() {
                   _active = !_active;
                 });
+                if (widget.onStateChanged != null) {
+                  widget.onStateChanged!(_active);
+                }
                 if (widget.onPressed != null) {
                   widget.onPressed!();
                 }
