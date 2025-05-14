@@ -54,6 +54,7 @@ extension _Modal on CardProfileRacePage {
         scrollable: true,
         content: SizedBox(
           height: 350,
+          width: MediaQuery.of(context).size.width,
           child: ListView(
             children: datasource(context),
           ),

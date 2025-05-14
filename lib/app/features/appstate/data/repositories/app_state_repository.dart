@@ -49,6 +49,7 @@ class AppStateRepository implements IAppStateRepository {
         'senha_atual': update.oldPassword,
         'senha': update.newPassword,
         'email': update.email,
+        'raca': update.race,
       }..removeWhere((key, value) => value == null);
 
       final appState = await _apiProvider
