@@ -58,12 +58,13 @@ class NotificationCardPage extends StatelessWidget {
                                   child: Text(notification.name!,
                                       style: titleTextStyle),
                                 ),
-                                SizedBox(
+                                Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.50,
+                                      MediaQuery.of(context).size.width * 0.55,
                                   child: Text(
                                     notification.title!,
                                     style: titleTextStyle,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                               ],
@@ -87,6 +88,15 @@ class NotificationCardPage extends StatelessWidget {
     );
   }
 
+  String _sanitizeHtmlContent(String content) {
+    return content
+        .replaceAll('&quot;', '"')
+        .replaceAll('&#39;', "'")
+        .replaceAll('&nbsp;', ' ')
+        .replaceAll('&ndash;', '-')
+        .replaceAll('&mdash;', '—');
+  }
+
   Widget _notificationContent(String? content) {
     if (content?.isEmpty ?? true) {
       return Container();
@@ -94,7 +104,7 @@ class NotificationCardPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 12.0, bottom: 12.0, left: 38),
       child: Html(
-        data: notification.content!,
+        data: _sanitizeHtmlContent(notification.content!),
         style: {
           'body': Style.fromTextStyle(contentTextStyle),
           'iframe': Style(display: Display.none)
