@@ -38,7 +38,7 @@ void main() {
     when(() => mockController.updateTask(any())).thenAnswer((_) async {});
   });
 
-  group(EscapeManualPage, skip: true, () {
+  group(EscapeManualPage, () {
     testWidgets(
       'should call load',
       (tester) async {
@@ -263,7 +263,6 @@ void main() {
     );
 
     testWidgets(
-      skip: true,
       'should call controller editTask when edit button is pressed',
       (tester) async {
         // arrange
@@ -291,10 +290,12 @@ void main() {
           matching: find.byType(PopupMenuButton),
         );
 
-        // Ensure that exactly one PopupMenuButton is found
         expect(popupMenuButtonFinder, findsOneWidget);
 
-        // Tap on the PopupMenuButton to show the menu
+        // Ensure the button is visible before tapping
+        await tester.ensureVisible(popupMenuButtonFinder);
+        await tester.pumpAndSettle();
+
         await tester.tap(popupMenuButtonFinder);
         await tester.pumpAndSettle(); // Wait for the menu to appear
 
@@ -316,7 +317,6 @@ void main() {
     );
 
     testWidgets(
-      skip: true,
       'should call controller callTo when call button is pressed',
       (tester) async {
         // arrange
@@ -333,14 +333,20 @@ void main() {
           find.widgetWithText(ExpansionTile, 'Section 1'),
         );
         await tester.pumpAndSettle();
-        await tester.tap(
-          find
-              .descendant(
-                of: find.byKey(Key('escape-manual-task-1-4')),
-                matching: find.textContaining('Ligar'),
-              )
-              .first,
-        );
+
+        final ligarFinder = find
+            .descendant(
+              of: find.byKey(Key('escape-manual-task-1-4')),
+              matching: find.textContaining('Ligar'),
+            )
+            .first;
+
+        // Ensure the button is visible before tapping
+        await tester.ensureVisible(ligarFinder);
+        await tester.pumpAndSettle();
+
+        await tester.tap(ligarFinder);
+        await tester.pumpAndSettle();
 
         // assert
         verify(() => mockController.callTo(expectedContact)).called(1);

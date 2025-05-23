@@ -61,39 +61,41 @@ void main() {
     testWidgets(
       'should navigate to assistant quiz when open assistant card',
       skip: true,
-      (tester) async {
-        // arrange
-        final widget =
-            buildTestableWidget(ChatMainTalksPage(controller: controller));
-        await tester.pumpWidget(widget);
-        await tester.pumpAndSettle();
+      (tester) => mockNetworkImages(
+        () async {
+          // arrange
+          final widget =
+              buildTestableWidget(ChatMainTalksPage(controller: controller));
+          await tester.pumpWidget(widget);
+          await tester.pumpAndSettle();
 
-        when(
-          () => mockNavigator.popAndPushNamed(
-            any(),
-            arguments: any(named: 'arguments'),
-          ),
-        ).thenAnswer((_) => Future.value());
+          when(
+            () => mockNavigator.popAndPushNamed(
+              any(),
+              arguments: any(named: 'arguments'),
+            ),
+          ).thenAnswer((_) => Future.value());
 
-        final assistantCardFinder = find.text('Assistente PenhaS');
-        expect(assistantCardFinder, findsOneWidget);
+          final assistantCardFinder = find.text('Assistente PenhaS');
+          expect(assistantCardFinder, findsOneWidget);
 
-        await tester.tap(assistantCardFinder);
-        await tester.pumpAndSettle();
+          await tester.tap(assistantCardFinder);
+          await tester.pumpAndSettle();
 
-        // assert
-        verify(
-          () => mockNavigator.pushNamed(
-            '/quiz',
-            arguments: QuizPageArgs(
-              origin: 'chat',
-              session: QuizSessionEntity(
-                sessionId: 'assistant-quiz-session',
+          // assert
+          verify(
+            () => mockNavigator.pushNamed(
+              '/quiz',
+              arguments: QuizPageArgs(
+                origin: 'chat',
+                session: QuizSessionEntity(
+                  sessionId: 'assistant-quiz-session',
+                ),
               ),
             ),
-          ),
-        ).called(1);
-      },
+          ).called(1);
+        },
+      ),
     );
 
     testWidgets(

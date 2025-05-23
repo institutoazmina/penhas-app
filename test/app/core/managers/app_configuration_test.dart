@@ -215,6 +215,7 @@ void main() {
     test(
       '`logout` should delete api token and offline hash from storage',
       skip: true,
+      //Skip test as FlutterBackgroundService throws an error
       () async {
         // arrange
         when(() => localStorage.delete(any()))
