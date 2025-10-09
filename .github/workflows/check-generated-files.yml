@@ -28,8 +28,8 @@ jobs:
       - name: Setup Flutter SDK
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
-          channel: ${{ env.FLUTTER_CHANNEL }}
+          flutter-version: 3.27.3
+          channel: stable
 
       - name: Install dependencies
         run: flutter pub get
