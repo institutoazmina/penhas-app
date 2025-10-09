@@ -37,17 +37,16 @@ def isFirebaseDistribution = System.getenv('IS_FIREBASE_DISTRIBUTION') == 'true'
 android {
     namespace 'br.com.azmina.penhas'
 
-    compileSdkVersion 35
+    compileSdkVersion 36
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-
     defaultConfig {
         applicationId "penhas.com.br"
         minSdkVersion 24
-        targetSdkVersion 35
+        targetSdkVersion 36
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
