@@ -52,6 +52,10 @@ jobs:
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: ${{ env.FLUTTER_CHANNEL }}
+          cache: true
+
+      - name: Clean Flutter pub cache
+        run: flutter pub cache repair
 
       - name: Install dependencies
         run: flutter pub get
