@@ -71,7 +71,7 @@ jobs:
           echo "$ANDROID_BUILD_FILES" | base64 -d | tar xzf -
 
       - name: Get Google Account credentials
-        shell: bash --noprofile --norc -euo pipefail
+        shell: bash
         env:
           GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64 }}
           GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_PATH: ${{ runner.temp }}/play-store-api-key.json
