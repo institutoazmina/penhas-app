@@ -30,13 +30,9 @@ jobs:
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: ${{ env.FLUTTER_CHANNEL }}
-
-      - name: Force clean Flutter environment
-        run: |
-          flutter clean
-          rm -rf .dart_tool
-          rm -rf pubspec.lock
-          flutter pub cache repair
+          
+      - name: Print Flutter version
+        run: flutter --version
 
       - name: Install dependencies
         run: flutter pub get
