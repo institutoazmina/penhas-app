@@ -181,7 +181,7 @@ class _SignUpTwoPageState extends State<SignUpTwoPage> with SnackBarHandler {
         items: dataSource as List<DropdownMenuItem<T>>,
         onChanged: onChange,
         style: const TextStyle(color: Colors.white),
-        initialValue: currentValue == '' ? null : currentValue,
+        value: currentValue == '' ? null : currentValue,
       ),
     );
   }

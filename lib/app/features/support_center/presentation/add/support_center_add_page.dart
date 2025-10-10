@@ -452,7 +452,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
           onChanged: (category) {
             controller.setCategory(category as String);
           },
-          initialValue: currentValue.isEmpty ? null : currentValue,
+          value: currentValue.isEmpty ? null : currentValue,
         ),
       ),
     );

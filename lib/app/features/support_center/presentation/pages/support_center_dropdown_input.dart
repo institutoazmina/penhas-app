@@ -65,7 +65,7 @@ class SupportCenterDropdownInput extends StatelessWidget {
           ),
           items: dataSource as List<DropdownMenuItem>,
           onChanged: onChanged,
-          initialValue: currentValue == '' ? null : currentValue,
+          value: currentValue == '' ? null : currentValue,
         ),
       ),
     );
