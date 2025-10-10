@@ -42,13 +42,13 @@ jobs:
           distribution: "zulu"
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v2
+        uses: android-actions/setup-android@7c5672355aaa8fde5f97a91aa9a99616d1ace6bc
 
       - name: Retrieve Flutter version from FVM config
-        uses: kuhnroyal/flutter-fvm-config-action@v1
+        uses: kuhnroyal/flutter-fvm-config-action@6ffa30473b346f7d7c63cf9e03e6a886f940a72b
 
       - name: Setup Flutter SDK
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@fd55f4c5af5b953cc57a2be44cb082c8f6635e8e
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: ${{ env.FLUTTER_CHANNEL }}
@@ -58,7 +58,7 @@ jobs:
         run: flutter pub get
 
       - name: Install Ruby to use Fastlane
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@b8d447ba7506ac7e0c8fbc50762276fb3b7df731
         with:
           ruby-version: '3.0'
           bundler-cache: true
@@ -91,7 +91,7 @@ jobs:
         run: echo "org.gradle.jvmargs=-Xmx4g" >> android/gradle.properties
         
       - name: Run lane to distribute
-        uses: maierj/fastlane-action@v3.0.0
+        uses: maierj/fastlane-action@516faaa1c6c7b366ecd238b4e4608d286874dd94
         with:
           lane: ${{ vars.TARGET_LANE }}
           options: '{ "tester_email": "${{ secrets.TESTER_EMAIL }}" }'
