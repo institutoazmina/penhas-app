@@ -30,7 +30,16 @@ jobs:
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: ${{ env.FLUTTER_CHANNEL }}
-          
+
+      - name: Clean Flutter build & lockfile
+        run: |
+          flutter clean
+          rm -rf pubspec.lock
+          flutter pub get
+      
+      - name: Clear Pub cache
+        run: flutter pub cache repair
+
       - name: Print Flutter version
         run: flutter --version
 
