@@ -65,12 +65,19 @@ jobs:
           working-directory: ./android
 
       - name: Get config files
-        run: base64 -d <<< "${{ secrets.ANDROID_BUILD_FILES }}" | tar xzf -
+        env: 
+          ANDROID_BUILD_FILES: ${{ secrets.ANDROID_BUILD_FILES }}
+        run: |
+          echo "$ANDROID_BUILD_FILES" | base64 -d | tar xzf -
 
       - name: Get Google Account credentials
-        run: base64 -d <<< "${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64 }}" > $GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_PATH
+        shell: bash --noprofile --norc -euo pipefail
         env:
+          GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64 }}
           GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_PATH: ${{ runner.temp }}/play-store-api-key.json
+        run: |
+          echo "$GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64" | base64 -d > "$GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_PATH"
+        
       
       - name: Increase Watcher Limit
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
