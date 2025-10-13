@@ -27,6 +27,10 @@ platform :android do
 
     build_apk
 
+    puts "🔥 Firebase App ID: #{firebase_id()}"
+    puts "🔥 APK path exists? #{File.exist?("build/app/outputs/flutter-apk/app-release.apk")}"
+    puts "🔥 FIREBASE_TOKEN present? #{ENV["FIREBASE_TOKEN"] ? "yes" : "no"}"
+
     firebase_app_distribution(
       app: firebase_id(),
       release_notes: get_changelog(),
