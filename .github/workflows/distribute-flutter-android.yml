@@ -91,6 +91,9 @@ jobs:
           rm -rf ~/.gradle/caches/
           rm -rf ~/.gradle/wrapper/
 
+      - name: Debug APK location
+        run: find . -type f -name "*.apk"
+
       - name: Disable Gradle Incremental Builds
         run: echo "org.gradle.configureondemand=false" >> android/gradle.properties
 
