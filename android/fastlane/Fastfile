@@ -10,7 +10,7 @@ platform :android do
 
   desc 'Build release APK'
   lane :build_apk do
-    sh("flutter build apk --release --dart-define=PENHAS_BASE_URL=#{$api_base_url}")
+    sh("flutter build apk --release --no-sign --dart-define=PENHAS_BASE_URL=#{$api_base_url}")
   end
 
   desc 'Build release Bundle'
@@ -28,10 +28,6 @@ platform :android do
     build_apk
 
     apk_path = "build/app/outputs/flutter-apk/app-release.apk"
-
-    puts "🔥 Firebase App ID: #{firebase_id()}"
-    puts "🔥 APK path exists? #{File.exist?("build/app/outputs/flutter-apk/app-release.apk")}"
-    puts "🔥 FIREBASE_TOKEN present? #{ENV["FIREBASE_TOKEN"] ? "yes" : "no"}"
 
     firebase_app_distribution(
       app: firebase_id(),

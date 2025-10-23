@@ -7,7 +7,6 @@ on:
         description: "Distribution environment"
         type: string
         required: true
-
     secrets:
       PENHAS_BASE_URL:
         required: true
@@ -20,12 +19,11 @@ on:
       TESTER_EMAIL:
         required: false
 
-# Define permissions for GITHUB_TOKEN
 permissions:
-  contents: read  # Required for actions/checkout
-  id-token: write # Required for some authentication tasks
-  packages: write # Required if you're publishing packages
-  actions: write  # Required if you're triggering other workflows
+  contents: read
+  id-token: write
+  packages: write
+  actions: write
 
 jobs:
   distribute:
@@ -88,7 +86,10 @@ jobs:
 
       - name: Set Gradle JVM Options
         run: echo "org.gradle.jvmargs=-Xmx4g" >> android/gradle.properties
-        
+
+      - name: Build release APK (no signing)
+        run: flutter build apk --release --no-sign --dart-define=PENHAS_BASE_URL=${{ secrets.PENHAS_BASE_URL }}
+
       - name: Run lane to distribute
         uses: maierj/fastlane-action@v3.0.0
         with:
