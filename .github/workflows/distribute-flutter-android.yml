@@ -94,6 +94,12 @@ jobs:
 
       - name: Set Gradle JVM Options
         run: echo "org.gradle.jvmargs=-Xmx4g" >> android/gradle.properties
+      
+      - name: Show current applicationId
+        run: grep "applicationId" android/app/build.gradle || echo "Nenhum applicationId encontrado"
+
+      - name: Show google-services.json package names
+        run: cat android/app/google-services.json | jq '.client[].client_info.package_name'
 
       - name: Build release APK
         run: flutter build apk --release --dart-define=PENHAS_BASE_URL=${{ secrets.PENHAS_BASE_URL }}
