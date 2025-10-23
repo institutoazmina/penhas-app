@@ -20,11 +20,12 @@ on:
       TESTER_EMAIL:
         required: false
 
+# Define permissions for GITHUB_TOKEN
 permissions:
-  contents: read
-  id-token: write
-  packages: write
-  actions: write
+  contents: read  # Required for actions/checkout
+  id-token: write # Required for some authentication tasks
+  packages: write # Required if you're publishing packages
+  actions: write  # Required if you're triggering other workflows
 
 jobs:
   distribute:
@@ -41,17 +42,16 @@ jobs:
           distribution: "zulu"
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@7c5672355aaa8fde5f97a91aa9a99616d1ace6bc
+        uses: android-actions/setup-android@v2
 
       - name: Retrieve Flutter version from FVM config
-        uses: kuhnroyal/flutter-fvm-config-action@6ffa30473b346f7d7c63cf9e03e6a886f940a72b
+        uses: kuhnroyal/flutter-fvm-config-action@v1
 
       - name: Setup Flutter SDK
-        uses: subosito/flutter-action@fd55f4c5af5b953cc57a2be44cb082c8f6635e8e
+        uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: ${{ env.FLUTTER_CHANNEL }}
-          cache: true
 
       - name: Install dependencies
         run: flutter pub get
@@ -64,22 +64,13 @@ jobs:
           working-directory: ./android
 
       - name: Get config files
-        env: 
-          ANDROID_BUILD_FILES: ${{ secrets.ANDROID_BUILD_FILES }}
-        run: |
-          mkdir -p android/app
-          echo "$ANDROID_BUILD_FILES" | base64 -d | tar xzf - -C android/app
-          echo "Conteúdo do google-services.json:"
-          cat android/app/google-services.json | jq '.client[].client_info.package_name' || echo "Arquivo não encontrado!"
+        run: base64 -d <<< "${{ secrets.ANDROID_BUILD_FILES }}" | tar xzf -
 
       - name: Get Google Account credentials
-        shell: bash
+        run: base64 -d <<< "${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64 }}" > $GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_PATH
         env:
-          GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64 }}
           GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_PATH: ${{ runner.temp }}/play-store-api-key.json
-        run: |
-          echo "$GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64" | base64 -d > "$GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_PATH"
-        
+      
       - name: Increase Watcher Limit
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
@@ -97,18 +88,9 @@ jobs:
 
       - name: Set Gradle JVM Options
         run: echo "org.gradle.jvmargs=-Xmx4g" >> android/gradle.properties
-
-      - name: Show google-services.json package names
-        run: cat android/app/google-services.json | jq '.client[].client_info.package_name'
-
-      - name: Build release APK
-        run: flutter build apk --release --dart-define=PENHAS_BASE_URL=${{ secrets.PENHAS_BASE_URL }}
-
-      - name: Debug APK location
-        run: find . -type f -name "*.apk" || true
-
+        
       - name: Run lane to distribute
-        uses: maierj/fastlane-action@516faaa1c6c7b366ecd238b4e4608d286874dd94
+        uses: maierj/fastlane-action@v3.0.0
         with:
           lane: ${{ vars.TARGET_LANE }}
           options: '{ "tester_email": "${{ secrets.TESTER_EMAIL }}" }'
