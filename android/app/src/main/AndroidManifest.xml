@@ -65,6 +65,20 @@
             </intent-filter>
         </service>
 
+        <!-- Remove after flutter_background_service is updated -->
+        <receiver
+            android:name="com.github.flutter_background_service.components.BootReceiver"
+            tools:node="remove"/>
+
+        <!-- Remove after flutter_background_service is updated -->
+        <receiver
+            android:name=".BootReceiverV15"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>
