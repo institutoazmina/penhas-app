@@ -67,7 +67,10 @@ jobs:
         env: 
           ANDROID_BUILD_FILES: ${{ secrets.ANDROID_BUILD_FILES }}
         run: |
-          echo "$ANDROID_BUILD_FILES" | base64 -d | tar xzf -
+          mkdir -p android/app
+          echo "$ANDROID_BUILD_FILES" | base64 -d | tar xzf - -C android/app
+          echo "Conteúdo do google-services.json:"
+          cat android/app/google-services.json | jq '.client[].client_info.package_name' || echo "Arquivo não encontrado!"
 
       - name: Get Google Account credentials
         shell: bash
@@ -94,9 +97,6 @@ jobs:
 
       - name: Set Gradle JVM Options
         run: echo "org.gradle.jvmargs=-Xmx4g" >> android/gradle.properties
-      
-      - name: Show current applicationId
-        run: grep "applicationId" android/app/build.gradle || echo "Nenhum applicationId encontrado"
 
       - name: Show google-services.json package names
         run: cat android/app/google-services.json | jq '.client[].client_info.package_name'
