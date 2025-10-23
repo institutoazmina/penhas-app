@@ -10,7 +10,7 @@ platform :android do
 
   desc 'Build release APK'
   lane :build_apk do
-    sh("flutter build apk --release --no-sign --dart-define=PENHAS_BASE_URL=#{$api_base_url}")
+    sh("flutter build apk --release --dart-define=PENHAS_BASE_URL=#{$api_base_url}")
   end
 
   desc 'Build release Bundle'
