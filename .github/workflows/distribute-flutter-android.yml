@@ -87,8 +87,18 @@ jobs:
       - name: Set Gradle JVM Options
         run: echo "org.gradle.jvmargs=-Xmx4g" >> android/gradle.properties
 
-      - name: Build release APK (no signing)
-        run: flutter build apk --release --no-sign --dart-define=PENHAS_BASE_URL=${{ secrets.PENHAS_BASE_URL }}
+      - name: Create temporary keystore
+        run: |
+          mkdir -p android/keystore
+          keytool -genkey -v -keystore android/keystore/release.jks \
+              -alias dummy -keyalg RSA -keysize 2048 -validity 10000 \
+              -storepass 123456 -keypass 123456 \
+              -dname "CN=CI, OU=CI, O=CI, L=CI, S=CI, C=BR"
+          echo "storeFile=android/keystore/release.jks" >> android/secrets.properties
+          echo "storePassword=123456" >> android/secrets.properties
+          echo "keyAlias=dummy" >> android/secrets.properties
+          echo "keyPassword=123456" >> android/secrets.properties
+
 
       - name: Run lane to distribute
         uses: maierj/fastlane-action@v3.0.0
