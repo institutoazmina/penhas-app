@@ -14,7 +14,6 @@ O PenhaS é um aplicativo móvel gratuito de ajuda, informação e acolhimento a
 4. [Configuração](#4-configuração)  
    - [Firebase](#firebase)  
    - [Google Maps](#google-maps)  
-   - [Outras Configurações](#outras-configurações)  
 5. [Execução](#5-execução)  
 6. [Testes Automatizados](#6-testes-automatizados)  
 7. [Iniciar pelo VS Code](#7-iniciar-pelo-vs-code)  
