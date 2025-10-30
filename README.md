@@ -8,19 +8,18 @@ O PenhaS é um aplicativo móvel gratuito de ajuda, informação e acolhimento a
 </div>
 
 ## 📋 Sumário
-1. [Visão Geral](#visão-geral)  
-2. [Funcionalidades](#funcionalidades)  
-3. [Requisitos](#requisitos)  
-4. [Configuração](#configuração)  
+1. [Visão Geral](#1-visão-geral)  
+2. [Funcionalidades](#2-funcionalidades)  
+3. [Requisitos](#3-requisitos)  
+4. [Configuração](#4-configuração)  
    - [Firebase](#firebase)  
    - [Google Maps](#google-maps)  
    - [Outras Configurações](#outras-configurações)  
-5. [Execução](#execução)  
-6. [Testes Automatizados](#testes-automatizados)  
-   - [Cobertura de Testes](#cobertura-de-testes)  
-7. [Iniciar pelo VS Code](#iniciar-pelo-vs-code)  
-8. [Contribuições](#contribuições)  
-9. [Licença](#licença)  
+5. [Execução](#5-execução)  
+6. [Testes Automatizados](#6-testes-automatizados)  
+7. [Iniciar pelo VS Code](#7-iniciar-pelo-vs-code)  
+8. [Contribuições](#8-contribuições)  
+9. [Licença](#9-licença)  
 
 
 ## 1. Visão Geral
@@ -102,13 +101,16 @@ GEO_API_KEY=[SUA CHAVE DE API]
 
 > 🔒 Mantenha esses arquivos fora do controle de versão.
 
-## Execução
+
+## 5. Execução
+
+Com tudo configurado, execute:
 
 ```bash
 fvm flutter run --dart-define=PENHAS_BASE_URL=[URL]
 ```
 
-## Testes automatizados
+## 6. Testes automatizados
 
 Para rodar os testes automatizados:
 
@@ -130,9 +132,9 @@ No VS Code, Também é possível instalar a extensão [Coverage Gutters](https:/
 
 
 
-## Iniciar app pelo VS Code
+## 7. Iniciar app pelo VS Code
 
-Para iniciar o app utilizando o vs code adicione os seguintes arquivos dentro da pasta `.vscode`
+Para iniciar o app utilizando o VS Code adicione os seguintes arquivos dentro da pasta `.vscode`
 
 ```
 - launch.json
