@@ -111,7 +111,7 @@ Com tudo configurado, execute:
 fvm flutter run --dart-define=PENHAS_BASE_URL=[URL]
 ```
 
-## 6. Testes automatizados
+### 3.4. Testes automatizados
 
 Para rodar os testes automatizados:
 
