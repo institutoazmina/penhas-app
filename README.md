@@ -103,7 +103,7 @@ GEO_API_KEY=[SUA CHAVE DE API]
 > 🔒 Mantenha esses arquivos fora do controle de versão.
 
 
-## 5. Execução
+### 3.3. Execução
 
 Com tudo configurado, execute:
 
