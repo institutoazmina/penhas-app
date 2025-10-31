@@ -8,18 +8,19 @@ O PenhaS é um aplicativo móvel gratuito de ajuda, informação e acolhimento a
 </div>
 
 ## 📋 Sumário
-1. [Visão Geral](#1-visão-geral)  
-2. [Funcionalidades](#2-funcionalidades)  
-3. [Desenvolvimento](#3-desenvolvimento)
-3.1. [Requisitos](#3-requisitos)  
-3.2. [Configuração](#3.1-configuração)  
-   - [Firebase](#firebase)  
-   - [Google Maps](#google-maps)  
-3.3. [Execução](#3.2-execução)  
-3.4. [Testes Automatizados](#3.3-testes-automatizados)  
-3.5. [Iniciar pelo VS Code](#3.4-iniciar-pelo-vs-code)
-4. [Contribuições](#4-contribuiçõe)
-5. [Licença](#5-licença)
+
+* 1. [Visão Geral](#1-visão-geral)  
+* 2. [Funcionalidades](#2-funcionalidades)  
+* 3. [Desenvolvimento](#3-desenvolvimento)
+  * 3.1. [Requisitos](#3-requisitos)  
+  * 3.2. [Configuração](#3.1-configuração)  
+    - [Firebase](#firebase)  
+    - [Google Maps](#google-maps)  
+  * 3.3. [Execução](#3.2-execução)  
+  * 3.4. [Testes Automatizados](#3.3-testes-automatizados)  
+  * 3.5. [Iniciar pelo VS Code](#3.4-iniciar-pelo-vs-code)
+* 4. [Contribuições](#4-contribuiçõe)
+* 5. [Licença](#5-licença)
 
 
 ## 1. Visão Geral
