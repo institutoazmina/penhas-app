@@ -55,7 +55,8 @@ O projeto é **open source**, licenciado sob **AGPL-3.0**, refletindo o compromi
 > Dados sensíveis são tratados de forma segura conforme a política de privacidade do app.
 
 
-## 3. Requisitos
+## 3. Desenvolvimento
+### 3.1 Requisitos
 
 - [FVM](https://fvm.app/) (recomendável) ou SDK Flutter 3.0.5
 - Android SDK
