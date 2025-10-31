@@ -65,7 +65,7 @@ O projeto é **open source**, licenciado sob **AGPL-3.0**, refletindo o compromi
 - Chave de API do Google Maps
 
 
-## 4. Configuração
+### 3.2. Configuração
 Antes de rodar o aplicativo pela primeira vez, são necessárias algumas configurações de serviços externos.
 
 ### Firebase
