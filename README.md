@@ -133,7 +133,7 @@ No VS Code, Também é possível instalar a extensão [Coverage Gutters](https:/
 
 
 
-## 7. Iniciar app pelo VS Code
+### 3.5. Iniciar app pelo VS Code
 
 Para iniciar o app utilizando o VS Code adicione os seguintes arquivos dentro da pasta `.vscode`
 
