@@ -190,7 +190,7 @@ Caso queira iniciar o app apontando para um ambiente diferente, isso pode ser fe
 }
 ```
 
-## 8. Contribuições 💜
+## 4. Contribuições 💜
 Quer contribuir? Siga estas orientações:
 
 1. **Issues:** relate bugs ou sugestões de melhoria.  
