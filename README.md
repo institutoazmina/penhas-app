@@ -204,7 +204,7 @@ Quer contribuir? Siga estas orientações:
 
 ---
 
-## 9. Licença
+## 5. Licença
 Este projeto está licenciado sob a **AGPL-3.0 (Affero General Public License)**.  
 O código pode ser usado e modificado livremente, desde que as distribuições derivadas mantenham a mesma licença e disponibilizem seu código-fonte.
 
