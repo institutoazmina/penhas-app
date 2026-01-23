@@ -2,11 +2,11 @@
 
 O **Círculo PenhaS** é uma funcionalidade do aplicativo PenhaS que articula desenvolvimento tecnológico *open source* e ação territorial para fortalecer redes locais de apoio entre mulheres em situação de violência.
 
-A ferramenta foi concebida como uma tecnologia social feminista, baseada na escuta do território, na experiência das usuárias e na valorização de vínculos comunitários como pilar de enfrentamento às violências de gênero e contou com financiamento do Nic.br através do edital Mover-se na web.
+A ferramenta foi concebida como uma tecnologia social feminista, baseada na escuta do território, na experiência das usuárias e na valorização de vínculos comunitários como pilar de enfrentamento às violências de gênero e contou com financiamento do NIC.br através do edital Mover-se na web.
 
 ## Sobre o Projeto
 
-O Círculo PenhaS é uma ferramenta exclusiva para usuárias de **Salvador (BA)**, que pode ser expandida para outros lugares. Foi lançada em 2025 com o apoio do Nic.br
+O Círculo PenhaS é uma ferramenta exclusiva para usuárias de **Salvador (BA)**, que pode ser expandida para outros lugares. Foi lançada em 2025 com o apoio do NIC.br
 
 ### Como funciona:
 
@@ -19,7 +19,7 @@ O Círculo PenhaS é uma ferramenta exclusiva para usuárias de **Salvador (BA)*
 
 A arquitetura da solução foi desenvolvida com foco em segurança, privacidade, escalabilidade e replicabilidade:
 
-* **Frontend:** Flutter
+* **Mobile:** Flutter
 * **Backend:** Perl
 * **Recursos:**
 * Uso de *feature flags*.
@@ -28,17 +28,17 @@ A arquitetura da solução foi desenvolvida com foco em segurança, privacidade,
 * Administração de territórios e interação entre usuárias.
 
 
-
 ## Financiamento e Lançamento
 
 O projeto contou com o financiamento do **NIC.br** por meio do edital **Mover-se na Web** e foi lançado em 2025.
 
-
 ---
+
 
 ## Histórico de Desenvolvimento (Pull Requests & Commits)
 
 *Lista organizada da implementação mais antiga para a mais recente.*
+
 
 ### Backend (Repositório: penhas-backend)
 
@@ -51,7 +51,8 @@ O projeto contou com o financiamento do **NIC.br** por meio do edital **Mover-se
 7. [Commit: 6e371c1](https://github.com/institutoazmina/penhas-backend/commit/6e371c1215fbdf9801802cd1f4aa12cbfa38b29e)
 8. [Commit: 5bb49dc](https://github.com/institutoazmina/penhas-backend/commit/5bb49dc87a8f86d05c2be3dd1a6d605b42891cc5)
 
-### Frontend (Repositório: penhas-app)
+
+### Mobile (Repositório: penhas-app)
 
 1. [PR #426](https://github.com/institutoazmina/penhas-app/pull/426)
 2. [PR #427](https://github.com/institutoazmina/penhas-app/pull/427)
