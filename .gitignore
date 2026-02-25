@@ -220,3 +220,6 @@ lib/firebase_options.dart
 
 # Ignore coverage-related files
 /coverage/
+
+# FVM Version Cache
+.fvm/

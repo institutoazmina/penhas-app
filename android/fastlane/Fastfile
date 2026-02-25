@@ -5,17 +5,19 @@ skip_docs
 default_platform(:android)
 
 testers_group = 'androidtestersgroup'
+$api_base_url = ENV['PENHAS_BASE_URL']
 
 platform :android do
 
   desc 'Build release APK'
   lane :build_apk do
-    sh("flutter build apk --release --dart-define=PENHAS_BASE_URL=#{$api_base_url}")
+    puts "Building release APK, API Base URL: #{$api_base_url}"
+    sh("fvm flutter build apk --release --dart-define=PENHAS_BASE_URL=#{$api_base_url}")
   end
 
   desc 'Build release Bundle'
   lane :build_bundle do
-    sh("flutter build appbundle --release --dart-define=PENHAS_BASE_URL=#{$api_base_url}")
+    sh("fvm flutter build appbundle --release --dart-define=PENHAS_BASE_URL=#{$api_base_url}")
   end
 
   desc 'Distribute to Android beta testers'

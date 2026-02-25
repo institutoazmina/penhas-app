@@ -3,6 +3,8 @@ import 'package:flutter_html/flutter_html.dart';
 
 import '../../../../../shared/design_system/text_styles.dart';
 import '../../../../../shared/design_system/widgets/badges/user_close_badge_widget.dart';
+import '../../../../../shared/navigation/app_navigator.dart';
+import '../../../../../shared/utils/html_link.dart';
 import '../../../data/models/tweet_model.dart';
 import '../../../domain/entities/tweet_badge_entity.dart';
 
@@ -23,6 +25,12 @@ class TweetBody extends StatelessWidget {
       style: {
         'body': Style.fromTextStyle(kTextStyleFeedTweetBody),
         'iframe': Style(display: Display.none),
+      },
+      onLinkTap: (url, attributes, element) {
+        final sanitizedUrl = sanitizeHtmlUrl(url);
+        if (sanitizedUrl != null) {
+          AppNavigator.launchURL(sanitizedUrl);
+        }
       },
     );
 
