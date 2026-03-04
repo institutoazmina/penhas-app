@@ -120,9 +120,9 @@ abstract class FeedControllerBase with Store, MapFailureMessage {
   }
 
   void _registerDataSource() {
-    _streamCache = _useCase
-        .tweetList()
-        .listen((cache) => state = FeedState.loaded(cache.tweets));
+    _streamCache = _useCase.tweetList().listen(
+      (cache) => state = FeedState.loaded(cache.tweets.toList(growable: false)),
+    );
 
     fetchNextPage();
   }
