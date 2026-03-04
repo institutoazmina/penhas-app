@@ -63,6 +63,9 @@ jobs:
       - name: Install project dependencies
         run: flutter pub get
 
+      - name: Install FlutterFire CLI
+        run: dart pub global activate flutterfire_cli
+
       - name: Install Fastlane dependencies
         run: cd ./ios && bundle install
 
