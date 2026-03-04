@@ -108,17 +108,40 @@ class FeedUseCases {
     final option = TweetCreateRequestOption(message: content);
     final result = await _repository.create(option: option);
 
-    return result.map(_insertCreatedTweetIntoCache);
+    return result.map((tweet) {
+      _insertCreatedTweetIntoCache(tweet);
+      _tweetListStreamCtrl.add(FeedCache(tweets: _tweetCacheFetch));
+      return FeedCache(tweets: _tweetCacheFetch);
+    });
   }
 
   Future<Either<Failure, FeedCache>> delete(TweetEntity tweet) async {
+    final previousTweetCacheFetch = _tweetCacheFetch.toList();
+    final previousTweetReplyMap = _tweetReplyMap.map(
+      (key, value) => MapEntry(key, value.toList()),
+    );
+
+    _removeFromCache(tweet);
+    _updateStream();
+
     final option = TweetEngageRequestOption(tweetId: tweet.id, message: '');
     final result = await _repository.delete(option: option);
 
-    return result.map((session) {
-      _removeFromCache(tweet);
-      return FeedCache(tweets: _tweetCacheFetch);
-    });
+    return result.fold(
+      (failure) {
+        _tweetCacheFetch = previousTweetCacheFetch;
+        _tweetReplyMap
+          ..clear()
+          ..addAll(previousTweetReplyMap);
+        _updateStream();
+        _tweetDetailsStreamCtrl.add(_tweetReplyMap);
+        return left(failure);
+      },
+      (_) {
+        _tweetListStreamCtrl.add(FeedCache(tweets: _tweetCacheFetch));
+        return right(FeedCache(tweets: _tweetCacheFetch));
+      },
+    );
   }
 
   Future<Either<Failure, FeedCache>> like(TweetEntity tweet) async {
