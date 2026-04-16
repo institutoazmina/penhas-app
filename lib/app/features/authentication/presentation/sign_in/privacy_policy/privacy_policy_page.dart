@@ -22,7 +22,7 @@ class PrivacyPolicyPage extends StatelessWidget {
       ),
       body: WebViewWidget(
         controller: WebViewController()
-          ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..setJavaScriptMode(JavaScriptMode.disabled)
           ..loadRequest(baseUrl.resolve('web/politica-privacidade')),
       ),
     );
