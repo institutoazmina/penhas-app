@@ -18,13 +18,12 @@ on:
 
 # Define permissions for the GITHUB_TOKEN
 permissions:
-  contents: read  # Only read access to the repository contents
-  actions: write  # Allow writing to actions (if needed)
-  checks: write   # Allow writing to checks (if needed)
+  contents: write # Required to commit the version bump
+  actions: write # Allow writing to actions (if needed)
+  checks: write # Allow writing to checks (if needed)
   # Add other permissions as needed
 
 jobs:
-
   distribute-android:
     if: ${{ github.event.inputs.platform == 'android' || github.event.inputs.platform == 'all' }}
     uses: ./.github/workflows/distribute-flutter-android.yml
