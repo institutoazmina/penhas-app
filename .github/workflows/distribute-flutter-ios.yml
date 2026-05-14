@@ -36,7 +36,7 @@ jobs:
     
     # Add permissions here
     permissions:
-      contents: read  # Only read access to the repository contents
+      contents: write  # Push back the bumped pubspec build number
       actions: write  # If you need to trigger other workflows
       checks: write   # If you need to create or update checks
       deployments: write  # If you need to create deployments
@@ -47,9 +47,6 @@ jobs:
 
       - name: Select Xcode version
         run: sudo xcode-select -s /Applications/Xcode_16.3.app
-
-      - name: Install iOS platform
-        run: xcodebuild -downloadPlatform iOS
 
       - name: Retrieve Flutter version from FVM config
         uses: kuhnroyal/flutter-fvm-config-action@v1
