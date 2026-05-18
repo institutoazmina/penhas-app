@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/privacy_policy/privacy_policy_page.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -22,6 +23,28 @@ void main() {
             path: 'web/politica-privacidade',
           ),
         ),
+      );
+    });
+
+    testWidgets('should configure WebView with JavaScript disabled',
+        (tester) async {
+      final fakePlatform = FakeWebViewPlatform();
+      WebViewPlatform.instance = fakePlatform;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: PrivacyPolicyPage(
+            baseUrl: Uri(
+              scheme: 'https',
+              host: 'www.example.com',
+            ),
+          ),
+        ),
+      );
+
+      expect(
+        fakePlatform.lastController?.lastJavaScriptMode,
+        equals(JavaScriptMode.disabled),
       );
     });
   });
