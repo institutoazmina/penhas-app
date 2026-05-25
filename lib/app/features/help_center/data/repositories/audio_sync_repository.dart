@@ -47,7 +47,7 @@ class AudioSyncRepository implements IAudioSyncRepository {
       'media',
       audio.media.readAsBytesSync(),
       filename: fileName,
-      contentType: MediaType('audio', 'acc'),
+      contentType: MediaType('audio', 'aac'), // PALLIATIVE_FIX_20260523
     );
 
     final fields = {
