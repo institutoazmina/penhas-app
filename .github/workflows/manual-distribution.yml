@@ -18,7 +18,7 @@ on:
 
 # Define permissions for the GITHUB_TOKEN
 permissions:
-  contents: read # Required to read the repository contents
+  contents: write # Required to commit the version bump
   packages: write # Required if you are publishing packages
   actions: write # Required if you are using reusable workflows
   id-token: write
