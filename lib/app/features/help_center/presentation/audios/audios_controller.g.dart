@@ -120,6 +120,22 @@ mixin _$AudiosController on _AudiosControllerBase, Store {
     });
   }
 
+  late final _$pendingProgressAtom =
+      Atom(name: '_AudiosControllerBase.pendingProgress', context: context);
+
+  @override
+  double get pendingProgress {
+    _$pendingProgressAtom.reportRead();
+    return super.pendingProgress;
+  }
+
+  @override
+  set pendingProgress(double value) {
+    _$pendingProgressAtom.reportWrite(value, super.pendingProgress, () {
+      super.pendingProgress = value;
+    });
+  }
+
   late final _$loadPageAsyncAction =
       AsyncAction('_AudiosControllerBase.loadPage', context: context);
 
@@ -143,6 +159,7 @@ errorMessage: ${errorMessage},
 currentState: ${currentState},
 actionSheetState: ${actionSheetState},
 playingAudioState: ${playingAudioState},
+pendingProgress: ${pendingProgress},
 loadState: ${loadState},
 updateState: ${updateState}
     ''';

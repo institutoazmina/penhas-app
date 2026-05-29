@@ -79,9 +79,6 @@ class _$HelpCenterStateCopyWithImpl<$Res, $Val extends HelpCenterState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of HelpCenterState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -98,9 +95,6 @@ class __$$InitialImplCopyWithImpl<$Res>
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of HelpCenterState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -213,8 +207,6 @@ class __$$GuardianTriggeredImplCopyWithImpl<$Res>
       $Res Function(_$GuardianTriggeredImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of HelpCenterState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -253,9 +245,7 @@ class _$GuardianTriggeredImpl implements _GuardianTriggered {
   @override
   int get hashCode => Object.hash(runtimeType, action);
 
-  /// Create a copy of HelpCenterState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$GuardianTriggeredImplCopyWith<_$GuardianTriggeredImpl> get copyWith =>
@@ -337,10 +327,7 @@ abstract class _GuardianTriggered implements HelpCenterState {
       _$GuardianTriggeredImpl;
 
   GuardianAlertMessageAction get action;
-
-  /// Create a copy of HelpCenterState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$GuardianTriggeredImplCopyWith<_$GuardianTriggeredImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -362,8 +349,6 @@ class __$$CallingPoliceImplCopyWithImpl<$Res>
       _$CallingPoliceImpl _value, $Res Function(_$CallingPoliceImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of HelpCenterState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -403,9 +388,7 @@ class _$CallingPoliceImpl implements _CallingPolice {
   @override
   int get hashCode => Object.hash(runtimeType, callingNumber);
 
-  /// Create a copy of HelpCenterState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$CallingPoliceImplCopyWith<_$CallingPoliceImpl> get copyWith =>
@@ -486,10 +469,7 @@ abstract class _CallingPolice implements HelpCenterState {
       _$CallingPoliceImpl;
 
   String get callingNumber;
-
-  /// Create a copy of HelpCenterState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$CallingPoliceImplCopyWith<_$CallingPoliceImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

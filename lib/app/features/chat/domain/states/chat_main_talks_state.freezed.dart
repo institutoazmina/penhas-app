@@ -84,9 +84,6 @@ class _$ChatMainTalksStateCopyWithImpl<$Res, $Val extends ChatMainTalksState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of ChatMainTalksState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -103,9 +100,6 @@ class __$$InitialImplCopyWithImpl<$Res>
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of ChatMainTalksState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -220,9 +214,6 @@ class __$$LoadingImplCopyWithImpl<$Res>
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of ChatMainTalksState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -340,8 +331,6 @@ class __$$LoadedImplCopyWithImpl<$Res>
       _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ChatMainTalksState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -386,9 +375,7 @@ class _$LoadedImpl implements _Loaded {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_tiles));
 
-  /// Create a copy of ChatMainTalksState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
@@ -473,10 +460,7 @@ abstract class _Loaded implements ChatMainTalksState {
   const factory _Loaded(final List<ChatMainTileEntity> tiles) = _$LoadedImpl;
 
   List<ChatMainTileEntity> get tiles;
-
-  /// Create a copy of ChatMainTalksState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -498,8 +482,6 @@ class __$$ErrorDetailsImplCopyWithImpl<$Res>
       _$ErrorDetailsImpl _value, $Res Function(_$ErrorDetailsImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ChatMainTalksState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -538,9 +520,7 @@ class _$ErrorDetailsImpl implements _ErrorDetails {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  /// Create a copy of ChatMainTalksState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ErrorDetailsImplCopyWith<_$ErrorDetailsImpl> get copyWith =>
@@ -625,10 +605,7 @@ abstract class _ErrorDetails implements ChatMainTalksState {
   const factory _ErrorDetails(final String message) = _$ErrorDetailsImpl;
 
   String get message;
-
-  /// Create a copy of ChatMainTalksState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ErrorDetailsImplCopyWith<_$ErrorDetailsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

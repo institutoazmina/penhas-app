@@ -73,9 +73,6 @@ class _$ChatMainSecurityStateCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of ChatMainSecurityState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -92,9 +89,6 @@ class __$$OnlySupportImplCopyWithImpl<$Res>
   __$$OnlySupportImplCopyWithImpl(
       _$OnlySupportImpl _value, $Res Function(_$OnlySupportImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of ChatMainSecurityState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -197,9 +191,6 @@ class __$$SupportAndPrivateImplCopyWithImpl<$Res>
   __$$SupportAndPrivateImplCopyWithImpl(_$SupportAndPrivateImpl _value,
       $Res Function(_$SupportAndPrivateImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of ChatMainSecurityState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

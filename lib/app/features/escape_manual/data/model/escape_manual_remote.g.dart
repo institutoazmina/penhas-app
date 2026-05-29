@@ -41,12 +41,21 @@ EscapeManualAssistantRemoteModel _$EscapeManualAssistantRemoteModelFromJson(
     );
 
 Map<String, dynamic> _$EscapeManualAssistantRemoteModelToJson(
-        EscapeManualAssistantRemoteModel instance) =>
-    <String, dynamic>{
-      'title': instance.title,
-      if (instance.subtitle case final value?) 'subtitle': value,
-      'quiz_session': instance.quizSession,
-    };
+    EscapeManualAssistantRemoteModel instance) {
+  final val = <String, dynamic>{
+    'title': instance.title,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('subtitle', instance.subtitle);
+  val['quiz_session'] = instance.quizSession;
+  return val;
+}
 
 EscapeManualTaskRemoteModel _$EscapeManualTaskRemoteModelFromJson(
         Map<String, dynamic> json) =>
@@ -69,22 +78,30 @@ EscapeManualTaskRemoteModel _$EscapeManualTaskRemoteModelFromJson(
     );
 
 Map<String, dynamic> _$EscapeManualTaskRemoteModelToJson(
-        EscapeManualTaskRemoteModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'tipo': _$EscapeManualTaskTypeEnumMap[instance.type]!,
-      if (instance.rawType case final value?) 'rawType': value,
-      'agrupador': instance.group,
-      if (const JsonEmptyStringToNullConverter().toJson(instance.title)
-          case final value?)
-        'titulo': value,
-      'descricao': instance.description,
-      if (instance.value case final value?) 'campo_livre': value,
-      if (const JsonBoolConverter().toJson(instance.isDone) case final value?)
-        'checkbox_feito': value,
-      'atualizado_em':
-          const JsonSecondsFromEpochConverter().toJson(instance.updatedAt),
-    };
+    EscapeManualTaskRemoteModel instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'tipo': _$EscapeManualTaskTypeEnumMap[instance.type]!,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('rawType', instance.rawType);
+  val['agrupador'] = instance.group;
+  writeNotNull(
+      'titulo', const JsonEmptyStringToNullConverter().toJson(instance.title));
+  val['descricao'] = instance.description;
+  writeNotNull('campo_livre', instance.value);
+  writeNotNull(
+      'checkbox_feito', const JsonBoolConverter().toJson(instance.isDone));
+  val['atualizado_em'] =
+      const JsonSecondsFromEpochConverter().toJson(instance.updatedAt);
+  return val;
+}
 
 const _$EscapeManualTaskTypeEnumMap = {
   EscapeManualTaskType.unknown: 'unknown',
