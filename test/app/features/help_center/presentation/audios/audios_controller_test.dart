@@ -9,7 +9,6 @@ import 'package:penhas/app/features/help_center/data/models/audio_model.dart';
 import 'package:penhas/app/features/help_center/data/repositories/audios_repository.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_play_tile_entity.dart';
-import 'package:penhas/app/features/help_center/domain/states/audio_playing.dart';
 import 'package:penhas/app/features/help_center/domain/states/audios_state.dart';
 import 'package:penhas/app/features/help_center/presentation/audios/audios_controller.dart';
 
