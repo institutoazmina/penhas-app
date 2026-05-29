@@ -585,6 +585,7 @@ class MainboardModule extends Module {
           (i) => AudiosController(
             audiosRepository: i.get<IAudiosRepository>(),
             audioPlayServices: i.get<IAudioPlayServices>(),
+            audioSyncManager: i.get<IAudioSyncManager>(),
           ),
         ),
         Bind.factory(

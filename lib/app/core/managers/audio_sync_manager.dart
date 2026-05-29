@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'dart:collection';
 import 'dart:io';
 
-import 'package:collection/collection.dart' show IterableExtension;
+import 'package:background_downloader/background_downloader.dart';
+import 'package:crypto/crypto.dart';
 import 'package:dartz/dartz.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -11,6 +11,7 @@ import '../../features/help_center/data/repositories/audio_sync_repository.dart'
 import '../../features/help_center/domain/entities/audio_entity.dart';
 import '../../shared/logger/log.dart';
 import '../error/failures.dart';
+import '../network/api_server_configure.dart';
 
 abstract class IAudioSyncManager {
   Future<String> audioFile({
@@ -20,23 +21,107 @@ abstract class IAudioSyncManager {
   });
   Future<bool> syncAudio();
   Future<Either<Failure, File>> cache(AudioEntity audio);
+  Future<List<Map<String, String>>> pendingUploads();
+
+  /// Broadcast re-emit of `FileDownloader().updates`. The manager owns the
+  /// single subscription to that single-subscription stream; consumers (e.g.
+  /// AudiosController) listen here instead of subscribing to FileDownloader
+  /// directly — a second direct subscription throws "Stream has already been
+  /// listened to".
+  Stream<TaskUpdate> get updates;
+  void dispose();
 }
 
 class AudioSyncManager implements IAudioSyncManager {
-  AudioSyncManager({required IAudioSyncRepository audioRepository})
-      : _audioRepository = audioRepository {
+  AudioSyncManager({
+    required IAudioSyncRepository audioRepository,
+    required IApiServerConfigure serverConfiguration,
+  })  : _audioRepository = audioRepository,
+        _serverConfiguration = serverConfiguration {
     _init();
   }
 
-  bool _syncAudioRunning = false;
-  // ignore: unused_field
-  late Timer _syncTimer;
-  final _pendingUploadAudio = Queue<File>();
   final IAudioSyncRepository _audioRepository;
+  final IApiServerConfigure _serverConfiguration;
+  StreamSubscription<TaskUpdate>? _updatesSubscription;
+  final StreamController<TaskUpdate> _updatesController =
+      StreamController<TaskUpdate>.broadcast();
+
+  @override
+  Stream<TaskUpdate> get updates => _updatesController.stream;
 
   Future _init() async {
-    await loadAudioQueue();
-    setupUploadTimer();
+    _updatesSubscription = FileDownloader().updates.listen(_handleUpdate);
+    await _migrateOrphanFiles();
+  }
+
+  void _handleUpdate(TaskUpdate update) {
+    // Re-broadcast every update so multiple consumers can react.
+    if (!_updatesController.isClosed) {
+      _updatesController.add(update);
+    }
+    if (update is TaskStatusUpdate && update.status == TaskStatus.complete) {
+      update.task.filePath().then((path) {
+        final file = File(path);
+        if (file.existsSync()) {
+          file.deleteSync();
+        }
+      });
+    }
+    if (update is TaskStatusUpdate && update.status == TaskStatus.failed) {
+      logError('Upload failed: ${update.task.taskId} - ${update.task.url}');
+    }
+  }
+
+  Future<void> _migrateOrphanFiles() async {
+    final files = await dirAudioUploadContent();
+    for (final file in files) {
+      await _enqueueFile(file);
+    }
+  }
+
+  Future<void> _enqueueFile(File file) async {
+    if (file.statSync().size < 30) {
+      file.deleteSync();
+      return;
+    }
+
+    final fileName = file.name;
+    final parts = fileName.split(RegExp('[_.]'));
+    if (parts.length < 3) return;
+
+    final epoch = parts[0];
+    final eventId = parts[1];
+    final sequence = parts[2];
+    final createdAt = mapEpochToUTC(epoch);
+    final fileSha1 = sha1.convert(file.readAsBytesSync()).toString();
+    final baseUri = _serverConfiguration.baseUri;
+    final apiToken = await _serverConfiguration.apiToken ?? '';
+    final userAgent = await _serverConfiguration.userAgent;
+
+    final task = UploadTask.fromFile(
+      file: file,
+      taskId: fileName,
+      url: baseUri.replace(path: '/me/audios').toString(),
+      fileField: 'media',
+      httpRequestMethod: 'POST',
+      fields: {
+        'sha1': fileSha1,
+        'event_id': eventId,
+        'event_sequence': sequence,
+        'cliente_created_at': createdAt,
+        'current_time': DateTime.now().toUtc().toIso8601String(),
+      },
+      headers: {
+        'X-Api-Key': apiToken,
+        'User-Agent': userAgent,
+      },
+      updates: Updates.statusAndProgress,
+      retries: 5,
+      requiresWiFi: false,
+    );
+
+    await FileDownloader().enqueue(task);
   }
 
   @override
@@ -63,15 +148,40 @@ class AudioSyncManager implements IAudioSyncManager {
   @override
   Future<bool> syncAudio() async {
     try {
-      await loadAudioQueue();
-      setupUploadTimer();
-      syncAudios();
-
+      final files = await dirAudioUploadContent();
+      for (final file in files) {
+        await _enqueueFile(file);
+      }
       return true;
     } catch (e, stack) {
       logError(e, stack);
       return true;
     }
+  }
+
+  @override
+  Future<List<Map<String, String>>> pendingUploads() async {
+    try {
+      final records = await FileDownloader().database.allRecords();
+      return records
+          .where((r) =>
+              r.status == TaskStatus.enqueued ||
+              r.status == TaskStatus.running)
+          .map((r) => {
+                'taskId': r.taskId,
+                'status': r.status.name,
+                'progress': (r.progress * 100).toStringAsFixed(0),
+              })
+          .toList();
+    } catch (_) {
+      return [];
+    }
+  }
+
+  @override
+  void dispose() {
+    _updatesSubscription?.cancel();
+    _updatesController.close();
   }
 
   @override
@@ -94,116 +204,6 @@ class AudioSyncManager implements IAudioSyncManager {
       file.deleteSync();
       return left(FileSystemFailure());
     }
-  }
-}
-
-extension _AudioSyncManager on AudioSyncManager {
-  Future<File> cacheFile(AudioEntity audio) async {
-    final fileName = [audio.id, 'cached'].join('.');
-    final path =
-        await getTemporaryDirectory().then((dir) => join(dir.path, fileName));
-
-    final file = File(path);
-
-    if (!file.existsSync()) {
-      file.createSync(recursive: true);
-    }
-
-    return file;
-  }
-
-  void setupUploadTimer() {
-    // Why this block is commented?
-    // if (_syncTimer != null) {
-    //   return;
-    // }
-
-    // _syncTimer = Timer.periodic(
-    //   Duration(seconds: 10),
-    //   (timer) async {
-    //     await loadAudioQueue();
-
-    //     if (_pendingUploadAudio?.isEmpty ?? true) {
-    //       timer.cancel();
-    //       if (_syncTimer != null) {
-    //         _syncTimer.cancel();
-    //         _syncTimer = null;
-    //       }
-    //     }
-
-    //     cleanCache();
-    //     syncAudios();
-    //   },
-    // );
-  }
-
-  // ignore: unused_element
-  Future<void> cleanCache() async {
-    final DateTime purgeCacheTime =
-        DateTime.now().subtract(const Duration(days: 3));
-
-    final List<File> files = await getTemporaryDirectory()
-        .then((dir) => dir.listSync(recursive: true))
-        .then((value) => value.map((e) => File.fromUri(e.uri)).toList());
-
-    files.retainWhere((f) => f.path.endsWith('.cached'));
-    // se o último acesso for maior que o purgeCacheTime
-    files.retainWhere(
-      (f) => purgeCacheTime.compareTo(f.statSync().accessed) > 0,
-    );
-    files.map((e) => e.deleteSync());
-  }
-
-  Future<void> syncAudios() async {
-    if (_syncAudioRunning || _pendingUploadAudio.isEmpty) {
-      return;
-    }
-
-    _syncAudioRunning = true;
-    setupUploadTimer();
-    try {
-      while (_pendingUploadAudio.isNotEmpty) {
-        final file = _pendingUploadAudio.removeFirst();
-        await _syncAudio(file);
-      }
-    } catch (e, stack) {
-      logError(e, stack);
-    }
-
-    _pendingUploadAudio.retainWhere((e) => e.existsSync());
-    _syncAudioRunning = false;
-  }
-
-  Future<void> _syncAudio(File file) async {
-    try {
-      if (file.statSync().size < 30) {
-        file.deleteSync();
-        return;
-      }
-
-      final fileName = file.name;
-      final parts = fileName.split(RegExp('[_.]'));
-      final audio = AudioData(
-        media: file,
-        eventId: parts[1],
-        sequence: parts[2],
-        createdAt: mapEpochToUTC(parts[0]),
-      );
-
-      final result = await _audioRepository.upload(audio);
-      result.fold(
-        (l) => handleUploadFailure(l, file),
-        (r) => file.deleteSync(),
-      );
-    } catch (e, stack) {
-      logError(e, stack);
-    }
-
-    return Future.value();
-  }
-
-  void handleUploadFailure(Failure failure, File file) {
-    logError(failure);
   }
 
   String mapEpochToUTC(String time) {
@@ -230,23 +230,26 @@ extension _AudioSyncManager on AudioSyncManager {
     files.sort((a, b) => a.path.compareTo(b.path));
     return files;
   }
+}
 
-  Future<void> loadAudioQueue() async {
-    final dirs = await dirAudioUploadContent();
-    for (final file in dirs) {
-      final status = _pendingUploadAudio.firstWhereOrNull(
-        (e) => e.path == file.path,
-      );
-
-      if (status == null) {
-        _pendingUploadAudio.add(file);
-      }
-    }
+extension _FileExtension on File {
+  String get name {
+    return path.split(Platform.pathSeparator).last;
   }
 }
 
-extension _FileExtention on File {
-  String get name {
-    return path.split(Platform.pathSeparator).last;
+extension _AudioSyncManager on AudioSyncManager {
+  Future<File> cacheFile(AudioEntity audio) async {
+    final fileName = [audio.id, 'cached'].join('.');
+    final path =
+        await getTemporaryDirectory().then((dir) => join(dir.path, fileName));
+
+    final file = File(path);
+
+    if (!file.existsSync()) {
+      file.createSync(recursive: true);
+    }
+
+    return file;
   }
 }
