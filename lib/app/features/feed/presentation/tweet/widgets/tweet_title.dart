@@ -202,6 +202,7 @@ class TweetTitle extends StatelessWidget {
           SizedBox(
             height: 38,
             child: IconButton(
+              tooltip: 'Mais opções',
               icon: const Icon(
                 Icons.more_vert,
               ),
@@ -226,6 +227,7 @@ class TweetTitle extends StatelessWidget {
           Container()
         else
           IconButton(
+            tooltip: 'Mais opções',
             icon: const Icon(Icons.more_vert),
             onPressed: () => _showTweetAction(),
           ),

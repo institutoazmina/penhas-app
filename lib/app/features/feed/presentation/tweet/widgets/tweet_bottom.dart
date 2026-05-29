@@ -48,6 +48,7 @@ class _TweetBottomState extends State<TweetBottom> {
         children: <Widget>[
           IconButton(
             padding: const EdgeInsets.only(right: 16.0),
+            tooltip: _isLiked ? 'Descurtir' : 'Curtir',
             icon: _isLiked
                 ? const Icon(
                     Icons.favorite,
@@ -68,6 +69,7 @@ class _TweetBottomState extends State<TweetBottom> {
           if (_isReplyVisible)
             IconButton(
               padding: const EdgeInsets.only(right: 16.0),
+              tooltip: 'Comentar',
               icon: const Icon(
                 Icons.chat_bubble_outline,
                 size: 30.0,

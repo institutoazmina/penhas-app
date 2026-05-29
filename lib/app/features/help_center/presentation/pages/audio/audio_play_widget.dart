@@ -40,6 +40,11 @@ class AudioPlayWidget extends StatelessWidget {
                     _buildUploadIndicator()
                   else ...[
                     IconButton(
+                      // Accessibility label so the icon-only control is
+                      // reachable by name (tests / screen readers).
+                      tooltip: audioPlay.audio.canPlay
+                          ? 'Ouvir áudio'
+                          : 'Solicitar áudio',
                       icon: _buildPlayIcone,
                       color: isPlaying
                           ? DesignSystemColors.ligthPurple
@@ -89,6 +94,7 @@ class AudioPlayWidget extends StatelessWidget {
                 height: 44,
                 width: 44,
                 child: IconButton(
+                  tooltip: 'Mais opções',
                   icon: const Icon(Icons.more_vert),
                   onPressed: () =>
                       audioPlay.onActionSheet(audioPlay.audio),
