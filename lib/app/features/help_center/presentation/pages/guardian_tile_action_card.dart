@@ -92,6 +92,7 @@ class GuardianTileActionCard extends StatelessWidget {
     return optionOf(action).fold(
       () => Container(),
       (a) => IconButton(
+        tooltip: 'Alterar nome',
         icon: _canEditIcon,
         onPressed: () => _onEditPressed(a),
       ),
@@ -102,6 +103,7 @@ class GuardianTileActionCard extends StatelessWidget {
     return optionOf(action).fold(
       () => Container(),
       (a) => IconButton(
+        tooltip: 'Excluir guardião',
         icon: _canDeleteIcon,
         onPressed: () => _onDeletePressed(a),
       ),
@@ -112,6 +114,7 @@ class GuardianTileActionCard extends StatelessWidget {
     return optionOf(action).fold(
       () => Container(),
       (a) => IconButton(
+        tooltip: 'Reenviar convite',
         icon: _canResendIcon,
         onPressed: () => _onResendPressed(a),
       ),

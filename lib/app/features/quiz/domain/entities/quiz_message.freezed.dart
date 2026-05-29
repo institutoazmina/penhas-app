@@ -90,9 +90,7 @@ mixin _$QuizMessage {
   }) =>
       throw _privateConstructorUsedError;
 
-  /// Create a copy of QuizMessage
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $QuizMessageCopyWith<QuizMessage> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -116,8 +114,6 @@ class _$QuizMessageCopyWithImpl<$Res, $Val extends QuizMessage>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of QuizMessage
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -151,8 +147,6 @@ class __$$TextMessageImplCopyWithImpl<$Res>
       _$TextMessageImpl _value, $Res Function(_$TextMessageImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of QuizMessage
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -202,9 +196,7 @@ class _$TextMessageImpl extends _TextMessage {
   @override
   int get hashCode => Object.hash(runtimeType, reference, content);
 
-  /// Create a copy of QuizMessage
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$TextMessageImplCopyWith<_$TextMessageImpl> get copyWith =>
@@ -316,11 +308,8 @@ abstract class _TextMessage extends QuizMessage {
   @override
   String get reference;
   String get content;
-
-  /// Create a copy of QuizMessage
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$TextMessageImplCopyWith<_$TextMessageImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -348,8 +337,6 @@ class __$$SentMessageImplCopyWithImpl<$Res>
       _$SentMessageImpl _value, $Res Function(_$SentMessageImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of QuizMessage
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -421,9 +408,7 @@ class _$SentMessageImpl extends _SentMessage {
   int get hashCode =>
       Object.hash(runtimeType, reference, content, answer, status);
 
-  /// Create a copy of QuizMessage
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$SentMessageImplCopyWith<_$SentMessageImpl> get copyWith =>
@@ -539,11 +524,8 @@ abstract class _SentMessage extends QuizMessage {
   String get content;
   UserAnswer? get answer;
   AnswerStatus get status;
-
-  /// Create a copy of QuizMessage
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$SentMessageImplCopyWith<_$SentMessageImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -569,8 +551,6 @@ class __$$HorizontalButtonsMessageImplCopyWithImpl<$Res>
       $Res Function(_$HorizontalButtonsMessageImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of QuizMessage
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -627,9 +607,7 @@ class _$HorizontalButtonsMessageImpl extends _HorizontalButtonsMessage {
   int get hashCode => Object.hash(
       runtimeType, reference, const DeepCollectionEquality().hash(_buttons));
 
-  /// Create a copy of QuizMessage
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$HorizontalButtonsMessageImplCopyWith<_$HorizontalButtonsMessageImpl>
@@ -743,11 +721,8 @@ abstract class _HorizontalButtonsMessage extends QuizMessage {
   @override
   String get reference;
   List<ButtonOption> get buttons;
-
-  /// Create a copy of QuizMessage
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$HorizontalButtonsMessageImplCopyWith<_$HorizontalButtonsMessageImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -771,8 +746,6 @@ class __$$SingleChoiceMessageImplCopyWithImpl<$Res>
       $Res Function(_$SingleChoiceMessageImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of QuizMessage
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -829,9 +802,7 @@ class _$SingleChoiceMessageImpl extends _SingleChoiceMessage {
   int get hashCode => Object.hash(
       runtimeType, reference, const DeepCollectionEquality().hash(_options));
 
-  /// Create a copy of QuizMessage
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$SingleChoiceMessageImplCopyWith<_$SingleChoiceMessageImpl> get copyWith =>
@@ -944,11 +915,8 @@ abstract class _SingleChoiceMessage extends QuizMessage {
   @override
   String get reference;
   List<MessageOption> get options;
-
-  /// Create a copy of QuizMessage
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$SingleChoiceMessageImplCopyWith<_$SingleChoiceMessageImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -973,8 +941,6 @@ class __$$MultipleChoiceMessageImplCopyWithImpl<$Res>
       $Res Function(_$MultipleChoiceMessageImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of QuizMessage
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1031,9 +997,7 @@ class _$MultipleChoiceMessageImpl extends _MultipleChoiceMessage {
   int get hashCode => Object.hash(
       runtimeType, reference, const DeepCollectionEquality().hash(_options));
 
-  /// Create a copy of QuizMessage
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$MultipleChoiceMessageImplCopyWith<_$MultipleChoiceMessageImpl>
@@ -1147,11 +1111,8 @@ abstract class _MultipleChoiceMessage extends QuizMessage {
   @override
   String get reference;
   List<MessageOption> get options;
-
-  /// Create a copy of QuizMessage
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$MultipleChoiceMessageImplCopyWith<_$MultipleChoiceMessageImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -1200,9 +1161,7 @@ mixin _$MessageOption {
   }) =>
       throw _privateConstructorUsedError;
 
-  /// Create a copy of MessageOption
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $MessageOptionCopyWith<MessageOption> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1226,8 +1185,6 @@ class _$MessageOptionCopyWithImpl<$Res, $Val extends MessageOption>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of MessageOption
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1266,8 +1223,6 @@ class __$$MessageOptionImplCopyWithImpl<$Res>
       _$MessageOptionImpl _value, $Res Function(_$MessageOptionImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of MessageOption
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1315,9 +1270,7 @@ class _$MessageOptionImpl extends _MessageOption {
   @override
   int get hashCode => Object.hash(runtimeType, label, value);
 
-  /// Create a copy of MessageOption
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$MessageOptionImplCopyWith<_$MessageOptionImpl> get copyWith =>
@@ -1397,11 +1350,8 @@ abstract class _MessageOption extends MessageOption {
   String get label;
   @override
   String get value;
-
-  /// Create a copy of MessageOption
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$MessageOptionImplCopyWith<_$MessageOptionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1427,8 +1377,6 @@ class __$$ButtonOptionImplCopyWithImpl<$Res>
       _$ButtonOptionImpl _value, $Res Function(_$ButtonOptionImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of MessageOption
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1452,8 +1400,6 @@ class __$$ButtonOptionImplCopyWithImpl<$Res>
     ));
   }
 
-  /// Create a copy of MessageOption
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $ButtonActionCopyWith<$Res>? get action {
@@ -1499,9 +1445,7 @@ class _$ButtonOptionImpl extends ButtonOption {
   @override
   int get hashCode => Object.hash(runtimeType, label, value, action);
 
-  /// Create a copy of MessageOption
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ButtonOptionImplCopyWith<_$ButtonOptionImpl> get copyWith =>
@@ -1583,11 +1527,8 @@ abstract class ButtonOption extends MessageOption {
   @override
   String get value;
   ButtonAction? get action;
-
-  /// Create a copy of MessageOption
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ButtonOptionImplCopyWith<_$ButtonOptionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1629,9 +1570,7 @@ mixin _$ButtonAction {
   }) =>
       throw _privateConstructorUsedError;
 
-  /// Create a copy of ButtonAction
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $ButtonActionCopyWith<ButtonAction> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1655,8 +1594,6 @@ class _$ButtonActionCopyWithImpl<$Res, $Val extends ButtonAction>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of ButtonAction
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1695,8 +1632,6 @@ class __$$NavigateActionImplCopyWithImpl<$Res>
       _$NavigateActionImpl _value, $Res Function(_$NavigateActionImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ButtonAction
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1746,9 +1681,7 @@ class _$NavigateActionImpl extends _NavigateAction {
   @override
   int get hashCode => Object.hash(runtimeType, route, readableResult);
 
-  /// Create a copy of ButtonAction
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$NavigateActionImplCopyWith<_$NavigateActionImpl> get copyWith =>
@@ -1822,11 +1755,8 @@ abstract class _NavigateAction extends ButtonAction {
   String get route;
   @override
   String get readableResult;
-
-  /// Create a copy of ButtonAction
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$NavigateActionImplCopyWith<_$NavigateActionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -72,9 +72,6 @@ class _$AudioPlayingCopyWithImpl<$Res, $Val extends AudioPlaying>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of AudioPlaying
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -90,9 +87,6 @@ class __$$NoneImplCopyWithImpl<$Res>
     implements _$$NoneImplCopyWith<$Res> {
   __$$NoneImplCopyWithImpl(_$NoneImpl _value, $Res Function(_$NoneImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of AudioPlaying
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -198,8 +192,6 @@ class __$$PlayingImplCopyWithImpl<$Res>
       _$PlayingImpl _value, $Res Function(_$PlayingImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of AudioPlaying
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -238,9 +230,7 @@ class _$PlayingImpl implements _Playing {
   @override
   int get hashCode => Object.hash(runtimeType, audio);
 
-  /// Create a copy of AudioPlaying
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$PlayingImplCopyWith<_$PlayingImpl> get copyWith =>
@@ -313,10 +303,7 @@ abstract class _Playing implements AudioPlaying {
   const factory _Playing(final AudioEntity audio) = _$PlayingImpl;
 
   AudioEntity get audio;
-
-  /// Create a copy of AudioPlaying
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$PlayingImplCopyWith<_$PlayingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

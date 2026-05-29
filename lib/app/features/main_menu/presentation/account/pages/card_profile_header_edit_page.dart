@@ -23,6 +23,7 @@ class CardProfileHeaderEditPage extends StatelessWidget {
           Container()
         else
           IconButton(
+            tooltip: 'Editar $title',
             icon: SvgPicture.asset(
               'assets/images/svg/profile/edit.svg',
               colorFilter: const ColorFilter.mode(

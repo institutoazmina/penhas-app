@@ -56,9 +56,7 @@ mixin _$FeedRouterType {
   }) =>
       throw _privateConstructorUsedError;
 
-  /// Create a copy of FeedRouterType
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $FeedRouterTypeCopyWith<FeedRouterType> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -82,8 +80,6 @@ class _$FeedRouterTypeCopyWithImpl<$Res, $Val extends FeedRouterType>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of FeedRouterType
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -116,8 +112,6 @@ class __$$ChatImplCopyWithImpl<$Res>
   __$$ChatImplCopyWithImpl(_$ChatImpl _value, $Res Function(_$ChatImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of FeedRouterType
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -157,9 +151,7 @@ class _$ChatImpl implements _Chat {
   @override
   int get hashCode => Object.hash(runtimeType, clientId);
 
-  /// Create a copy of FeedRouterType
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ChatImplCopyWith<_$ChatImpl> get copyWith =>
@@ -233,11 +225,8 @@ abstract class _Chat implements FeedRouterType {
 
   @override
   int get clientId;
-
-  /// Create a copy of FeedRouterType
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ChatImplCopyWith<_$ChatImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -261,8 +250,6 @@ class __$$ProfileImplCopyWithImpl<$Res>
       _$ProfileImpl _value, $Res Function(_$ProfileImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of FeedRouterType
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -302,9 +289,7 @@ class _$ProfileImpl implements _Profile {
   @override
   int get hashCode => Object.hash(runtimeType, clientId);
 
-  /// Create a copy of FeedRouterType
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ProfileImplCopyWith<_$ProfileImpl> get copyWith =>
@@ -378,11 +363,8 @@ abstract class _Profile implements FeedRouterType {
 
   @override
   int get clientId;
-
-  /// Create a copy of FeedRouterType
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ProfileImplCopyWith<_$ProfileImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

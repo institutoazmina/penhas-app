@@ -23,16 +23,24 @@ EscapeManualTaskLocalModel _$EscapeManualTaskLocalModelFromJson(
     );
 
 Map<String, dynamic> _$EscapeManualTaskLocalModelToJson(
-        EscapeManualTaskLocalModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'type': _$EscapeManualTaskTypeEnumMap[instance.type]!,
-      if (instance.value case final value?) 'value': value,
-      'isDone': instance.isDone,
-      'isRemoved': instance.isRemoved,
-      if (instance.updatedAt?.toIso8601String() case final value?)
-        'updatedAt': value,
-    };
+    EscapeManualTaskLocalModel instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'type': _$EscapeManualTaskTypeEnumMap[instance.type]!,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('value', instance.value);
+  val['isDone'] = instance.isDone;
+  val['isRemoved'] = instance.isRemoved;
+  writeNotNull('updatedAt', instance.updatedAt?.toIso8601String());
+  return val;
+}
 
 const _$EscapeManualTaskTypeEnumMap = {
   EscapeManualTaskType.unknown: 'unknown',

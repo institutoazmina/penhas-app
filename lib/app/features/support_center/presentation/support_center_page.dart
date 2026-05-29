@@ -154,48 +154,60 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
             right: 0,
             child: Column(
               children: [
-                TextButton(
-                  onPressed: () {
-                    controller.requestLocation((LatLng location) {
-                      mapController!.animateCamera(
-                        CameraUpdate.newCameraPosition(
-                          CameraPosition(
-                            tilt: 75.0,
-                            zoom: 12.0,
-                            bearing: 15.0,
-                            target: location,
+                Semantics(
+                  button: true,
+                  label: 'Minha localização',
+                  child: TextButton(
+                    onPressed: () {
+                      controller.requestLocation((LatLng location) {
+                        mapController!.animateCamera(
+                          CameraUpdate.newCameraPosition(
+                            CameraPosition(
+                              tilt: 75.0,
+                              zoom: 12.0,
+                              bearing: 15.0,
+                              target: location,
+                            ),
                           ),
-                        ),
-                      );
-                    });
-                  },
-                  child: CircleAvatar(
-                    radius: 12,
-                    backgroundColor: DesignSystemColors.pumpkinOrange,
-                    child: SvgPicture.asset(
-                      'assets/images/svg/support_center/location.svg',
+                        );
+                      });
+                    },
+                    child: CircleAvatar(
+                      radius: 12,
+                      backgroundColor: DesignSystemColors.pumpkinOrange,
+                      child: SvgPicture.asset(
+                        'assets/images/svg/support_center/location.svg',
+                      ),
                     ),
                   ),
                 ),
-                TextButton(
-                  onPressed: () =>
-                      _dismissSnackBarForAction(controller.listPlaces),
-                  child: CircleAvatar(
-                    radius: 12,
-                    backgroundColor: DesignSystemColors.pumpkinOrange,
-                    child: SvgPicture.asset(
-                      'assets/images/svg/support_center/list.svg',
+                Semantics(
+                  button: true,
+                  label: 'Lista de pontos de apoio',
+                  child: TextButton(
+                    onPressed: () =>
+                        _dismissSnackBarForAction(controller.listPlaces),
+                    child: CircleAvatar(
+                      radius: 12,
+                      backgroundColor: DesignSystemColors.pumpkinOrange,
+                      child: SvgPicture.asset(
+                        'assets/images/svg/support_center/list.svg',
+                      ),
                     ),
                   ),
                 ),
-                TextButton(
-                  onPressed: () =>
-                      _dismissSnackBarForAction(controller.addPlace),
-                  child: CircleAvatar(
-                    radius: 20,
-                    backgroundColor: DesignSystemColors.pumpkinOrange,
-                    child: SvgPicture.asset(
-                      'assets/images/svg/support_center/suggest_place.svg',
+                Semantics(
+                  button: true,
+                  label: 'Sugerir ponto de apoio',
+                  child: TextButton(
+                    onPressed: () =>
+                        _dismissSnackBarForAction(controller.addPlace),
+                    child: CircleAvatar(
+                      radius: 20,
+                      backgroundColor: DesignSystemColors.pumpkinOrange,
+                      child: SvgPicture.asset(
+                        'assets/images/svg/support_center/suggest_place.svg',
+                      ),
                     ),
                   ),
                 ),
