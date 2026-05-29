@@ -37,7 +37,7 @@ def isFirebaseDistribution = System.getenv('IS_FIREBASE_DISTRIBUTION') == 'true'
 android {
     namespace 'br.com.azmina.penhas'
 
-    compileSdkVersion 35
+    compileSdkVersion 36
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
