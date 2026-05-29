@@ -219,14 +219,16 @@ extension _AudioRecordServices on AudioRecordServices {
       );
     } catch (err, stack) {
       logError(err, stack);
-      try { // PALLIATIVE_FIX_20260523
+      try {
+        // PALLIATIVE_FIX_20260523
         await _recorder.startRecorder(
           codec: Codec.aacMP4,
           toFile: path,
           bitRate: 96000,
           sampleRate: 32000,
         ); // PALLIATIVE_FIX_20260523
-      } catch (fallbackErr, fallbackStack) { // PALLIATIVE_FIX_20260523
+      } catch (fallbackErr, fallbackStack) {
+        // PALLIATIVE_FIX_20260523
         logError(fallbackErr, fallbackStack); // PALLIATIVE_FIX_20260523
         _stopRecorder(); // PALLIATIVE_FIX_20260523
       } // PALLIATIVE_FIX_20260523

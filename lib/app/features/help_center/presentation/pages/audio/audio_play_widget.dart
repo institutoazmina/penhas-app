@@ -49,8 +49,7 @@ class AudioPlayWidget extends StatelessWidget {
                       color: isPlaying
                           ? DesignSystemColors.ligthPurple
                           : DesignSystemColors.charcoalGrey2,
-                      onPressed: () =>
-                          audioPlay.onPlayAudio(audioPlay.audio),
+                      onPressed: () => audioPlay.onPlayAudio(audioPlay.audio),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 2.0),
@@ -96,8 +95,7 @@ class AudioPlayWidget extends StatelessWidget {
                 child: IconButton(
                   tooltip: 'Mais opções',
                   icon: const Icon(Icons.more_vert),
-                  onPressed: () =>
-                      audioPlay.onActionSheet(audioPlay.audio),
+                  onPressed: () => audioPlay.onActionSheet(audioPlay.audio),
                 ),
               ),
             )

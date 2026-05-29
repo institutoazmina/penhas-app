@@ -165,8 +165,7 @@ class AudioSyncManager implements IAudioSyncManager {
       final records = await FileDownloader().database.allRecords();
       return records
           .where((r) =>
-              r.status == TaskStatus.enqueued ||
-              r.status == TaskStatus.running)
+              r.status == TaskStatus.enqueued || r.status == TaskStatus.running)
           .map((r) => {
                 'taskId': r.taskId,
                 'status': r.status.name,
