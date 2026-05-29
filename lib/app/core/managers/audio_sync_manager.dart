@@ -22,6 +22,13 @@ abstract class IAudioSyncManager {
   Future<bool> syncAudio();
   Future<Either<Failure, File>> cache(AudioEntity audio);
   Future<List<Map<String, String>>> pendingUploads();
+
+  /// Broadcast re-emit of `FileDownloader().updates`. The manager owns the
+  /// single subscription to that single-subscription stream; consumers (e.g.
+  /// AudiosController) listen here instead of subscribing to FileDownloader
+  /// directly — a second direct subscription throws "Stream has already been
+  /// listened to".
+  Stream<TaskUpdate> get updates;
   void dispose();
 }
 
@@ -37,6 +44,11 @@ class AudioSyncManager implements IAudioSyncManager {
   final IAudioSyncRepository _audioRepository;
   final IApiServerConfigure _serverConfiguration;
   StreamSubscription<TaskUpdate>? _updatesSubscription;
+  final StreamController<TaskUpdate> _updatesController =
+      StreamController<TaskUpdate>.broadcast();
+
+  @override
+  Stream<TaskUpdate> get updates => _updatesController.stream;
 
   Future _init() async {
     _updatesSubscription = FileDownloader().updates.listen(_handleUpdate);
@@ -44,6 +56,10 @@ class AudioSyncManager implements IAudioSyncManager {
   }
 
   void _handleUpdate(TaskUpdate update) {
+    // Re-broadcast every update so multiple consumers can react.
+    if (!_updatesController.isClosed) {
+      _updatesController.add(update);
+    }
     if (update is TaskStatusUpdate && update.status == TaskStatus.complete) {
       update.task.filePath().then((path) {
         final file = File(path);
@@ -165,6 +181,7 @@ class AudioSyncManager implements IAudioSyncManager {
   @override
   void dispose() {
     _updatesSubscription?.cancel();
+    _updatesController.close();
   }
 
   @override

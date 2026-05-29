@@ -28,62 +28,8 @@ void main() {
   });
 
   group(AudioSyncRepository, () {
-    group('upload', () {
-      test(
-        'get ValidField for a valid upload',
-        () async {
-          // arrange
-          final expected = right(
-            const ValidField(message: 'Áudio recebido com sucesso!'),
-          );
-          final audio = AudioData(
-            sequence: '1',
-            createdAt: '1',
-            eventId: '15dba431-b9c9-4983-af75-9f08c3070c15',
-            media: File('test/assets/audio/silence.aac'),
-          );
-          const bodyMessage =
-              '{"message":"Áudio recebido com sucesso!","success":1,"data":{"id":1234}}';
-          when(
-            () => apiProvider.upload(
-              path: any(named: 'path'),
-              file: any(named: 'file'),
-              fields: any(named: 'fields'),
-            ),
-          ).thenAnswer((_) async => bodyMessage);
-          // act
-          final received = await sut.upload(audio);
-          // assert
-          expect(expected, received);
-        },
-      );
-      test(
-        'return Failure when get Exception',
-        () async {
-          // arrange
-          when(
-            () => apiProvider.upload(
-              path: any(named: 'path'),
-              file: any(named: 'file'),
-              fields: any(named: 'fields'),
-            ),
-          ).thenThrow(ApiProviderSessionError());
-          final audio = AudioData(
-            createdAt: '1',
-            sequence: '1',
-            eventId: '15dba431-b9c9-4983-af75-9f08c3070c15',
-            media: File('test/assets/audio/silence.aac'),
-          );
-
-          final expected = left(ServerSideSessionFailed());
-          // act
-          final received = await sut.upload(audio);
-          // assert
-          expect(expected, received);
-        },
-      );
-    });
-
+    // Upload moved to background_downloader (UploadTask in AudioSyncManager);
+    // the repository now only owns download. See audio.md.
     group('download', () {
       test(
         'get ValidField for a valid download',

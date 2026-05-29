@@ -111,7 +111,10 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
   }
 
   void initUpdatesListener() {
-    _taskSubscription ??= FileDownloader().updates.listen((update) {
+    // Listen via the manager's broadcast re-emit — NOT FileDownloader().updates
+    // directly (that single-subscription stream is already owned by
+    // AudioSyncManager; a second .listen throws and aborts initState).
+    _taskSubscription ??= _audioSyncManager.updates.listen((update) {
       if (update is TaskProgressUpdate) {
         pendingProgress = update.progress;
       }
