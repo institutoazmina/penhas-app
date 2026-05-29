@@ -65,10 +65,16 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name="com.bbflight.background_downloader.UploadWorkerService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />

@@ -43,17 +43,19 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
+defaultConfig {
+    applicationId "penhas.com.br"
+    minSdkVersion 24
+    targetSdkVersion 35
+    versionCode flutterVersionCode.toInteger()
+    versionName flutterVersionName
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-    defaultConfig {
-        applicationId "penhas.com.br"
-        minSdkVersion 24
-        targetSdkVersion 35
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        manifestPlaceholders["GEO_API_KEY"] = System.getenv('GEO_API_KEY') ?: secretsProperties.getProperty('GEO_API_KEY')
-    }
+   manifestPlaceholders = [
+        GEO_API_KEY: project.findProperty('GEO_API_KEY') ?: "DUMMY",
+        applicationName: project.findProperty('applicationName') ?: "android.app.Application"
+    ]
+}
     
     buildFeatures {
         buildConfig true

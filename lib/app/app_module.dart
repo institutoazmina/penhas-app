@@ -116,6 +116,7 @@ class AppModule extends Module {
         Bind.lazySingleton<IAudioSyncManager>(
           (i) => AudioSyncManager(
             audioRepository: i.get<IAudioSyncRepository>(),
+            serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
         Bind.factory<IAudioSyncRepository>(

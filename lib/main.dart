@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:background_downloader/background_downloader.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -17,8 +18,14 @@ void main() {
 
     await Bootstrap.instance.withRunner(
       MainAppRunner(),
-      onBeforeRun: () {
+      onBeforeRun: () async {
         BackgroundTaskManager.instance.registerDispatcher(callbackDispatcher);
+
+        await FileDownloader().configure(
+          globalConfig: {Config.requestTimeout: const Duration(minutes: 2)},
+        );
+        await FileDownloader().start();
+        await FileDownloader().rescheduleKilledTasks();
       },
     );
   }, (error, stack) {

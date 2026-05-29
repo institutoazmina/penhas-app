@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../../shared/design_system/colors.dart';
 import '../../../../../shared/design_system/text_styles.dart';
@@ -35,22 +34,28 @@ class AudioPlayWidget extends StatelessWidget {
               padding: EdgeInsets.zero,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  IconButton(
-                    icon: _buildPlayIcone,
-                    color: isPlaying
-                        ? DesignSystemColors.ligthPurple
-                        : DesignSystemColors.charcoalGrey2,
-                    onPressed: () => audioPlay.onPlayAudio(audioPlay.audio),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 2.0),
-                    child: Text(
-                      audioPlay.audio.audioDuration!,
-                      style: kTextStyleAudioDuration,
-                      textAlign: TextAlign.center,
+                  if (audioPlay.uploadStatus != null)
+                    _buildUploadIndicator()
+                  else ...[
+                    IconButton(
+                      icon: _buildPlayIcone,
+                      color: isPlaying
+                          ? DesignSystemColors.ligthPurple
+                          : DesignSystemColors.charcoalGrey2,
+                      onPressed: () =>
+                          audioPlay.onPlayAudio(audioPlay.audio),
                     ),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2.0),
+                      child: Text(
+                        audioPlay.audio.audioDuration ?? '',
+                        style: kTextStyleAudioDuration,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -60,40 +65,54 @@ class AudioPlayWidget extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          DateFormat.yMd('pt_BR')
-                              .format(audioPlay.audio.createdAt!),
-                          style: kTextStyleAudioTime,
-                          textAlign: TextAlign.right,
-                        ),
-                      )
-                    ],
-                  ),
                   Text(
                     audioPlay.description,
                     style: kTextStyleAudioDescription,
                   ),
+                  if (audioPlay.uploadStatus == TileUploadStatus.uploading &&
+                      audioPlay.uploadProgress != null) ...[
+                    const SizedBox(height: 4),
+                    LinearProgressIndicator(
+                      value: audioPlay.uploadProgress! / 100,
+                      backgroundColor: Colors.grey[300],
+                    ),
+                  ],
                 ],
               ),
             ),
           ),
-          Expanded(
-            child: SizedBox(
-              height: 44,
-              width: 44,
-              child: IconButton(
-                icon: const Icon(Icons.more_vert),
-                onPressed: () => audioPlay.onActionSheet(audioPlay.audio),
+          if (audioPlay.uploadStatus == null)
+            Expanded(
+              child: SizedBox(
+                height: 44,
+                width: 44,
+                child: IconButton(
+                  icon: const Icon(Icons.more_vert),
+                  onPressed: () =>
+                      audioPlay.onActionSheet(audioPlay.audio),
+                ),
               ),
-            ),
-          )
+            )
         ],
       ),
     );
+  }
+
+  Widget _buildUploadIndicator() {
+    switch (audioPlay.uploadStatus) {
+      case TileUploadStatus.uploading:
+        return const SizedBox(
+          height: 36,
+          width: 36,
+          child: CircularProgressIndicator(strokeWidth: 3),
+        );
+      case TileUploadStatus.waitingNetwork:
+        return const Icon(Icons.cloud_off, size: 28, color: Colors.grey);
+      default:
+        return const SizedBox.shrink();
+    }
   }
 
   Widget get _buildPlayIcone {

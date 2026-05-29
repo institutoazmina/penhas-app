@@ -46,6 +46,7 @@ class _AudiosPageState extends State<AudiosPage> with SnackBarHandler {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.initUpdatesListener();
       controller.loadPage();
     });
   }
