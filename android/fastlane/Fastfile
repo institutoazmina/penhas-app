@@ -10,9 +10,13 @@ $api_base_url = ENV['PENHAS_BASE_URL']
 platform :android do
 
   desc 'Build release APK'
-  lane :build_apk do
+  lane :build_apk do |options|
+    options ||= {}
     puts "Building release APK, API Base URL: #{$api_base_url}"
-    sh("flutter build apk --release --dart-define=PENHAS_BASE_URL=#{$api_base_url}")
+    cmd = "flutter build apk --release --dart-define=PENHAS_BASE_URL=#{$api_base_url}"
+    cmd += " --build-name=#{options[:version_name]}" if options[:version_name] && !options[:version_name].to_s.empty?
+    cmd += " --build-number=#{options[:build_number]}" if options[:build_number]
+    sh(cmd)
   end
 
   desc 'Build release Bundle'
@@ -27,10 +31,21 @@ platform :android do
     testers = options[:tester_email] || ''
     groups = testers.empty? ? testers_group : nil
 
-    build_apk
+    app_id = firebase_id()
+
+    latest = firebase_app_distribution_get_latest_release(app: app_id)
+    pubspec_build = File.read("#{$project_path}/pubspec.yaml").match(/^version:\s*\S+\+(\d+)/)[1].to_i
+    last_uploaded = latest && latest[:buildVersion] ? latest[:buildVersion].to_i : 0
+    next_build = [pubspec_build, last_uploaded].max + 1
+    UI.message("Android build number: #{next_build} (pubspec=#{pubspec_build}, firebase_latest=#{last_uploaded})")
+
+    build_apk(
+      version_name: options[:version_name],
+      build_number: next_build,
+    )
 
     firebase_app_distribution(
-      app: firebase_id(),
+      app: app_id,
       release_notes: get_changelog(),
       android_artifact_path: "#{$project_path}/build/app/outputs/apk/release/app-release.apk",
       groups: groups,
