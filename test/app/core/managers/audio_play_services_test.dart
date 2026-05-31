@@ -90,6 +90,72 @@ void main() {
       expect(result.fold((l) => l, (r) => r), audioReference);
     });
 
+    group('codec detection (recorder may fall back to aacMP4)', () {
+      late Directory tmpDir;
+
+      setUp(() {
+        tmpDir = Directory.systemTemp.createTempSync('audio_codec_test');
+        when(() => flutterSoundPlayer.isStopped).thenReturn(true);
+        when(() => flutterSoundPlayer.closePlayer())
+            .thenAnswer((_) => Future.value());
+        when(() => flutterSoundPlayer.openPlayer())
+            .thenAnswer((_) async => null);
+        when(() => flutterSoundPlayer
+                .setSubscriptionDuration(Duration(milliseconds: 100)))
+            .thenAnswer((_) => Future.value());
+      });
+
+      tearDown(() => tmpDir.deleteSync(recursive: true));
+
+      Future<void> playFile(File file, Codec expected) async {
+        when(() => audioSyncManager.cache(audioReference))
+            .thenAnswer((_) async => right(file));
+        when(() => flutterSoundPlayer.startPlayer(
+              fromURI: any(named: 'fromURI'),
+              codec: expected,
+              whenFinished: any(named: 'whenFinished'),
+            )).thenAnswer((_) => Future.value());
+
+        final audioPlayServices = AudioPlayServices(
+          audioSyncManager: audioSyncManager,
+          player: flutterSoundPlayer,
+        );
+
+        await audioPlayServices.start(audioReference);
+        // start() fire-and-forgets _play() inside Either.fold, so let its async
+        // chain (release -> open -> startPlayer) drain before verifying.
+        await pumpEventQueue();
+
+        verify(() => flutterSoundPlayer.startPlayer(
+              fromURI: file.path,
+              codec: expected,
+              whenFinished: any(named: 'whenFinished'),
+            )).called(1);
+      }
+
+      test('plays a real ADTS file (0xFFFx sync word) as aacADTS', () async {
+        await playFile(File('test/assets/audio/silence.aac'), Codec.aacADTS);
+      });
+
+      test('plays an MP4 container (ftyp box) as aacMP4', () async {
+        // The downloaded file is named `{id}.cached`, so the codec must come
+        // from the header, not the extension. 'ftyp' sits at byte offset 4.
+        final file = File('${tmpDir.path}/123.cached')
+          ..writeAsBytesSync([
+            0x00, 0x00, 0x00, 0x18, // box size
+            0x66, 0x74, 0x79, 0x70, // 'ftyp'
+            0x4D, 0x34, 0x41, 0x20, // 'M4A '
+          ]);
+        await playFile(file, Codec.aacMP4);
+      });
+
+      test('falls back to aacADTS for an inconclusive header', () async {
+        final file = File('${tmpDir.path}/garbage.cached')
+          ..writeAsBytesSync([0x01, 0x02, 0x03, 0x04, 0x05, 0x06]);
+        await playFile(file, Codec.aacADTS);
+      });
+    });
+
     test('dispose release the audio session', () async {
       // arrange
       when((() => audioSyncManager.cache(audioReference)))

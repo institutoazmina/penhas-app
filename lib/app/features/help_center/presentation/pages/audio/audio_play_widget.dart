@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 import '../../../../../shared/design_system/colors.dart';
 import '../../../../../shared/design_system/text_styles.dart';
@@ -71,6 +72,14 @@ class AudioPlayWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Recording date. Guarded against null because optimistic
+                  // upload tiles have no createdAt yet (force-unwrapping here is
+                  // what dropped the date in the background-upload refactor).
+                  if (audioPlay.audio.createdAt != null)
+                    Text(
+                      DateFormat.yMd('pt_BR').format(audioPlay.audio.createdAt!),
+                      style: kTextStyleAudioTime,
+                    ),
                   Text(
                     audioPlay.description,
                     style: kTextStyleAudioDescription,
