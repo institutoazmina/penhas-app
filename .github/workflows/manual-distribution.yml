@@ -25,15 +25,6 @@ on:
         default: patch
         required: true
 
-# Define permissions for the GITHUB_TOKEN
-permissions:
-  contents: write # Required to commit the version bump
-  packages: write # Required if you are publishing packages
-  actions: write # Required if you are using reusable workflows
-  id-token: write
-  checks: write
-  deployments: write
-
 jobs:
   version:
     runs-on: ubuntu-latest
@@ -87,6 +78,11 @@ jobs:
   distribute-android:
     needs: version
     if: ${{ github.event.inputs.platform == 'android' || github.event.inputs.platform == 'all' }}
+    permissions:
+      contents: read
+      id-token: write
+      packages: write
+      actions: write
     uses: ./.github/workflows/distribute-flutter-android.yml
     with:
       environment: ${{ github.event.inputs.environment }}
@@ -100,6 +96,11 @@ jobs:
   distribute-ios:
     needs: version
     if: ${{ github.event.inputs.platform == 'ios' || github.event.inputs.platform == 'all' }}
+    permissions:
+      contents: write
+      actions: write
+      checks: write
+      deployments: write
     uses: ./.github/workflows/distribute-flutter-ios.yml
     with:
       environment: ${{ github.event.inputs.environment }}
