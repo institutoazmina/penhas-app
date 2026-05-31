@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_play_tile_entity.dart';
@@ -10,7 +11,12 @@ import 'package:penhas/app/features/help_center/presentation/audios/audios_page.
 void main() {
   late AudiosController mockController;
 
-  setUpAll(() {
+  setUpAll(() async {
+    // AudioPlayWidget formats the recording date with the pt_BR locale, which
+    // GlobalMaterialLocalizations loads at runtime but the bare MaterialApp in
+    // these tests does not — initialize it explicitly.
+    await initializeDateFormatting('pt_BR');
+
     mockController = _MockAudiosController();
     when(() => mockController.loadPage()).thenAnswer((_) => Future.value());
   });
