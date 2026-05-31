@@ -77,7 +77,8 @@ class AudioPlayWidget extends StatelessWidget {
                   // what dropped the date in the background-upload refactor).
                   if (audioPlay.audio.createdAt != null)
                     Text(
-                      DateFormat.yMd('pt_BR').format(audioPlay.audio.createdAt!),
+                      DateFormat.yMd('pt_BR')
+                          .format(audioPlay.audio.createdAt!),
                       style: kTextStyleAudioTime,
                     ),
                   Text(

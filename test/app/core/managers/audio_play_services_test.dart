@@ -100,9 +100,8 @@ void main() {
             .thenAnswer((_) => Future.value());
         when(() => flutterSoundPlayer.openPlayer())
             .thenAnswer((_) async => null);
-        when(() => flutterSoundPlayer
-                .setSubscriptionDuration(Duration(milliseconds: 100)))
-            .thenAnswer((_) => Future.value());
+        when(() => flutterSoundPlayer.setSubscriptionDuration(
+            Duration(milliseconds: 100))).thenAnswer((_) => Future.value());
       });
 
       tearDown(() => tmpDir.deleteSync(recursive: true));
