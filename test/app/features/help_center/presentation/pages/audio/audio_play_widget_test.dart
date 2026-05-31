@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart' show DateFormat;
 import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_play_tile_entity.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/audio/audio_play_widget.dart';
 
 void main() {
-  AudioEntity audio() => AudioEntity(
+  // The widget formats the recording date with the pt_BR locale; at runtime
+  // GlobalMaterialLocalizations loads it, but the bare MaterialApp below does
+  // not, so initialize it explicitly for the tests.
+  setUpAll(() => initializeDateFormatting('pt_BR'));
+
+  AudioEntity audio({DateTime? createdAt}) => AudioEntity(
         id: 'event.aac',
         audioDuration: '1m30s',
-        createdAt: DateTime(2023, 2, 3, 14, 44),
+        createdAt: createdAt,
         canPlay: false,
         isRequested: false,
         isRequestGranted: false,
@@ -90,6 +97,41 @@ void main() {
       expect(find.byType(CircularProgressIndicator), findsNothing);
       expect(find.byType(LinearProgressIndicator), findsNothing);
       expect(find.byIcon(Icons.cloud_off), findsNothing);
+    });
+
+    testWidgets('confirmed tile renders the recording date (pt_BR)',
+        (tester) async {
+      final createdAt = DateTime(2023, 2, 3, 14, 44);
+      final tile = AudioPlayTileEntity(
+        audio: audio(createdAt: createdAt),
+        description: 'Toque no ícone para solicitar o audio',
+        onPlayAudio: (_) {},
+        onActionSheet: (_) {},
+      );
+
+      await pump(tester, tile);
+
+      expect(
+        find.text(DateFormat.yMd('pt_BR').format(createdAt)),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('tile without createdAt renders no date and does not crash',
+        (tester) async {
+      final tile = AudioPlayTileEntity(
+        audio: audio(),
+        description: 'Enviando áudio... 10%',
+        onPlayAudio: (_) {},
+        onActionSheet: (_) {},
+        uploadStatus: TileUploadStatus.uploading,
+        uploadProgress: 10,
+      );
+
+      await pump(tester, tile);
+
+      expect(tester.takeException(), isNull);
+      expect(find.textContaining('/'), findsNothing);
     });
   });
 }
