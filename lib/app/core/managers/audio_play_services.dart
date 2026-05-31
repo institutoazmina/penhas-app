@@ -57,9 +57,49 @@ class AudioPlayServices implements IAudioPlayServices {
 
     await _playerModule.startPlayer(
       fromURI: file.path,
-      codec: _audioCodec,
+      codec: _detectCodec(file),
       whenFinished: onFinished,
     );
+  }
+
+  /// The recorder normally writes AAC ADTS, but on devices where ADTS recording
+  /// fails it falls back to AAC MP4 (PALLIATIVE_FIX_20260523 in
+  /// [AudioRecordServices]) — both end up in a file named `.aac`, and the
+  /// downloaded copy is cached as `{id}.cached`, so the extension carries no
+  /// codec hint. Decoding an MP4 container as ADTS yields garbled/silent
+  /// playback, so sniff the container from the file header instead of trusting
+  /// a fixed codec. Falls back to [_audioCodec] when the bytes are unreadable
+  /// or inconclusive.
+  Codec _detectCodec(File file) {
+    try {
+      final raf = file.openSync();
+      final List<int> header;
+      try {
+        header = raf.readSync(12);
+      } finally {
+        raf.closeSync();
+      }
+
+      // ISO-BMFF (MP4/M4A): 'ftyp' box type at byte offset 4.
+      if (header.length >= 8 &&
+          header[4] == 0x66 && // f
+          header[5] == 0x74 && // t
+          header[6] == 0x79 && // y
+          header[7] == 0x70) {
+        return Codec.aacMP4;
+      }
+
+      // AAC ADTS: 12-bit sync word 0xFFF at the start of the stream.
+      if (header.length >= 2 &&
+          header[0] == 0xFF &&
+          (header[1] & 0xF6) == 0xF0) {
+        return Codec.aacADTS;
+      }
+    } catch (e, stack) {
+      logError(e, stack);
+    }
+
+    return _audioCodec;
   }
 
   Future<void> _setupPlayEnvironment() async {
