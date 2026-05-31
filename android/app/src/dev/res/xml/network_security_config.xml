@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  DEV / Firebase App Distribution override. Permits cleartext HTTP so the native
+  background_downloader upload reaches an http dev backend (e.g. 10.0.2.2:8000 on
+  the emulator, or a staging host without TLS). NEVER shipped to production: the
+  src/dev/res sourceSet is only merged for debug builds and for release builds
+  when IS_FIREBASE_DISTRIBUTION=true (see android/app/build.gradle).
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>
