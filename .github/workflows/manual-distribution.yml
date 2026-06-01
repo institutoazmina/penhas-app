@@ -29,14 +29,12 @@ jobs:
   version:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
     outputs:
       version_name: ${{ steps.bump.outputs.version_name }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Bump semantic version name in pubspec.yaml
         id: bump
@@ -58,22 +56,7 @@ jobs:
           new_version="${new_name}${build}"
           sed -i -E "s/^version:.*/version: ${new_version}/" pubspec.yaml
           echo "version_name=${new_name}" >> "$GITHUB_OUTPUT"
-          echo "Bumped ${current} -> ${new_version}"
-
-      - name: Commit and push version bump
-        env:
-          BRANCH: ${{ github.ref_name }}
-        run: |
-          set -euo pipefail
-          if git diff --quiet pubspec.yaml; then
-            echo "pubspec.yaml unchanged, skipping commit"
-            exit 0
-          fi
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add pubspec.yaml
-          git commit -m "chore: bump version name to ${{ steps.bump.outputs.version_name }} [skip ci]"
-          git push origin "HEAD:${BRANCH}"
+          echo "Computed ${current} -> ${new_version} (passed to distribution, not committed)"
 
   distribute-android:
     needs: version
