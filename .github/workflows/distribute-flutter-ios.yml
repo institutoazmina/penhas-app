@@ -7,6 +7,10 @@ on:
         description: "Distribution environment"
         type: string
         required: true
+      version_name:
+        description: "Semantic version name (e.g. 3.7.4) to stamp on the build"
+        type: string
+        required: false
 
     secrets:
       APPLE_API_KEY_B64:
@@ -90,7 +94,7 @@ jobs:
         uses: maierj/fastlane-action@v3.0.0
         with:
           lane: ${{ vars.TARGET_LANE }}
-          options: '{ "tester_email": "${{ secrets.TESTER_EMAIL }}" }'
+          options: '{ "tester_email": "${{ secrets.TESTER_EMAIL }}", "version_name": "${{ inputs.version_name }}" }'
           subdirectory: ./ios
         env:
           APPLE_API_KEY_PATH: ${{ runner.temp }}/app-store-api-key.json

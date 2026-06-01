@@ -15,22 +15,78 @@ on:
         description: "Distribution environment"
         type: environment
         required: true
-
-# Define permissions for the GITHUB_TOKEN
-permissions:
-  contents: write # Required to commit the version bump
-  packages: write # Required if you are publishing packages
-  actions: write # Required if you are using reusable workflows
-  id-token: write
-  checks: write
-  deployments: write
+      bump:
+        description: "Semantic version name bump"
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+        default: patch
+        required: true
 
 jobs:
+  version:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      version_name: ${{ steps.bump.outputs.version_name }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Bump semantic version name in pubspec.yaml
+        id: bump
+        env:
+          BUMP: ${{ github.event.inputs.bump }}
+        run: |
+          set -euo pipefail
+          current=$(grep -E '^version:' pubspec.yaml | head -1 | sed -E 's/^version:[[:space:]]*//' | tr -d '[:space:]')
+          name="${current%%+*}"
+          if [[ "$current" == *"+"* ]]; then build="+${current#*+}"; else build=""; fi
+          IFS='.' read -r major minor patch <<< "$name"
+          case "$BUMP" in
+            major) major=$((major + 1)); minor=0; patch=0 ;;
+            minor) minor=$((minor + 1)); patch=0 ;;
+            patch) patch=$((patch + 1)) ;;
+            *) echo "::error::invalid bump value: $BUMP"; exit 1 ;;
+          esac
+          new_name="${major}.${minor}.${patch}"
+          new_version="${new_name}${build}"
+          sed -i -E "s/^version:.*/version: ${new_version}/" pubspec.yaml
+          echo "version_name=${new_name}" >> "$GITHUB_OUTPUT"
+          echo "Bumped ${current} -> ${new_version}"
+
+      - name: Commit and push version bump
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          if git diff --quiet pubspec.yaml; then
+            echo "pubspec.yaml unchanged, skipping commit"
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add pubspec.yaml
+          git commit -m "chore: bump version name to ${{ steps.bump.outputs.version_name }} [skip ci]"
+          git push origin "HEAD:${BRANCH}"
+
   distribute-android:
+    needs: version
     if: ${{ github.event.inputs.platform == 'android' || github.event.inputs.platform == 'all' }}
+    permissions:
+      contents: read
+      id-token: write
+      packages: write
+      actions: write
     uses: ./.github/workflows/distribute-flutter-android.yml
     with:
       environment: ${{ github.event.inputs.environment }}
+      version_name: ${{ needs.version.outputs.version_name }}
     secrets:
       ANDROID_BUILD_FILES: ${{ secrets.ANDROID_BUILD_FILES }}
       FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
@@ -38,10 +94,17 @@ jobs:
       PENHAS_BASE_URL: ${{ secrets.PENHAS_BASE_URL }}
 
   distribute-ios:
+    needs: version
     if: ${{ github.event.inputs.platform == 'ios' || github.event.inputs.platform == 'all' }}
+    permissions:
+      contents: write
+      actions: write
+      checks: write
+      deployments: write
     uses: ./.github/workflows/distribute-flutter-ios.yml
     with:
       environment: ${{ github.event.inputs.environment }}
+      version_name: ${{ needs.version.outputs.version_name }}
     secrets:
       APPLE_API_KEY_B64: ${{ secrets.APPLE_API_KEY_B64 }}
       APPLE_ID: ${{ secrets.APPLE_ID }}

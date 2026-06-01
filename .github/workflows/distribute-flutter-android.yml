@@ -7,6 +7,10 @@ on:
         description: "Distribution environment"
         type: string
         required: true
+      version_name:
+        description: "Semantic version name (e.g. 3.7.4) to stamp on the build"
+        type: string
+        required: false
 
     secrets:
       PENHAS_BASE_URL:
@@ -20,17 +24,16 @@ on:
       TESTER_EMAIL:
         required: false
 
-# Define permissions for GITHUB_TOKEN
-permissions:
-  contents: read  # Required for actions/checkout
-  id-token: write # Required for some authentication tasks
-  packages: write # Required if you're publishing packages
-  actions: write  # Required if you're triggering other workflows
-
 jobs:
   distribute:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
+    # Define permissions for GITHUB_TOKEN at the job level (least privilege)
+    permissions:
+      contents: read  # Required for actions/checkout
+      id-token: write # Required for some authentication tasks
+      packages: write # Required if you're publishing packages
+      actions: write  # Required if you're triggering other workflows
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -93,7 +96,7 @@ jobs:
         uses: maierj/fastlane-action@v3.0.0
         with:
           lane: ${{ vars.TARGET_LANE }}
-          options: '{ "tester_email": "${{ secrets.TESTER_EMAIL }}" }'
+          options: '{ "tester_email": "${{ secrets.TESTER_EMAIL }}", "version_name": "${{ inputs.version_name }}" }'
           subdirectory: ./android
         env:
           FASTLANE_SKIP_UPDATE_CHECK: true

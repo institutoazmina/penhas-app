@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Production / default config. Cleartext HTTP is denied everywhere; only the
+  https backend (api.penhas.com.br) is reachable. The dev/Firebase-distribution
+  flavor overrides this file via src/dev/res to permit cleartext to the local
+  backend (see that copy). Native HTTP clients (e.g. background_downloader's
+  WorkManager uploader) honor this config; dart:io does not, which is why audio
+  uploads failed on Android dev builds while every Dart API call succeeded.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false" />
+</network-security-config>

@@ -24,6 +24,7 @@ platform :ios do
   desc 'Build release IPA'
   lane :build do |options|
     cmd = "flutter build ios --release --no-codesign --config-only --dart-define=PENHAS_BASE_URL=#{$api_base_url}"
+    cmd += " --build-name=#{options[:version_name]}" if options[:version_name] && !options[:version_name].to_s.empty?
     cmd += " --build-number=#{options[:build_number]}" if options[:build_number]
     sh(cmd)
   end
@@ -78,6 +79,7 @@ platform :ios do
     build(
       profile_type: options[:profile_type],
       build_number: options[:build_number],
+      version_name: options[:version_name],
     )
 
     gym(
@@ -128,6 +130,7 @@ platform :ios do
       profile_type: profile_type_edirock,
       force_profile: new_devices.any?,
       build_number: next_build,
+      version_name: options[:version_name],
     )
 
     firebase_app_distribution(
@@ -137,32 +140,6 @@ platform :ios do
       groups: groups,
       testers: testers,
     )
-
-    commit_build_bump(build_number: next_build) if ENV['CI']
-  end
-
-  desc 'Write bumped build number back to pubspec.yaml and push to remote'
-  private_lane :commit_build_bump do |options|
-    build_number = options[:build_number]
-    pubspec_path = "#{$project_path}/pubspec.yaml"
-    pubspec_content = File.read(pubspec_path)
-    updated = pubspec_content.sub(/^(version:\s*\S+?)\+\d+/, "\\1+#{build_number}")
-
-    if updated == pubspec_content
-      UI.important("pubspec.yaml unchanged — skipping commit")
-      next
-    end
-
-    File.write(pubspec_path, updated)
-
-    branch = ENV['GITHUB_REF_NAME']
-    UI.user_error!('GITHUB_REF_NAME not set — cannot push') if branch.nil? || branch.empty?
-
-    sh("git config user.email '41898282+github-actions[bot]@users.noreply.github.com'")
-    sh("git config user.name 'github-actions[bot]'")
-    sh("git add #{pubspec_path}")
-    sh("git commit -m 'chore(ios): bump build number to #{build_number} [skip ci]'")
-    sh("git push origin HEAD:#{branch}")
   end
 
   private_lane :request_api_key do
