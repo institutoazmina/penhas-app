@@ -72,7 +72,7 @@ jobs:
       version_name: ${{ needs.version.outputs.version_name }}
     secrets:
       ANDROID_BUILD_FILES: ${{ secrets.ANDROID_BUILD_FILES }}
-      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      FIREBASE_SERVICE_ACCOUNT_B64: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_B64 }}
       GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64 }}
       PENHAS_BASE_URL: ${{ secrets.PENHAS_BASE_URL }}
 
@@ -93,7 +93,7 @@ jobs:
       APPLE_ID: ${{ secrets.APPLE_ID }}
       CERTIFICATE_CONTENT: ${{ secrets.CERTIFICATE_CONTENT }}
       CERTIFICATE_PWD: ${{ secrets.CERTIFICATE_PWD }}
-      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      FIREBASE_SERVICE_ACCOUNT_B64: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_B64 }}
       IOS_BUILD_FILES: ${{ secrets.IOS_BUILD_FILES }}
       KEYCHAIN_PWD: ${{ secrets.KEYCHAIN_PWD }}
       PENHAS_BASE_URL: ${{ secrets.PENHAS_BASE_URL }}

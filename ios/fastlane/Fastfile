@@ -16,6 +16,7 @@ provisioning_names = {
 
 ios_devices_file = ENV['TMP_DEVICES_FILE']
 apple_api_key_path = ENV['APPLE_API_KEY_PATH']
+firebase_service_account_path = ENV['FIREBASE_SERVICE_ACCOUNT_PATH']
 
 testers_group = 'iostestersgroup'
 
@@ -57,6 +58,7 @@ platform :ios do
     firebase_app_distribution_get_udids(
       app: options[:app_id],
       output_file: ios_devices_file,
+      service_credentials_file: firebase_service_account_path,
     )
   end
 
@@ -117,7 +119,10 @@ platform :ios do
 
     app_id = firebase_id()
 
-    latest = firebase_app_distribution_get_latest_release(app: app_id)
+    latest = firebase_app_distribution_get_latest_release(
+      app: app_id,
+      service_credentials_file: firebase_service_account_path,
+    )
     pubspec_build = File.read("#{$project_path}/pubspec.yaml").match(/^version:\s*\S+\+(\d+)/)[1].to_i
     last_uploaded = latest && latest[:buildVersion] ? latest[:buildVersion].to_i : 0
     next_build = [pubspec_build, last_uploaded].max + 1
@@ -139,6 +144,7 @@ platform :ios do
       ipa_path: "#{$project_path}/build/ios/Runner/Runner.ipa",
       groups: groups,
       testers: testers,
+      service_credentials_file: firebase_service_account_path,
     )
   end
 

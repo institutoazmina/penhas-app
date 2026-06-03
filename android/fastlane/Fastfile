@@ -6,6 +6,7 @@ default_platform(:android)
 
 testers_group = 'androidtestersgroup'
 $api_base_url = ENV['PENHAS_BASE_URL']
+firebase_service_account_path = ENV['FIREBASE_SERVICE_ACCOUNT_PATH']
 
 platform :android do
 
@@ -33,7 +34,10 @@ platform :android do
 
     app_id = firebase_id()
 
-    latest = firebase_app_distribution_get_latest_release(app: app_id)
+    latest = firebase_app_distribution_get_latest_release(
+      app: app_id,
+      service_credentials_file: firebase_service_account_path,
+    )
     pubspec_build = File.read("#{$project_path}/pubspec.yaml").match(/^version:\s*\S+\+(\d+)/)[1].to_i
     last_uploaded = latest && latest[:buildVersion] ? latest[:buildVersion].to_i : 0
     next_build = [pubspec_build, last_uploaded].max + 1
@@ -50,7 +54,7 @@ platform :android do
       android_artifact_path: "#{$project_path}/build/app/outputs/apk/release/app-release.apk",
       groups: groups,
       testers: testers,
-      debug: true,
+      service_credentials_file: firebase_service_account_path,
     )
   end
 
