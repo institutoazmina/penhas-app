@@ -75,8 +75,9 @@ jobs:
           GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_PATH: ${{ runner.temp }}/play-store-api-key.json
 
       - name: Get Firebase service account
-        run: base64 -d <<< "${{ secrets.FIREBASE_SERVICE_ACCOUNT_B64 }}" > $FIREBASE_SERVICE_ACCOUNT_PATH
+        run: base64 -d <<< "$FIREBASE_SERVICE_ACCOUNT_B64" > "$FIREBASE_SERVICE_ACCOUNT_PATH"
         env:
+          FIREBASE_SERVICE_ACCOUNT_B64: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_B64 }}
           FIREBASE_SERVICE_ACCOUNT_PATH: ${{ runner.temp }}/firebase-service-account.json
       
       - name: Increase Watcher Limit

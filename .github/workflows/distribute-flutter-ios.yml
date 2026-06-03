@@ -76,8 +76,9 @@ jobs:
           APPLE_API_KEY_PATH: ${{ runner.temp }}/app-store-api-key.json
 
       - name: Get Firebase service account
-        run: base64 -d <<< "${{ secrets.FIREBASE_SERVICE_ACCOUNT_B64 }}" > $FIREBASE_SERVICE_ACCOUNT_PATH
+        run: base64 -d <<< "$FIREBASE_SERVICE_ACCOUNT_B64" > "$FIREBASE_SERVICE_ACCOUNT_PATH"
         env:
+          FIREBASE_SERVICE_ACCOUNT_B64: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_B64 }}
           FIREBASE_SERVICE_ACCOUNT_PATH: ${{ runner.temp }}/firebase-service-account.json
 
       - name: Create default keychain
