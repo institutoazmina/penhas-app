@@ -21,8 +21,8 @@ on:
         required: true
       CERTIFICATE_PWD:
         required: true
-      FIREBASE_TOKEN:
-        required: false
+      FIREBASE_SERVICE_ACCOUNT_B64:
+        required: true
       IOS_BUILD_FILES:
         required: true
       KEYCHAIN_PWD:
@@ -74,7 +74,12 @@ jobs:
         run: base64 -d <<< "${{ secrets.APPLE_API_KEY_B64 }}" > $APPLE_API_KEY_PATH
         env:
           APPLE_API_KEY_PATH: ${{ runner.temp }}/app-store-api-key.json
-      
+
+      - name: Get Firebase service account
+        run: base64 -d <<< "${{ secrets.FIREBASE_SERVICE_ACCOUNT_B64 }}" > $FIREBASE_SERVICE_ACCOUNT_PATH
+        env:
+          FIREBASE_SERVICE_ACCOUNT_PATH: ${{ runner.temp }}/firebase-service-account.json
+
       - name: Create default keychain
         run: |
           security create-keychain -p "$KEYCHAIN_PWD" $KEYCHAIN_PATH
@@ -102,7 +107,7 @@ jobs:
           CERTIFICATE_PATH: ${{ runner.temp }}/build_certificate.p12
           CERTIFICATE_PWD: ${{ secrets.CERTIFICATE_PWD }}
           FASTLANE_SKIP_UPDATE_CHECK: true
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_SERVICE_ACCOUNT_PATH: ${{ runner.temp }}/firebase-service-account.json
           IOS_BUNDLE_ID: ${{ vars.IOS_BUNDLE_ID }}
           KEYCHAIN_PATH: ${{ runner.temp }}/app-signing.keychain-db
           KEYCHAIN_PWD: ${{ secrets.KEYCHAIN_PWD }}

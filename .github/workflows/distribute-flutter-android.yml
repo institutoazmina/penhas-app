@@ -17,8 +17,8 @@ on:
         required: true
       ANDROID_BUILD_FILES:
         required: true
-      FIREBASE_TOKEN:
-        required: false
+      FIREBASE_SERVICE_ACCOUNT_B64:
+        required: true
       GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64:
         required: true
       TESTER_EMAIL:
@@ -73,6 +73,11 @@ jobs:
         run: base64 -d <<< "${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64 }}" > $GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_PATH
         env:
           GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_PATH: ${{ runner.temp }}/play-store-api-key.json
+
+      - name: Get Firebase service account
+        run: base64 -d <<< "${{ secrets.FIREBASE_SERVICE_ACCOUNT_B64 }}" > $FIREBASE_SERVICE_ACCOUNT_PATH
+        env:
+          FIREBASE_SERVICE_ACCOUNT_PATH: ${{ runner.temp }}/firebase-service-account.json
       
       - name: Increase Watcher Limit
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
@@ -100,7 +105,7 @@ jobs:
           subdirectory: ./android
         env:
           FASTLANE_SKIP_UPDATE_CHECK: true
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_SERVICE_ACCOUNT_PATH: ${{ runner.temp }}/firebase-service-account.json
           GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_PATH: ${{ runner.temp }}/play-store-api-key.json
           IOS_BUNDLE_ID: ${{ vars.IOS_BUNDLE_ID }}
           PENHAS_BASE_URL: ${{ secrets.PENHAS_BASE_URL }}
