@@ -21,7 +21,12 @@ platform :android do
   end
 
   desc 'Build release Bundle'
+  # Sem --build-name/--build-number: a release de produção usa exatamente o
+  # version do pubspec.yaml. O bump que manual-distribution.yml calcula não é
+  # commitado, então aceitá-lo aqui publicaria no Play uma versão inexistente
+  # no repositório.
   lane :build_bundle do
+    puts "Building release Bundle, API Base URL: #{$api_base_url}"
     sh("flutter build appbundle --release --dart-define=PENHAS_BASE_URL=#{$api_base_url}")
   end
 
@@ -59,10 +64,17 @@ platform :android do
   end
 
   desc 'Deploy a new version to the Play Store'
+  # Publica no track de produção como rascunho: o AAB fica disponível no Play
+  # Console para revisão e a publicação é confirmada manualmente. Alertas do
+  # Play (target API, 16 KB page size) avaliam a release de produção, então
+  # bundles enviados a outros tracks não os encerram.
+  #
+  # O versionCode vem do pubspec.yaml — nenhum bump automático acontece aqui.
+  # Incremente-o antes de rodar, ou o Play recusa o upload por versão duplicada.
   lane :release_distribute do
     build_bundle
     upload_to_play_store(
-      track: 'alpha',
+      track: 'production',
       release_status: 'draft',
       aab: "#{$project_path}/build/app/outputs/bundle/release/app-release.aab",
     )

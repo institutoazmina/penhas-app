@@ -1,27 +1,9 @@
-buildscript {
-    ext.kotlin_version = '2.1.0'
-    repositories {
-        google()
-        jcenter()
-        maven {
-            url 'https://maven.fabric.io/public'
-        }
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:8.5.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        // Add the google services classpath
-        classpath 'com.google.gms:google-services:4.4.2'
-        // Add fabric classpath
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1'
-    }
-}
+// Plugin versions are declared once in settings.gradle (pluginManagement/plugins).
+// Declaring them again as buildscript classpaths silently overrides those versions.
 
 allprojects {
     repositories {
         google()
-        jcenter()
         mavenCentral()
     }
 }
