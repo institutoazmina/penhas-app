@@ -23,7 +23,7 @@ class AboutPenhasPage extends StatelessWidget {
       ),
       body: WebViewWidget(
         controller: WebViewController()
-          ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..setJavaScriptMode(JavaScriptMode.disabled)
           ..setNavigationDelegate(NavigationDelegate(
             onNavigationRequest: (request) {
               if (request.url.startsWith('mailto')) {
