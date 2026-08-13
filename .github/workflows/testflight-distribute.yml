@@ -1,0 +1,23 @@
+name: "Distribute iOS test build to TestFlight"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  distribute-ios:
+    permissions:
+      contents: write
+      actions: write
+      checks: write
+      deployments: write
+    uses: ./.github/workflows/distribute-flutter-ios.yml
+    with:
+      environment: firebase-distribution
+    secrets:
+      APPLE_API_KEY_B64: ${{ secrets.APPLE_API_KEY_B64 }}
+      APPLE_ID: ${{ secrets.APPLE_ID }}
+      CERTIFICATE_CONTENT: ${{ secrets.CERTIFICATE_CONTENT }}
+      CERTIFICATE_PWD: ${{ secrets.CERTIFICATE_PWD }}
+      IOS_BUILD_FILES: ${{ secrets.IOS_BUILD_FILES }}
+      KEYCHAIN_PWD: ${{ secrets.KEYCHAIN_PWD }}
+      PENHAS_BASE_URL: ${{ secrets.PENHAS_BASE_URL }}

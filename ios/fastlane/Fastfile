@@ -6,19 +6,18 @@ skip_docs
 
 default_platform(:ios)
 
-profile_type_edirock = 'ad-hoc' # Firebase
 profile_type_store = 'app-store'
 
-provisioning_names = {
-  "#{profile_type_edirock}": "#{$app_name} AdHoc",
-  "#{profile_type_store}": "#{$app_name} AppStore",
-}
+# Nome do provisioning profile App Store no portal da Apple. Permite que o app
+# de teste use um profile próprio sem afetar produção.
+provisioning_name = ENV.fetch('IOS_PROVISIONING_PROFILE', '')
+provisioning_name = "#{$app_name} AppStore" if provisioning_name.empty?
 
-ios_devices_file = ENV['TMP_DEVICES_FILE']
 apple_api_key_path = ENV['APPLE_API_KEY_PATH']
-firebase_service_account_path = ENV['FIREBASE_SERVICE_ACCOUNT_PATH']
 
-testers_group = 'iostestersgroup'
+# Grupos externos do TestFlight (nomes separados por vírgula). Vazio = só sobe a
+# build, sem distribuição externa (grupos internos pegam pela config do ASC).
+testflight_groups = ENV['TESTFLIGHT_GROUPS'].to_s.split(',').map(&:strip).reject(&:empty?)
 
 platform :ios do
 
@@ -31,12 +30,7 @@ platform :ios do
   end
 
   desc 'Generates a provisioning profile, saving it in the current folder '
-  private_lane :update_profile do |options|
-
-    is_edirock = options[:profile_type] == profile_type_edirock
-    provisioning_name = provisioning_names[:"#{options[:profile_type]}"]
-    sigh_force = is_edirock && options[:force]
-
+  private_lane :update_profile do
     FastlaneCore::KeychainImporter.import_file(
       ENV['CERTIFICATE_PATH'],
       ENV['KEYCHAIN_PATH'],
@@ -48,38 +42,14 @@ platform :ios do
       provisioning_name: provisioning_name,
       output_path: "#{$project_path}/ios/certificates",
       skip_certificate_verification: true,
-      adhoc: is_edirock,
-      force: sigh_force,
     )
-  end
-
-  desc 'Download devices IDs from Firebase'
-  private_lane :download_udids do |options|
-    firebase_app_distribution_get_udids(
-      app: options[:app_id],
-      output_file: ios_devices_file,
-      service_credentials_file: firebase_service_account_path,
-    )
-  end
-
-  desc 'Registers devices to the Apple Dev Portal'
-  private_lane :sync_device_info do
-    if File.exist?(ios_devices_file)
-      register_devices(
-        devices_file: ios_devices_file,
-      )
-    end
   end
 
   desc 'Generate IPA'
   private_lane :generate_ipa do |options|
-    profile_uuid = update_profile(
-      profile_type: options[:profile_type],
-      force: options[:force_profile],
-    )
+    profile_uuid = update_profile
 
     build(
-      profile_type: options[:profile_type],
       build_number: options[:build_number],
       version_name: options[:version_name],
     )
@@ -90,61 +60,34 @@ platform :ios do
       workspace: "#{$project_path}/ios/Runner.xcworkspace",
       archive_path: "#{$project_path}/build/ios/Runner.xcarchive",
       output_directory: "#{$project_path}/build/ios/Runner",
-      export_method: options[:profile_type],
+      export_method: profile_type_store,
       xcargs: "PROVISIONING_PROFILE_SPECIFIER='#{profile_uuid}'",
     )
   end
 
-  desc 'Distribute to iOS beta testers in TestFlight'
-  lane :release_distribute do
+  desc 'Distribute to TestFlight'
+  lane :distribute do |options|
     request_api_key
 
-    generate_ipa(
-      profile_type: profile_type_store,
-    )
-
-    pilot(
-      ipa: "#{$project_path}/build/ios/Runner/Runner.ipa",
-    )
-  end
-
-  desc 'Distribute to iOS beta testers in Firebase'
-  lane :firebase_distribute do |options|
-    ENV['IS_FIREBASE_DISTRIBUTION'] = 'true'
-
-    testers = options[:tester_email] || ''
-    groups = testers.empty? ? testers_group : nil
-
-    request_api_key
-
-    app_id = firebase_id()
-
-    latest = firebase_app_distribution_get_latest_release(
-      app: app_id,
-      service_credentials_file: firebase_service_account_path,
-    )
     pubspec_build = File.read("#{$project_path}/pubspec.yaml").match(/^version:\s*\S+\+(\d+)/)[1].to_i
-    last_uploaded = latest && latest[:buildVersion] ? latest[:buildVersion].to_i : 0
+    last_uploaded = latest_testflight_build_number(initial_build_number: 0)
     next_build = [pubspec_build, last_uploaded].max + 1
-    UI.message("iOS build number: #{next_build} (pubspec=#{pubspec_build}, firebase_latest=#{last_uploaded})")
-
-    download_udids(app_id: app_id)
-    new_devices = sync_device_info || []
+    UI.message("iOS build number: #{next_build} (pubspec=#{pubspec_build}, testflight_latest=#{last_uploaded})")
 
     generate_ipa(
-      profile_type: profile_type_edirock,
-      force_profile: new_devices.any?,
       build_number: next_build,
       version_name: options[:version_name],
     )
 
-    firebase_app_distribution(
-      app: app_id,
-      release_notes: get_changelog(),
-      ipa_path: "#{$project_path}/build/ios/Runner/Runner.ipa",
-      groups: groups,
-      testers: testers,
-      service_credentials_file: firebase_service_account_path,
+    # distribute_external exige changelog não-vazio; a seção [Unreleased] pode estar vazia.
+    changelog = get_changelog()
+    changelog = "Build de teste #{next_build}." if changelog.empty?
+
+    pilot(
+      ipa: "#{$project_path}/build/ios/Runner/Runner.ipa",
+      changelog: changelog,
+      groups: testflight_groups.empty? ? nil : testflight_groups,
+      distribute_external: !testflight_groups.empty?,
     )
   end
 
@@ -170,12 +113,6 @@ platform :ios do
       app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier),
       initial_build_number: true
     )
-  end
-
-  desc 'Get Firebase project ID from config file'
-  lane :firebase_id do
-    google_services_file = "#{$project_path}/ios/Runner/GoogleService-Info.plist"
-    sh("cat '#{google_services_file}' | grep ':ios:' | sed 's/^.*>\\(.*\\)<.*\$/\\1/g'").strip
   end
 
 end

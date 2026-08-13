@@ -23,21 +23,13 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Build release IPA
 
-### ios release_distribute
+### ios distribute
 
 ```sh
-[bundle exec] fastlane ios release_distribute
+[bundle exec] fastlane ios distribute
 ```
 
-Distribute to iOS beta testers in TestFlight
-
-### ios firebase_distribute
-
-```sh
-[bundle exec] fastlane ios firebase_distribute
-```
-
-Distribute to iOS beta testers in Firebase
+Distribute to TestFlight
 
 ### ios verify_app_store_auth
 
@@ -46,14 +38,6 @@ Distribute to iOS beta testers in Firebase
 ```
 
 Check if json credentials is valid
-
-### ios firebase_id
-
-```sh
-[bundle exec] fastlane ios firebase_id
-```
-
-Get Firebase project ID from config file
 
 ----
 
