@@ -29,6 +29,11 @@ if (secretsPropertiesFile.exists()){
     secretsProperties.load(new FileInputStream(secretsPropertiesFile))
 }
 
+def geoApiKey = secretsProperties.getProperty('GEO_API_KEY')?.trim() ?: project.findProperty('GEO_API_KEY')?.toString()?.trim()
+if (!geoApiKey) {
+    throw GradleException("Google Maps API key is missing. Define GEO_API_KEY in android/secrets.properties or pass -PGEO_API_KEY=<key>.")
+}
+
 
 
 def isFirebaseDistribution = System.getenv('IS_FIREBASE_DISTRIBUTION') == 'true'
@@ -52,7 +57,7 @@ defaultConfig {
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
    manifestPlaceholders = [
-        GEO_API_KEY: project.findProperty('GEO_API_KEY') ?: "DUMMY",
+        GEO_API_KEY: geoApiKey,
         applicationName: project.findProperty('applicationName') ?: "android.app.Application"
     ]
 }
