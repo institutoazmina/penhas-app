@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'app/core/managers/impl/background_task_manager.dart';
+import 'app/core/managers/audio_sync_manager.dart';
 import 'bootstrap/bootstrap.dart';
 import 'bootstrap/impl/background_tasks_runner.dart';
 import 'bootstrap/impl/main_app_runner.dart';
@@ -38,14 +39,23 @@ void main() {
 /// Initializes the background uploader off the boot-critical path.
 Future<void> _initBackgroundUploads() async {
   try {
+    // FileDownloader.updates is single-subscription. Register the relay
+    // before start(), because start() replays completions from suspension.
+    AudioSyncManager.prepareForDownloaderStart();
     await FileDownloader().configure(
       globalConfig: {Config.requestTimeout: const Duration(minutes: 2)},
     );
-    await FileDownloader().start();
+    // start() schedules rescheduleKilledTasks() in a delayed timer by
+    // default. Disable that timer and await the explicit call below so the
+    // first authenticated recovery cannot race the reschedule operation.
+    await FileDownloader().start(doRescheduleKilledTasks: false);
     await FileDownloader().rescheduleKilledTasks();
   } catch (error, stack) {
     log('FileDownloader init failed: $error', stackTrace: stack);
+    AudioSyncManager.markDownloaderStartupFailed();
+    return;
   }
+  AudioSyncManager.markDownloaderStartupComplete();
 }
 
 @pragma('vm:entry-point')

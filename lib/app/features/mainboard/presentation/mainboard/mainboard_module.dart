@@ -134,6 +134,7 @@ class MainboardModule extends Module {
             mainboardStore: i.get<MainboardStore>(),
             inactivityLogoutUseCase: i.get<InactivityLogoutUseCase>(),
             notification: i.get<INotificationRepository>(),
+            audioSyncManager: i.get<IAudioSyncManager>(),
           ),
         ),
         Bind.lazySingleton<FeedUseCases>(

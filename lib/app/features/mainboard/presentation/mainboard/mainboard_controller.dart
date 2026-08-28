@@ -5,6 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/managers/audio_sync_manager.dart';
 import '../../../../shared/navigation/app_navigator.dart';
 import '../../../appstate/domain/usecases/app_preferences_use_case.dart';
 import '../../../notification/data/repositories/notification_repository.dart';
@@ -19,9 +20,11 @@ abstract class MainboardControllerBase with Store {
     required this.mainboardStore,
     required InactivityLogoutUseCase inactivityLogoutUseCase,
     required INotificationRepository notification,
+    IAudioSyncManager? audioSyncManager,
     Timer? notificationTimer,
   })  : _inactivityLogoutUseCase = inactivityLogoutUseCase,
         _notification = notification,
+        _audioSyncManager = audioSyncManager,
         _syncTimer = notificationTimer;
 
   final MainboardStore mainboardStore;
@@ -31,6 +34,7 @@ abstract class MainboardControllerBase with Store {
 
   final InactivityLogoutUseCase _inactivityLogoutUseCase;
   final INotificationRepository _notification;
+  final IAudioSyncManager? _audioSyncManager;
 
   @observable
   int selectedIndex = 0;
@@ -56,6 +60,7 @@ abstract class MainboardControllerBase with Store {
         );
         await _inactivityLogoutUseCase.setActive();
         route.map(AppNavigator.push);
+        await _audioSyncManager?.syncAudio();
         break;
       case material.AppLifecycleState.detached:
       case material.AppLifecycleState.paused:
@@ -67,6 +72,7 @@ abstract class MainboardControllerBase with Store {
   Future<void> initialize() async {
     _setupUploadTimer();
     _checkUnRead();
+    await _audioSyncManager?.syncAudio();
   }
 
   void _setupUploadTimer() {
