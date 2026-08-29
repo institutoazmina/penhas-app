@@ -70,6 +70,7 @@ jobs:
     with:
       environment: ${{ github.event.inputs.environment }}
       version_name: ${{ needs.version.outputs.version_name }}
+      build_number: ${{ github.run_number * 100 + github.run_attempt }}
     secrets:
       ANDROID_BUILD_FILES: ${{ secrets.ANDROID_BUILD_FILES }}
       FIREBASE_SERVICE_ACCOUNT_B64: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_B64 }}

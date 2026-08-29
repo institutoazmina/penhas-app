@@ -11,6 +11,10 @@ on:
         description: "Semantic version name (e.g. 3.7.4) to stamp on the build"
         type: string
         required: false
+      build_number:
+        description: "Android version code to stamp on the build"
+        type: number
+        required: false
 
     secrets:
       PENHAS_BASE_URL:
@@ -102,7 +106,7 @@ jobs:
         uses: maierj/fastlane-action@v3.0.0
         with:
           lane: ${{ vars.TARGET_LANE }}
-          options: '{ "tester_email": "${{ secrets.TESTER_EMAIL }}", "version_name": "${{ inputs.version_name }}" }'
+          options: '{ "tester_email": "${{ secrets.TESTER_EMAIL }}", "version_name": "${{ inputs.version_name }}", "build_number": "${{ inputs.build_number }}" }'
           subdirectory: ./android
         env:
           FASTLANE_SKIP_UPDATE_CHECK: true

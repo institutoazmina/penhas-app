@@ -21,13 +21,14 @@ platform :android do
   end
 
   desc 'Build release Bundle'
-  # Sem --build-name/--build-number: a release de produção usa exatamente o
-  # version do pubspec.yaml. O bump que manual-distribution.yml calcula não é
-  # commitado, então aceitá-lo aqui publicaria no Play uma versão inexistente
-  # no repositório.
-  lane :build_bundle do
+  # Sem --build-number, a release de produção usa exatamente o versionCode do
+  # pubspec.yaml. O número calculado no CI não é commitado no repositório.
+  lane :build_bundle do |options|
+    options ||= {}
     puts "Building release Bundle, API Base URL: #{$api_base_url}"
-    sh("flutter build appbundle --release --dart-define=PENHAS_BASE_URL=#{$api_base_url}")
+    cmd = "flutter build appbundle --release --dart-define=PENHAS_BASE_URL=#{$api_base_url}"
+    cmd += " --build-number=#{options[:build_number]}" if options[:build_number] && !options[:build_number].to_s.empty?
+    sh(cmd)
   end
 
   desc 'Distribute to Android beta testers'
@@ -69,10 +70,11 @@ platform :android do
   # Play (target API, 16 KB page size) avaliam a release de produção, então
   # bundles enviados a outros tracks não os encerram.
   #
-  # O versionCode vem do pubspec.yaml — nenhum bump automático acontece aqui.
-  # Incremente-o antes de rodar, ou o Play recusa o upload por versão duplicada.
-  lane :release_distribute do
-    build_bundle
+  # No CI, o versionCode é recebido do workflow; localmente, o pubspec.yaml
+  # continua sendo usado quando nenhum build_number é informado.
+  lane :release_distribute do |options|
+    options ||= {}
+    build_bundle(build_number: options[:build_number])
     upload_to_play_store(
       track: 'production',
       release_status: 'draft',
