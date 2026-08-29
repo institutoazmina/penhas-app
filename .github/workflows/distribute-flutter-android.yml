@@ -13,7 +13,7 @@ on:
         required: false
       build_number:
         description: "Android version code to stamp on the build"
-        type: number
+        type: string
         required: false
 
     secrets:
