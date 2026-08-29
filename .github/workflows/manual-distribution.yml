@@ -32,6 +32,7 @@ jobs:
       contents: read
     outputs:
       version_name: ${{ steps.bump.outputs.version_name }}
+      build_number: ${{ steps.bump.outputs.build_number }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -56,6 +57,7 @@ jobs:
           new_version="${new_name}${build}"
           sed -i -E "s/^version:.*/version: ${new_version}/" pubspec.yaml
           echo "version_name=${new_name}" >> "$GITHUB_OUTPUT"
+          echo "build_number=$((GITHUB_RUN_NUMBER * 100 + GITHUB_RUN_ATTEMPT))" >> "$GITHUB_OUTPUT"
           echo "Computed ${current} -> ${new_version} (passed to distribution, not committed)"
 
   distribute-android:
@@ -70,7 +72,7 @@ jobs:
     with:
       environment: ${{ github.event.inputs.environment }}
       version_name: ${{ needs.version.outputs.version_name }}
-      build_number: ${{ github.run_number * 100 + github.run_attempt }}
+      build_number: ${{ needs.version.outputs.build_number }}
     secrets:
       ANDROID_BUILD_FILES: ${{ secrets.ANDROID_BUILD_FILES }}
       FIREBASE_SERVICE_ACCOUNT_B64: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_B64 }}
