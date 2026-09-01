@@ -3,10 +3,15 @@ import 'package:webview_flutter_platform_interface/webview_flutter_platform_inte
 
 /// Fake implementation of WebViewPlatform for testing.
 class FakeWebViewPlatform extends WebViewPlatform {
+  /// The last controller created by this platform, useful for asserting
+  /// configuration values (e.g. JavaScriptMode) set during widget build.
+  FakeWebViewController? lastController;
+
   @override
   PlatformWebViewController createPlatformWebViewController(
       PlatformWebViewControllerCreationParams params) {
-    return FakeWebViewController(params);
+    lastController = FakeWebViewController(params);
+    return lastController!;
   }
 
   @override
@@ -21,6 +26,9 @@ class FakeWebViewController extends PlatformWebViewController {
   FakeWebViewController(PlatformWebViewControllerCreationParams params)
       : super.implementation(params);
 
+  /// Captures the last JavaScriptMode set, enabling test assertions.
+  JavaScriptMode? lastJavaScriptMode;
+
   @override
   Future<void> loadRequest(LoadRequestParams params) async {
     // Mock the behavior when loadRequest is called.
@@ -31,7 +39,7 @@ class FakeWebViewController extends PlatformWebViewController {
 
   @override
   Future<void> setJavaScriptMode(JavaScriptMode javaScriptMode) async {
-    // Simulate setting JavaScript mode.
+    lastJavaScriptMode = javaScriptMode;
   }
 
   @override
@@ -42,6 +50,12 @@ class FakeWebViewController extends PlatformWebViewController {
   @override
   Future<void> enableZoom(bool enabled) async {
     // Simulate enabling/disabling zoom.
+  }
+
+  @override
+  Future<void> setPlatformNavigationDelegate(
+      PlatformNavigationDelegate handler) async {
+    // Simulate setting navigation delegate (needed by AboutPenhasPage).
   }
 }
 
