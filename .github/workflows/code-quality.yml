@@ -9,13 +9,12 @@ concurrency:
   group: qa-${{ github.ref }}
   cancel-in-progress: true
 
-# Add this permissions section
-permissions:
-  contents: read
-  pull-requests: read
 
 jobs:
   check-changes:
+    permissions:
+      contents: read
+      pull-requests: read
     name: Check changed files
     runs-on: ubuntu-latest
     outputs:
@@ -42,10 +41,13 @@ jobs:
           changed_files=$(echo "${{ steps.changed-files.outputs.added_files }} ${{ steps.changed-files.outputs.modified_files }}" | xargs)
           changed_dart_files=$(echo "$changed_files" | tr ' ' '\n' | grep -E '\.dart$' | xargs)
 
-          echo "all=$changed_files" >> $GITHUB_OUTPUT
-          echo "dart=$changed_dart_files" >> $GITHUB_OUTPUT
+          echo "all=$changed_files" >> "$GITHUB_OUTPUT"
+          echo "dart=$changed_dart_files" >> "$GITHUB_OUTPUT"
 
   lint:
+    permissions:
+      contents: read
+      pull-requests: read
     name: Run lint on affected files
     runs-on: ubuntu-latest
     needs: check-changes
@@ -87,6 +89,9 @@ jobs:
             ${{ needs.check-changes.outputs.changed_dart_files }}
 
   unit-tests:
+    permissions:
+      contents: read
+      pull-requests: read
     name: Run unit tests
     runs-on: ubuntu-latest
     steps:
@@ -123,3 +128,69 @@ jobs:
 
       - name: Codecov
         uses: codecov/codecov-action@v4
+
+  generated-files:
+    permissions:
+      contents: read
+      pull-requests: read
+    name: Check generated files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Flutter SDK
+        uses: kuhnroyal/flutter-fvm-config-action/setup@c378498f1d1962d33039c3989411093ef8a17b2c # v3.3
+
+      - name: Install dependencies
+        run: flutter pub get --enforce-lockfile
+
+      - name: Setup Firebase Options
+        run: |
+          tee lib/firebase_options.dart <<EOF
+          class DefaultFirebaseOptions {
+            static const currentPlatform = null;
+          }
+          EOF
+
+      - name: Check if generated files are up to date
+        run: |
+          dart run build_runner build --delete-conflicting-outputs
+          if [[ -n "$(git diff --name-only)" ]]; then
+            git diff --name-only
+            echo "::error::Generated files are not up to date. Run 'dart run build_runner build --delete-conflicting-outputs' and commit the changes."
+            exit 1
+          fi
+
+  pipeline:
+    permissions:
+      contents: read
+      pull-requests: read
+    name: Validate distribution pipeline
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Lint workflows
+        env:
+          ACTIONLINT_VERSION: 1.7.12
+          ACTIONLINT_SHA256: 8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8
+        run: |
+          archive="actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          curl --proto '=https' --tlsv1.2 -sSfL -o "$archive" \
+            "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/$archive"
+          echo "$ACTIONLINT_SHA256  $archive" | sha256sum --check --strict
+          tar xzf "$archive" actionlint
+          ./actionlint -color
+
+      - uses: ruby/setup-ruby@14594264cd68ce8a2345dd349bc3d138a4ef85c8 # v1.327.0
+        with:
+          bundler-cache: true
+
+      - name: Load fastlane lanes
+        run: |
+          (cd android && bundle exec fastlane lanes)
+          (cd ios && bundle exec fastlane lanes)
+        env:
+          FASTLANE_SKIP_UPDATE_CHECK: true

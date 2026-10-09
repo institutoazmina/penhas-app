@@ -1,36 +1,46 @@
-# This file contains the fastlane.tools configuration
-# You can find the documentation at https://docs.fastlane.tools
+# Shared helpers imported by android/fastlane/Fastfile and ios/fastlane/Fastfile.
 #
-# For a list of all available actions, check out
+# Each platform exposes the same two lanes, called by .github/workflows/distribute.yml:
+#   staging    -> Android: Firebase App Distribution | iOS: TestFlight (dev app)
+#   production -> Android: Play Store (production draft) | iOS: TestFlight (store app)
 #
-#     https://docs.fastlane.tools/actions
-#
-# For a list of all available plugins, check out
-#
-#     https://docs.fastlane.tools/plugins/available-plugins
-#
-
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
+# Version name always comes from pubspec.yaml. The build number is computed as
+# max(pubspec build, latest build already uploaded to the target store) + 1, so
+# re-running a lane never collides with a previous upload.
 
 $project_path = File.realpath(File.dirname(File.dirname(__FILE__)))
-
-$app_name = 'PenhaS'
 $api_base_url = ENV['PENHAS_BASE_URL']
 
+DEFAULT_RELEASE_NOTES = 'Build de teste do PenhaS.'
 
-private_lane :get_changelog do
+def pubspec_build_number
+  File.read("#{$project_path}/pubspec.yaml").match(/^version:\s*\S+\+(\d+)/)[1].to_i
+end
+
+def next_build_number(last_uploaded)
+  next_build = [pubspec_build_number, last_uploaded.to_i].max + 1
+  UI.message("Build number: #{next_build} (pubspec=#{pubspec_build_number}, store_latest=#{last_uploaded.to_i})")
+  next_build
+end
+
+def flutter_build(target, build_number)
+  UI.user_error!('PENHAS_BASE_URL is not set') if $api_base_url.to_s.empty?
+  sh("flutter build #{target} --release --dart-define=PENHAS_BASE_URL=#{$api_base_url} --build-number=#{build_number}")
+end
+
+# Contents of the "## [Unreleased]" section of CHANGELOG.md.
+def changelog
   is_unreleased_section = false
   changelog_contents = ''
   File.readlines("#{$project_path}/CHANGELOG.md").each do |line|
     if is_unreleased_section
-      if line.start_with?('## [')
-        break
-      end
+      break if line.start_with?('## [')
+
       changelog_contents += line
     end
 
-    is_unreleased_section = is_unreleased_section || line.start_with?('## [Unreleased]')
+    is_unreleased_section ||= line.start_with?('## [Unreleased]')
   end
-  changelog_contents.strip
+  notes = changelog_contents.strip
+  notes.empty? ? DEFAULT_RELEASE_NOTES : notes
 end

@@ -1,98 +1,70 @@
-import("../../fastlane/Fastfile")
+import('../../fastlane/Fastfile')
 
 skip_docs
 
 default_platform(:android)
 
-testers_group = 'androidtestersgroup'
-$api_base_url = ENV['PENHAS_BASE_URL']
-firebase_service_account_path = ENV['FIREBASE_SERVICE_ACCOUNT_PATH']
-
 platform :android do
 
-  desc 'Build release APK'
-  lane :build_apk do |options|
-    options ||= {}
-    puts "Building release APK, API Base URL: #{$api_base_url}"
-    cmd = "flutter build apk --release --dart-define=PENHAS_BASE_URL=#{$api_base_url}"
-    cmd += " --build-name=#{options[:version_name]}" if options[:version_name] && !options[:version_name].to_s.empty?
-    cmd += " --build-number=#{options[:build_number]}" if options[:build_number]
-    sh(cmd)
-  end
-
-  desc 'Build release Bundle'
-  # Sem --build-number, a release de produção usa exatamente o versionCode do
-  # pubspec.yaml. O número calculado no CI não é commitado no repositório.
-  lane :build_bundle do |options|
-    options ||= {}
-    puts "Building release Bundle, API Base URL: #{$api_base_url}"
-    cmd = "flutter build appbundle --release --dart-define=PENHAS_BASE_URL=#{$api_base_url}"
-    cmd += " --build-number=#{options[:build_number]}" if options[:build_number] && !options[:build_number].to_s.empty?
-    sh(cmd)
-  end
-
-  desc 'Distribute to Android beta testers'
-  lane :firebase_distribute do |options|
+  desc 'Staging: build an APK of the dev app and send it to Firebase App Distribution'
+  # FIREBASE_TESTERS (comma-separated e-mails) overrides the default tester group.
+  lane :staging do
+    # Read by android/app/build.gradle: switches to the dev applicationId and resources.
     ENV['IS_FIREBASE_DISTRIBUTION'] = 'true'
 
-    testers = options[:tester_email] || ''
-    groups = testers.empty? ? testers_group : nil
-
-    app_id = firebase_id()
+    credentials = ENV['FIREBASE_SERVICE_ACCOUNT_PATH']
+    testers = ENV['FIREBASE_TESTERS'].to_s.strip
+    app_id = firebase_app_id
 
     latest = firebase_app_distribution_get_latest_release(
       app: app_id,
-      service_credentials_file: firebase_service_account_path,
+      service_credentials_file: credentials,
     )
-    pubspec_build = File.read("#{$project_path}/pubspec.yaml").match(/^version:\s*\S+\+(\d+)/)[1].to_i
-    last_uploaded = latest && latest[:buildVersion] ? latest[:buildVersion].to_i : 0
-    next_build = [pubspec_build, last_uploaded].max + 1
-    UI.message("Android build number: #{next_build} (pubspec=#{pubspec_build}, firebase_latest=#{last_uploaded})")
-
-    build_apk(
-      version_name: options[:version_name],
-      build_number: next_build,
-    )
+    flutter_build('apk', next_build_number(latest && latest[:buildVersion]))
 
     firebase_app_distribution(
       app: app_id,
-      release_notes: get_changelog(),
+      android_artifact_type: 'APK',
       android_artifact_path: "#{$project_path}/build/app/outputs/apk/release/app-release.apk",
-      groups: groups,
-      testers: testers,
-      service_credentials_file: firebase_service_account_path,
+      release_notes: changelog,
+      groups: testers.empty? ? 'androidtestersgroup' : nil,
+      testers: testers.empty? ? nil : testers,
+      service_credentials_file: credentials,
     )
   end
 
-  desc 'Deploy a new version to the Play Store'
-  # Publica no track de produção como rascunho: o AAB fica disponível no Play
-  # Console para revisão e a publicação é confirmada manualmente. Alertas do
-  # Play (target API, 16 KB page size) avaliam a release de produção, então
-  # bundles enviados a outros tracks não os encerram.
-  #
-  # No CI, o versionCode é recebido do workflow; localmente, o pubspec.yaml
-  # continua sendo usado quando nenhum build_number é informado.
-  lane :release_distribute do |options|
-    options ||= {}
-    build_bundle(build_number: options[:build_number])
+  desc 'Production: build an AAB and upload it to the Play Store production track as a draft'
+  # The release stays as a draft; it is reviewed and rolled out manually in the
+  # Play Console (see docs/processo-de-release.md).
+  lane :production do
+    used_codes = %w[production beta alpha internal].flat_map do |track|
+      google_play_track_version_codes(track: track)
+    rescue StandardError => e
+      UI.important("Could not read track #{track}: #{e.message}")
+      []
+    end
+    flutter_build('appbundle', next_build_number(used_codes.max))
+
     upload_to_play_store(
       track: 'production',
       release_status: 'draft',
       aab: "#{$project_path}/build/app/outputs/bundle/release/app-release.aab",
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
     )
   end
 
-  desc 'Verify if has valid Play Store credentials'
+  desc 'Check that the Play Store credentials are valid'
   lane :verify_play_store_auth do
     validate_play_store_json_key(
       json_key: CredentialsManager::AppfileConfig.try_fetch_value(:json_key_file),
     )
   end
 
-  desc 'Get Firebase project ID from config file'
-  lane :firebase_id do
-    google_services_file = "#{$project_path}/android/app/google-services.json"
-    sh("cat '#{google_services_file}' | jq '.client[0]|.client_info.mobilesdk_app_id' -r").strip
+  private_lane :firebase_app_id do
+    JSON.parse(File.read("#{$project_path}/android/app/google-services.json"))
+        .dig('client', 0, 'client_info', 'mobilesdk_app_id')
   end
 
 end
