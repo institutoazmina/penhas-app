@@ -1,99 +1,83 @@
-require 'fastlane_core/keychain_importer'
-
-import("../../fastlane/Fastfile")
+import('../../fastlane/Fastfile')
 
 skip_docs
 
 default_platform(:ios)
 
-profile_type_store = 'app-store'
-
-# Nome do provisioning profile App Store no portal da Apple. Permite que o app
-# de teste use um profile próprio sem afetar produção.
-provisioning_name = ENV.fetch('IOS_PROVISIONING_PROFILE', '')
-provisioning_name = "#{$app_name} AppStore" if provisioning_name.empty?
-
-apple_api_key_path = ENV['APPLE_API_KEY_PATH']
-
-# Grupos externos do TestFlight (nomes separados por vírgula). Vazio = só sobe a
-# build, sem distribuição externa (grupos internos pegam pela config do ASC).
-testflight_groups = ENV['TESTFLIGHT_GROUPS'].to_s.split(',').map(&:strip).reject(&:empty?)
-
 platform :ios do
 
-  desc 'Build release IPA'
-  lane :build do |options|
-    cmd = "flutter build ios --release --no-codesign --config-only --dart-define=PENHAS_BASE_URL=#{$api_base_url}"
-    cmd += " --build-name=#{options[:version_name]}" if options[:version_name] && !options[:version_name].to_s.empty?
-    cmd += " --build-number=#{options[:build_number]}" if options[:build_number]
-    sh(cmd)
+  # Both lanes upload to TestFlight; the target app comes from the GitHub
+  # environment (IOS_BUNDLE_ID, IOS_PROVISIONING_PROFILE, PENHAS_BASE_URL):
+  #   firebase-distribution -> dev.penhas.testflight.com.br (staging)
+  #   production            -> penhas.alphacode.com.br (submitted to review manually in App Store Connect)
+
+  desc 'Staging: upload the dev app to TestFlight'
+  lane :staging do
+    testflight_distribute
   end
 
-  desc 'Generates a provisioning profile, saving it in the current folder '
-  private_lane :update_profile do
-    FastlaneCore::KeychainImporter.import_file(
-      ENV['CERTIFICATE_PATH'],
-      ENV['KEYCHAIN_PATH'],
-      certificate_password: ENV['CERTIFICATE_PWD'],
-      keychain_password: ENV['KEYCHAIN_PWD'],
-    )
-
-    sigh(
-      provisioning_name: provisioning_name,
-      output_path: "#{$project_path}/ios/certificates",
-      skip_certificate_verification: true,
-    )
+  desc 'Production: upload the store app to TestFlight'
+  lane :production do
+    testflight_distribute
   end
 
-  desc 'Generate IPA'
-  private_lane :generate_ipa do |options|
-    profile_uuid = update_profile
+  desc 'Check that the App Store Connect API key is valid'
+  lane :verify_app_store_auth do
+    request_api_key
+    latest_testflight_build_number(app_identifier: bundle_id)
+  end
 
-    build(
-      build_number: options[:build_number],
-      version_name: options[:version_name],
-    )
+  private_lane :testflight_distribute do
+    request_api_key
+    setup_signing
 
-    gym(
+    build_number = next_build_number(latest_testflight_build_number(app_identifier: bundle_id, initial_build_number: 0))
+    flutter_build('ios --no-codesign --config-only', build_number)
+
+    build_app(
       scheme: 'Runner',
       configuration: 'Release',
       workspace: "#{$project_path}/ios/Runner.xcworkspace",
       archive_path: "#{$project_path}/build/ios/Runner.xcarchive",
       output_directory: "#{$project_path}/build/ios/Runner",
-      export_method: profile_type_store,
-      xcargs: "PROVISIONING_PROFILE_SPECIFIER='#{profile_uuid}'",
+      export_method: 'app-store',
+      xcargs: "PROVISIONING_PROFILE_SPECIFIER='#{lane_context[SharedValues::SIGH_UUID]}'",
+    )
+
+    # TESTFLIGHT_GROUPS lists external groups only; internal testers receive
+    # builds through automatic distribution configured in App Store Connect.
+    groups = ENV['TESTFLIGHT_GROUPS'].to_s.split(',').map(&:strip).reject(&:empty?)
+    upload_to_testflight(
+      ipa: "#{$project_path}/build/ios/Runner/Runner.ipa",
+      changelog: changelog,
+      groups: groups,
+      distribute_external: groups.any?,
+      skip_waiting_for_build_processing: groups.empty?,
     )
   end
 
-  desc 'Distribute to TestFlight'
-  lane :distribute do |options|
-    request_api_key
+  private_lane :setup_signing do
+    # Creates a temporary keychain when running on CI (no-op locally).
+    setup_ci
+    if ENV['CERTIFICATE_PATH']
+      import_certificate(
+        certificate_path: ENV['CERTIFICATE_PATH'],
+        certificate_password: ENV['CERTIFICATE_PWD'],
+        keychain_name: 'fastlane_tmp_keychain',
+        keychain_password: '',
+      )
+    end
 
-    pubspec_build = File.read("#{$project_path}/pubspec.yaml").match(/^version:\s*\S+\+(\d+)/)[1].to_i
-    last_uploaded = latest_testflight_build_number(initial_build_number: 0)
-    next_build = [pubspec_build, last_uploaded].max + 1
-    UI.message("iOS build number: #{next_build} (pubspec=#{pubspec_build}, testflight_latest=#{last_uploaded})")
-
-    generate_ipa(
-      build_number: next_build,
-      version_name: options[:version_name],
-    )
-
-    # distribute_external exige changelog não-vazio; a seção [Unreleased] pode estar vazia.
-    changelog = get_changelog()
-    changelog = "Build de teste #{next_build}." if changelog.empty?
-
-    pilot(
-      ipa: "#{$project_path}/build/ios/Runner/Runner.ipa",
-      changelog: changelog,
-      groups: testflight_groups.empty? ? nil : testflight_groups,
-      distribute_external: !testflight_groups.empty?,
+    get_provisioning_profile(
+      app_identifier: bundle_id,
+      provisioning_name: ENV['IOS_PROVISIONING_PROFILE'].to_s.empty? ? 'PenhaS AppStore' : ENV['IOS_PROVISIONING_PROFILE'],
+      output_path: "#{$project_path}/ios/certificates",
+      skip_certificate_verification: true,
     )
   end
 
   private_lane :request_api_key do
-    api_key_content = File.read(apple_api_key_path)
-    api_key_json = JSON.parse(api_key_content)
+    api_key_json = JSON.parse(File.read(ENV['APPLE_API_KEY_PATH']))
 
     app_store_connect_api_key(
       key_id: api_key_json['key_id'],
@@ -105,14 +89,8 @@ platform :ios do
     )
   end
 
-  desc 'Check if json credentials is valid'
-  lane :verify_app_store_auth do
-    request_api_key
-    app_store_build_number(
-      live: false,
-      app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier),
-      initial_build_number: true
-    )
+  private_lane :bundle_id do
+    CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
   end
 
 end

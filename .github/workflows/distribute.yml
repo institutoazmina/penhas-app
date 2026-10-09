@@ -1,0 +1,127 @@
+name: Distribute app
+
+# Single entry point for manual distribution (see docs/processo-de-release.md):
+#   staging    -> Android: Firebase App Distribution | iOS: TestFlight (dev app)
+#   production -> Android: Play Store production draft | iOS: TestFlight (store app)
+#
+# The version name comes from pubspec.yaml; build numbers are computed by the
+# lanes from the latest upload in each store, so nothing is committed back.
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Target
+        type: choice
+        options: [staging, production]
+        required: true
+      platform:
+        description: Platform
+        type: choice
+        options: [all, android, ios]
+        default: all
+        required: true
+      android_testers:
+        description: "Android staging only: comma-separated tester e-mails (empty = default group)"
+        type: string
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: distribute-${{ inputs.environment }}
+  cancel-in-progress: false
+
+env:
+  FASTLANE_SKIP_UPDATE_CHECK: true
+  FASTLANE_HIDE_CHANGELOG: true
+
+jobs:
+  android:
+    if: inputs.platform != 'ios'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    # GitHub environments keep their historical names; secrets are write-only,
+    # so renaming them would mean re-uploading every credential.
+    environment: ${{ inputs.environment == 'staging' && 'firebase-distribution' || 'production' }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-java@v6
+        with:
+          java-version: 17
+          distribution: zulu
+
+      - uses: kuhnroyal/flutter-fvm-config-action/setup@v3
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Restore build files and credentials
+        env:
+          ANDROID_BUILD_FILES: ${{ secrets.ANDROID_BUILD_FILES }}
+          FIREBASE_SERVICE_ACCOUNT_B64: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_B64 }}
+          GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64 }}
+        run: |
+          base64 -d <<< "$ANDROID_BUILD_FILES" | tar xzf -
+          if [ -n "$FIREBASE_SERVICE_ACCOUNT_B64" ]; then
+            base64 -d <<< "$FIREBASE_SERVICE_ACCOUNT_B64" > "$RUNNER_TEMP/firebase-service-account.json"
+          fi
+          if [ -n "$GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64" ]; then
+            base64 -d <<< "$GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64" > "$RUNNER_TEMP/play-store-api-key.json"
+          fi
+
+      - run: flutter pub get
+
+      - name: Run fastlane
+        working-directory: android
+        env:
+          FIREBASE_SERVICE_ACCOUNT_PATH: ${{ runner.temp }}/firebase-service-account.json
+          FIREBASE_TESTERS: ${{ inputs.android_testers }}
+          GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_PATH: ${{ runner.temp }}/play-store-api-key.json
+          PENHAS_BASE_URL: ${{ secrets.PENHAS_BASE_URL }}
+        run: bundle exec fastlane android ${{ inputs.environment }}
+
+  ios:
+    if: inputs.platform != 'android'
+    runs-on: macos-26
+    timeout-minutes: 90
+    environment: ${{ inputs.environment == 'staging' && 'firebase-distribution' || 'production' }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1.7.0
+        with:
+          xcode-version: latest-stable
+
+      - uses: kuhnroyal/flutter-fvm-config-action/setup@v3
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Restore build files and credentials
+        env:
+          APPLE_API_KEY_B64: ${{ secrets.APPLE_API_KEY_B64 }}
+          CERTIFICATE_CONTENT: ${{ secrets.CERTIFICATE_CONTENT }}
+          IOS_BUILD_FILES: ${{ secrets.IOS_BUILD_FILES }}
+        run: |
+          base64 -d <<< "$IOS_BUILD_FILES" | tar xzf -
+          base64 -d <<< "$APPLE_API_KEY_B64" > "$RUNNER_TEMP/app-store-api-key.json"
+          base64 -d <<< "$CERTIFICATE_CONTENT" > "$RUNNER_TEMP/certificate.p12"
+
+      - run: flutter pub get
+
+      - name: Run fastlane
+        working-directory: ios
+        env:
+          APPLE_API_KEY_PATH: ${{ runner.temp }}/app-store-api-key.json
+          CERTIFICATE_PATH: ${{ runner.temp }}/certificate.p12
+          CERTIFICATE_PWD: ${{ secrets.CERTIFICATE_PWD }}
+          IOS_BUNDLE_ID: ${{ vars.IOS_BUNDLE_ID }}
+          IOS_PROVISIONING_PROFILE: ${{ vars.IOS_PROVISIONING_PROFILE }}
+          PENHAS_BASE_URL: ${{ secrets.PENHAS_BASE_URL }}
+          TESTFLIGHT_GROUPS: ${{ vars.TESTFLIGHT_GROUPS }}
+        run: bundle exec fastlane ios ${{ inputs.environment }}
