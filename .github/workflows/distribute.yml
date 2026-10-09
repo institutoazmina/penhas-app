@@ -46,16 +46,16 @@ jobs:
     # so renaming them would mean re-uploading every credential.
     environment: ${{ inputs.environment == 'staging' && 'firebase-distribution' || 'production' }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-java@v6
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
         with:
           java-version: 17
           distribution: zulu
 
-      - uses: kuhnroyal/flutter-fvm-config-action/setup@v3
+      - uses: kuhnroyal/flutter-fvm-config-action/setup@c378498f1d1962d33039c3989411093ef8a17b2c # v3.3
 
-      - uses: ruby/setup-ruby@v1
+      - uses: ruby/setup-ruby@14594264cd68ce8a2345dd349bc3d138a4ef85c8 # v1.327.0
         with:
           bundler-cache: true
 
@@ -73,7 +73,7 @@ jobs:
             base64 -d <<< "$GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64" > "$RUNNER_TEMP/play-store-api-key.json"
           fi
 
-      - run: flutter pub get
+      - run: flutter pub get --enforce-lockfile
 
       - name: Run fastlane
         working-directory: android
@@ -90,15 +90,15 @@ jobs:
     timeout-minutes: 90
     environment: ${{ inputs.environment == 'staging' && 'firebase-distribution' || 'production' }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1.7.0
         with:
           xcode-version: latest-stable
 
-      - uses: kuhnroyal/flutter-fvm-config-action/setup@v3
+      - uses: kuhnroyal/flutter-fvm-config-action/setup@c378498f1d1962d33039c3989411093ef8a17b2c # v3.3
 
-      - uses: ruby/setup-ruby@v1
+      - uses: ruby/setup-ruby@14594264cd68ce8a2345dd349bc3d138a4ef85c8 # v1.327.0
         with:
           bundler-cache: true
 
@@ -112,7 +112,7 @@ jobs:
           base64 -d <<< "$APPLE_API_KEY_B64" > "$RUNNER_TEMP/app-store-api-key.json"
           base64 -d <<< "$CERTIFICATE_CONTENT" > "$RUNNER_TEMP/certificate.p12"
 
-      - run: flutter pub get
+      - run: flutter pub get --enforce-lockfile
 
       - name: Run fastlane
         working-directory: ios
