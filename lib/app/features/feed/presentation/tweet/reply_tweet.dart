@@ -90,6 +90,7 @@ class ReplyTweet extends StatelessWidget {
                   TweetBody(
                     content: tweet.content,
                     badges: tweet.badges,
+                    media: tweet.media,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
@@ -186,6 +187,7 @@ class _RepliedTweet extends StatelessWidget {
                   TweetBody(
                     content: repliedTweet.content,
                     badges: repliedTweet.badges,
+                    media: repliedTweet.media,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 20.0),

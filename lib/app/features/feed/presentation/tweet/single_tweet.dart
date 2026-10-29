@@ -60,6 +60,7 @@ class SingleTweet extends StatelessWidget {
                     TweetBody(
                       content: tweet.content,
                       badges: tweet.badges,
+                      media: tweet.media,
                     ),
                     TweetBottom(tweet: tweet, controller: controller)
                   ],

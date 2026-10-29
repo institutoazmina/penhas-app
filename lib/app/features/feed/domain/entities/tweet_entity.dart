@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import 'tweet_badge_entity.dart';
+import 'tweet_media_entity.dart';
 
 abstract class TweetTiles extends Equatable {}
 
@@ -18,6 +19,7 @@ class TweetEntity extends TweetTiles {
     required this.meta,
     this.parentId,
     this.lastReply = const [],
+    this.media = const [],
     required this.badges,
   });
 
@@ -33,6 +35,7 @@ class TweetEntity extends TweetTiles {
   final String avatar;
   final TweetMeta meta;
   final List<TweetEntity> lastReply;
+  final List<TweetMediaEntity> media;
   final List<TweetBadgeEntity> badges;
 
   @override
@@ -49,6 +52,7 @@ class TweetEntity extends TweetTiles {
         totalLikes,
         parentId,
         lastReply,
+        media,
         badges,
       ];
 
@@ -65,6 +69,7 @@ class TweetEntity extends TweetTiles {
     TweetMeta? meta,
     String? parentId,
     List<TweetEntity>? lastReply,
+    List<TweetMediaEntity>? media,
     List<TweetBadgeEntity>? badges,
   }) {
     return TweetEntity(
@@ -80,6 +85,7 @@ class TweetEntity extends TweetTiles {
       meta: meta ?? this.meta,
       parentId: parentId ?? this.parentId,
       lastReply: lastReply ?? this.lastReply,
+      media: media ?? this.media,
       badges: badges ?? this.badges,
     );
   }

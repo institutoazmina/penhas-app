@@ -260,6 +260,8 @@ class _ReplyTweetState extends State<_ReplyTweet> {
               TweetBody(
                 content: _tweet.content,
                 badges: _tweet.badges,
+                media: _tweet.media,
+                highQualityMedia: true,
               ),
               TweetBottom(tweet: _tweet, controller: controller),
               if (_isComment && _tweet.totalReply > 0)

@@ -1,5 +1,6 @@
 import '../../domain/entities/tweet_badge_entity.dart';
 import '../../domain/entities/tweet_entity.dart';
+import '../../domain/entities/tweet_media_entity.dart';
 
 class TweetModel extends TweetEntity {
   TweetModel(
@@ -15,6 +16,7 @@ class TweetModel extends TweetEntity {
       required super.meta,
       super.parentId,
       required List<TweetModel> super.lastReply,
+      super.media,
       required super.badges});
 
   factory TweetModel.fromJson(Map<String, dynamic> jsonData) {
@@ -48,12 +50,35 @@ class TweetModel extends TweetEntity {
       meta: tweetMeta,
       parentId: meta['parent_id'],
       lastReply: lastReply,
+      media: _parseMedia(jsonData['media']),
       badges: badges,
     );
   }
 
   static List<TweetBadgeEntity> _parseBadges(List<dynamic> badges) {
     return badges.map((e) => TweetBadgeModel.fromJson(e)).toList();
+  }
+
+  static List<TweetMediaEntity> _parseMedia(dynamic media) {
+    if (media is! List) {
+      return const [];
+    }
+
+    return media
+        .whereType<Map<String, dynamic>>()
+        .map((item) {
+          final sd = item['sd'];
+          final hd = item['hd'];
+          if (sd is! String || hd is! String) {
+            return null;
+          }
+          if (sd.isEmpty && hd.isEmpty) {
+            return null;
+          }
+          return TweetMediaEntity(sd: sd, hd: hd);
+        })
+        .whereType<TweetMediaEntity>()
+        .toList(growable: false);
   }
 }
 

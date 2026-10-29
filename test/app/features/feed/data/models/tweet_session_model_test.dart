@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_model.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_session_model.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
+import 'package:penhas/app/features/feed/domain/entities/tweet_media_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
 
 import '../../../../../utils/json_util.dart';
@@ -163,6 +164,81 @@ void main() {
       final result = TweetSessionModel.fromJson(jsonData);
       // assert
       expect(result, expectedSession);
+    });
+
+    test('should parse media with sd and hd urls', () async {
+      // arrange
+      final jsonData = await JsonUtil.getJson(
+        from: 'feed/retrieve_with_media_response.json',
+      );
+
+      // act
+      final result = TweetSessionModel.fromJson(jsonData);
+      final tweet = result.tweets.single as TweetModel;
+
+      // assert
+      expect(
+        tweet.media,
+        [
+          const TweetMediaEntity(
+            sd: 'https://api-hmg.penhas.com.br/media-download/?m=1122575b-5315-450e-8067-905a08acf21e&q=sd&h=77ac8a567bbd',
+            hd: 'https://api-hmg.penhas.com.br/media-download/?m=1122575b-5315-450e-8067-905a08acf21e&q=hd&h=a639dc67c021',
+          ),
+        ],
+      );
+    });
+
+    test('should preserve media when copying a tweet', () async {
+      // arrange
+      final jsonData = await JsonUtil.getJson(
+        from: 'feed/retrieve_with_media_response.json',
+      );
+      final tweet =
+          TweetSessionModel.fromJson(jsonData).tweets.single as TweetModel;
+
+      // act
+      final result = tweet.copyWith(totalLikes: 1);
+
+      // assert
+      expect(result.media, tweet.media);
+      expect(result.totalLikes, 1);
+    });
+
+    test('should ignore invalid media entries', () {
+      // arrange
+      final jsonData = {
+        'id': '261028T0307280000',
+        'name': 'Admin PenhaS',
+        'cliente_id': 0,
+        'created_at': '2026-10-28 03:07:28',
+        'qtde_comentarios': 0,
+        'qtde_likes': 0,
+        'anonimo': 0,
+        'content': '',
+        'icon': '',
+        'media': [
+          {'sd': null, 'hd': null},
+          {'sd': '', 'hd': ''},
+          {'sd': 'https://api.test/sd', 'hd': 'https://api.test/hd'},
+        ],
+        'meta': {'liked': 0, 'owner': 0, 'can_reply': 1},
+        'last_reply': null,
+        'badges': [],
+      };
+
+      // act
+      final result = TweetModel.fromJson(jsonData);
+
+      // assert
+      expect(
+        result.media,
+        const [
+          TweetMediaEntity(
+            sd: 'https://api.test/sd',
+            hd: 'https://api.test/hd',
+          ),
+        ],
+      );
     });
   });
 }
