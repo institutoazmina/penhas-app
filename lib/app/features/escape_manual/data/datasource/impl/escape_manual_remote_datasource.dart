@@ -27,6 +27,7 @@ class EscapeManualRemoteDatasource implements IEscapeManualRemoteDatasource {
   Future<QuizSessionModel> start(String sessionId) async {
     final response = await _apiProvider.post(
       path: '/me/quiz',
+      feature: ApiFeature.escapeManual,
       parameters: {'session_id': sessionId},
     ).then(jsonDecode);
 
@@ -41,6 +42,7 @@ class EscapeManualRemoteDatasource implements IEscapeManualRemoteDatasource {
     try {
       final response = await _apiProvider.get(
         path: '/me/tarefas',
+        feature: ApiFeature.escapeManual,
         parameters: {
           'modificado_apos': '$lastChangeAt',
         },
@@ -66,6 +68,7 @@ class EscapeManualRemoteDatasource implements IEscapeManualRemoteDatasource {
     final response = await _apiProvider.request(
       method: 'POST',
       path: '/me/tarefas/batch',
+      feature: ApiFeature.escapeManual,
       headers: {'Content-Type': 'application/json; charset=utf-8'},
       body: jsonEncode([task.asRequest]),
     );
@@ -84,6 +87,7 @@ class EscapeManualRemoteDatasource implements IEscapeManualRemoteDatasource {
     final response = await _apiProvider.request(
       method: 'POST',
       path: '/me/tarefas/batch',
+      feature: ApiFeature.escapeManual,
       headers: {'Content-Type': 'application/json; charset=utf-8'},
       body: jsonEncode(
         tasks.map((e) => e.asRequest).toList(),

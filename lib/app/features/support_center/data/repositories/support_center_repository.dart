@@ -70,6 +70,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
     try {
       final bodyResponse = await _apiProvider.get(
         path: endPoint,
+        feature: ApiFeature.supportCenter,
         parameters: parameters,
       );
       return right(_parseMetadata(bodyResponse));
@@ -89,6 +90,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
       final parameters = _parseRequestOptions(options);
       final bodyResponse = await _apiProvider.get(
         path: endPoint,
+        feature: ApiFeature.supportCenter,
         parameters: parameters,
       );
       return right(_parseSupportCenter(bodyResponse));
@@ -106,8 +108,11 @@ class SupportCenterRepository implements ISupportCenterRepository {
     };
 
     try {
-      final bodyResponse =
-          await _apiProvider.get(path: endPoint, parameters: parameters);
+      final bodyResponse = await _apiProvider.get(
+        path: endPoint,
+        feature: ApiFeature.supportCenter,
+        parameters: parameters,
+      );
       return right(_parseGeoFromCep(bodyResponse));
     } catch (error, stack) {
       logError(error, stack);
@@ -163,6 +168,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
     try {
       final response = await _apiProvider.post(
         path: endPoint,
+        feature: ApiFeature.supportCenter,
         body: bodyContent,
       );
       return right(_parseAddSuggestion(response));
@@ -179,7 +185,10 @@ class SupportCenterRepository implements ISupportCenterRepository {
     final endPoint = ['me', 'pontos-de-apoio', placeEntity!.id].join('/');
 
     try {
-      final response = await _apiProvider.get(path: endPoint);
+      final response = await _apiProvider.get(
+        path: endPoint,
+        feature: ApiFeature.supportCenter,
+      );
       return right(_parseDetail(response));
     } catch (error, stack) {
       logError(error, stack);
@@ -200,6 +209,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
     try {
       await _apiProvider.post(
         path: endPoint,
+        feature: ApiFeature.supportCenter,
         parameters: parameters,
       );
       return right(const ValidField());

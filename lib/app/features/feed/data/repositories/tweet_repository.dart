@@ -29,7 +29,11 @@ class TweetRepository implements ITweetRepository {
     try {
       final bodyContent = Uri.encodeComponent(option.message);
       final result = await _apiProvider
-          .post(path: '/me/tweets', body: 'content=$bodyContent')
+          .post(
+            path: '/me/tweets',
+            feature: ApiFeature.feed,
+            body: 'content=$bodyContent',
+          )
           .then((value) => jsonDecode(value))
           .then((value) => TweetModel.fromJson(value));
 
@@ -47,7 +51,11 @@ class TweetRepository implements ITweetRepository {
     try {
       final Map<String, String> queryParameters = {'id': option.tweetId};
       final result = await _apiProvider
-          .get(path: '/timeline', parameters: queryParameters)
+          .get(
+            path: '/timeline',
+            feature: ApiFeature.feed,
+            parameters: queryParameters,
+          )
           .then((value) => jsonDecode(value))
           .then((value) => TweetSessionModel.fromJson(value));
 
@@ -64,7 +72,11 @@ class TweetRepository implements ITweetRepository {
   }) async {
     try {
       final result = await _apiProvider
-          .delete(path: '/me/tweets', parameters: {'id': option.tweetId})
+          .delete(
+            path: '/me/tweets',
+            feature: ApiFeature.feed,
+            parameters: {'id': option.tweetId},
+          )
           .then((value) => jsonDecode(value))
           .then((value) => ValidField.fromJson(value));
       return right(result);
@@ -92,7 +104,11 @@ class TweetRepository implements ITweetRepository {
       };
 
       final result = await _apiProvider
-          .get(path: '/timeline', parameters: queryParameters)
+          .get(
+            path: '/timeline',
+            feature: ApiFeature.feed,
+            parameters: queryParameters,
+          )
           .then((value) => jsonDecode(value))
           .then((value) => TweetSessionModel.fromJson(value));
 
@@ -111,6 +127,7 @@ class TweetRepository implements ITweetRepository {
       final result = await _apiProvider
           .post(
             path: '/timeline/${option.tweetId}/like',
+            feature: ApiFeature.feed,
             parameters: {'remove': option.dislike ? '1' : null},
           )
           .then((value) => jsonDecode(value))
@@ -131,6 +148,7 @@ class TweetRepository implements ITweetRepository {
       final result = await _apiProvider
           .post(
             path: '/timeline/${option.tweetId}/comment',
+            feature: ApiFeature.feed,
             body: 'content=$bodyContent',
           )
           .then((value) => jsonDecode(value))
@@ -152,6 +170,7 @@ class TweetRepository implements ITweetRepository {
       final result = await _apiProvider
           .post(
             path: '/timeline/${option.tweetId}/report',
+            feature: ApiFeature.feed,
             body: 'reason=$bodyContent',
           )
           .then((value) => jsonDecode(value))

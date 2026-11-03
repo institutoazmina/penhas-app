@@ -7,7 +7,9 @@ import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
+import 'package:penhas/app/core/network/api_version_policy.dart';
 import 'package:penhas/app/core/network/interfaces/api_content_type.dart';
+import 'package:penhas/app/core/remoteconfig/i_remote_config.dart';
 
 class MockFile extends Mock implements File {}
 
@@ -16,6 +18,8 @@ class MockClient extends Mock implements http.Client {}
 class FakeRequest extends Fake implements http.BaseRequest {}
 
 class MockApiServerConfigure extends Mock implements IApiServerConfigure {}
+
+class MockRemoteConfigService extends Mock implements IRemoteConfigService {}
 
 void main() {
   late MockFile mockFile;
@@ -97,6 +101,41 @@ void main() {
         containsPair('key1', 'value1'),
         reason: 'Custom property',
       );
+    });
+    test('reads the feature flag again before each request', () async {
+      var enabled = false;
+      final remoteConfig = MockRemoteConfigService();
+      when(() => remoteConfig.getBool(RemoteConfigKeys.featureApiV2Feed))
+          .thenAnswer((_) => enabled);
+      when(() => apiClient.send(any())).thenAnswer(
+        (_) async => http.StreamedResponse(
+          http.ByteStream.fromBytes(utf8.encode('{}')),
+          HttpStatus.ok,
+        ),
+      );
+      final sut = ApiProvider(
+        serverConfiguration: serverConfiguration,
+        apiClient: apiClient,
+        apiVersionPolicy: ApiVersionPolicy(remoteConfig: remoteConfig),
+      );
+
+      await sut.get(path: '/timeline', feature: ApiFeature.feed);
+      enabled = true;
+      await sut.get(path: '/timeline', feature: ApiFeature.feed);
+
+      final requests = verify(() => apiClient.send(captureAny()))
+          .captured
+          .cast<http.Request>();
+      expect(
+        requests.first.headers,
+        isNot(contains(ApiVersionPolicy.headerName)),
+      );
+      expect(
+        requests.last.headers,
+        containsPair(ApiVersionPolicy.headerName, ApiVersionPolicy.versionV2),
+      );
+      verify(() => remoteConfig.getBool(RemoteConfigKeys.featureApiV2Feed))
+          .called(2);
     });
     test(
       'default content type is formUrlEncoded',

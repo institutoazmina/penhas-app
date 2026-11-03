@@ -26,6 +26,7 @@ void main() {
   void _setUpMockPost() {
     when(
       () => apiProvider.post(
+        feature: ApiFeature.users,
         path: any(named: 'path'),
         parameters: any(named: 'parameters'),
       ),
@@ -43,6 +44,7 @@ void main() {
 
         when(
           () => apiProvider.post(
+            feature: ApiFeature.users,
             path: any(named: 'path'),
             parameters: any(named: 'parameters'),
           ),
@@ -63,6 +65,7 @@ void main() {
 
         // assert
         verify(() => apiProvider.post(
+              feature: ApiFeature.users,
               path: '/block-profile',
               parameters: parameters,
             ));

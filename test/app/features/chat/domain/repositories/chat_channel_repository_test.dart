@@ -36,6 +36,7 @@ void main() {
   void mockGetSuccessfully(String jsonFile) {
     when(
       () => apiProvider.get(
+        feature: ApiFeature.chat,
         path: any(named: 'path'),
         headers: any(named: 'headers'),
         parameters: any(named: 'parameters'),
@@ -46,6 +47,7 @@ void main() {
   void mockGetException(Object throwable) {
     when(
       () => apiProvider.get(
+        feature: ApiFeature.chat,
         path: any(named: 'path'),
         headers: any(named: 'headers'),
         parameters: any(named: 'parameters'),
@@ -56,6 +58,7 @@ void main() {
   void mockPostSuccessfully(String jsonFile) {
     when(
       () => apiProvider.post(
+        feature: ApiFeature.chat,
         path: any(named: 'path'),
         headers: any(named: 'headers'),
         parameters: any(named: 'parameters'),
@@ -67,6 +70,7 @@ void main() {
   void mockPostException(Object throwable) {
     when(
       () => apiProvider.post(
+        feature: ApiFeature.chat,
         path: any(named: 'path'),
         headers: any(named: 'headers'),
         parameters: any(named: 'parameters'),
@@ -89,7 +93,9 @@ void main() {
           final actual = await sut.listChannel();
           // assert
           expect(actual, expected);
-          verify(() => apiProvider.get(path: '/me/chats')).called(1);
+          verify(() =>
+                  apiProvider.get(feature: ApiFeature.chat, path: '/me/chats'))
+              .called(1);
         },
       );
       test(
@@ -135,6 +141,7 @@ void main() {
           expect(actual, expected);
           verify(
             () => apiProvider.post(
+              feature: ApiFeature.chat,
               path: '/me/chats-session',
               parameters: {'prefetch': '1', 'cliente_id': clientId},
             ),
@@ -172,6 +179,7 @@ void main() {
           expect(actual, expected);
           verify(
             () => apiProvider.get(
+              feature: ApiFeature.chat,
               path: '/me/chats-messages',
               headers: any(named: 'headers'),
               parameters: {
@@ -228,6 +236,7 @@ void main() {
           expect(actual, expected);
           verify(
             () => apiProvider.post(
+                feature: ApiFeature.chat,
                 path: '/me/chats-messages',
                 parameters: {'chat_auth': chatRequest.token},
                 body: bodyContent),
@@ -271,6 +280,7 @@ void main() {
               ValidField(),
             );
             verify(() => apiProvider.post(
+                  feature: ApiFeature.chat,
                   path: '/me/manage-blocks',
                   parameters: {
                     'block': item.key,
@@ -300,6 +310,7 @@ void main() {
         () async {
           // arrange
           when(() => apiProvider.delete(
+                feature: ApiFeature.chat,
                 path: any(named: 'path'),
                 parameters: any(named: 'parameters'),
               )).thenAnswer((_) async => '');
@@ -308,6 +319,7 @@ void main() {
           // assert
           expect(result, equals(right(ValidField())));
           verify(() => apiProvider.delete(
+                feature: ApiFeature.chat,
                 path: '/me/chats-session',
                 parameters: {'chat_auth': chatRequest.token},
               )).called(1);
@@ -319,6 +331,7 @@ void main() {
         () async {
           // arrange
           when(() => apiProvider.delete(
+                feature: ApiFeature.chat,
                 path: any(named: 'path'),
                 parameters: any(named: 'parameters'),
               )).thenThrow(NetworkServerException());

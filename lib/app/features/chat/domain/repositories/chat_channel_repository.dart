@@ -41,7 +41,9 @@ class ChatChannelRepository implements IChatChannelRepository {
     const endPoint = '/me/chats';
 
     try {
-      final response = await _apiProvider.get(path: endPoint).parseSession();
+      final response = await _apiProvider
+          .get(path: endPoint, feature: ApiFeature.chat)
+          .parseSession();
       return right(response);
     } catch (error, stack) {
       logError(error, stack);
@@ -61,7 +63,11 @@ class ChatChannelRepository implements IChatChannelRepository {
 
     try {
       final response = await _apiProvider
-          .post(path: endPoint, parameters: parameters)
+          .post(
+            path: endPoint,
+            feature: ApiFeature.chat,
+            parameters: parameters,
+          )
           .parseOpenChannel();
       return right(response);
     } catch (error, stack) {
@@ -83,7 +89,11 @@ class ChatChannelRepository implements IChatChannelRepository {
 
     try {
       final response = await _apiProvider
-          .get(path: endPoint, parameters: parameters)
+          .get(
+            path: endPoint,
+            feature: ApiFeature.chat,
+            parameters: parameters,
+          )
           .parseSessionChannel();
       return right(response);
     } catch (error, stack) {
@@ -107,6 +117,7 @@ class ChatChannelRepository implements IChatChannelRepository {
       final response = await _apiProvider
           .post(
             path: endPoint,
+            feature: ApiFeature.chat,
             parameters: parameters,
             body: bodyContent,
           )
@@ -132,6 +143,7 @@ class ChatChannelRepository implements IChatChannelRepository {
     try {
       await _apiProvider.post(
         path: endPoint,
+        feature: ApiFeature.chat,
         parameters: parameters,
       );
       return right(const ValidField());
@@ -150,6 +162,7 @@ class ChatChannelRepository implements IChatChannelRepository {
     try {
       await _apiProvider.delete(
         path: endPoint,
+        feature: ApiFeature.chat,
         parameters: parameters,
       );
       return right(const ValidField());

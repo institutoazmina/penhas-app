@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:firebase_remote_config/firebase_remote_config.dart';
@@ -7,9 +8,10 @@ import '../../shared/logger/log.dart';
 import 'i_remote_config.dart';
 
 class RemoteConfigService implements IRemoteConfigService {
-  const RemoteConfigService();
+  RemoteConfigService();
 
   static FirebaseRemoteConfig _remoteConfig = FirebaseRemoteConfig.instance;
+  StreamSubscription<RemoteConfigUpdate>? _updatesSubscription;
 
   @visibleForTesting
   static set remoteConfig(FirebaseRemoteConfig value) => _remoteConfig = value;
@@ -19,7 +21,8 @@ class RemoteConfigService implements IRemoteConfigService {
     try {
       await _setDefaults();
       await _setConfigSettings();
-      await _activate();
+      _listenForUpdates();
+      await refresh();
     } catch (e, stack) {
       logError(e, stack);
     }
@@ -44,8 +47,14 @@ class RemoteConfigService implements IRemoteConfigService {
     ));
   }
 
-  Future<void> _activate() async {
-    await _remoteConfig.activate();
+  void _listenForUpdates() {
+    _updatesSubscription ??= _remoteConfig.onConfigUpdated.listen(
+      (_) => _remoteConfig.activate().catchError((error, stack) {
+        logError(error, stack);
+        return false;
+      }),
+      onError: (Object error, StackTrace stack) => logError(error, stack),
+    );
   }
 
   Future<void> _setDefaults() async {

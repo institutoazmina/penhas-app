@@ -28,6 +28,7 @@ void main() {
 
     when(
       () => apiProvider.get(
+        feature: ApiFeature.users,
         path: any(named: 'path'),
         headers: any(named: 'headers'),
         parameters: any(named: 'parameters'),
@@ -48,6 +49,7 @@ void main() {
         // assert
         verify(
           () => apiProvider.get(
+            feature: ApiFeature.users,
             path: '/search-users',
             parameters: {
               'name': null,
@@ -67,6 +69,7 @@ void main() {
         // assert
         verify(
           () => apiProvider.get(
+            feature: ApiFeature.users,
             path: '/search-users',
             parameters: {
               'name': null,
@@ -107,6 +110,7 @@ void main() {
         final options = UserSearchOptions(skills: ['a', 'b', 'c']);
 
         when(() => apiProvider.get(
+              feature: ApiFeature.users,
               path: any(named: 'path'),
               headers: any(named: 'headers'),
               parameters: any(named: 'parameters'),

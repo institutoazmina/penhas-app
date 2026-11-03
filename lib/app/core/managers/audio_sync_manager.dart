@@ -3,15 +3,51 @@ import 'dart:io';
 
 import 'package:background_downloader/background_downloader.dart';
 import 'package:crypto/crypto.dart';
-import 'package:dartz/dartz.dart';
+import 'package:dartz/dartz.dart' hide Task;
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:meta/meta.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../../firebase_options.dart';
 import '../../features/help_center/data/repositories/audio_sync_repository.dart';
 import '../../features/help_center/domain/entities/audio_entity.dart';
 import '../../shared/logger/log.dart';
 import '../error/failures.dart';
 import '../network/api_server_configure.dart';
+import '../network/api_version_policy.dart';
+import '../remoteconfig/remote_config_keys.dart';
+
+@pragma('vm:entry-point')
+Future<Task?> applyAudioApiVersion(Task original) async {
+  var enabled = false;
+
+  try {
+    if (Firebase.apps.isEmpty) {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+    }
+
+    enabled = FirebaseRemoteConfig.instance
+        .getBool(RemoteConfigKeys.featureApiV2Audios);
+  } catch (error, stack) {
+    logError(error, stack);
+  }
+
+  return applyAudioApiVersionHeader(original, enabled: enabled);
+}
+
+@visibleForTesting
+Task applyAudioApiVersionHeader(Task original, {required bool enabled}) {
+  final headers = Map<String, String>.from(original.headers)
+    ..remove(ApiVersionPolicy.headerName);
+  if (enabled) {
+    headers[ApiVersionPolicy.headerName] = ApiVersionPolicy.versionV2;
+  }
+  return original.copyWith(headers: headers);
+}
 
 abstract class IAudioSyncManager {
   Future<String> audioFile({
@@ -116,6 +152,7 @@ class AudioSyncManager implements IAudioSyncManager {
         'X-Api-Key': apiToken,
         'User-Agent': userAgent,
       },
+      options: TaskOptions(onTaskStart: applyAudioApiVersion),
       updates: Updates.statusAndProgress,
       retries: 5,
       requiresWiFi: false,

@@ -33,6 +33,7 @@ class ChangePasswordRepository
       final response = await _apiProvider
           .post(
             path: '/reset-password/request-new',
+            feature: ApiFeature.authentication,
             parameters: {
               'email': emailAddress.rawValue,
               'app_version': userAgent,
@@ -59,6 +60,7 @@ class ChangePasswordRepository
       final response = await _apiProvider
           .post(
             path: '/reset-password/write-new',
+            feature: ApiFeature.authentication,
             parameters: {
               'dry': '0',
               'email': emailAddress.rawValue,
@@ -87,6 +89,7 @@ class ChangePasswordRepository
       final response = await _apiProvider
           .post(
             path: '/reset-password/write-new',
+            feature: ApiFeature.authentication,
             parameters: {
               'dry': '1',
               'email': emailAddress.rawValue,

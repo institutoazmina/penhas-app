@@ -25,6 +25,7 @@ void main() {
   void _setUpMockGet() {
     when(
       () => apiProvider.get(
+        feature: ApiFeature.users,
         path: any(named: 'path'),
         headers: any(named: 'headers'),
         parameters: any(named: 'parameters'),
@@ -43,6 +44,7 @@ void main() {
         // assert
         verify(
           () => apiProvider.get(
+            feature: ApiFeature.users,
             path: '/profile',
             parameters: {'cliente_id': clientId},
           ),
@@ -69,6 +71,7 @@ void main() {
 
         when(
           () => apiProvider.get(
+            feature: ApiFeature.users,
             path: any(named: 'path'),
             parameters: any(named: 'parameters'),
           ),

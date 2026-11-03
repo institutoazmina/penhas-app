@@ -31,6 +31,7 @@ class AudioSyncRepository implements IAudioSyncRepository {
       await _apiProvider.download(
         path: endPoint,
         file: file,
+        feature: ApiFeature.audios,
         fields: fields,
       );
       return right(const ValidField());

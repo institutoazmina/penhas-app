@@ -37,7 +37,11 @@ class UsersRepository implements IUsersRepository {
 
     try {
       final response = await _apiProvider
-          .get(path: endPoint, parameters: parameters)
+          .get(
+            path: endPoint,
+            feature: ApiFeature.users,
+            parameters: parameters,
+          )
           .parseDetail();
       return right(response);
     } catch (error, stack) {
@@ -63,7 +67,11 @@ class UsersRepository implements IUsersRepository {
 
     try {
       final response = await _apiProvider
-          .get(path: endPoint, parameters: parameters)
+          .get(
+            path: endPoint,
+            feature: ApiFeature.users,
+            parameters: parameters,
+          )
           .parseSearchSession();
       return right(response);
     } catch (error, stack) {
@@ -79,7 +87,11 @@ class UsersRepository implements IUsersRepository {
       const endPoint = '/report-profile';
       final parameters = {'reason': reason, 'cliente_id': clientId};
       final response = await _apiProvider
-          .post(path: endPoint, parameters: parameters)
+          .post(
+            path: endPoint,
+            feature: ApiFeature.users,
+            parameters: parameters,
+          )
           .parseValidField();
       return right(response);
     } catch (error, stack) {
@@ -94,6 +106,7 @@ class UsersRepository implements IUsersRepository {
       const endPoint = '/block-profile';
       final response = await _apiProvider.post(
           path: endPoint,
+          feature: ApiFeature.users,
           parameters: {'cliente_id': clientId}).parseValidField();
       return right(response);
     } catch (error, stack) {

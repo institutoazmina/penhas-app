@@ -42,7 +42,11 @@ class UserProfileRepository implements IUserProfileRepository {
 
     try {
       final response = await _apiProvider
-          .post(path: endPoint, parameters: parameters)
+          .post(
+            path: endPoint,
+            feature: ApiFeature.account,
+            parameters: parameters,
+          )
           .parseValidField();
       return right(response);
     } catch (error, stack) {
@@ -60,7 +64,11 @@ class UserProfileRepository implements IUserProfileRepository {
 
     try {
       final response = await _apiProvider
-          .post(path: endPoint, parameters: parameters)
+          .post(
+            path: endPoint,
+            feature: ApiFeature.account,
+            parameters: parameters,
+          )
           .parseValidField();
       return right(response);
     } catch (error, stack) {
@@ -81,7 +89,11 @@ class UserProfileRepository implements IUserProfileRepository {
     };
 
     try {
-      await _apiProvider.delete(path: endPoint, parameters: parameters);
+      await _apiProvider.delete(
+        path: endPoint,
+        feature: ApiFeature.account,
+        parameters: parameters,
+      );
       return right(const ValidField());
     } catch (error, stack) {
       logError(error, stack);
@@ -94,7 +106,9 @@ class UserProfileRepository implements IUserProfileRepository {
     const endPoint = '/me/delete-text';
 
     try {
-      final response = await _apiProvider.get(path: endPoint).parseValidField();
+      final response = await _apiProvider
+          .get(path: endPoint, feature: ApiFeature.account)
+          .parseValidField();
       return right(response);
     } catch (error, stack) {
       logError(error, stack);
@@ -113,7 +127,11 @@ class UserProfileRepository implements IUserProfileRepository {
     };
 
     try {
-      await _apiProvider.post(path: endPoint, parameters: parameters);
+      await _apiProvider.post(
+        path: endPoint,
+        feature: ApiFeature.account,
+        parameters: parameters,
+      );
       return right(ValidField(message: token));
     } catch (error, stack) {
       logError(error, stack);
@@ -126,7 +144,10 @@ class UserProfileRepository implements IUserProfileRepository {
     const endPoint = '/me/preferences';
 
     try {
-      final data = await _apiProvider.get(path: endPoint);
+      final data = await _apiProvider.get(
+        path: endPoint,
+        feature: ApiFeature.account,
+      );
       final jsonData = jsonDecode(data) as Map<String, dynamic>;
       final session = AccountPreferenceSessionModel.fromJson(jsonData);
       return right(session);
@@ -145,8 +166,11 @@ class UserProfileRepository implements IUserProfileRepository {
     final parameters = {key: status ? '1' : '0'};
 
     try {
-      final data =
-          await _apiProvider.post(path: endPoint, parameters: parameters);
+      final data = await _apiProvider.post(
+        path: endPoint,
+        feature: ApiFeature.account,
+        parameters: parameters,
+      );
       final jsonData = jsonDecode(data) as Map<String, dynamic>;
       final session = AccountPreferenceSessionModel.fromJson(jsonData);
       return right(session);

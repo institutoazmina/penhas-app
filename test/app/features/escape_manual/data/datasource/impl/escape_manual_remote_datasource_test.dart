@@ -44,6 +44,7 @@ void main() {
           );
           when(
             () => mockApiProvider.post(
+              feature: ApiFeature.escapeManual,
               path: any(named: 'path'),
               parameters: any(named: 'parameters'),
             ),
@@ -55,6 +56,7 @@ void main() {
           // assert
           verify(
             () => mockApiProvider.post(
+              feature: ApiFeature.escapeManual,
               path: '/me/quiz',
               parameters: {'session_id': 'MF1234'},
             ),
@@ -73,6 +75,7 @@ void main() {
           const expectedQuiz = QuizSessionModel(sessionId: 'session_id');
           when(
             () => mockApiProvider.post(
+              feature: ApiFeature.escapeManual,
               path: any(named: 'path'),
               parameters: any(named: 'parameters'),
             ),
@@ -92,6 +95,7 @@ void main() {
           // arrange
           when(
             () => mockApiProvider.post(
+              feature: ApiFeature.escapeManual,
               path: any(named: 'path'),
               parameters: any(named: 'parameters'),
             ),
@@ -123,6 +127,7 @@ void main() {
           when(() => mockCacheStorage.retrieve()).thenAnswer((_) async => null);
           when(
             () => mockApiProvider.get(
+              feature: ApiFeature.escapeManual,
               path: any(named: 'path'),
               parameters: any(named: 'parameters'),
             ),
@@ -150,6 +155,7 @@ void main() {
             );
             when(
               () => mockApiProvider.get(
+                feature: ApiFeature.escapeManual,
                 path: any(named: 'path'),
                 parameters: any(named: 'parameters'),
               ),
@@ -161,6 +167,7 @@ void main() {
             // assert
             verify(
               () => mockApiProvider.get(
+                feature: ApiFeature.escapeManual,
                 path: '/me/tarefas',
                 parameters: {
                   'modificado_apos': '0',
@@ -181,6 +188,7 @@ void main() {
             final expectedCachedData = jsonDecode(response);
             when(
               () => mockApiProvider.get(
+                feature: ApiFeature.escapeManual,
                 path: any(named: 'path'),
                 parameters: any(named: 'parameters'),
               ),
@@ -208,6 +216,7 @@ void main() {
 
             when(
               () => mockApiProvider.get(
+                feature: ApiFeature.escapeManual,
                 path: any(named: 'path'),
                 parameters: any(named: 'parameters'),
               ),
@@ -227,6 +236,7 @@ void main() {
             // arrange
             when(
               () => mockApiProvider.get(
+                feature: ApiFeature.escapeManual,
                 path: any(named: 'path'),
                 parameters: any(named: 'parameters'),
               ),
@@ -256,6 +266,7 @@ void main() {
                 .thenAnswer((_) async => cachedData);
             when(
               () => mockApiProvider.get(
+                feature: ApiFeature.escapeManual,
                 path: any(named: 'path'),
                 parameters: any(named: 'parameters'),
               ),
@@ -267,6 +278,7 @@ void main() {
             // assert
             verify(
               () => mockApiProvider.get(
+                feature: ApiFeature.escapeManual,
                 path: '/me/tarefas',
                 parameters: {
                   'modificado_apos': '$expectedLastModifiedAt',
@@ -292,6 +304,7 @@ void main() {
 
             when(
               () => mockApiProvider.get(
+                feature: ApiFeature.escapeManual,
                 path: any(named: 'path'),
                 parameters: any(named: 'parameters'),
               ),
@@ -320,6 +333,7 @@ void main() {
 
             when(
               () => mockApiProvider.get(
+                feature: ApiFeature.escapeManual,
                 path: any(named: 'path'),
                 parameters: any(named: 'parameters'),
               ),
@@ -346,6 +360,7 @@ void main() {
                 (_) async => escapeManualRemoteModelFixture.asJsonObject);
             when(
               () => mockApiProvider.get(
+                feature: ApiFeature.escapeManual,
                 path: any(named: 'path'),
                 parameters: any(named: 'parameters'),
               ),
@@ -380,6 +395,7 @@ void main() {
           );
           when(
             () => mockApiProvider.request(
+              feature: ApiFeature.escapeManual,
               method: any(named: 'method'),
               path: any(named: 'path'),
               body: any(named: 'body'),
@@ -399,6 +415,7 @@ void main() {
           // assert
           verify(
             () => mockApiProvider.request(
+              feature: ApiFeature.escapeManual,
               method: 'POST',
               path: '/me/tarefas/batch',
               body: jsonEncode([
@@ -434,6 +451,7 @@ void main() {
           );
           when(
             () => mockApiProvider.request(
+              feature: ApiFeature.escapeManual,
               method: any(named: 'method'),
               path: any(named: 'path'),
               headers: any(named: 'headers'),
@@ -485,6 +503,7 @@ void main() {
           ];
           when(
             () => mockApiProvider.request(
+              feature: ApiFeature.escapeManual,
               method: any(named: 'method'),
               path: any(named: 'path'),
               body: any(named: 'body'),
@@ -504,6 +523,7 @@ void main() {
           // assert
           verify(
             () => mockApiProvider.request(
+              feature: ApiFeature.escapeManual,
               method: 'POST',
               path: '/me/tarefas/batch',
               body: jsonEncode(tasks.map((e) => e.asRequest).toList()),
@@ -545,6 +565,7 @@ void main() {
           );
           when(
             () => mockApiProvider.request(
+              feature: ApiFeature.escapeManual,
               method: any(named: 'method'),
               path: any(named: 'path'),
               headers: any(named: 'headers'),

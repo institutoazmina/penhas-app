@@ -18,7 +18,7 @@ mixin RunnerMixin on Runner {
 
   @override
   FutureOr<void> configure() async {
-    const remoteConfig = RemoteConfigService();
+    final remoteConfig = RemoteConfigService();
 
     await Future.wait([
       Hive.initFlutter(),

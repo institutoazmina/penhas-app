@@ -35,13 +35,15 @@ void main() {
             final jsonData = await JsonUtil.getString(from: jsonFile);
             final actual = right(ValidField(message: '0'));
 
-            when(() => mockApiProvider.get(path: any(named: 'path')))
-                .thenAnswer((_) async => jsonData);
+            when(() => mockApiProvider.get(
+                feature: ApiFeature.notifications,
+                path: any(named: 'path'))).thenAnswer((_) async => jsonData);
             // act
             final matcher = await sut.unread();
             // assert
-            verify(() => mockApiProvider.get(path: '/me/unread-notif-count'))
-                .called(1);
+            verify(() => mockApiProvider.get(
+                feature: ApiFeature.notifications,
+                path: '/me/unread-notif-count')).called(1);
             expect(actual, matcher);
           },
         );
@@ -50,13 +52,15 @@ void main() {
           () async {
             // arrange
             final actual = left(ServerFailure());
-            when(() => mockApiProvider.get(path: any(named: 'path')))
-                .thenThrow(Exception());
+            when(() => mockApiProvider.get(
+                feature: ApiFeature.notifications,
+                path: any(named: 'path'))).thenThrow(Exception());
             // act
             final matcher = await sut.unread();
             // assert
-            verify(() => mockApiProvider.get(path: '/me/unread-notif-count'))
-                .called(1);
+            verify(() => mockApiProvider.get(
+                feature: ApiFeature.notifications,
+                path: '/me/unread-notif-count')).called(1);
             expect(actual, matcher);
           },
         );
@@ -72,6 +76,7 @@ void main() {
           final actual = right(NotificationSessionModel.fromJson(jsonData));
 
           when(() => mockApiProvider.get(
+                feature: ApiFeature.notifications,
                 path: any(named: 'path'),
                 parameters: any(named: 'parameters'),
               )).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
@@ -79,6 +84,7 @@ void main() {
           final matcher = await sut.notifications();
           // assert
           verify(() => mockApiProvider.get(
+              feature: ApiFeature.notifications,
               path: '/me/notifications',
               parameters: any(named: 'parameters'))).called(1);
           expect(actual, matcher);
@@ -88,6 +94,7 @@ void main() {
         // arrange
         final actual = left(ServerFailure());
         when(() => mockApiProvider.get(
+              feature: ApiFeature.notifications,
               path: any(named: 'path'),
               parameters: any(named: 'parameters'),
             )).thenThrow(Exception());
@@ -95,6 +102,7 @@ void main() {
         final matcher = await sut.notifications();
         // assert
         verify(() => mockApiProvider.get(
+            feature: ApiFeature.notifications,
             path: '/me/notifications',
             parameters: any(named: 'parameters'))).called(1);
         expect(actual, matcher);

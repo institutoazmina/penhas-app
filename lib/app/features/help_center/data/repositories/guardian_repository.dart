@@ -36,6 +36,7 @@ class GuardianRepository extends IGuardianRepository {
       final session = await _apiProvider
           .get(
             path: '/me/guardioes',
+            feature: ApiFeature.guardians,
             contentType: ApiContentType.json,
           )
           .then((value) => jsonDecode(value))
@@ -61,6 +62,7 @@ class GuardianRepository extends IGuardianRepository {
       final alert = await _apiProvider
           .post(
             path: '/me/guardioes',
+            feature: ApiFeature.guardians,
             parameters: parameters,
           )
           .then((value) => jsonDecode(value))
@@ -83,6 +85,7 @@ class GuardianRepository extends IGuardianRepository {
       final result = await _apiProvider
           .put(
             path: '/me/guardioes/${guardian.id}',
+            feature: ApiFeature.guardians,
             parameters: parameters,
           )
           .then((value) => jsonDecode(value))
@@ -102,6 +105,7 @@ class GuardianRepository extends IGuardianRepository {
       final result = await _apiProvider
           .delete(
             path: '/me/guardioes/${guardian.id}',
+            feature: ApiFeature.guardians,
           )
           .then((value) => jsonDecode(value))
           .then((value) => ValidField.fromJson(value));
@@ -123,6 +127,7 @@ class GuardianRepository extends IGuardianRepository {
       final result = await _apiProvider
           .post(
             path: '/me/guardioes/alert',
+            feature: ApiFeature.guardians,
             parameters: parameters,
           )
           .then((value) => jsonDecode(value))
@@ -138,7 +143,10 @@ class GuardianRepository extends IGuardianRepository {
   Future<Either<Failure, ValidField>> callPolice() async {
     try {
       final result = await _apiProvider
-          .post(path: '/me/call-police-pressed')
+          .post(
+            path: '/me/call-police-pressed',
+            feature: ApiFeature.guardians,
+          )
           .then((value) => jsonDecode(value))
           .then((value) => ValidField.fromJson(value));
       return right(result);

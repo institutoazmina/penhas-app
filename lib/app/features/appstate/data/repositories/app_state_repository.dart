@@ -25,6 +25,7 @@ class AppStateRepository implements IAppStateRepository {
       final appState = await _apiProvider
           .get(
             path: '/me',
+            feature: ApiFeature.appState,
             contentType: ApiContentType.json,
           )
           .then((value) => jsonDecode(value))
@@ -55,6 +56,7 @@ class AppStateRepository implements IAppStateRepository {
       final appState = await _apiProvider
           .put(
             path: '/me',
+            feature: ApiFeature.account,
             parameters: parameters,
             contentType: ApiContentType.formUrlEncoded,
           )

@@ -25,6 +25,7 @@ void main() {
       final actual = FilterSkillsModel.fromJson(jsonData).skills;
       when(
         () => apiProvider.get(
+          feature: ApiFeature.users,
           path: any(named: 'path'),
           headers: any(named: 'headers'),
           parameters: any(named: 'parameters'),

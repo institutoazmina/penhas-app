@@ -28,6 +28,7 @@ class QuizRepository implements IQuizRepository {
       final quizSession = await _apiProvider
           .post(
             path: '/me/quiz',
+            feature: ApiFeature.quiz,
             parameters: {'session_id': sessionId},
           )
           .then((value) => jsonDecode(value))
@@ -72,6 +73,7 @@ class QuizRepository implements IQuizRepository {
       final response = await _apiProvider
           .post(
             path: '/me/quiz',
+            feature: ApiFeature.quiz,
             parameters: queryParameters,
           )
           .then((value) => jsonDecode(value))

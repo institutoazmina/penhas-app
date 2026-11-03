@@ -27,7 +27,9 @@ class AudiosRepository implements IAudiosRepository {
     final endPoint = ['me', 'audios'].join('/');
 
     try {
-      final response = await _apiProvider!.get(path: endPoint).parseAudios();
+      final response = await _apiProvider!
+          .get(path: endPoint, feature: ApiFeature.audios)
+          .parseAudios();
       return right(response);
     } catch (error, stack) {
       logError(error, stack);
@@ -40,8 +42,9 @@ class AudiosRepository implements IAudiosRepository {
     final endPoint = ['me', 'audios', audio.id].join('/');
 
     try {
-      final response =
-          await _apiProvider!.delete(path: endPoint).parseValidField();
+      final response = await _apiProvider!
+          .delete(path: endPoint, feature: ApiFeature.audios)
+          .parseValidField();
       return right(response);
     } catch (error, stack) {
       logError(error, stack);
@@ -54,8 +57,9 @@ class AudiosRepository implements IAudiosRepository {
     final endPoint = ['me', 'audios', audio.id, 'request-access'].join('/');
 
     try {
-      final response =
-          await _apiProvider!.post(path: endPoint).parseValidField();
+      final response = await _apiProvider!
+          .post(path: endPoint, feature: ApiFeature.audios)
+          .parseValidField();
       return right(response);
     } catch (error, stack) {
       logError(error, stack);

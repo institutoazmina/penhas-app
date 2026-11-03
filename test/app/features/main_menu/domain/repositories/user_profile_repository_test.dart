@@ -29,6 +29,7 @@ void main() {
   void _setUpMockPost() {
     when(
       () => apiProvider.post(
+        feature: ApiFeature.account,
         path: any(named: 'path'),
         parameters: any(named: 'parameters'),
       ),
@@ -38,6 +39,7 @@ void main() {
   void _setUpMockPostException() {
     when(
       () => apiProvider.post(
+        feature: ApiFeature.account,
         path: any(named: 'path'),
         parameters: any(named: 'parameters'),
       ),
@@ -58,6 +60,7 @@ void main() {
           // assert
           verify(
             () => apiProvider.post(
+              feature: ApiFeature.account,
               path: endPoint,
               parameters: parameters,
             ),
@@ -98,6 +101,7 @@ void main() {
         // assert
         verify(
           () => apiProvider.post(
+            feature: ApiFeature.account,
             path: endPoint,
             parameters: parameters,
           ),
@@ -131,7 +135,9 @@ void main() {
         // arrange
         const endPoint = '/me';
         when(() => apiProvider.delete(
-                path: any(named: 'path'), parameters: any(named: 'parameters')))
+                feature: ApiFeature.account,
+                path: any(named: 'path'),
+                parameters: any(named: 'parameters')))
             .thenAnswer((_) async => Future.value(''));
         when(() => serverConfiguration.userAgent).thenAnswer((_) async => 'v1');
         // act
@@ -139,6 +145,7 @@ void main() {
         // assert
         verify(
           () => apiProvider.delete(
+              feature: ApiFeature.account,
               path: endPoint,
               parameters: {'senha_atual': '123456', 'app_version': 'v1'}),
         ).called(1);
@@ -149,6 +156,7 @@ void main() {
           // arrange
           final expected = right(const ValidField());
           when(() => apiProvider.delete(
+                  feature: ApiFeature.account,
                   path: any(named: 'path'),
                   parameters: any(named: 'parameters')))
               .thenAnswer((_) async => Future.value(''));
@@ -163,6 +171,7 @@ void main() {
       test('return Failure when encounters an error', () async {
         // arrange
         when(() => apiProvider.delete(
+            feature: ApiFeature.account,
             path: any(named: 'path'),
             parameters: any(named: 'parameters'))).thenThrow(Exception());
         when(() => serverConfiguration.userAgent).thenAnswer((_) async => 'v1');
@@ -176,13 +185,14 @@ void main() {
       test('hit endpoint me/delete-text', () async {
         // arrange
         const endPoint = '/me/delete-text';
-        when(() => apiProvider.get(path: any(named: 'path')))
+        when(() => apiProvider.get(
+                feature: ApiFeature.account, path: any(named: 'path')))
             .thenAnswer((_) async => Future.value(''));
         // act
         await sut.deleteNotice();
         // assert
         verify(
-          () => apiProvider.get(path: endPoint),
+          () => apiProvider.get(feature: ApiFeature.account, path: endPoint),
         ).called(1);
       });
       test(
@@ -190,7 +200,8 @@ void main() {
         () async {
           // arrange
           final expected = right(const ValidField());
-          when(() => apiProvider.get(path: any(named: 'path')))
+          when(() => apiProvider.get(
+                  feature: ApiFeature.account, path: any(named: 'path')))
               .thenAnswer((_) async => Future.value(''));
           // act
           final actual = await sut.deleteNotice();
@@ -200,8 +211,9 @@ void main() {
       );
       test('return Failure when encounters an error', () async {
         // arrange
-        when(() => apiProvider.get(path: any(named: 'path')))
-            .thenThrow(Exception());
+        when(() => apiProvider.get(
+            feature: ApiFeature.account,
+            path: any(named: 'path'))).thenThrow(Exception());
         // act
         final result = await sut.deleteNotice();
         // assert
@@ -215,14 +227,18 @@ void main() {
         const parameters = {'app_version': 'v1', 'api_key': 'abc'};
 
         when(() => apiProvider.post(
-                path: any(named: 'path'), parameters: any(named: 'parameters')))
+                feature: ApiFeature.account,
+                path: any(named: 'path'),
+                parameters: any(named: 'parameters')))
             .thenAnswer((_) async => Future.value(''));
         when(() => serverConfiguration.userAgent).thenAnswer((_) async => 'v1');
         // act
         await sut.reactivate(token: 'abc');
         // assert
-        verify(() => apiProvider.post(path: endPoint, parameters: parameters))
-            .called(1);
+        verify(() => apiProvider.post(
+            feature: ApiFeature.account,
+            path: endPoint,
+            parameters: parameters)).called(1);
       });
       test(
         'receive ValidField',
@@ -230,6 +246,7 @@ void main() {
           // arrange
           final expected = right(const ValidField(message: 'abc'));
           when(() => apiProvider.post(
+                  feature: ApiFeature.account,
                   path: any(named: 'path'),
                   parameters: any(named: 'parameters')))
               .thenAnswer((_) async => Future.value(''));
@@ -244,6 +261,7 @@ void main() {
       test('return Failure when encounters an error', () async {
         // arrange
         when(() => apiProvider.post(
+            feature: ApiFeature.account,
             path: any(named: 'path'),
             parameters: any(named: 'parameters'))).thenThrow(Exception());
         when(() => serverConfiguration.userAgent).thenAnswer((_) async => 'v1');
@@ -265,12 +283,15 @@ void main() {
       });
       test('hit endpoint /me/preferences', () async {
         // arrange
-        when(() => apiProvider.get(path: any(named: 'path')))
-            .thenAnswer((_) async => jsonData);
+        when(() => apiProvider.get(
+            feature: ApiFeature.account,
+            path: any(named: 'path'))).thenAnswer((_) async => jsonData);
         // act
         await sut.preferences();
         // assert
-        verify(() => apiProvider.get(path: endPoint)).called(1);
+        verify(() =>
+                apiProvider.get(feature: ApiFeature.account, path: endPoint))
+            .called(1);
       });
       test('receive AccountPreferenceSessionModel', () async {
         // arrange
@@ -280,8 +301,9 @@ void main() {
                 key: 'testKey', value: true, label: 'testLabel')
           ]),
         );
-        when(() => apiProvider.get(path: any(named: 'path')))
-            .thenAnswer((_) async => jsonData);
+        when(() => apiProvider.get(
+            feature: ApiFeature.account,
+            path: any(named: 'path'))).thenAnswer((_) async => jsonData);
         // act
         final actual = await sut.preferences();
         // assert
@@ -289,8 +311,9 @@ void main() {
       });
       test('return Failure when encounters an error', () async {
         // arrange
-        when(() => apiProvider.get(path: any(named: 'path')))
-            .thenThrow(Exception());
+        when(() => apiProvider.get(
+            feature: ApiFeature.account,
+            path: any(named: 'path'))).thenThrow(Exception());
         // act
         final result = await sut.preferences();
         // assert
@@ -309,13 +332,17 @@ void main() {
       test('hit endpoint /me/preferences', () async {
         // arrange
         when(() => apiProvider.post(
-                path: any(named: 'path'), parameters: any(named: 'parameters')))
+                feature: ApiFeature.account,
+                path: any(named: 'path'),
+                parameters: any(named: 'parameters')))
             .thenAnswer((_) async => jsonData);
         // act
         await sut.updatePreferences(key: 'foo', status: true);
         // assert
-        verify(
-            () => apiProvider.post(path: endPoint, parameters: {'foo': '1'}));
+        verify(() => apiProvider.post(
+            feature: ApiFeature.account,
+            path: endPoint,
+            parameters: {'foo': '1'}));
       });
       test('receive AccountPreferenceModel', () async {
         // arrange
@@ -326,7 +353,9 @@ void main() {
           ]),
         );
         when(() => apiProvider.post(
-                path: any(named: 'path'), parameters: any(named: 'parameters')))
+                feature: ApiFeature.account,
+                path: any(named: 'path'),
+                parameters: any(named: 'parameters')))
             .thenAnswer((_) async => jsonData);
         // act
         final actual = await sut.updatePreferences(key: 'foo', status: false);
@@ -336,6 +365,7 @@ void main() {
       test('return Failure when encounters an error', () async {
         // arrange
         when(() => apiProvider.post(
+            feature: ApiFeature.account,
             path: any(named: 'path'),
             parameters: any(named: 'parameters'))).thenThrow(Exception());
         // act

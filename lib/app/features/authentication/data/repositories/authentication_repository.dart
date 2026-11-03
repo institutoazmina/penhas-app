@@ -40,6 +40,7 @@ class AuthenticationRepository implements IAuthenticationRepository {
       final result = await _apiProvider
           .post(
             path: '/login',
+            feature: ApiFeature.authentication,
             parameters: parameters,
             body: body,
           )

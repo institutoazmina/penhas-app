@@ -65,6 +65,7 @@ class UserRegisterRepository implements IUserRegisterRepository {
       final result = await _apiProvider
           .post(
             path: '/signup',
+            feature: ApiFeature.authentication,
             parameters: queryParameters,
           )
           .then((value) => jsonDecode(value))
@@ -108,6 +109,7 @@ class UserRegisterRepository implements IUserRegisterRepository {
       final result = await _apiProvider
           .post(
             path: '/signup',
+            feature: ApiFeature.authentication,
             parameters: queryParameters,
           )
           .then((value) => jsonDecode(value))

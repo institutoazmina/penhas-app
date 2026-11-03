@@ -30,6 +30,7 @@ class NotificationRepository implements INotificationRepository {
     try {
       final bodyResponse = await _apiProvider.get(
         path: endPoint,
+        feature: ApiFeature.notifications,
       );
       return right(parseUnread(bodyResponse));
     } catch (error, stack) {
@@ -48,6 +49,7 @@ class NotificationRepository implements INotificationRepository {
     try {
       final bodyResponse = await _apiProvider.get(
         path: endPoint,
+        feature: ApiFeature.notifications,
         parameters: parameters,
       );
       return right(

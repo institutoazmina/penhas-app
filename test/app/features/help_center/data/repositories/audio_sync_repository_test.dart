@@ -51,6 +51,7 @@ void main() {
               '{"message":"Áudio recebido com sucesso!","success":1,"data":{"id":1234}}';
           when(
             () => apiProvider.download(
+              feature: ApiFeature.audios,
               path: any(named: 'path'),
               file: any(named: 'file'),
               fields: any(named: 'fields'),
@@ -75,6 +76,7 @@ void main() {
         final media = File('test/assets/audio/silence.aac');
         when(
           () => apiProvider.download(
+            feature: ApiFeature.audios,
             path: any(named: 'path'),
             file: any(named: 'file'),
             fields: any(named: 'fields'),

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:firebase_remote_config/firebase_remote_config.dart';
@@ -17,7 +18,7 @@ void main() {
     remoteConfig = _MockFirebaseRemoteConfig();
     RemoteConfigService.remoteConfig = remoteConfig;
 
-    sut = const RemoteConfigService();
+    sut = RemoteConfigService();
   });
 
   group(RemoteConfigService, () {
@@ -84,6 +85,18 @@ void main() {
           {
             'feature_login_offline': false,
             'feature_update_prompt': false,
+            'feature_api_v2_authentication': false,
+            'feature_api_v2_app_state': false,
+            'feature_api_v2_account': false,
+            'feature_api_v2_users': false,
+            'feature_api_v2_feed': false,
+            'feature_api_v2_chat': false,
+            'feature_api_v2_notifications': false,
+            'feature_api_v2_guardians': false,
+            'feature_api_v2_audios': false,
+            'feature_api_v2_support_center': false,
+            'feature_api_v2_quiz': false,
+            'feature_api_v2_escape_manual': false,
             'config_quiz_animation_duration': 400,
             'config_recommended_build_android': 0,
             'config_recommended_build_ios': 0,
@@ -108,15 +121,22 @@ void main() {
       expect(resultConfig.minimumFetchInterval, const Duration(hours: 1));
     });
 
-    test('activate', () async {
+    test('listens for real-time updates and activates them', () async {
+      final updates = StreamController<RemoteConfigUpdate>();
       when(() => remoteConfig.setDefaults(any())).thenAnswer((_) async => {});
       when(() => remoteConfig.setConfigSettings(any()))
           .thenAnswer((_) async => {});
-
+      when(() => remoteConfig.onConfigUpdated)
+          .thenAnswer((_) => updates.stream);
+      when(() => remoteConfig.fetchAndActivate()).thenAnswer((_) async => true);
       when(() => remoteConfig.activate()).thenAnswer((_) async => true);
 
       await sut.initialize();
+      updates.add(RemoteConfigUpdate({'feature_api_v2_feed'}));
+      await untilCalled(() => remoteConfig.activate());
+
       verify(() => remoteConfig.activate()).called(1);
+      await updates.close();
     });
 
     test('refresh fetches and activates the latest config', () async {

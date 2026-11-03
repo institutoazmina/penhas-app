@@ -25,7 +25,7 @@ class TweetFilterPreferenceRepository
   Future<Either<Failure, TweetFilterSessionEntity>> retrieve() async {
     try {
       final result = await _apiProvider
-          .get(path: '/filter-tags')
+          .get(path: '/filter-tags', feature: ApiFeature.feed)
           .then((value) => jsonDecode(value))
           .then((value) => TweetFilterSessionModel.fromJson(value));
 

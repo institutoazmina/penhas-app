@@ -25,7 +25,9 @@ class FilterSkillRepository implements IFilterSkillRepository {
     const endPoint = '/filter-skills';
 
     try {
-      final response = await _apiProvider.get(path: endPoint).parseSkills();
+      final response = await _apiProvider
+          .get(path: endPoint, feature: ApiFeature.users)
+          .parseSkills();
       return right(response);
     } catch (error, stack) {
       logError(error, stack);

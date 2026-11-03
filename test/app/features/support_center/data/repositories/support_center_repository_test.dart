@@ -43,6 +43,7 @@ void main() {
           final actual = right(SupportCenterMetadataModel.fromJson(jsonData));
           when(
             () => apiProvider.get(
+              feature: ApiFeature.supportCenter,
               path: any(named: 'path'),
               headers: any(named: 'headers'),
               parameters: any(named: 'parameters'),
@@ -61,6 +62,7 @@ void main() {
           final actual = left(ServerFailure());
           when(
             () => apiProvider.get(
+              feature: ApiFeature.supportCenter,
               path: any(named: 'path'),
               headers: any(named: 'headers'),
               parameters: any(named: 'parameters'),
@@ -84,6 +86,7 @@ void main() {
 
           when(
             () => apiProvider.get(
+              feature: ApiFeature.supportCenter,
               path: any(named: 'path'),
               headers: any(named: 'headers'),
               parameters: any(named: 'parameters'),
@@ -109,6 +112,7 @@ void main() {
           };
           when(
             () => apiProvider.get(
+              feature: ApiFeature.supportCenter,
               path: any(named: 'path'),
               headers: any(named: 'headers'),
               parameters: any(named: 'parameters'),
@@ -118,6 +122,7 @@ void main() {
           await sut.fetch(fetchRequest);
           // assert
           verify(() => apiProvider.get(
+              feature: ApiFeature.supportCenter,
               path: 'me/pontos-de-apoio',
               headers: any(named: 'headers'),
               parameters: defaultParameters));
@@ -140,6 +145,7 @@ void main() {
           };
           when(
             () => apiProvider.get(
+              feature: ApiFeature.supportCenter,
               path: any(named: 'path'),
               headers: any(named: 'headers'),
               parameters: any(named: 'parameters'),
@@ -158,6 +164,7 @@ void main() {
           ));
           // assert
           verify(() => apiProvider.get(
+              feature: ApiFeature.supportCenter,
               path: 'me/pontos-de-apoio',
               headers: any(named: 'headers'),
               parameters: defaultParameters));
@@ -176,6 +183,7 @@ void main() {
 
           when(
             () => apiProvider.get(
+              feature: ApiFeature.supportCenter,
               path: any(named: 'path'),
               headers: any(named: 'headers'),
               parameters: any(named: 'parameters'),
@@ -197,6 +205,7 @@ void main() {
 
           when(
             () => apiProvider.get(
+              feature: ApiFeature.supportCenter,
               path: any(named: 'path'),
               headers: any(named: 'headers'),
               parameters: any(named: 'parameters'),
@@ -216,6 +225,7 @@ void main() {
         final jsonData = await JsonUtil.getJson(from: jsonFile);
         final actual = right(AlertModel.fromJson(jsonData));
         when(() => apiProvider.post(
+              feature: ApiFeature.supportCenter,
               path: any(named: 'path'),
               body: any(named: 'body'),
             )).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
@@ -245,6 +255,7 @@ void main() {
 
         // assert
         verify(() => apiProvider.post(
+              feature: ApiFeature.supportCenter,
               path: '/me/sugerir-pontos-de-apoio-completo',
               body:
                   'nome=John&categoria=Category&nome_logradouro=123%20Street&observacao=Observation&cep=12345&abrangencia=Coverage&complemento=Complement&bairro=Neighborhood&municipio=City&uf=UF&email=john%40example.com&numero=Number&horario=Hour&ddd1=DDD1&telefone1=Phone1&ddd2=DDD2&telefone2=Phone2&is24h=Is24h&hasWhatsapp=HasWhatsapp',
@@ -257,6 +268,7 @@ void main() {
           // arrange
           final actual = left(ServerFailure());
           when(() => apiProvider.post(
+                feature: ApiFeature.supportCenter,
                 path: any(named: 'path'),
                 body: any(named: 'body'),
               )).thenThrow(Exception());
@@ -295,12 +307,14 @@ void main() {
         final jsonData = await JsonUtil.getJson(from: jsonFile);
         final place = FakeSupportCenterPlaceEntity();
         final actual = right(SupportCenterPlaceDetailModel.fromJson(jsonData));
-        when(() => apiProvider.get(path: any(named: 'path')))
+        when(() => apiProvider.get(
+                feature: ApiFeature.supportCenter, path: any(named: 'path')))
             .thenAnswer((_) => JsonUtil.getString(from: jsonFile));
         final matcher = await sut.detail(place);
         // assert
-        verify(() => apiProvider.get(path: 'me/pontos-de-apoio/${place.id}'))
-            .called(1);
+        verify(() => apiProvider.get(
+            feature: ApiFeature.supportCenter,
+            path: 'me/pontos-de-apoio/${place.id}')).called(1);
         expect(matcher, equals(actual));
       });
       test(
@@ -311,6 +325,7 @@ void main() {
           final place = FakeSupportCenterPlaceEntity();
           when(
             () => apiProvider.get(
+              feature: ApiFeature.supportCenter,
               path: any(named: 'path'),
               headers: any(named: 'headers'),
               parameters: any(named: 'parameters'),
@@ -331,12 +346,14 @@ void main() {
         final place = FakeSupportCenterPlaceEntity();
         final actual = right(ValidField());
         when(() => apiProvider.post(
+              feature: ApiFeature.supportCenter,
               path: any(named: 'path'),
               parameters: any(named: 'parameters'),
             )).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
         final matcher = await sut.rate(place, 2.49);
         // assert
         verify(() => apiProvider.post(
+            feature: ApiFeature.supportCenter,
             path: 'me/avaliar-pontos-de-apoio',
             parameters: {'ponto_apoio_id': '1', 'rating': '2'})).called(1);
         expect(matcher, equals(actual));
@@ -349,6 +366,7 @@ void main() {
           final place = FakeSupportCenterPlaceEntity();
           when(
             () => apiProvider.post(
+              feature: ApiFeature.supportCenter,
               path: any(named: 'path'),
               headers: any(named: 'headers'),
               parameters: any(named: 'parameters'),
@@ -358,6 +376,7 @@ void main() {
           final matcher = await sut.rate(place, 2.99);
           // assert
           verify(() => apiProvider.post(
+              feature: ApiFeature.supportCenter,
               path: 'me/avaliar-pontos-de-apoio',
               parameters: {'ponto_apoio_id': '1', 'rating': '2'})).called(1);
           expect(actual, matcher);

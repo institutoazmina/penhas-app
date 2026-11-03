@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:background_downloader/background_downloader.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -10,6 +11,7 @@ import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/audio_sync_manager.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
+import 'package:penhas/app/core/network/api_version_policy.dart';
 import 'package:penhas/app/features/help_center/data/repositories/audio_sync_repository.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
@@ -103,6 +105,36 @@ void main() {
         DateTime.now().toUtc().difference(parsed).inMinutes.abs(),
         lessThanOrEqualTo(2),
       );
+    });
+  });
+
+  group('audio API version', () {
+    final task = UploadTask(
+      url: 'https://api.example.com/me/audios',
+      filename: 'audio.aac',
+      headers: const {'X-Api-Key': 'token'},
+    );
+
+    test('adds the v2 header immediately before upload', () {
+      final updated = applyAudioApiVersionHeader(task, enabled: true);
+
+      expect(
+        updated.headers,
+        containsPair(ApiVersionPolicy.headerName, ApiVersionPolicy.versionV2),
+      );
+    });
+
+    test('removes a stale v2 header after rollback', () {
+      final v2Task = task.copyWith(
+        headers: {
+          ...task.headers,
+          ApiVersionPolicy.headerName: ApiVersionPolicy.versionV2,
+        },
+      );
+
+      final updated = applyAudioApiVersionHeader(v2Task, enabled: false);
+
+      expect(updated.headers, isNot(contains(ApiVersionPolicy.headerName)));
     });
   });
 

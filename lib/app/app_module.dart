@@ -13,6 +13,7 @@ import 'core/managers/modules_sevices.dart';
 import 'core/managers/user_profile_store.dart';
 import 'core/network/api_client.dart';
 import 'core/network/api_server_configure.dart';
+import 'core/network/api_version_policy.dart';
 import 'core/remoteconfig/i_remote_config.dart';
 import 'core/remoteconfig/remote_config.dart';
 import 'core/storage/cache_storage.dart';
@@ -64,6 +65,12 @@ class AppModule extends Module {
         Bind.factory<IApiProvider>(
           (i) => ApiProvider(
             serverConfiguration: i.get<IApiServerConfigure>(),
+            apiVersionPolicy: i.get<ApiVersionPolicy>(),
+          ),
+        ),
+        Bind.lazySingleton<ApiVersionPolicy>(
+          (i) => ApiVersionPolicy(
+            remoteConfig: i.get<IRemoteConfigService>(),
           ),
         ),
         Bind.factory<IUserProfileRepository>(
@@ -127,7 +134,7 @@ class AppModule extends Module {
           ),
         ),
         Bind.lazySingleton<IRemoteConfigService>(
-          (i) => const RemoteConfigService(),
+          (i) => RemoteConfigService(),
         ),
         Bind.lazySingleton<AppUpdateChecker>(
           (i) => AppUpdateChecker(remoteConfig: i.get<IRemoteConfigService>()),

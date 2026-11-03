@@ -30,6 +30,7 @@ void main() {
       final expected = AudioModel.fromJson(jsonData);
       when(
         () => apiProvider.get(
+          feature: ApiFeature.audios,
           path: any(named: 'path'),
           headers: any(named: 'headers'),
           parameters: any(named: 'parameters'),
@@ -55,6 +56,7 @@ void main() {
       );
       when(
         () => apiProvider.delete(
+          feature: ApiFeature.audios,
           path: any(named: 'path'),
           parameters: any(named: 'parameters'),
         ),
@@ -83,6 +85,7 @@ void main() {
       );
       when(
         () => apiProvider.post(
+          feature: ApiFeature.audios,
           path: any(named: 'path'),
           headers: any(named: 'headers'),
           parameters: any(named: 'parameters'),

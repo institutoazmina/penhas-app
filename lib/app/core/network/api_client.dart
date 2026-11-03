@@ -5,16 +5,20 @@ import 'package:http/http.dart';
 
 import '../../shared/logger/log.dart';
 import '../error/exceptions.dart';
+import 'api_feature.dart';
 import 'api_server_configure.dart';
+import 'api_version_policy.dart';
 import 'interfaces/api_content_type.dart';
 import 'interfaces/api_http_request_method.dart';
 
 export 'package:http/http.dart' show Response;
+export 'api_feature.dart' show ApiFeature;
 
 abstract class IApiProvider {
   Future<Response> request({
     required String method,
     required String path,
+    ApiFeature? feature,
     Map<String, String> headers,
     Map<String, String?> parameters,
     String body,
@@ -22,6 +26,7 @@ abstract class IApiProvider {
 
   Future<String> get({
     required String path,
+    ApiFeature? feature,
     Map<String, String> headers,
     Map<String, String?> parameters,
     ApiContentType? contentType,
@@ -29,6 +34,7 @@ abstract class IApiProvider {
 
   Future<String> post({
     required String path,
+    ApiFeature? feature,
     Map<String, String> headers,
     Map<String, String?> parameters,
     ApiContentType? contentType,
@@ -37,6 +43,7 @@ abstract class IApiProvider {
 
   Future<String> put({
     required String path,
+    ApiFeature? feature,
     Map<String, String> headers,
     Map<String, String?> parameters,
     ApiContentType? contentType,
@@ -45,11 +52,13 @@ abstract class IApiProvider {
 
   Future<String> delete({
     required String path,
+    ApiFeature? feature,
     Map<String, String?> parameters,
   });
 
   Future<String> upload({
     required String path,
+    ApiFeature? feature,
     required MultipartFile file,
     Map<String, String> headers,
     Map<String, String> fields,
@@ -58,6 +67,7 @@ abstract class IApiProvider {
   Future<String> download({
     required String path,
     required File file,
+    ApiFeature? feature,
     Map<String, String> headers,
     Map<String, String> fields,
   });
@@ -66,12 +76,15 @@ abstract class IApiProvider {
 class ApiProvider implements IApiProvider {
   ApiProvider({
     required IApiServerConfigure serverConfiguration,
+    ApiVersionPolicy? apiVersionPolicy,
     Client? apiClient,
   })  : _httpClient = apiClient ?? Client(),
-        _serverConfiguration = serverConfiguration;
+        _serverConfiguration = serverConfiguration,
+        _apiVersionPolicy = apiVersionPolicy;
 
   final Client _httpClient;
   final IApiServerConfigure _serverConfiguration;
+  final ApiVersionPolicy? _apiVersionPolicy;
 
   static const _successfulResponse = {200, 204};
   static const _serverExceptions = {500, 501, 505};
@@ -84,6 +97,7 @@ class ApiProvider implements IApiProvider {
   Future<Response> request({
     required String method,
     required String path,
+    ApiFeature? feature,
     Map<String, String> headers = const {},
     Map<String, String?> parameters = const {},
     String body = '',
@@ -92,7 +106,7 @@ class ApiProvider implements IApiProvider {
       path: path,
       queryParameters: parameters,
     );
-    final header = await _setupHttpHeader(headers);
+    final header = await _setupHttpHeader(headers, null, feature);
 
     final response = await _httpClient.send(
       Request(method, uriRequest)
@@ -106,6 +120,7 @@ class ApiProvider implements IApiProvider {
   @override
   Future<String> get({
     required String path,
+    ApiFeature? feature,
     Map<String, String> headers = const {},
     Map<String, String?> parameters = const {},
     ApiContentType? contentType,
@@ -117,6 +132,7 @@ class ApiProvider implements IApiProvider {
       headers: headers,
       parameters: parameters,
       contentType: contentType,
+      feature: feature,
     );
 
     final response = await _parseResponse(streamedResponse);
@@ -126,6 +142,7 @@ class ApiProvider implements IApiProvider {
   @override
   Future<String> post({
     required String path,
+    ApiFeature? feature,
     Map<String, String> headers = const {},
     Map<String, String?> parameters = const {},
     ApiContentType? contentType,
@@ -138,6 +155,7 @@ class ApiProvider implements IApiProvider {
       headers: headers,
       parameters: parameters,
       contentType: contentType,
+      feature: feature,
     );
 
     final response = await _parseResponse(streamedResponse);
@@ -147,6 +165,7 @@ class ApiProvider implements IApiProvider {
   @override
   Future<String> put({
     required String path,
+    ApiFeature? feature,
     Map<String, String> headers = const {},
     Map<String, String?> parameters = const {},
     ApiContentType? contentType,
@@ -159,6 +178,7 @@ class ApiProvider implements IApiProvider {
       headers: headers,
       parameters: parameters,
       contentType: contentType,
+      feature: feature,
     );
 
     final response = await _parseResponse(streamedResponse);
@@ -168,6 +188,7 @@ class ApiProvider implements IApiProvider {
   @override
   Future<String> delete({
     required String path,
+    ApiFeature? feature,
     Map<String, String?> parameters = const {},
   }) async {
     final streamedResponse = await _execute(
@@ -177,6 +198,7 @@ class ApiProvider implements IApiProvider {
       headers: const {},
       parameters: parameters,
       contentType: null,
+      feature: feature,
     );
 
     final response = await _parseResponse(streamedResponse);
@@ -187,6 +209,7 @@ class ApiProvider implements IApiProvider {
   Future<String> upload({
     required String path,
     required MultipartFile file,
+    ApiFeature? feature,
     Map<String, String> headers = const {},
     Map<String, String> fields = const {},
   }) async {
@@ -194,7 +217,7 @@ class ApiProvider implements IApiProvider {
       path: path,
       queryParameters: {},
     );
-    final header = await _setupHttpHeader(headers);
+    final header = await _setupHttpHeader(headers, null, feature);
     final request = MultipartRequest('POST', uriRequest);
     request
       ..headers.addAll(header)
@@ -211,6 +234,7 @@ class ApiProvider implements IApiProvider {
   Future<String> download({
     required String path,
     required File file,
+    ApiFeature? feature,
     Map<String, String> headers = const {},
     Map<String, String> fields = const {},
   }) async {
@@ -219,7 +243,7 @@ class ApiProvider implements IApiProvider {
       queryParameters: fields,
     );
 
-    final header = await _setupHttpHeader(headers);
+    final header = await _setupHttpHeader(headers, null, feature);
 
     final response = await _httpClient.get(uriRequest, headers: header);
     final parsed = await _parseResponse(response);
@@ -235,10 +259,11 @@ extension _ApiProvider on ApiProvider {
     required ApiContentType? contentType,
     required String path,
     required String body,
+    ApiFeature? feature,
     Map<String, String> headers = const {},
     Map<String, String?> parameters = const {},
   }) async {
-    final header = await _setupHttpHeader(headers, contentType);
+    final header = await _setupHttpHeader(headers, contentType, feature);
     final uriRequest = _setupHttpRequest(
       path: path,
       queryParameters: parameters,
@@ -263,12 +288,15 @@ extension _ApiProvider on ApiProvider {
   Future<Map<String, String>> _setupHttpHeader([
     Map<String, String> headers = const {},
     ApiContentType? contentType,
+    ApiFeature? feature,
   ]) async {
     final Map<String, String> httpHeaders = {
       'X-Api-Key': await _serverConfiguration.apiToken ?? '',
       'User-Agent': await _serverConfiguration.userAgent,
       'Content-Type': contentType?.value ?? ApiContentType.formUrlEncoded.value,
       ...headers,
+      if (feature != null && _apiVersionPolicy != null)
+        ..._apiVersionPolicy.headersFor(feature),
     };
 
     return httpHeaders;
