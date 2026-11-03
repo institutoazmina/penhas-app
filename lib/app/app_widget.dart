@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import 'core/update/app_update_checker.dart';
+import 'core/update/app_update_launcher.dart';
+import 'core/update/app_update_prompt.dart';
 import 'shared/design_system/theme.dart';
 
 class AppWidget extends StatelessWidget {
@@ -23,7 +26,14 @@ class AppWidget extends StatelessWidget {
 
     return MaterialApp.router(
       title: 'PenhaS',
-      builder: Asuka.builder,
+      builder: (context, child) => Asuka.builder(
+        context,
+        AppUpdatePrompt(
+          checker: Modular.get<AppUpdateChecker>(),
+          launcher: Modular.get<AppUpdateLauncher>(),
+          child: child ?? const SizedBox.shrink(),
+        ),
+      ),
       theme: AppTheme.of(context),
       localizationsDelegates: const [
         GlobalWidgetsLocalizations.delegate,

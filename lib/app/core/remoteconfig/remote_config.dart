@@ -20,17 +20,20 @@ class RemoteConfigService implements IRemoteConfigService {
       await _setDefaults();
       await _setConfigSettings();
       await _activate();
-      _fetch();
     } catch (e, stack) {
       logError(e, stack);
     }
   }
 
-  void _fetch() async {
+  @override
+  Future<bool> refresh() async {
     try {
-      await _remoteConfig.fetch();
+      return await _remoteConfig
+          .fetchAndActivate()
+          .timeout(const Duration(seconds: 5));
     } catch (e, stack) {
       logError(e, stack);
+      return false;
     }
   }
 

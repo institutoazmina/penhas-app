@@ -23,6 +23,8 @@ import 'core/storage/local_storage_shared_preferences.dart';
 import 'core/storage/migrator_local_storage.dart';
 import 'core/storage/persistent_storage.dart';
 import 'core/storage/secure_local_storage.dart';
+import 'core/update/app_update_checker.dart';
+import 'core/update/app_update_launcher.dart';
 import 'features/appstate/data/repositories/app_state_repository.dart';
 import 'features/appstate/domain/entities/app_preferences_entity.dart';
 import 'features/appstate/domain/entities/user_profile_entity.dart';
@@ -127,6 +129,10 @@ class AppModule extends Module {
         Bind.lazySingleton<IRemoteConfigService>(
           (i) => const RemoteConfigService(),
         ),
+        Bind.lazySingleton<AppUpdateChecker>(
+          (i) => AppUpdateChecker(remoteConfig: i.get<IRemoteConfigService>()),
+        ),
+        Bind.lazySingleton<AppUpdateLauncher>((i) => AppUpdateLauncher()),
         Bind.lazySingleton<IBackgroundTaskManager>(
           (i) => BackgroundTaskManager.instance,
         ),

@@ -8,6 +8,8 @@ import 'package:penhas/app/core/remoteconfig/i_remote_config.dart';
 import 'package:penhas/app/core/remoteconfig/remote_config.dart';
 import 'package:penhas/app/core/storage/cache_storage.dart';
 import 'package:penhas/app/core/storage/impl/hive_cache_storage.dart';
+import 'package:penhas/app/core/update/app_update_checker.dart';
+import 'package:penhas/app/core/update/app_update_launcher.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_platform_interface.dart';
 
 void main() {
@@ -54,5 +56,10 @@ void main() {
         expect(instance, isA<BackgroundTaskManager>());
       },
     );
+
+    test('update services should be registered', () {
+      expect(Modular.get<AppUpdateChecker>(), isA<AppUpdateChecker>());
+      expect(Modular.get<AppUpdateLauncher>(), isA<AppUpdateLauncher>());
+    });
   });
 }

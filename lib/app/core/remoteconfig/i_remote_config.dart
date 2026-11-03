@@ -3,6 +3,8 @@ export 'remote_config_keys.dart';
 abstract class IRemoteConfigService {
   Future<void> initialize();
 
+  Future<bool> refresh();
+
   bool getBool(String key);
 
   int getInt(String key);

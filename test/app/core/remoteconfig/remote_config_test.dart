@@ -83,7 +83,10 @@ void main() {
         () => remoteConfig.setDefaults(
           {
             'feature_login_offline': false,
+            'feature_update_prompt': false,
             'config_quiz_animation_duration': 400,
+            'config_recommended_build_android': 0,
+            'config_recommended_build_ios': 0,
           },
         ),
       ).called(1);
@@ -116,15 +119,13 @@ void main() {
       verify(() => remoteConfig.activate()).called(1);
     });
 
-    test('fetch', () async {
-      when(() => remoteConfig.setDefaults(any())).thenAnswer((_) async => {});
-      when(() => remoteConfig.setConfigSettings(any()))
-          .thenAnswer((_) async => {});
-      when(() => remoteConfig.activate()).thenAnswer((_) async => true);
-      when(() => remoteConfig.fetch()).thenAnswer((_) async => {});
+    test('refresh fetches and activates the latest config', () async {
+      when(() => remoteConfig.fetchAndActivate()).thenAnswer((_) async => true);
 
-      await sut.initialize();
-      verify(() => remoteConfig.fetch()).called(1);
+      final result = await sut.refresh();
+
+      expect(result, isTrue);
+      verify(() => remoteConfig.fetchAndActivate()).called(1);
     });
   });
 }
